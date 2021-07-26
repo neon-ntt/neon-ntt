@@ -1,4 +1,4 @@
-This repository accompanies the paper **Neon NTT: Faster Dilithium, Kyber, and Saber on Cortex-A72 and Apple M1** available at XXX.
+This repository accompanies the paper **Neon NTT: Faster Dilithium, Kyber, and Saber on Cortex-A72 and Apple M1** available at https://eprint.iacr.org/2021/986.
 
 
 Authors: 
