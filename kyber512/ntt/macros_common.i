@@ -1,0 +1,1 @@
+../../kyber768/ntt/macros_common.i

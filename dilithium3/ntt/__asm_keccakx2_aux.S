@@ -1,8 +1,12 @@
 
 .align 2
 .global __asm_state_interleave
+.global ___asm_state_interleave
+#ifndef __clang__
 .type __asm_state_interleave, %function
+#endif
 __asm_state_interleave:
+___asm_state_interleave:
 
     mov x3, #25
 
@@ -21,8 +25,12 @@ __asm_state_interleave:
 
 .align 2
 .global __asm_state_deinterleave
+.global ___asm_state_deinterleave
+#ifndef __clang__
 .type __asm_state_deinterleave, %function
+#endif
 __asm_state_deinterleave:
+___asm_state_deinterleave:
 
     mov x3, #25
 

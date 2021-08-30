@@ -1,5 +1,6 @@
 #ifndef PACKING_H
 #define PACKING_H
+#include "api.h"
 #include "params.h"
 #include "polyvec.h"
 #include <stdint.h>

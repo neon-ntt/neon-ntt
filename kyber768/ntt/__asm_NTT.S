@@ -3,8 +3,12 @@
 
 .align 2
 .global __asm_ntt_SIMD_top
+.global ___asm_ntt_SIMD_top
+#ifndef __clang__
 .type __asm_ntt_SIMD_top, %function
+#endif
 __asm_ntt_SIMD_top:
+___asm_ntt_SIMD_top:
 
     push_all
     Q         .req w20
@@ -49,7 +53,7 @@ __asm_ntt_SIMD_top:
     add src15, x0, #32*15
 
     ld1 { v0.8H,  v1.8H,  v2.8H,  v3.8H}, [table], #64
-    
+
     mov v0.H[0], Q
 
     ld1 { v4.8H}, [ src0]
@@ -168,14 +172,18 @@ __asm_ntt_SIMD_top:
 
 .align 2
 .global __asm_ntt_SIMD_bot
+.global ___asm_ntt_SIMD_bot
+#ifndef __clang__
 .type __asm_ntt_SIMD_bot, %function
+#endif
 __asm_ntt_SIMD_bot:
+___asm_ntt_SIMD_bot:
 
     push_all
     Q         .req w20
     BarrettM  .req w21
     src0      .req x0
-    src1      .req x1 
+    src1      .req x1
     table     .req x28
     counter   .req x19
 
@@ -214,7 +222,7 @@ __asm_ntt_SIMD_bot:
     do_butterfly_vec_mixed v25, v27, v29, v31, v18, v19, v24, v26, v28, v30, v16, v17,  v0,  v2,  v3,  v2,  v3,  v2,  v3,  v2,  v3
     do_butterfly_vec_mixed v24, v26, v28, v30, v16, v17, v25, v29, v27, v31, v18, v19,  v0,  v2,  v3,  v2,  v3,  v4,  v5,  v6,  v7
     do_butterfly_vec_mixed v25, v29, v27, v31, v18, v19, v24, v28, v26, v30, v16, v17,  v0,  v4,  v5,  v6,  v7,  v4,  v5,  v6,  v7
-    do_butterfly_vec_mixed  v24, v28, v26, v30, v16, v17, v24, v26, v25, v27, v18, v19,  v0,  v4,  v5,  v6,  v7,  v8,  v9, v10, v11
+    do_butterfly_vec_mixed v24, v28, v26, v30, v16, v17, v24, v26, v25, v27, v18, v19,  v0,  v4,  v5,  v6,  v7,  v8,  v9, v10, v11
     do_butterfly_vec_mixed v24, v26, v25, v27, v18, v19, v28, v30, v29, v31, v16, v17,  v0,  v8,  v9, v10, v11, v12, v13, v14, v15
     do_butterfly_vec_bot v28, v30, v29, v31, v16, v17,  v0, v12, v13, v14, v15
     oo_barrett v24, v25, v26, v27, v16, v17, v18, v19, v28, v29, v30, v31, v20, v21, v22, v23,  v1,  #11,  v0

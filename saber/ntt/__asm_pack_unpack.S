@@ -1,8 +1,12 @@
 
 .align 2
 .global __asm_1_to_16
+.global ___asm_1_to_16
+#ifndef __clang__
 .type __asm_1_to_16, %function
+#endif
 __asm_1_to_16:
+___asm_1_to_16:
 
     mov x15, #8
     _1_to_16_outer_loop:
@@ -42,8 +46,12 @@ __asm_1_to_16:
 
 .align 2
 .global __asm_4_to_16
+.global ___asm_4_to_16
+#ifndef __clang__
 .type __asm_4_to_16, %function
+#endif
 __asm_4_to_16:
+___asm_4_to_16:
 
     mov x7, #32
     _4_to_16_loop:
@@ -76,8 +84,12 @@ __asm_4_to_16:
 
 .align 2
 .global __asm_10_to_32
+.global ___asm_10_to_32
+#ifndef __clang__
 .type __asm_10_to_32, %function
+#endif
 __asm_10_to_32:
+___asm_10_to_32:
 
     mov x7, #16
     _10_to_32_loop:
@@ -148,8 +160,12 @@ __asm_10_to_32:
 
 .align 2
 .global __asm_13_to_32
+.global ___asm_13_to_32
+#ifndef __clang__
 .type __asm_13_to_32, %function
+#endif
 __asm_13_to_32:
+___asm_13_to_32:
 
     mov x7, #8
     _13_to_32_loop:
@@ -301,8 +317,12 @@ __asm_13_to_32:
 
 .align 2
 .global __asm_16_to_32
+.global ___asm_16_to_32
+#ifndef __clang__
 .type __asm_16_to_32, %function
+#endif
 __asm_16_to_32:
+___asm_16_to_32:
 
     mov x7, #128
     _sbfx_loop:

@@ -45,19 +45,15 @@ void polyvec_matrix_pointwise_montgomery(polyveck *t, const polyvecl mat[K], con
 void polyvecl_uniform_eta(polyvecl *v, const uint8_t seed[CRHBYTES], uint16_t nonce) {
     unsigned int i;
 
-    for (i = 0; i < L; i += 2) {
-        poly_uniform_etax2(&v->vec[i + 0], &v->vec[i + 1], seed, nonce + 0, nonce + 1);
-        nonce += 2;
-    }
-    if(L & 1){
-        poly_uniform_eta(&v->vec[i], seed, nonce - 1);
+    for (i = 0; i < L; ++i) {
+        poly_uniform_eta(&v->vec[i], seed, nonce++);
     }
 }
 
 void polyvecl_uniform_gamma1(polyvecl *v, const uint8_t seed[CRHBYTES], uint16_t nonce) {
     unsigned int i;
 
-    for (i = 0; i < L; i += 2) {
+    for (i = 0; i < L-1; i += 2) {
         poly_uniform_gamma1x2(&v->vec[i + 0], &v->vec[i + 1], seed, (uint16_t) (L * nonce + i + 0), (uint16_t) (L * nonce + i + 1));
     }
     if(L & 1){
@@ -188,9 +184,8 @@ int polyvecl_chknorm(const polyvecl *v, int32_t bound)  {
 void polyveck_uniform_eta(polyveck *v, const uint8_t seed[CRHBYTES], uint16_t nonce) {
     unsigned int i;
 
-    for(i = 0; i < K; i += 2){
-        poly_uniform_etax2(&v->vec[i + 0], &v->vec[i + 1], seed, nonce + 0, nonce + 1);
-	nonce += 2;
+    for(i = 0; i < K; ++i){
+        poly_uniform_eta(&v->vec[i], seed, nonce++);
     }
 
 }

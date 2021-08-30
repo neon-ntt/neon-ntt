@@ -1,0 +1,4 @@
+NTTs: 2241 cycles
+polyvecl_pointwise_acc_montgomerys: 1814 cycles
+iNTTs: 2823 cycles
+MatrixVectorMul: 54759 cycles

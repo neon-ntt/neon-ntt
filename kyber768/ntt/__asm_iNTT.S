@@ -3,8 +3,12 @@
 
 .align 2
 .global __asm_intt_SIMD_bot
+.global ___asm_intt_SIMD_bot
+#ifndef __clang__
 .type __asm_intt_SIMD_bot, %function
+#endif
 __asm_intt_SIMD_bot:
+___asm_intt_SIMD_bot:
 
     push_all
     Q         .req w20
@@ -85,8 +89,12 @@ __asm_intt_SIMD_bot:
 
 .align 2
 .global __asm_intt_SIMD_top
+.global ___asm_intt_SIMD_top
+#ifndef __clang__
 .type __asm_intt_SIMD_top, %function
+#endif
 __asm_intt_SIMD_top:
+___asm_intt_SIMD_top:
 
     push_all
     Q         .req w20
@@ -304,6 +312,9 @@ __asm_intt_SIMD_top:
     st1 {v19.8H}, [src15], #16
 
     .unreq    Q
+    .unreq    BarrettM
+    .unreq    invN
+    .unreq    invN_f
     .unreq    src0
     .unreq    src1
     .unreq    src2

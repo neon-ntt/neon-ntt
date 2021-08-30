@@ -3,8 +3,12 @@
 
 .align 2
 .global __asm_intt_SIMD_top
+.global ___asm_intt_SIMD_top
+#ifndef __clang__
 .type __asm_intt_SIMD_top, %function
+#endif
 __asm_intt_SIMD_top:
+___asm_intt_SIMD_top:
 
     push_all
     Q         .req w20
@@ -145,8 +149,12 @@ __asm_intt_SIMD_top:
 
 .align 2
 .global __asm_intt_SIMD_bot
+.global ___asm_intt_SIMD_bot
+#ifndef __clang__
 .type __asm_intt_SIMD_bot, %function
+#endif
 __asm_intt_SIMD_bot:
+___asm_intt_SIMD_bot:
 
     push_all
     Q         .req w20
@@ -248,9 +256,9 @@ __asm_intt_SIMD_bot:
     sqrdmulh v20.4S,  v4.4S,  v8.4S
     cmge     v19.4S, v26.4S,  v1.4S
     sqrdmulh v21.4S,  v5.4S, v10.4S
-    cmge     v16.4S,  v0.4S, v25.4S
+    cmgt     v16.4S,  v0.4S, v25.4S
     sqrdmulh v22.4S,  v6.4S, v12.4S
-    cmge     v17.4S,  v1.4S, v25.4S
+    cmgt     v17.4S,  v1.4S, v25.4S
     sqrdmulh v23.4S,  v7.4S, v14.4S
 
     sub      v16.4S, v16.4S, v18.4S
@@ -267,9 +275,9 @@ __asm_intt_SIMD_bot:
     mls       v4.4S, v20.4S, v24.4S
     cmge     v19.4S, v26.4S,  v3.4S
     mls       v5.4S, v21.4S, v24.4S
-    cmge     v16.4S,  v2.4S, v25.4S
+    cmgt     v16.4S,  v2.4S, v25.4S
     mls       v6.4S, v22.4S, v24.4S
-    cmge     v17.4S,  v3.4S, v25.4S
+    cmgt     v17.4S,  v3.4S, v25.4S
     mls       v7.4S, v23.4S, v24.4S
 
     sub      v16.4S, v16.4S, v18.4S
@@ -278,9 +286,9 @@ __asm_intt_SIMD_bot:
     cmge     v23.4S, v26.4S,  v5.4S
 
     mla       v2.4S, v16.4S, v24.4S
-    cmge     v20.4S,  v4.4S, v25.4S
+    cmgt     v20.4S,  v4.4S, v25.4S
     mla       v3.4S, v17.4S, v24.4S
-    cmge     v21.4S,  v5.4S, v25.4S
+    cmgt     v21.4S,  v5.4S, v25.4S
 
     st1 { v0.4S}, [ src0], #16
     sub      v20.4S, v20.4S, v22.4S
@@ -298,9 +306,9 @@ __asm_intt_SIMD_bot:
     ld1 { v0.4S}, [ src0]
     cmge     v23.4S, v26.4S,  v7.4S
     ld1 { v1.4S}, [ src1]
-    cmge     v20.4S,  v6.4S, v25.4S
+    cmgt     v20.4S,  v6.4S, v25.4S
     ld1 { v2.4S}, [ src2]
-    cmge     v21.4S,  v7.4S, v25.4S
+    cmgt     v21.4S,  v7.4S, v25.4S
     ld1 { v3.4S}, [ src3]
 
     sub      v20.4S, v20.4S, v22.4S
@@ -363,9 +371,9 @@ __asm_intt_SIMD_bot:
     sqrdmulh v20.4S,  v4.4S,  v8.4S
     cmge     v19.4S, v26.4S,  v1.4S
     sqrdmulh v21.4S,  v5.4S, v10.4S
-    cmge     v16.4S,  v0.4S, v25.4S
+    cmgt     v16.4S,  v0.4S, v25.4S
     sqrdmulh v22.4S,  v6.4S, v12.4S
-    cmge     v17.4S,  v1.4S, v25.4S
+    cmgt     v17.4S,  v1.4S, v25.4S
     sqrdmulh v23.4S,  v7.4S, v14.4S
 
     sub      v16.4S, v16.4S, v18.4S
@@ -382,9 +390,9 @@ __asm_intt_SIMD_bot:
     mls       v4.4S, v20.4S, v24.4S
     cmge     v19.4S, v26.4S,  v3.4S
     mls       v5.4S, v21.4S, v24.4S
-    cmge     v16.4S,  v2.4S, v25.4S
+    cmgt     v16.4S,  v2.4S, v25.4S
     mls       v6.4S, v22.4S, v24.4S
-    cmge     v17.4S,  v3.4S, v25.4S
+    cmgt     v17.4S,  v3.4S, v25.4S
     mls       v7.4S, v23.4S, v24.4S
 
     sub      v16.4S, v16.4S, v18.4S
@@ -393,9 +401,9 @@ __asm_intt_SIMD_bot:
     cmge     v23.4S, v26.4S,  v5.4S
 
     mla       v2.4S, v16.4S, v24.4S
-    cmge     v20.4S,  v4.4S, v25.4S
+    cmgt     v20.4S,  v4.4S, v25.4S
     mla       v3.4S, v17.4S, v24.4S
-    cmge     v21.4S,  v5.4S, v25.4S
+    cmgt     v21.4S,  v5.4S, v25.4S
 
     st1 { v0.4S}, [ src0], #16
     sub      v20.4S, v20.4S, v22.4S
@@ -411,8 +419,8 @@ __asm_intt_SIMD_bot:
 
     cmge     v22.4S, v26.4S,  v6.4S
     cmge     v23.4S, v26.4S,  v7.4S
-    cmge     v20.4S,  v6.4S, v25.4S
-    cmge     v21.4S,  v7.4S, v25.4S
+    cmgt     v20.4S,  v6.4S, v25.4S
+    cmgt     v21.4S,  v7.4S, v25.4S
     
     sub      v20.4S, v20.4S, v22.4S
     sub      v21.4S, v21.4S, v23.4S

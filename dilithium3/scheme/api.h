@@ -3,12 +3,14 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include "params.h"
 
-#define CRYPTO_PUBLICKEYBYTES 1952
-#define CRYPTO_SECRETKEYBYTES 4000
-#define CRYPTO_BYTES 3293
 
-#define CRYPTO_ALGNAME "Dilithium3"
+#define CRYPTO_PUBLICKEYBYTES DILITHIUM_CRYPTO_PUBLICKEYBYTES
+#define CRYPTO_SECRETKEYBYTES DILITHIUM_CRYPTO_SECRETKEYBYTES
+#define CRYPTO_BYTES DILITHIUM_CRYPTO_BYTES
+
+
 
 int crypto_sign_keypair(uint8_t *pk, uint8_t *sk);
 

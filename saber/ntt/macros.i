@@ -1,3 +1,7 @@
+
+#ifndef MACROS_S
+#define MACROS_S
+
 #include "macros_common.i"
 
 .macro dq_butterfly_top a0, a1, b0, b1, t0, t1, mod, z0, l0, h0, z1, l1, h1
@@ -48,3 +52,6 @@
 .macro qq_add_sub s0, s1, s2, s3, t0, t1, t2, t3, a0, a1, a2, a3, b0, b1, b2, b3
     wrap_qX_add_sub \s0, \s1, \s2, \s3, \t0, \t1, \t2, \t3, \a0, \a1, \a2, \a3, \b0, \b1, \b2, \b3, .4S
 .endm
+
+#endif
+

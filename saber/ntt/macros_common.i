@@ -1,3 +1,7 @@
+
+#ifndef MACROS_COMMON
+#define MACROS_COMMON
+
 // for ABI
 
 .macro push_all
@@ -421,3 +425,10 @@
     add \s3\wX, \a3\wX, \b3\wX
 
 .endm
+
+
+#endif
+
+
+
+

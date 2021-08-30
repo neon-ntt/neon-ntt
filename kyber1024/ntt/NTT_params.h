@@ -1,0 +1,1 @@
+../../kyber768/ntt/NTT_params.h

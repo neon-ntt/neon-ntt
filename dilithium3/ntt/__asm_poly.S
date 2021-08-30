@@ -1,10 +1,15 @@
 
 #include "macros.i"
+#include "params.h"
 
 .align 2
 .global __asm_10_to_32
+.global ___asm_10_to_32
+#ifndef __clang__
 .type __asm_10_to_32, %function
+#endif
 __asm_10_to_32:
+___asm_10_to_32:
 
     mov x7, #16
     _10_to_32_loop:
@@ -75,8 +80,12 @@ __asm_10_to_32:
 
 .align 2
 .global __asm_poly_reduce
+.global ___asm_poly_reduce
+#ifndef __clang__
 .type __asm_poly_reduce, %function
+#endif
 __asm_poly_reduce:
+___asm_poly_reduce:
 
     ldr w4, [x1]
 
@@ -167,8 +176,12 @@ __asm_poly_reduce:
 
 .align 2
 .global __asm_poly_caddq
+.global ___asm_poly_caddq
+#ifndef __clang__
 .type __asm_poly_caddq, %function
+#endif
 __asm_poly_caddq:
+___asm_poly_caddq:
 
     ldr w4, [x1]
 
@@ -259,8 +272,12 @@ __asm_poly_caddq:
 
 .align 2
 .global __asm_poly_freeze
+.global ___asm_poly_freeze
+#ifndef __clang__
 .type __asm_poly_freeze, %function
+#endif
 __asm_poly_freeze:
+___asm_poly_freeze:
 
     ldr w4, [x1]
 
@@ -318,7 +335,7 @@ __asm_poly_freeze:
     mls     v7.4S, v23.4S, v24.4S
     st1 { v3.4S}, [x0], #16
 
-    mov x16, 8
+    mov x16, #8
     _poly_freeze_loop:
 
     st1 { v4.4S}, [x0], #16
@@ -387,8 +404,12 @@ __asm_poly_freeze:
 
 .align 2
 .global __asm_poly_power2round
+.global ___asm_poly_power2round
+#ifndef __clang__
 .type __asm_poly_power2round, %function
+#endif
 __asm_poly_power2round:
+___asm_poly_power2round:
 
     mov w4, #1
 
@@ -532,8 +553,12 @@ __asm_poly_power2round:
 
 .align 2
 .global __asm_poly_add
+.global ___asm_poly_add
+#ifndef __clang__
 .type __asm_poly_add, %function
+#endif
 __asm_poly_add:
+___asm_poly_add:
 
     ld1 {v0.4S}, [x1], #16
     ld1 {v4.4S}, [x2], #16
@@ -580,8 +605,12 @@ __asm_poly_add:
 
 .align 2
 .global __asm_poly_sub
+.global ___asm_poly_sub
+#ifndef __clang__
 .type __asm_poly_sub, %function
+#endif
 __asm_poly_sub:
+___asm_poly_sub:
 
     ld1 {v0.4S}, [x1], #16
     ld1 {v4.4S}, [x2], #16
@@ -628,8 +657,12 @@ __asm_poly_sub:
 
 .align 2
 .global __asm_poly_shiftl
+.global ___asm_poly_shiftl
+#ifndef __clang__
 .type __asm_poly_shiftl, %function
+#endif
 __asm_poly_shiftl:
+___asm_poly_shiftl:
 
     add x1, x0, #0
 
@@ -694,8 +727,12 @@ __asm_poly_shiftl:
 
 .align 2
 .global __asm_poly_pointwise_montgomery
+.global ___asm_poly_pointwise_montgomery
+#ifndef __clang__
 .type __asm_poly_pointwise_montgomery, %function
+#endif
 __asm_poly_pointwise_montgomery:
+___asm_poly_pointwise_montgomery:
 
     push_all
 
@@ -812,25 +849,39 @@ __asm_poly_pointwise_montgomery:
 
 .align 2
 .global __asm_polyvecl_pointwise_acc_montgomery
+.global ___asm_polyvecl_pointwise_acc_montgomery
+#ifndef __clang__
 .type __asm_polyvecl_pointwise_acc_montgomery, %function
+#endif
 __asm_polyvecl_pointwise_acc_montgomery:
+___asm_polyvecl_pointwise_acc_montgomery:
 
     push_all
 
     ldr w20, [x3, #0]
     ldr w21, [x3, #4]
 
-    add  x5,  x1, #1024
-    add  x6,  x2, #1024
+    add  x5,  x1, #1024*1
+    add  x6,  x2, #1024*1
 
-    add  x7,  x1, #2048
-    add  x8,  x2, #2048
+    add  x7,  x1, #1024*2
+    add  x8,  x2, #1024*2
 
-    add  x9,  x1, #3072
-    add x10,  x2, #3072
+    add  x9,  x1, #1024*3
+    add x10,  x2, #1024*3
 
-    add x11,  x1, #4096
-    add x12,  x2, #4096
+#if L > 4
+    add x11,  x1, #1024*4
+    add x12,  x2, #1024*4
+#endif
+
+#if L > 5
+    add x13,  x11, #1024*1
+    add x14,  x12, #1024*1
+
+    add x15,  x11, #1024*2
+    add x19,  x12, #1024*2
+#endif
 
     dup v30.4S, w20
     dup v31.4S, w21
@@ -895,6 +946,7 @@ __asm_polyvecl_pointwise_acc_montgomery:
     ld1 { v3.4S}, [ x9], #16 
     ld1 { v7.4S}, [x10], #16
 
+#if L > 4
     smlal  v12.2D,  v0.2S,  v4.2S
     smlal2 v16.2D,  v0.4S,  v4.4S
     ld1 { v0.4S}, [x11], #16 
@@ -911,6 +963,43 @@ __asm_polyvecl_pointwise_acc_montgomery:
     smlal2 v19.2D,  v3.4S,  v7.4S
     ld1 { v3.4S}, [x11], #16 
     ld1 { v7.4S}, [x12], #16
+#endif
+
+#if L > 5
+    smlal  v12.2D,  v0.2S,  v4.2S
+    smlal2 v16.2D,  v0.4S,  v4.4S
+    ld1 { v0.4S}, [x13], #16 
+    ld1 { v4.4S}, [x14], #16 
+    smlal  v13.2D,  v1.2S,  v5.2S
+    smlal2 v17.2D,  v1.4S,  v5.4S
+    ld1 { v1.4S}, [x13], #16 
+    ld1 { v5.4S}, [x14], #16 
+    smlal  v14.2D,  v2.2S,  v6.2S
+    smlal2 v18.2D,  v2.4S,  v6.4S
+    ld1 { v2.4S}, [x13], #16 
+    ld1 { v6.4S}, [x14], #16 
+    smlal  v15.2D,  v3.2S,  v7.2S
+    smlal2 v19.2D,  v3.4S,  v7.4S
+    ld1 { v3.4S}, [x13], #16 
+    ld1 { v7.4S}, [x14], #16
+
+    smlal  v12.2D,  v0.2S,  v4.2S
+    smlal2 v16.2D,  v0.4S,  v4.4S
+    ld1 { v0.4S}, [x15], #16 
+    ld1 { v4.4S}, [x19], #16 
+    smlal  v13.2D,  v1.2S,  v5.2S
+    smlal2 v17.2D,  v1.4S,  v5.4S
+    ld1 { v1.4S}, [x15], #16 
+    ld1 { v5.4S}, [x19], #16 
+    smlal  v14.2D,  v2.2S,  v6.2S
+    smlal2 v18.2D,  v2.4S,  v6.4S
+    ld1 { v2.4S}, [x15], #16 
+    ld1 { v6.4S}, [x19], #16 
+    smlal  v15.2D,  v3.2S,  v7.2S
+    smlal2 v19.2D,  v3.4S,  v7.4S
+    ld1 { v3.4S}, [x15], #16 
+    ld1 { v7.4S}, [x19], #16
+#endif
 
     mov x16, #15
     _polyvecl_pointwise_acc_montgomery_loop:
@@ -1011,6 +1100,7 @@ __asm_polyvecl_pointwise_acc_montgomery:
     ld1 { v3.4S}, [ x9], #16 
     ld1 { v7.4S}, [x10], #16
 
+#if L > 4
     smlal  v12.2D,  v0.2S,  v4.2S
     smlal2 v16.2D,  v0.4S,  v4.4S
     ld1 { v0.4S}, [x11], #16 
@@ -1027,6 +1117,43 @@ __asm_polyvecl_pointwise_acc_montgomery:
     smlal2 v19.2D,  v3.4S,  v7.4S
     ld1 { v3.4S}, [x11], #16 
     ld1 { v7.4S}, [x12], #16
+#endif
+
+#if L > 5
+    smlal  v12.2D,  v0.2S,  v4.2S
+    smlal2 v16.2D,  v0.4S,  v4.4S
+    ld1 { v0.4S}, [x13], #16 
+    ld1 { v4.4S}, [x14], #16 
+    smlal  v13.2D,  v1.2S,  v5.2S
+    smlal2 v17.2D,  v1.4S,  v5.4S
+    ld1 { v1.4S}, [x13], #16 
+    ld1 { v5.4S}, [x14], #16 
+    smlal  v14.2D,  v2.2S,  v6.2S
+    smlal2 v18.2D,  v2.4S,  v6.4S
+    ld1 { v2.4S}, [x13], #16 
+    ld1 { v6.4S}, [x14], #16 
+    smlal  v15.2D,  v3.2S,  v7.2S
+    smlal2 v19.2D,  v3.4S,  v7.4S
+    ld1 { v3.4S}, [x13], #16 
+    ld1 { v7.4S}, [x14], #16
+
+    smlal  v12.2D,  v0.2S,  v4.2S
+    smlal2 v16.2D,  v0.4S,  v4.4S
+    ld1 { v0.4S}, [x15], #16 
+    ld1 { v4.4S}, [x19], #16 
+    smlal  v13.2D,  v1.2S,  v5.2S
+    smlal2 v17.2D,  v1.4S,  v5.4S
+    ld1 { v1.4S}, [x15], #16 
+    ld1 { v5.4S}, [x19], #16 
+    smlal  v14.2D,  v2.2S,  v6.2S
+    smlal2 v18.2D,  v2.4S,  v6.4S
+    ld1 { v2.4S}, [x15], #16 
+    ld1 { v6.4S}, [x19], #16 
+    smlal  v15.2D,  v3.2S,  v7.2S
+    smlal2 v19.2D,  v3.4S,  v7.4S
+    ld1 { v3.4S}, [x15], #16 
+    ld1 { v7.4S}, [x19], #16
+#endif
 
     sub x16, x16, #1
     cbnz x16, _polyvecl_pointwise_acc_montgomery_loop

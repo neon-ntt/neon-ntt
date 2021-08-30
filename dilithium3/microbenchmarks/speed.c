@@ -8,8 +8,10 @@
 #include "NTT_params.h"
 #include "ntt.h"
 
-#define DILITHIUM_L 5
-#define DILITHIUM_K 6
+#include "params.h"
+
+#define DILITHIUM_L L
+#define DILITHIUM_K K
 #define ITERATIONS 1000
 
 #define QINV 58728449

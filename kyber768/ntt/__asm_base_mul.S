@@ -1,10 +1,16 @@
 
 #include "macros.i"
 
+#include "params.h"
+
 .align 2
 .global __asm_point_mul_extended
-.type __asm_point_mul_extended, %function
+.global ___asm_point_mul_extended
+#ifndef __clang__
+  .type __asm_point_mul_extended, %function
+#endif
 __asm_point_mul_extended:
+___asm_point_mul_extended:
 
     push_all
     Q         .req w20
@@ -35,7 +41,7 @@ __asm_point_mul_extended:
     sqrdmulh  v2.8H,  v3.8H, v10.8H
     sqrdmulh  v4.8H,  v5.8H, v12.8H
     sqrdmulh  v6.8H,  v7.8H, v14.8H
-    
+
     mul       v1.8H,  v1.8H,  v9.8H
     mul       v3.8H,  v3.8H, v11.8H
     mul       v5.8H,  v5.8H, v13.8H
@@ -66,8 +72,12 @@ __asm_point_mul_extended:
 
 .align 2
 .global __asm_asymmetric_mul
+.global ___asm_asymmetric_mul
+#ifndef __clang__
 .type __asm_asymmetric_mul, %function
+#endif
 __asm_asymmetric_mul:
+___asm_asymmetric_mul:
 
     push_all
     Q         .req w28
@@ -82,6 +92,9 @@ __asm_asymmetric_mul:
     src1_2    .req x8
     src2_2    .req x9
     src2asy_2 .req x10
+    src1_3    .req x12
+    src2_3    .req x13
+    src2asy_3 .req x14
     counter   .req x19
 
     ldrsh Q, [x3, #0]
@@ -93,9 +106,17 @@ __asm_asymmetric_mul:
     add     src2_1,    src2_0, #512*1
     add  src2asy_1, src2asy_0, #256*1
 
+#if KYBER_K > 2
     add     src1_2,    src1_0, #512*2
     add     src2_2,    src2_0, #512*2
     add  src2asy_2, src2asy_0, #256*2
+#endif
+
+#if KYBER_K > 3
+    add     src1_3,    src1_0, #512*3
+    add     src2_3,    src2_0, #512*3
+    add  src2asy_3, src2asy_0, #256*3
+#endif
 
     dup v28.8H, Q
     dup v29.8H, Qprime2
@@ -132,6 +153,7 @@ __asm_asymmetric_mul:
     smlal  v17.4S,  v1.4H,  v2.4H
     smlal2 v21.4S,  v1.8H,  v2.8H
 
+#if KYBER_K > 2
     ld2 { v0.8H,  v1.8H}, [   src1_2], #32
     ld2 { v2.8H,  v3.8H}, [   src2_2], #32
     ld1 { v5.8H}, [src2asy_2], #16
@@ -145,6 +167,23 @@ __asm_asymmetric_mul:
     smlal2 v20.4S,  v1.8H,  v5.8H
     smlal  v17.4S,  v1.4H,  v2.4H
     smlal2 v21.4S,  v1.8H,  v2.8H
+#endif
+
+#if KYBER_K > 3
+    ld2 { v0.8H,  v1.8H}, [   src1_3], #32
+    ld2 { v2.8H,  v3.8H}, [   src2_3], #32
+    ld1 { v5.8H}, [src2asy_3], #16
+
+    smlal  v16.4S,  v0.4H,  v2.4H
+    smlal2 v20.4S,  v0.8H,  v2.8H
+    smlal  v17.4S,  v0.4H,  v3.4H
+    smlal2 v21.4S,  v0.8H,  v3.8H
+
+    smlal  v16.4S,  v1.4H,  v5.4H
+    smlal2 v20.4S,  v1.8H,  v5.8H
+    smlal  v17.4S,  v1.4H,  v2.4H
+    smlal2 v21.4S,  v1.8H,  v2.8H
+#endif
 
     uzp1    v0.8H, v16.8H, v20.8H
     uzp1    v1.8H, v17.8H, v21.8H
@@ -177,6 +216,9 @@ __asm_asymmetric_mul:
     .unreq    src1_2
     .unreq    src2_2
     .unreq    src2asy_2
+    .unreq    src1_3
+    .unreq    src2_3
+    .unreq    src2asy_3
     .unreq    counter
     pop_all
 
@@ -185,8 +227,12 @@ __asm_asymmetric_mul:
 
 .align 2
 .global __asm_asymmetric_mul_montgomery
+.global ___asm_asymmetric_mul_montgomery
+#ifndef __clang__
 .type __asm_asymmetric_mul_montgomery, %function
+#endif
 __asm_asymmetric_mul_montgomery:
+___asm_asymmetric_mul_montgomery:
 
     push_all
     Q         .req w28
@@ -203,6 +249,9 @@ __asm_asymmetric_mul_montgomery:
     src1_2    .req x8
     src2_2    .req x9
     src2asy_2 .req x10
+    src1_3    .req x12
+    src2_3    .req x13
+    src2asy_3 .req x14
     counter   .req x19
 
     ldrsh Q, [x3, #0]
@@ -217,9 +266,17 @@ __asm_asymmetric_mul_montgomery:
     add     src2_1,    src2_0, #512*1
     add  src2asy_1, src2asy_0, #256*1
 
+#if KYBER_K > 2
     add     src1_2,    src1_0, #512*2
     add     src2_2,    src2_0, #512*2
     add  src2asy_2, src2asy_0, #256*2
+#endif
+
+#if KYBER_K > 3
+    add     src1_3,    src1_0, #512*3
+    add     src2_3,    src2_0, #512*3
+    add  src2asy_3, src2asy_0, #256*3
+#endif
 
     dup v26.8H, R3
     dup v27.8H, R3p
@@ -259,6 +316,7 @@ __asm_asymmetric_mul_montgomery:
     smlal  v17.4S,  v1.4H,  v2.4H
     smlal2 v21.4S,  v1.8H,  v2.8H
 
+#if KYBER_K > 2
     ld2 { v0.8H,  v1.8H}, [   src1_2], #32
     ld2 { v2.8H,  v3.8H}, [   src2_2], #32
     ld1 { v5.8H}, [src2asy_2], #16
@@ -272,6 +330,23 @@ __asm_asymmetric_mul_montgomery:
     smlal2 v20.4S,  v1.8H,  v5.8H
     smlal  v17.4S,  v1.4H,  v2.4H
     smlal2 v21.4S,  v1.8H,  v2.8H
+#endif
+
+#if KYBER_K > 3
+    ld2 { v0.8H,  v1.8H}, [   src1_3], #32
+    ld2 { v2.8H,  v3.8H}, [   src2_3], #32
+    ld1 { v5.8H}, [src2asy_3], #16
+
+    smlal  v16.4S,  v0.4H,  v2.4H
+    smlal2 v20.4S,  v0.8H,  v2.8H
+    smlal  v17.4S,  v0.4H,  v3.4H
+    smlal2 v21.4S,  v0.8H,  v3.8H
+
+    smlal  v16.4S,  v1.4H,  v5.4H
+    smlal2 v20.4S,  v1.8H,  v5.8H
+    smlal  v17.4S,  v1.4H,  v2.4H
+    smlal2 v21.4S,  v1.8H,  v2.8H
+#endif
 
     uzp1    v0.8H, v16.8H, v20.8H
     uzp1    v1.8H, v17.8H, v21.8H
@@ -315,6 +390,9 @@ __asm_asymmetric_mul_montgomery:
     .unreq    src1_2
     .unreq    src2_2
     .unreq    src2asy_2
+    .unreq    src1_3
+    .unreq    src2_3
+    .unreq    src2asy_3
     .unreq    counter
     pop_all
 

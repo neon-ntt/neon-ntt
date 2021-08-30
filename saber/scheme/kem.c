@@ -6,16 +6,17 @@ by : Jan-Pieter D'Anvers, Angshuman Karmakar, Sujoy Sinha Roy, and Frederik Verc
 Jose Maria Bermudo Mera, Michiel Van Beirendonck, Andrea Basso.
 =============================================================================*/
 
-
-#include "SABER_params.h"
 #include <string.h>
 #include <stdint.h>
 #include <stdio.h>
-#include "SABER_indcpa.h"
+
 #include "api.h"
-#include "verify.h"
+
+#include "SABER_params.h"
+#include "SABER_indcpa.h"
 #include "randombytes.h"
 #include "fips202.h"
+#include "verify.h"
 #include "crypto_kem.h"
 
 int crypto_kem_keypair(unsigned char *pk, unsigned char *sk)

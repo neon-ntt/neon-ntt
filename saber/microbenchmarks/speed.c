@@ -7,9 +7,9 @@
 
 #include "hal.h"
 #include "NTT_params.h"
-#include "ntt.h"
+#include "NTT.h"
+#include "SABER_params.h"
 
-#define SABER_L 3
 #define ITERATIONS 1000
 
 uint64_t t0, t1;

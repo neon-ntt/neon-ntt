@@ -1,0 +1,1 @@
+../../dilithium3/scheme/__asm_keccakx2_aux.S

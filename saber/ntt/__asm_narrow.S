@@ -1,11 +1,17 @@
 
+#include "SABER_params.h"
 
 .align 2
 .global __asm_round
+.global ___asm_round
+#ifndef __clang__
 .type __asm_round, %function
+#endif
 __asm_round:
+___asm_round:
 
-    .equ srv, 3
+
+    .equ srv, (SABER_EQ-SABER_EP)
 
     ld2 { v0.8H,  v1.8H}, [x1], #32
     ld2 { v2.8H,  v3.8H}, [x1], #32
@@ -46,10 +52,15 @@ __asm_round:
 
 .align 2
 .global __asm_enc_add_msg
+.global ___asm_enc_add_msg
+#ifndef __clang__
 .type __asm_enc_add_msg, %function
+#endif
 __asm_enc_add_msg:
+___asm_enc_add_msg:
 
-    .equ srv, 6
+    .equ srv, (SABER_EP-SABER_ET)
+    .equ slv, (SABER_EP-1)
 
     dup v30.8H, w3
 
@@ -67,10 +78,10 @@ __asm_enc_add_msg:
     add   v4.8H,   v4.8H,  v30.8H
     add   v6.8H,   v6.8H,  v30.8H
 
-    shl   v1.8H,   v1.8H, #9
-    shl   v3.8H,   v3.8H, #9
-    shl   v5.8H,   v5.8H, #9
-    shl   v7.8H,   v7.8H, #9
+    shl   v1.8H,   v1.8H, #slv
+    shl   v3.8H,   v3.8H, #slv
+    shl   v5.8H,   v5.8H, #slv
+    shl   v7.8H,   v7.8H, #slv
 
     sub   v0.8H,   v0.8H,   v1.8H
     sub   v2.8H,   v2.8H,   v3.8H
@@ -103,10 +114,10 @@ __asm_enc_add_msg:
     add   v4.8H,   v4.8H,  v30.8H
     add   v6.8H,   v6.8H,  v30.8H
 
-    shl   v1.8H,   v1.8H, #9
-    shl   v3.8H,   v3.8H, #9
-    shl   v5.8H,   v5.8H, #9
-    shl   v7.8H,   v7.8H, #9
+    shl   v1.8H,   v1.8H, #slv
+    shl   v3.8H,   v3.8H, #slv
+    shl   v5.8H,   v5.8H, #slv
+    shl   v7.8H,   v7.8H, #slv
 
     sub   v0.8H,   v0.8H,   v1.8H
     sub   v2.8H,   v2.8H,   v3.8H
@@ -131,10 +142,15 @@ __asm_enc_add_msg:
 
 .align 2
 .global __asm_dec_get_msg
+.global ___asm_dec_get_msg
+#ifndef __clang__
 .type __asm_dec_get_msg, %function
+#endif
 __asm_dec_get_msg:
+___asm_dec_get_msg:
 
-    .equ slv, 6
+    .equ srv, (SABER_EP-1)
+    .equ slv, (SABER_EP-SABER_ET)
 
     dup v30.8H, w3
 
@@ -162,10 +178,10 @@ __asm_dec_get_msg:
     sub   v4.8H,   v4.8H,   v5.8H
     sub   v6.8H,   v6.8H,   v7.8H
 
-    sshr  v0.8H,   v0.8H, #9
-    sshr  v2.8H,   v2.8H, #9
-    sshr  v4.8H,   v4.8H, #9
-    sshr  v6.8H,   v6.8H, #9
+    sshr  v0.8H,   v0.8H, #srv
+    sshr  v2.8H,   v2.8H, #srv
+    sshr  v4.8H,   v4.8H, #srv
+    sshr  v6.8H,   v6.8H, #srv
 
     mov x7, #7
     _dec_get_msg_loop:
@@ -198,10 +214,10 @@ __asm_dec_get_msg:
     sub   v4.8H,   v4.8H,   v5.8H
     sub   v6.8H,   v6.8H,   v7.8H
 
-    sshr  v0.8H,   v0.8H, #9
-    sshr  v2.8H,   v2.8H, #9
-    sshr  v4.8H,   v4.8H, #9
-    sshr  v6.8H,   v6.8H, #9
+    sshr  v0.8H,   v0.8H, #srv
+    sshr  v2.8H,   v2.8H, #srv
+    sshr  v4.8H,   v4.8H, #srv
+    sshr  v6.8H,   v6.8H, #srv
 
     sub x7, x7, #1
     cbnz x7, _dec_get_msg_loop

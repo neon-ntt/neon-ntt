@@ -1,10 +1,15 @@
 
 #include "macros.i"
+#include "SABER_params.h"
 
 .align 2
 .global __asm_asymmetric_mul
+.global ___asm_asymmetric_mul
+#ifndef __clang__
 .type __asm_asymmetric_mul, %function
+#endif
 __asm_asymmetric_mul:
+___asm_asymmetric_mul:
 
     push_all
 
@@ -19,9 +24,18 @@ __asm_asymmetric_mul:
     add  x4,  x0, #1024
     add  x5,  x1, #1024
     add  x6,  x2, #1024
+
+.if SABER_L > 2
     add  x8,  x0, #2048
     add  x9,  x1, #2048
     add x10,  x2, #2048
+.endif
+
+.if SABER_L > 3
+    add x12,  x0, #3072
+    add x13,  x1, #3072
+    add x14,  x2, #3072
+.endif
 
     mov x16, #16
     _asymmetric_loop:
@@ -35,23 +49,36 @@ __asm_asymmetric_mul:
     _4x4_asymmetric smlal, smlal2,  v1, v11,  v4,  v5,  v6, v16, v20, v17, v21, v18, v22, v19, v23
     _4x4_asymmetric smlal, smlal2,  v0,  v4,  v5,  v6,  v7, v16, v20, v17, v21, v18, v22, v19, v23
 
+    ld4 { v0.4S,  v1.4S,  v2.4S,  v3.4S}, [ x4], #64
+    ld4 { v4.4S,  v5.4S,  v6.4S,  v7.4S}, [ x5], #64
     ld4 { v8.4S,  v9.4S, v10.4S, v11.4S}, [ x6], #64
-    ld4 {v12.4S, v13.4S, v14.4S, v15.4S}, [ x4], #64
-    ld4 {v24.4S, v25.4S, v26.4S, v27.4S}, [ x5], #64
-
-    _4x4_asymmetric smlal, smlal2, v15,  v9, v10, v11, v24, v16, v20, v17, v21, v18, v22, v19, v23
-    _4x4_asymmetric smlal, smlal2, v14, v10, v11, v24, v25, v16, v20, v17, v21, v18, v22, v19, v23
-    _4x4_asymmetric smlal, smlal2, v13, v11, v24, v25, v26, v16, v20, v17, v21, v18, v22, v19, v23
-    _4x4_asymmetric smlal, smlal2, v12, v24, v25, v26, v27, v16, v20, v17, v21, v18, v22, v19, v23
-
-    ld4 { v8.4S,  v9.4S, v10.4S, v11.4S}, [x10], #64
-    ld4 { v0.4S,  v1.4S,  v2.4S,  v3.4S}, [ x8], #64
-    ld4 { v4.4S,  v5.4S,  v6.4S,  v7.4S}, [ x9], #64
 
     _4x4_asymmetric smlal, smlal2,  v3,  v9, v10, v11,  v4, v16, v20, v17, v21, v18, v22, v19, v23
     _4x4_asymmetric smlal, smlal2,  v2, v10, v11,  v4,  v5, v16, v20, v17, v21, v18, v22, v19, v23
     _4x4_asymmetric smlal, smlal2,  v1, v11,  v4,  v5,  v6, v16, v20, v17, v21, v18, v22, v19, v23
     _4x4_asymmetric smlal, smlal2,  v0,  v4,  v5,  v6,  v7, v16, v20, v17, v21, v18, v22, v19, v23
+
+.if SABER_L > 2
+    ld4 { v0.4S,  v1.4S,  v2.4S,  v3.4S}, [ x8], #64
+    ld4 { v4.4S,  v5.4S,  v6.4S,  v7.4S}, [ x9], #64
+    ld4 { v8.4S,  v9.4S, v10.4S, v11.4S}, [x10], #64
+
+    _4x4_asymmetric smlal, smlal2,  v3,  v9, v10, v11,  v4, v16, v20, v17, v21, v18, v22, v19, v23
+    _4x4_asymmetric smlal, smlal2,  v2, v10, v11,  v4,  v5, v16, v20, v17, v21, v18, v22, v19, v23
+    _4x4_asymmetric smlal, smlal2,  v1, v11,  v4,  v5,  v6, v16, v20, v17, v21, v18, v22, v19, v23
+    _4x4_asymmetric smlal, smlal2,  v0,  v4,  v5,  v6,  v7, v16, v20, v17, v21, v18, v22, v19, v23
+.endif
+
+.if SABER_L > 3
+    ld4 { v0.4S,  v1.4S,  v2.4S,  v3.4S}, [x12], #64
+    ld4 { v4.4S,  v5.4S,  v6.4S,  v7.4S}, [x13], #64
+    ld4 { v8.4S,  v9.4S, v10.4S, v11.4S}, [x14], #64
+
+    _4x4_asymmetric smlal, smlal2,  v3,  v9, v10, v11,  v4, v16, v20, v17, v21, v18, v22, v19, v23
+    _4x4_asymmetric smlal, smlal2,  v2, v10, v11,  v4,  v5, v16, v20, v17, v21, v18, v22, v19, v23
+    _4x4_asymmetric smlal, smlal2,  v1, v11,  v4,  v5,  v6, v16, v20, v17, v21, v18, v22, v19, v23
+    _4x4_asymmetric smlal, smlal2,  v0,  v4,  v5,  v6,  v7, v16, v20, v17, v21, v18, v22, v19, v23
+.endif
 
     qq_montgomery v24, v25, v26, v27, v16, v17, v18, v19, v20, v21, v22, v23, v0, v1, v2, v3, v29, v28
 
@@ -66,8 +93,12 @@ __asm_asymmetric_mul:
 
 .align 2
 .global __asm_point_mul_extended
+.global ___asm_point_mul_extended
+#ifndef __clang__
 .type __asm_point_mul_extended, %function
+#endif
 __asm_point_mul_extended:
+___asm_point_mul_extended:
 
     push_all
 

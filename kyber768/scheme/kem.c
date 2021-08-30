@@ -1,7 +1,6 @@
 #include <stddef.h>
 #include <stdint.h>
 #include "params.h"
-#include "kem.h"
 #include "indcpa.h"
 #include "verify.h"
 #include "symmetric.h"
