@@ -1,0 +1,43 @@
+--- work/kyber512/scheme/__asm_NTT.S
++++ work-patched/kyber512/scheme/__asm_NTT.S
+@@ -1,14 +1,14 @@
+ 
+-#include "macros.i"
++#include "macros.inc"
+ 
+ .align 2
+-.global __asm_ntt_SIMD_top
+-.global ___asm_ntt_SIMD_top
++.global PQCLEAN_NAMESPACE_asm_ntt_SIMD_top
++.global _PQCLEAN_NAMESPACE_asm_ntt_SIMD_top
+ #ifndef __clang__
+-.type __asm_ntt_SIMD_top, %function
++.type PQCLEAN_NAMESPACE_asm_ntt_SIMD_top, %function
+ #endif
+-__asm_ntt_SIMD_top:
+-___asm_ntt_SIMD_top:
++PQCLEAN_NAMESPACE_asm_ntt_SIMD_top:
++_PQCLEAN_NAMESPACE_asm_ntt_SIMD_top:
+ 
+     push_all
+     Q         .req w20
+@@ -171,13 +171,13 @@
+ 
+ 
+ .align 2
+-.global __asm_ntt_SIMD_bot
+-.global ___asm_ntt_SIMD_bot
++.global PQCLEAN_NAMESPACE_asm_ntt_SIMD_bot
++.global _PQCLEAN_NAMESPACE_asm_ntt_SIMD_bot
+ #ifndef __clang__
+-.type __asm_ntt_SIMD_bot, %function
++.type PQCLEAN_NAMESPACE_asm_ntt_SIMD_bot, %function
+ #endif
+-__asm_ntt_SIMD_bot:
+-___asm_ntt_SIMD_bot:
++PQCLEAN_NAMESPACE_asm_ntt_SIMD_bot:
++_PQCLEAN_NAMESPACE_asm_ntt_SIMD_bot:
+ 
+     push_all
+     Q         .req w20
+

@@ -1,0 +1,39 @@
+--- work/kyber1024/scheme/polyvec.h
++++ work-patched/kyber1024/scheme/polyvec.h
+@@ -1,21 +1,21 @@
+ #ifndef POLYVEC_H
+ #define POLYVEC_H
+ 
+-#include <stdint.h>
+ #include "params.h"
+ #include "poly.h"
++#include <stdint.h>
+ 
+-typedef struct{
+-  poly vec[KYBER_K];
++typedef struct {
++    poly vec[KYBER_K];
+ } polyvec;
+ 
+ #define polyvec_compress KYBER_NAMESPACE(polyvec_compress)
+-void polyvec_compress(uint8_t r[KYBER_POLYVECCOMPRESSEDBYTES], const int16_t a[KYBER_K][KYBER_N]);
++void polyvec_compress(uint8_t r[KYBER_POLYVECCOMPRESSEDBYTES], int16_t a[KYBER_K][KYBER_N]);
+ #define polyvec_decompress KYBER_NAMESPACE(polyvec_decompress)
+ void polyvec_decompress(int16_t r[KYBER_K][KYBER_N], const uint8_t a[KYBER_POLYVECCOMPRESSEDBYTES]);
+ 
+ #define polyvec_tobytes KYBER_NAMESPACE(polyvec_tobytes)
+-void polyvec_tobytes(uint8_t r[KYBER_POLYVECBYTES], const int16_t a[KYBER_K][KYBER_N]);
++void polyvec_tobytes(uint8_t r[KYBER_POLYVECBYTES], int16_t a[KYBER_K][KYBER_N]);
+ #define polyvec_frombytes KYBER_NAMESPACE(polyvec_frombytes)
+ void polyvec_frombytes(int16_t r[KYBER_K][KYBER_N], const uint8_t a[KYBER_POLYVECBYTES]);
+ 
+@@ -28,7 +28,7 @@
+ void neon_polyvec_invntt_to_mont(int16_t r[KYBER_K][KYBER_N]);
+ 
+ #define neon_polyvec_add_reduce KYBER_NAMESPACE(polyvec_add_reduce)
+-void neon_polyvec_add_reduce(int16_t c[KYBER_K][KYBER_N], const int16_t a[KYBER_K][KYBER_N]);
++void neon_polyvec_add_reduce(int16_t c[KYBER_K][KYBER_N], int16_t a[KYBER_K][KYBER_N]);
+ 
+ 
+ #endif
+
