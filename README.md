@@ -65,3 +65,10 @@ For each of the schemes, we provide three folders:
     └── scheme
 ```
 
+# TODO
+Adjust the names of the tables
+
+Remove unused constants in Kyber
+
+
+
