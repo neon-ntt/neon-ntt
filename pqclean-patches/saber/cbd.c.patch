@@ -1,0 +1,197 @@
+--- work/saber/scheme/cbd.c
++++ work-patched/saber/scheme/cbd.c
+@@ -10,8 +10,8 @@
+  * Author: Duc Tri Nguyen
+ =============================================================================*/
+ 
+-#include <arm_neon.h>
+ #include "cbd.h"
++#include <arm_neon.h>
+ 
+ #define vload4(c, ptr) c = vld4q_u8(ptr);
+ #define vstore4(ptr, c) vst4q_u16(ptr, c);
+@@ -32,41 +32,38 @@
+ #define vsublh8(c, a, b) c = vsubl_high_u8(a, b);
+ 
+ #if SABER_MU == 6
+-static uint32_t load24_littleendian(const uint8_t x[3])
+-{
+-  uint32_t r;
+-  r  = (uint32_t)x[0];
+-  r |= (uint32_t)x[1] << 8;
+-  r |= (uint32_t)x[2] << 16;
+-  return r;
+-}
+-
+-static void cbd3(uint16_t s[SABER_N], const uint8_t buf[SABER_POLYCOINBYTES])
+-{
+-  unsigned int i,j;
+-  uint32_t t,d;
+-  int16_t a,b;
+-
+-  for(i=0;i<SABER_N/4;i++) {
+-    t  = load24_littleendian(buf+3*i);
+-    d  = t & 0x00249249;
+-    d += (t>>1) & 0x00249249;
+-    d += (t>>2) & 0x00249249;
+-
+-    for(j=0;j<4;j++) {
+-      a = (d >> (6*j+0)) & 0x7;
+-      b = (d >> (6*j+3)) & 0x7;
+-      s[4*i+j] = a - b;
++static uint32_t load24_littleendian(const uint8_t x[3]) {
++    uint32_t r;
++    r  = (uint32_t)x[0];
++    r |= (uint32_t)x[1] << 8;
++    r |= (uint32_t)x[2] << 16;
++    return r;
++}
++
++static void cbd3(uint16_t s[SABER_N], const uint8_t buf[SABER_POLYCOINBYTES]) {
++    unsigned int i, j;
++    uint32_t t, d;
++    int16_t a, b;
++
++    for (i = 0; i < SABER_N / 4; i++) {
++        t  = load24_littleendian(buf + 3 * i);
++        d  = t & 0x00249249;
++        d += (t >> 1) & 0x00249249;
++        d += (t >> 2) & 0x00249249;
++
++        for (j = 0; j < 4; j++) {
++            a = (d >> (6 * j + 0)) & 0x7;
++            b = (d >> (6 * j + 3)) & 0x7;
++            s[4 * i + j] = a - b;
++        }
+     }
+-  }
+ }
+ #endif
+ 
+ 
+ #if SABER_MU == 8
+-static 
+-void neon_cbd4(uint16_t s[SABER_N], const uint8_t buf[SABER_POLYCOINBYTES])
+-{
++static
++void neon_cbd4(uint16_t s[SABER_N], const uint8_t buf[SABER_POLYCOINBYTES]) {
+     uint8x16x4_t neon_buf, res, tmp, a, b;  // 20
+     uint16x8x4_t store1, store2;            // 8
+ 
+@@ -75,8 +72,7 @@
+     const_0xf = vdupq_n_u8(0xf);
+ 
+     // Total SIMD register: 30
+-    for (int i = 0; i < SABER_POLYCOINBYTES; i += 4 * 16)
+-    {
++    for (int i = 0; i < SABER_POLYCOINBYTES; i += 4 * 16) {
+         // 0, 4, ...
+         // 1, 5, ...
+         // 2, 6, ...
+@@ -184,58 +180,55 @@
+ #endif
+ 
+ #if SABER_MU==10
+-static uint64_t load40_littleendian(const uint8_t x[5])
+-{
+-  uint64_t r;
+-  r  = (uint64_t) x[0];
+-  r |= (uint64_t) x[1] << 8;
+-  r |= (uint64_t) x[2] << 16;
+-  r |= (uint64_t) x[3] << 24;
+-  r |= (uint64_t) x[4] << 32;
+-  return r;
+-}
+-
+-static 
+-void cbd5(uint16_t s[SABER_N], const uint8_t buf[SABER_POLYCOINBYTES])
+-{
+-  uint64_t t, d, a[4], b[4];
+-  int i, j;
+-
+-  for (i = 0; i < SABER_N / 4; i++)
+-  {
+-    t = load40_littleendian(buf);
+-    d = 0;
+-    for (j = 0; j < 5; j++)
+-      d += (t >> j) & 0x0842108421UL;
+-
+-    a[0] = d & 0x1f;
+-    b[0] = (d >> 5) & 0x1f;
+-    a[1] = (d >> 10) & 0x1f;
+-    b[1] = (d >> 15) & 0x1f;
+-    a[2] = (d >> 20) & 0x1f;
+-    b[2] = (d >> 25) & 0x1f;
+-    a[3] = (d >> 30) & 0x1f;
+-    b[3] = (d >> 35);
+-
+-    s[4 * i + 0] = (uint16_t)(a[0] - b[0]);
+-    s[4 * i + 1] = (uint16_t)(a[1] - b[1]);
+-    s[4 * i + 2] = (uint16_t)(a[2] - b[2]);
+-    s[4 * i + 3] = (uint16_t)(a[3] - b[3]);
+-    
+-    buf += 5;
+-  }
++static uint64_t load40_littleendian(const uint8_t x[5]) {
++    uint64_t r;
++    r  = (uint64_t) x[0];
++    r |= (uint64_t) x[1] << 8;
++    r |= (uint64_t) x[2] << 16;
++    r |= (uint64_t) x[3] << 24;
++    r |= (uint64_t) x[4] << 32;
++    return r;
++}
++
++static
++void cbd5(uint16_t s[SABER_N], const uint8_t buf[SABER_POLYCOINBYTES]) {
++    uint64_t t, d, a[4], b[4];
++    int i, j;
++
++    for (i = 0; i < SABER_N / 4; i++) {
++        t = load40_littleendian(buf);
++        d = 0;
++        for (j = 0; j < 5; j++) {
++            d += (t >> j) & 0x0842108421UL;
++        }
++
++        a[0] = d & 0x1f;
++        b[0] = (d >> 5) & 0x1f;
++        a[1] = (d >> 10) & 0x1f;
++        b[1] = (d >> 15) & 0x1f;
++        a[2] = (d >> 20) & 0x1f;
++        b[2] = (d >> 25) & 0x1f;
++        a[3] = (d >> 30) & 0x1f;
++        b[3] = (d >> 35);
++
++        s[4 * i + 0] = (uint16_t)(a[0] - b[0]);
++        s[4 * i + 1] = (uint16_t)(a[1] - b[1]);
++        s[4 * i + 2] = (uint16_t)(a[2] - b[2]);
++        s[4 * i + 3] = (uint16_t)(a[3] - b[3]);
++
++        buf += 5;
++    }
+ }
+ #endif
+ 
+-void cbd(uint16_t s[SABER_N], const uint8_t buf[SABER_POLYCOINBYTES])
+-{
+-#if SABER_MU == 6
+-  cbd3(s, buf);
+-#elif SABER_MU == 8 
+-  neon_cbd4(s, buf);
+-#elif SABER_MU == 10
+-  cbd5(s, buf);
+-#else
++void cbd(uint16_t s[SABER_N], const uint8_t buf[SABER_POLYCOINBYTES]) {
++    #if SABER_MU == 6
++    cbd3(s, buf);
++    #elif SABER_MU == 8
++    neon_cbd4(s, buf);
++    #elif SABER_MU == 10
++    cbd5(s, buf);
++    #else
+ #error "Unsupported SABER parameter."
+-#endif
++    #endif
+ }
+

@@ -1,0 +1,44 @@
+--- work/lightsaber/scheme/__asm_mul.S
++++ work-patched/lightsaber/scheme/__asm_mul.S
+@@ -1,15 +1,15 @@
+ 
+-#include "macros.i"
++#include "macros.inc"
+ #include "SABER_params.h"
+ 
+ .align 2
+-.global __asm_asymmetric_mul
+-.global ___asm_asymmetric_mul
++.global PQCLEAN_NAMESPACE_asm_asymmetric_mul
++.global _PQCLEAN_NAMESPACE_asm_asymmetric_mul
+ #ifndef __clang__
+-.type __asm_asymmetric_mul, %function
++.type PQCLEAN_NAMESPACE_asm_asymmetric_mul, %function
+ #endif
+-__asm_asymmetric_mul:
+-___asm_asymmetric_mul:
++PQCLEAN_NAMESPACE_asm_asymmetric_mul:
++_PQCLEAN_NAMESPACE_asm_asymmetric_mul:
+ 
+     push_all
+ 
+@@ -92,13 +92,13 @@
+     br lr
+ 
+ .align 2
+-.global __asm_point_mul_extended
+-.global ___asm_point_mul_extended
++.global PQCLEAN_NAMESPACE_asm_point_mul_extended
++.global _PQCLEAN_NAMESPACE_asm_point_mul_extended
+ #ifndef __clang__
+-.type __asm_point_mul_extended, %function
++.type PQCLEAN_NAMESPACE_asm_point_mul_extended, %function
+ #endif
+-__asm_point_mul_extended:
+-___asm_point_mul_extended:
++PQCLEAN_NAMESPACE_asm_point_mul_extended:
++_PQCLEAN_NAMESPACE_asm_point_mul_extended:
+ 
+     push_all
+ 
+

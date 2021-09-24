@@ -8,7 +8,7 @@ rm -rf ${WORK} ${WORKPATCHED}
 mkdir -p ${WORK} ${WORKPATCHED}
 
 # patch implementations
-for scheme in {kyber512,kyber768,kyber1024}
+for scheme in {kyber512,kyber768,kyber1024,saber,lightsaber,firesaber}
 do
     cp -rL ${scheme} ${WORK}
 
@@ -36,6 +36,7 @@ done
 
 # process and copy to PQClean
 cd ${WORKPATCHED}
+# kyber
 for k in {2,3,4}; do
     ka=$((k*256));
     if [ $k -eq 2 ]
@@ -56,4 +57,31 @@ for k in {2,3,4}; do
     unifdef -m -DKYBER_K=$k -U KYBER_90S -DKYBER_POLYVECCOMPRESSEDBYTES=$polyvec -UPROFILE_HASHING -DKYBER_ETA1=$eta1 -DKYBER_ETA2=2 -DKYBER_POLYCOMPRESSEDBYTES=$polycomp -DKYBER_N=256 -DKYBER_INDCPA_MSGBYTES=32 ~/git/PQClean/crypto_kem/kyber$ka/aarch64/*.[ch]
     namespc="s/PQCLEAN_NAMESPACE/PQCLEAN_KYBER${ka}_AARCH64/g"
     sed -i $namespc ~/git/PQClean/crypto_kem/kyber$ka/aarch64/*.[chS]
+done
+
+# saber
+for k in {2,3,4}; do
+    if [ $k -eq 2 ]
+    then
+        scheme=lightsaber
+        mu=10
+        et=3
+    fi
+    if [ $k -eq 3 ]
+    then
+        scheme=saber
+        mu=8
+        et=4
+    fi
+    if [ $k -eq 4 ]
+    then
+        scheme=firesaber
+        mu=6
+        et=6
+    fi
+
+    cp -rL ${scheme}/scheme/* ~/git/PQClean/crypto_kem/${scheme}/aarch64
+    unifdef -m -DSABER_L=$k -DSABER_MU=$mu -DSABER_ET=$et -U__ARM_ARCH_8_3__ -UPROFILE_HASHING ~/git/PQClean/crypto_kem/${scheme}/aarch64/*.[ch]
+    namespc="s/PQCLEAN_NAMESPACE/PQCLEAN_${scheme^^}_AARCH64/g"
+    sed -i $namespc ~/git/PQClean/crypto_kem/${scheme}/aarch64/*.[chS]
 done
