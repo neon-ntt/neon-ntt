@@ -114,9 +114,7 @@ int main(){
     );
 
     for(size_t i = 0; i < (NTT_N << 3); i++){
-        if(pre_asymmetric_table_Q1_extended[i] != buff_extended[i]){
-            printf("%zu: %d, %d\n", i, pre_asymmetric_table_Q1_extended[i], buff_extended[i]);
-        }
+        assert(pre_asymmetric_table_Q1_extended[i] == buff_extended[i]);
     }
 
 // ================
@@ -147,9 +145,7 @@ int main(){
     );
 
     for(size_t i = 0; i < (((NTT_N - 1) + (1 << 0) + (1 << 3)) << 1); i++){
-        if(streamlined_inv_CT_table_Q1_extended[i] != buff_extended[i]){
-            printf("%zu: %d, %d\n", i, streamlined_inv_CT_table_Q1_extended[i], buff_extended[i]);
-        }
+        assert(streamlined_inv_CT_table_Q1_extended[i] == buff_extended[i]);
     }
 
 // ================
@@ -187,9 +183,7 @@ int main(){
     );
 
     for(size_t i = 0; i < (ARRAY_N << 1); i++){
-        if(inv_twist_table_all_Q1_extended[i] != buff_extended[i]){
-            printf("%zu: %d, %d\n", i, inv_twist_table_all_Q1_extended[i], buff_extended[i]);
-        }
+        assert(inv_twist_table_all_Q1_extended[i] == buff_extended[i]);
     }
 
 // ================
