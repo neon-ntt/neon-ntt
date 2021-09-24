@@ -43,6 +43,13 @@ For each of the schemes, we provide three folders:
 │   ├── microbenchmarks
 │   ├── ntt
 │   └── scheme
+├── gen_table
+│   ├── Dilithium
+│   ├── Kyber
+│   ├── README.md
+│   ├── Saber
+│   ├── common -> multi-moduli-ntt-saber/gen_table/common/
+│   └── multi-moduli-ntt-saber
 ├── kyber1024
 │   ├── microbenchmarks
 │   ├── ntt
@@ -66,6 +73,9 @@ For each of the schemes, we provide three folders:
 ```
 
 # TODO
+
+Re-structure the directory after merging patches for pqclean
+
 Adjust the names of the tables
 
 Remove unused constants in Kyber
