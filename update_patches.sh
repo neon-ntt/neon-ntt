@@ -15,7 +15,7 @@ fi
 
 rm -rf ${PATCHES}
 mkdir -p ${PATCHES}/tmp/
-for scheme in {kyber512,kyber768,kyber1024}
+for scheme in {kyber512,kyber768,kyber1024,lightsaber,saber,firesaber}
 do
   echo $scheme;
   V1=${WORK}/${scheme}

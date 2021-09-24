@@ -1,0 +1,12 @@
+--- work/saber/scheme/macros.inc
++++ work-patched/saber/scheme/macros.inc
+@@ -2,7 +2,7 @@
+ #ifndef MACROS_S
+ #define MACROS_S
+ 
+-#include "macros_common.i"
++#include "macros_common.inc"
+ 
+ .macro dq_butterfly_top a0, a1, b0, b1, t0, t1, mod, z0, l0, h0, z1, l1, h1
+     wrap_dX_butterfly_top \a0, \a1, \b0, \b1, \t0, \t1, \mod, \z0, \l0, \h0, \z1, \l1, \h1, .4S, .S
+

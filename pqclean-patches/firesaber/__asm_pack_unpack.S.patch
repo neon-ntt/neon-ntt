@@ -1,0 +1,97 @@
+--- work/firesaber/scheme/__asm_pack_unpack.S
++++ work-patched/firesaber/scheme/__asm_pack_unpack.S
+@@ -1,12 +1,12 @@
+ 
+ .align 2
+-.global __asm_1_to_16
+-.global ___asm_1_to_16
++.global PQCLEAN_NAMESPACE_asm_1_to_16
++.global _PQCLEAN_NAMESPACE_asm_1_to_16
+ #ifndef __clang__
+-.type __asm_1_to_16, %function
++.type PQCLEAN_NAMESPACE_asm_1_to_16, %function
+ #endif
+-__asm_1_to_16:
+-___asm_1_to_16:
++PQCLEAN_NAMESPACE_asm_1_to_16:
++_PQCLEAN_NAMESPACE_asm_1_to_16:
+ 
+     mov x15, #8
+     _1_to_16_outer_loop:
+@@ -45,13 +45,13 @@
+ 
+ 
+ .align 2
+-.global __asm_4_to_16
+-.global ___asm_4_to_16
++.global PQCLEAN_NAMESPACE_asm_4_to_16
++.global _PQCLEAN_NAMESPACE_asm_4_to_16
+ #ifndef __clang__
+-.type __asm_4_to_16, %function
++.type PQCLEAN_NAMESPACE_asm_4_to_16, %function
+ #endif
+-__asm_4_to_16:
+-___asm_4_to_16:
++PQCLEAN_NAMESPACE_asm_4_to_16:
++_PQCLEAN_NAMESPACE_asm_4_to_16:
+ 
+     mov x7, #32
+     _4_to_16_loop:
+@@ -83,13 +83,13 @@
+ 
+ 
+ .align 2
+-.global __asm_10_to_32
+-.global ___asm_10_to_32
++.global PQCLEAN_NAMESPACE_asm_10_to_32
++.global _PQCLEAN_NAMESPACE_asm_10_to_32
+ #ifndef __clang__
+-.type __asm_10_to_32, %function
++.type PQCLEAN_NAMESPACE_asm_10_to_32, %function
+ #endif
+-__asm_10_to_32:
+-___asm_10_to_32:
++PQCLEAN_NAMESPACE_asm_10_to_32:
++_PQCLEAN_NAMESPACE_asm_10_to_32:
+ 
+     mov x7, #16
+     _10_to_32_loop:
+@@ -159,13 +159,13 @@
+     br lr
+ 
+ .align 2
+-.global __asm_13_to_32
+-.global ___asm_13_to_32
++.global PQCLEAN_NAMESPACE_asm_13_to_32
++.global _PQCLEAN_NAMESPACE_asm_13_to_32
+ #ifndef __clang__
+-.type __asm_13_to_32, %function
++.type PQCLEAN_NAMESPACE_asm_13_to_32, %function
+ #endif
+-__asm_13_to_32:
+-___asm_13_to_32:
++PQCLEAN_NAMESPACE_asm_13_to_32:
++_PQCLEAN_NAMESPACE_asm_13_to_32:
+ 
+     mov x7, #8
+     _13_to_32_loop:
+@@ -316,13 +316,13 @@
+ 
+ 
+ .align 2
+-.global __asm_16_to_32
+-.global ___asm_16_to_32
++.global PQCLEAN_NAMESPACE_asm_16_to_32
++.global _PQCLEAN_NAMESPACE_asm_16_to_32
+ #ifndef __clang__
+-.type __asm_16_to_32, %function
++.type PQCLEAN_NAMESPACE_asm_16_to_32, %function
+ #endif
+-__asm_16_to_32:
+-___asm_16_to_32:
++PQCLEAN_NAMESPACE_asm_16_to_32:
++_PQCLEAN_NAMESPACE_asm_16_to_32:
+ 
+     mov x7, #128
+     _sbfx_loop:
+

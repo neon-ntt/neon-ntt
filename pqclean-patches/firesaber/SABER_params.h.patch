@@ -1,0 +1,47 @@
+--- work/firesaber/scheme/SABER_params.h
++++ work-patched/firesaber/scheme/SABER_params.h
+@@ -1,30 +1,26 @@
++#ifndef PARAMS_H
++#define PARAMS_H
+ /*=============================================================================
+-This file has been adapted from the implementation 
+-(available at, Public Domain https://github.com/KULeuven-COSIC/SABER) 
++This file has been adapted from the implementation
++(available at, Public Domain https://github.com/KULeuven-COSIC/SABER)
+ of "Saber: Module-LWR based key exchange, CPA-secure encryption and CCA-secure KEM"
+ by : Jan-Pieter D'Anvers, Angshuman Karmakar, Sujoy Sinha Roy, and Frederik Vercauteren
+-Jose Maria Bermudo Mera, Michiel Van Beirendonck, Andrea Basso. 
++Jose Maria Bermudo Mera, Michiel Van Beirendonck, Andrea Basso.
+ =============================================================================*/
+-#ifndef PARAMS_H
+-#define PARAMS_H
+ 
+-/* Change this for different security strengths */
+-#ifndef SABER_L
+-// #define SABER_L 2 /* LightSaber */
+-// #define SABER_L 3 /* Saber */
+-#define SABER_L 4 /* FireSaber */
+-#endif 
++#define SABER_NAMESPACE(s) PQCLEAN_FIRESABER_AARCH64_##s
++#define SABER_L 4
+ 
+ /* Don't change anything below this line */
+ #if SABER_L == 2
+-	#define SABER_MU 10
+-	#define SABER_ET 3
++#define SABER_MU 10
++#define SABER_ET 3
+ #elif SABER_L == 3
+-	#define SABER_MU 8
+-	#define SABER_ET 4
++#define SABER_MU 8
++#define SABER_ET 4
+ #elif SABER_L == 4
+-	#define SABER_MU 6
+-	#define SABER_ET 6
++#define SABER_MU 6
++#define SABER_ET 6
+ #endif
+ 
+ #define SABER_EQ 13
+
