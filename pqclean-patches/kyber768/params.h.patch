@@ -1,0 +1,12 @@
+--- work/kyber768/scheme/params.h
++++ work-patched/kyber768/scheme/params.h
+@@ -1,7 +1,7 @@
+ #ifndef PARAMS_H
+ #define PARAMS_H
+ 
+-#define KYBER_NAMESPACE(s) CRYPTO_NAMESPACE(s)
++#define KYBER_NAMESPACE(s) PQCLEAN_KYBER768_AARCH64_##s
+ 
+ 
+ #define KYBER_N 256
+

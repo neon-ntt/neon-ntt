@@ -1,0 +1,59 @@
+#!/bin/bash
+BASE=`dirname $0`
+BASE=`cd ${BASE} && pwd`
+WORK=work
+WORKPATCHED=work-patched
+
+rm -rf ${WORK} ${WORKPATCHED}
+mkdir -p ${WORK} ${WORKPATCHED}
+
+# patch implementations
+for scheme in {kyber512,kyber768,kyber1024}
+do
+    cp -rL ${scheme} ${WORK}
+
+    # delete non scheme files
+    rm -rf ${WORK}/${scheme}/ntt ${WORK}/${scheme}/microbenchmarks
+
+    # delete fips202.[ch]
+    rm ${WORK}/${scheme}/scheme/fips202.[ch]
+
+    # mv .i to .inc
+    mv $WORK/${scheme}/scheme/macros.i $WORK/${scheme}/scheme/macros.inc
+    mv $WORK/${scheme}/scheme/macros_common.i $WORK/${scheme}/scheme/macros_common.inc
+
+    # copy to work-patched
+    cp -r $WORK/${scheme} ${WORKPATCHED}
+
+    # apply patches
+    cd ${WORKPATCHED}
+    for X in ${BASE}/pqclean-patches/${scheme}/*
+    do
+        patch -s -p1 < ${X}
+    done
+    cd ..
+done
+
+# process and copy to PQClean
+cd ${WORKPATCHED}
+for k in {2,3,4}; do
+    ka=$((k*256));
+    if [ $k -eq 2 ]
+    then
+        eta1=3
+    else
+        eta1=2
+    fi
+    if [ $k -eq 4 ]
+    then
+        polycomp=160
+        polyvec=$((k*352))
+    else
+        polycomp=128
+        polyvec=$((k*320))
+    fi
+    cp -rL kyber$ka/scheme/* ~/git/PQClean/crypto_kem/kyber$ka/aarch64/
+    unifdef -m -DKYBER_K=$k -U KYBER_90S -DKYBER_POLYVECCOMPRESSEDBYTES=$polyvec -UPROFILE_HASHING -DKYBER_ETA1=$eta1 -DKYBER_ETA2=2 -DKYBER_POLYCOMPRESSEDBYTES=$polycomp -DKYBER_N=256 -DKYBER_INDCPA_MSGBYTES=32 ~/git/PQClean/crypto_kem/kyber$ka/aarch64/*.[ch]
+    namespc="s/PQCLEAN_NAMESPACE/PQCLEAN_KYBER${ka}_AARCH64/g"
+    sed -i $namespc ~/git/PQClean/crypto_kem/kyber$ka/aarch64/*.[chS]
+done

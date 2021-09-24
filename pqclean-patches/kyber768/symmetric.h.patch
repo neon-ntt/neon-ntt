@@ -1,0 +1,31 @@
+--- work/kyber768/scheme/symmetric.h
++++ work-patched/kyber768/scheme/symmetric.h
+@@ -1,9 +1,9 @@
+ #ifndef SYMMETRIC_H
+ #define SYMMETRIC_H
+ 
++#include "params.h"
+ #include <stddef.h>
+ #include <stdint.h>
+-#include "params.h"
+ 
+ #ifdef KYBER_90S
+ 
+@@ -77,13 +77,13 @@
+ #define XOF_BLOCKBYTES SHAKE128_RATE
+ 
+ #define neon_prf(OUT1, OUT2, OUTBYTES, KEY, NONCE1, NONCE2) \
+-        neon_kyber_shake256_prf(OUT1, OUT2, OUTBYTES, KEY, NONCE1, NONCE2);
++    neon_kyber_shake256_prf(OUT1, OUT2, OUTBYTES, KEY, NONCE1, NONCE2);
+ 
+ #define neon_xof_absorb(STATE, SEED, X1, X2, Y1, Y2)\
+-        neon_kyber_shake128_absorb(STATE, SEED, X1, X2, Y1, Y2)
++    neon_kyber_shake128_absorb(STATE, SEED, X1, X2, Y1, Y2)
+ 
+ #define neon_xof_squeezeblocks(OUT0, OUT1, OUTBLOCKS, STATE) \
+-        shake128x2_squeezeblocks(OUT0, OUT1, OUTBLOCKS, STATE)
++    shake128x2_squeezeblocks(OUT0, OUT1, OUTBLOCKS, STATE)
+ 
+ #endif /* KYBER_90S */
+ 
+
