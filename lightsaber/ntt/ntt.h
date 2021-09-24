@@ -1,1 +1,0 @@
-../../saber/ntt/ntt.h

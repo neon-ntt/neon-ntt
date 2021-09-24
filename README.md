@@ -16,3 +16,52 @@ For each of the schemes, we provide three folders:
 - `ntt`: Code for the core polynomial arithmetic. 
 - `microbenchmarks`: Standalone code for benchmarking individual functions; `make` will produce a benchmarking binary (when executed on an A72).
 - `scheme`: Contains the entire code for the scheme; ready to be placed in supercop. 
+
+```
+.
+├── LICENSE
+├── README.md
+├── dilithium2
+│   ├── checksumbig
+│   ├── checksumsmall
+│   ├── microbenchmarks
+│   ├── ntt
+│   └── scheme
+├── dilithium3
+│   ├── checksumbig
+│   ├── checksumsmall
+│   ├── microbenchmarks
+│   ├── ntt
+│   └── scheme
+├── dilithium5
+│   ├── checksumbig
+│   ├── checksumsmall
+│   ├── microbenchmarks
+│   ├── ntt
+│   └── scheme
+├── firesaber
+│   ├── microbenchmarks
+│   ├── ntt
+│   └── scheme
+├── kyber1024
+│   ├── microbenchmarks
+│   ├── ntt
+│   └── scheme
+├── kyber512
+│   ├── microbenchmarks
+│   ├── ntt
+│   └── scheme
+├── kyber768
+│   ├── microbenchmarks
+│   ├── ntt
+│   └── scheme
+├── lightsaber
+│   ├── microbenchmarks
+│   ├── ntt
+│   └── scheme
+└── saber
+    ├── microbenchmarks
+    ├── ntt
+    └── scheme
+```
+
