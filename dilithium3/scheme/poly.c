@@ -395,54 +395,24 @@ void poly_uniform(poly *a,
 void poly_uniformx2(poly *a0, poly *a1,
         const uint8_t seed[SEEDBYTES],
         uint16_t nonce0, uint16_t nonce1) {
-
-    unsigned int i, ctr, off;
+    unsigned int ctr0, ctr1;
     unsigned int buflen = POLY_UNIFORM_NBLOCKS * STREAM128_BLOCKBYTES;
     uint8_t buf0[POLY_UNIFORM_NBLOCKS * STREAM128_BLOCKBYTES + 2];
     uint8_t buf1[POLY_UNIFORM_NBLOCKS * STREAM128_BLOCKBYTES + 2];
 
-    stream128_state state0;
-    stream128_state state1;
-
     keccakx2_state statex2;
-
-    stream128_init(&state0, seed, nonce0);
-    stream128_init(&state1, seed, nonce1);
-
-    __asm_state_interleave((void*)&statex2, (void*)&state0, (void*)&state1);
-
+    dilithium_shake128x2_stream_init(&statex2, seed, nonce0, nonce1);
     shake128x2_squeezeblocks(buf0, buf1, POLY_UNIFORM_NBLOCKS, &statex2);
 
-    __asm_state_deinterleave((void*)&state0, (void*)&state1, (void*)&statex2);
+    ctr0 = rej_uniform(a0->coeffs, N, buf0, buflen);
+    ctr1 = rej_uniform(a1->coeffs, N, buf1, buflen);
 
-    ctr = rej_uniform(a0->coeffs, N, buf0, buflen);
-
-    while (ctr < N) {
-        off = buflen % 3;
-        for (i = 0; i < off; ++i) {
-            buf0[i] = buf0[buflen - off + i];
-        }
-
-        stream128_squeezeblocks(buf0 + off, 1, &state0);
-        buflen = STREAM128_BLOCKBYTES + off;
-        ctr += rej_uniform(a0->coeffs + ctr, N - ctr, buf0, buflen);
+    while (ctr0 < N || ctr1 < N) {
+        shake128x2_squeezeblocks(buf0, buf1, 1, &statex2);
+        ctr0 += rej_uniform(a0->coeffs + ctr0, N - ctr0, buf0, buflen);
+        ctr1 += rej_uniform(a1->coeffs + ctr1, N - ctr1, buf1, buflen);
     }
-    stream128_release(&state0);
 
-
-    ctr = rej_uniform(a1->coeffs, N, buf1, buflen);
-
-    while (ctr < N) {
-        off = buflen % 3;
-        for (i = 0; i < off; ++i) {
-            buf1[i] = buf1[buflen - off + i];
-        }
-
-        stream128_squeezeblocks(buf1 + off, 1, &state1);
-        buflen = STREAM128_BLOCKBYTES + off;
-        ctr += rej_uniform(a1->coeffs + ctr, N - ctr, buf1, buflen);
-    }
-    stream128_release(&state1);
 
 }
 
@@ -545,44 +515,25 @@ void poly_uniform_eta(poly *a,
 void poly_uniform_etax2(poly *a0, poly *a1,
         const uint8_t seed[CRHBYTES],
         uint16_t nonce0, uint16_t nonce1) {
-    unsigned int ctr;
+    unsigned int ctr0, ctr1;
     unsigned int buflen = POLY_UNIFORM_ETA_NBLOCKS * STREAM256_BLOCKBYTES;
 
     uint8_t buf0[POLY_UNIFORM_ETA_NBLOCKS * STREAM256_BLOCKBYTES];
     uint8_t buf1[POLY_UNIFORM_ETA_NBLOCKS * STREAM256_BLOCKBYTES];
 
-    stream256_state state0;
-    stream256_state state1;
-
     keccakx2_state statex2;
 
-
-    stream256_init(&state0, seed, nonce0);
-    stream256_init(&state1, seed, nonce1);
-
-    __asm_state_interleave((void*)&statex2, (void*)&state0, (void*)&state1);
-
+    dilithium_shake256x2_stream_init(&statex2, seed, nonce0, nonce1);
     shake256x2_squeezeblocks(buf0, buf1, POLY_UNIFORM_ETA_NBLOCKS, &statex2);
 
-    __asm_state_deinterleave((void*)&state0, (void*)&state1, (void*)&statex2);
+    ctr0 = rej_eta(a0->coeffs, N, buf0, buflen);
+    ctr1 = rej_eta(a1->coeffs, N, buf1, buflen);
 
-    ctr = rej_eta(a0->coeffs, N, buf0, buflen);
-
-    while (ctr < N) {
-        stream256_squeezeblocks(buf0, 1, &state0);
-        ctr += rej_eta(a0->coeffs + ctr, N - ctr, buf0, STREAM256_BLOCKBYTES);
+    while (ctr0 < N || ctr1 < N) {
+        shake256x2_squeezeblocks(buf0, buf1, 1, &statex2);
+        ctr0 += rej_eta(a0->coeffs + ctr0, N - ctr0, buf0, STREAM256_BLOCKBYTES);
+        ctr1 += rej_eta(a1->coeffs + ctr1, N - ctr1, buf1, STREAM256_BLOCKBYTES);
     }
-    stream256_release(&state0);
-
-    ctr = rej_eta(a1->coeffs, N, buf1, buflen);
-
-    while (ctr < N) {
-        stream256_squeezeblocks(buf1, 1, &state1);
-        ctr += rej_eta(a1->coeffs + ctr, N - ctr, buf1, STREAM256_BLOCKBYTES);
-    }
-    stream256_release(&state1);
-
-
 }
 
 /*************************************************
@@ -616,20 +567,10 @@ void poly_uniform_gamma1x2(poly *a0, poly *a1,
     uint8_t buf0[POLY_UNIFORM_GAMMA1_NBLOCKS * STREAM256_BLOCKBYTES];
     uint8_t buf1[POLY_UNIFORM_GAMMA1_NBLOCKS * STREAM256_BLOCKBYTES];
 
-    stream256_state state0;
-    stream256_state state1;
-
     keccakx2_state statex2;
 
-    stream256_init(&state0, seed, nonce0);
-    stream256_init(&state1, seed, nonce1);
-
-    __asm_state_interleave(&statex2, &state0, &state1);
-
+    dilithium_shake256x2_stream_init(&statex2, seed, nonce0, nonce1);
     shake256x2_squeezeblocks(buf0, buf1, POLY_UNIFORM_GAMMA1_NBLOCKS, &statex2);
-
-    stream256_release(&state0);
-    stream256_release(&state1);
 
     polyz_unpack(a0, buf0);
     polyz_unpack(a1, buf1);

@@ -1,6 +1,7 @@
 #ifndef SYMMETRIC_H
 #define SYMMETRIC_H
 #include "fips202.h"
+#include "fips202x2.h"
 #include "params.h"
 #include <stdint.h>
 
@@ -15,6 +16,15 @@ void dilithium_shake128_stream_init(shake128incctx *state,
 void dilithium_shake256_stream_init(shake256incctx *state,
         const uint8_t seed[CRHBYTES],
         uint16_t nonce);
+
+void dilithium_shake128x2_stream_init(keccakx2_state *state,
+                                const uint8_t seed[CRHBYTES],
+                                uint16_t nonce1, uint16_t nonce2);
+
+void dilithium_shake256x2_stream_init(keccakx2_state *state,
+                                const uint8_t seed[CRHBYTES],
+                                uint16_t nonce1, uint16_t nonce2);
+
 
 #define STREAM128_BLOCKBYTES SHAKE128_RATE
 #define STREAM256_BLOCKBYTES SHAKE256_RATE
