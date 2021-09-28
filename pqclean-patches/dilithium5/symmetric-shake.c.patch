@@ -1,0 +1,24 @@
+--- work/dilithium5/scheme/symmetric-shake.c
++++ work-patched/dilithium5/scheme/symmetric-shake.c
+@@ -26,8 +26,8 @@
+ }
+ 
+ void dilithium_shake128x2_stream_init(keccakx2_state *state,
+-                                const uint8_t seed[SEEDBYTES],
+-                                uint16_t nonce1, uint16_t nonce2) {
++                                      const uint8_t seed[SEEDBYTES],
++                                      uint16_t nonce1, uint16_t nonce2) {
+     unsigned int i;
+     uint8_t extseed1[SEEDBYTES + 2 + 14];
+     uint8_t extseed2[SEEDBYTES + 2 + 14];
+@@ -46,8 +46,8 @@
+ }
+ 
+ void dilithium_shake256x2_stream_init(keccakx2_state *state,
+-                                const uint8_t seed[CRHBYTES],
+-                                uint16_t nonce1, uint16_t nonce2) {
++                                      const uint8_t seed[CRHBYTES],
++                                      uint16_t nonce1, uint16_t nonce2) {
+     unsigned int i;
+     uint8_t extseed1[CRHBYTES + 2 + 14];
+     uint8_t extseed2[CRHBYTES + 2 + 14];

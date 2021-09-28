@@ -8,7 +8,7 @@ rm -rf ${WORK} ${WORKPATCHED}
 mkdir -p ${WORK} ${WORKPATCHED}
 
 # patch implementations
-for scheme in {kyber512,kyber768,kyber1024,saber,lightsaber,firesaber}
+for scheme in {kyber512,kyber768,kyber1024,saber,lightsaber,firesaber,dilithium2,dilithium3,dilithium5}
 do
     cp -rL ${scheme} ${WORK}
 
@@ -17,6 +17,9 @@ do
 
     # delete fips202.[ch]
     rm ${WORK}/${scheme}/scheme/fips202.[ch]
+
+    # delete checksum files for dilithium
+    rm -f ${WORK}/${scheme}/checksum*
 
     # mv .i to .inc
     mv $WORK/${scheme}/scheme/macros.i $WORK/${scheme}/scheme/macros.inc
@@ -84,4 +87,34 @@ for k in {2,3,4}; do
     unifdef -m -DSABER_L=$k -DSABER_MU=$mu -DSABER_ET=$et -U__ARM_ARCH_8_3__ -UPROFILE_HASHING ~/git/PQClean/crypto_kem/${scheme}/aarch64/*.[ch]
     namespc="s/PQCLEAN_NAMESPACE/PQCLEAN_${scheme^^}_AARCH64/g"
     sed -i $namespc ~/git/PQClean/crypto_kem/${scheme}/aarch64/*.[chS]
+done
+
+#dilithium
+for k in {2,3,5}; do
+    if [ $k -eq 2 ]
+    then
+        gamma2=95232
+        gamma1=131072
+    else
+        gamma2=261888
+        gamma1=524288
+    fi
+    if [ $k -eq 2 ]
+    then
+        eta=2
+    fi
+    if [ $k -eq 3 ]
+    then
+        eta=4
+    fi
+    if [ $k -eq 5 ]
+    then
+        eta=2
+    fi
+
+    scheme=dilithium$k
+    cp -rL ${scheme}/scheme/* ~/git/PQClean/crypto_sign/${scheme}/aarch64
+    unifdef -m -DDILITHIUM_Q=8380417 -DDILITHIUM_MODE=$k -DGAMMA1=$gamma1 -DGAMMA2=$gamma2 -DETA=$eta -UPROFILE_HASHING ~/git/PQClean/crypto_sign/${scheme}/aarch64/*.[ch]
+    namespc="s/PQCLEAN_NAMESPACE/PQCLEAN_${scheme^^}_AARCH64/g"
+    sed -i $namespc ~/git/PQClean/crypto_sign/${scheme}/aarch64/*.[chS]
 done
