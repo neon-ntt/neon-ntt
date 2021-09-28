@@ -1,1 +1,0 @@
-../../dilithium3/ntt/__asm_keccakx2_aux.S

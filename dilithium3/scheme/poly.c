@@ -361,10 +361,6 @@ static unsigned int rej_uniform(int32_t *a,
 *              - uint16_t nonce: 2-byte nonce
 **************************************************/
 
-extern void __asm_state_interleave(
-		void *statex2, void *state0, void *state1);
-extern void __asm_state_deinterleave(
-		void *state0, void *state1, void *statex2);
 #define POLY_UNIFORM_NBLOCKS ((768 + STREAM128_BLOCKBYTES - 1)/STREAM128_BLOCKBYTES)
 void poly_uniform(poly *a,
         const uint8_t seed[SEEDBYTES],
