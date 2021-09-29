@@ -8,13 +8,13 @@ Authors:
  - [Bo-Yin Yang](https://homepage.iis.sinica.edu.tw/pages/byyang/) `<by@crypto.tw>` 
  - Shang-Yi Yang `<nick.yang@chelpis.com>`
 
-It contains our source code for Dilithium (`dilithium3`), Kyber (`kyber768`), and Saber (`saber`) optimized for Cortex-A72. 
+It contains our source code for Dilithium, Kyber, and Saber optimized for Cortex-A72. 
 
 # Benchmarking 
 
 For each of the schemes, we provide three folders: 
 - `ntt`: Code for the core polynomial arithmetic. 
-- `microbenchmarks`: Standalone code for benchmarking individual functions; `make` will produce a benchmarking binary (when executed on an A72).
+- `microbenchmarks`: Standalone code for benchmarking individual functions; `make` will produce a benchmarking binary (when executed on an A72). For running benchmarks, user space access to the PMU cycle count register needs to be enabled. A kernel module which enabled it, can, for example, be found in [pqax](https://github.com/mupq/pqax#enable-access-to-performance-counters).
 - `scheme`: Contains the entire code for the scheme; ready to be placed in supercop. 
 
 ```
@@ -64,4 +64,8 @@ For each of the schemes, we provide three folders:
     ├── ntt
     └── scheme
 ```
+# Troubleshooting 
 
+## `Illegal instruction` when running benchmarks 
+
+Probably access to the PMU cycle counters from user space is not enabled. For enabling it, see https://github.com/mupq/pqax#enable-access-to-performance-counters. 
