@@ -14,7 +14,7 @@ It contains our source code for Dilithium, Kyber, and Saber optimized for Cortex
 
 For each of the schemes, we provide three folders: 
 - `ntt`: Code for the core polynomial arithmetic. 
-- `microbenchmarks`: Standalone code for benchmarking individual functions; `make` will produce a benchmarking binary (when executed on an A72). For running benchmarks, user space access to the PMU cycle count register needs to be enabled. A kernel module which enabled it, can, for example, be found in [pqax](https://github.com/mupq/pqax#enable-access-to-performance-counters).
+- `microbenchmarks`: Standalone code for benchmarking individual functions; `make` will produce a benchmarking binary (when executed on an A72). For running benchmarks, user space access to the PMU cycle count register needs to be enabled. A kernel module that enables it, can, for example, be found in [pqax](https://github.com/mupq/pqax#enable-access-to-performance-counters).
 - `scheme`: Contains the entire code for the scheme; ready to be placed in supercop. 
 
 ```
