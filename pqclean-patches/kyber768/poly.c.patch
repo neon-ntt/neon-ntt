@@ -18,7 +18,7 @@
  *                            (of length KYBER_POLYCOMPRESSEDBYTES)
  *              - const poly *a: pointer to input polynomial
  **************************************************/
--void poly_compress(uint8_t r[KYBER_POLYCOMPRESSEDBYTES], const int16_t *a)
+-void poly_compress(uint8_t r[KYBER_POLYCOMPRESSEDBYTES], const int16_t a[KYBER_N])
 -{
 -  unsigned int i,j;
 -  int16_t u;
@@ -56,7 +56,7 @@
 -    r += 5;
 -  }
 -#else
-+void poly_compress(uint8_t r[KYBER_POLYCOMPRESSEDBYTES], const int16_t *a) {
++void poly_compress(uint8_t r[KYBER_POLYCOMPRESSEDBYTES], const int16_t a[KYBER_N]) {
 +    unsigned int i, j;
 +    int16_t u;
 +    uint8_t t[8];
@@ -103,7 +103,7 @@
  *              - const uint8_t *a: pointer to input byte array
  *                                  (of length KYBER_POLYCOMPRESSEDBYTES bytes)
  **************************************************/
--void poly_decompress(int16_t *r, const uint8_t a[KYBER_POLYCOMPRESSEDBYTES])
+-void poly_decompress(int16_t r[KYBER_N], const uint8_t a[KYBER_POLYCOMPRESSEDBYTES])
 -{
 -  unsigned int i;
 -
@@ -131,7 +131,7 @@
 -      r[8*i+j] = ((uint32_t)(t[j] & 31)*KYBER_Q + 16) >> 5;
 -  }
 -#else
-+void poly_decompress(int16_t *r, const uint8_t a[KYBER_POLYCOMPRESSEDBYTES]) {
++void poly_decompress(int16_t r[KYBER_N], const uint8_t a[KYBER_POLYCOMPRESSEDBYTES]) {
 +    unsigned int i;
 +
 +    #if (KYBER_POLYCOMPRESSEDBYTES == 128)
@@ -169,7 +169,7 @@
  *                            (needs space for KYBER_POLYBYTES bytes)
  *              - const poly *a: pointer to input polynomial
  **************************************************/
--void poly_tobytes(uint8_t r[KYBER_POLYBYTES], const int16_t *a)
+-void poly_tobytes(uint8_t r[KYBER_POLYBYTES], const int16_t a[KYBER_N])
 -{
 -  unsigned int i;
 -  uint16_t t0, t1;
@@ -184,7 +184,7 @@
 -    r[3*i+1] = (t0 >> 8) | (t1 << 4);
 -    r[3*i+2] = (t1 >> 4);
 -  }
-+void poly_tobytes(uint8_t r[KYBER_POLYBYTES], const int16_t *a) {
++void poly_tobytes(uint8_t r[KYBER_POLYBYTES], const int16_t a[KYBER_N]) {
 +    unsigned int i;
 +    uint16_t t0, t1;
 +
@@ -205,7 +205,7 @@
  *              - const uint8_t *a: pointer to input byte array
  *                                  (of KYBER_POLYBYTES bytes)
  **************************************************/
--void poly_frombytes(int16_t *r, const uint8_t a[KYBER_POLYBYTES])
+-void poly_frombytes(int16_t r[KYBER_N], const uint8_t a[KYBER_POLYBYTES])
 -{
 -  uint8x16x3_t neon_buf;
 -  uint16x8x4_t tmp;
@@ -241,7 +241,7 @@
 -    vst1q_s16_x4(r + j, value);
 -    j += 32;
 -  }
-+void poly_frombytes(int16_t *r, const uint8_t a[KYBER_POLYBYTES]) {
++void poly_frombytes(int16_t r[KYBER_N], const uint8_t a[KYBER_POLYBYTES]) {
 +    uint8x16x3_t neon_buf;
 +    uint16x8x4_t tmp;
 +    int16x8x4_t value;
@@ -282,11 +282,11 @@
  * Arguments:   - poly *r: pointer to output polynomial
  *              - const uint8_t *msg: pointer to input message
  **************************************************/
--void poly_frommsg(int16_t *r, const uint8_t msg[KYBER_INDCPA_MSGBYTES])
+-void poly_frommsg(int16_t r[KYBER_N], const uint8_t msg[KYBER_INDCPA_MSGBYTES])
 -{
 -  unsigned int i,j;
 -  int16_t mask;
-+void poly_frommsg(int16_t *r, const uint8_t msg[KYBER_INDCPA_MSGBYTES]) {
++void poly_frommsg(int16_t r[KYBER_N], const uint8_t msg[KYBER_INDCPA_MSGBYTES]) {
 +    unsigned int i, j;
 +    int16_t mask;
  
@@ -314,7 +314,7 @@
  * Arguments:   - uint8_t *msg: pointer to output message
  *              - const poly *a: pointer to input polynomial
  **************************************************/
--void poly_tomsg(uint8_t msg[KYBER_INDCPA_MSGBYTES], const int16_t *a)
+-void poly_tomsg(uint8_t msg[KYBER_INDCPA_MSGBYTES], const int16_t a[KYBER_N])
 -{
 -  unsigned int i,j;
 -  uint16_t t;
@@ -326,7 +326,7 @@
 -      t += ((int16_t)t >> 15) & KYBER_Q;
 -      t  = (((t << 1) + KYBER_Q/2)/KYBER_Q) & 1;
 -      msg[i] |= t << j;
-+void poly_tomsg(uint8_t msg[KYBER_INDCPA_MSGBYTES], const int16_t *a) {
++void poly_tomsg(uint8_t msg[KYBER_INDCPA_MSGBYTES], const int16_t a[KYBER_N]) {
 +    unsigned int i, j;
 +    uint16_t t;
 +
