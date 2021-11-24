@@ -1,0 +1,1 @@
+../common/naive_mult.c

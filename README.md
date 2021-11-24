@@ -8,7 +8,7 @@ Authors:
  - [Bo-Yin Yang](https://homepage.iis.sinica.edu.tw/pages/byyang/) `<by@crypto.tw>` 
  - Shang-Yi Yang `<nick.yang@chelpis.com>`
 
-It contains our source code for Dilithium, Kyber, and Saber optimized for Cortex-A72. 
+It contains our source code for Dilithium, Kyber, and Saber optimized for Cortex-A72.
 
 # Benchmarking 
 
@@ -43,6 +43,13 @@ For each of the schemes, we provide three folders:
 │   ├── microbenchmarks
 │   ├── ntt
 │   └── scheme
+├── gen_table
+│   ├── Dilithium
+│   ├── Kyber
+│   ├── README.md
+│   ├── Saber
+│   ├── common -> multi-moduli-ntt-saber/gen_table/common/
+│   └── multi-moduli-ntt-saber
 ├── kyber1024
 │   ├── microbenchmarks
 │   ├── ntt
@@ -64,8 +71,10 @@ For each of the schemes, we provide three folders:
     ├── ntt
     └── scheme
 ```
-# Troubleshooting 
+# Troubleshooting
 
-## `Illegal instruction` when running benchmarks 
+## `Illegal instruction` when running benchmarks
 
-Probably access to the PMU cycle counters from user space is not enabled. For enabling it, see https://github.com/mupq/pqax#enable-access-to-performance-counters. 
+Probably access to the PMU cycle counters from user space is not enabled. For enabling it, see https://github.com/mupq/pqax#enable-access-to-performance-counters.
+
+
