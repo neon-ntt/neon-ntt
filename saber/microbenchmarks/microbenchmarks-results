@@ -1,7 +1,7 @@
-NTTs: 1538 cycles
-NTT_heavys: 2039
-asymmetric_muls: 2795 cycles
-iNTTs: 1886 cycles
-MatrixVectorMul: 35730 cycles
-InnerProd (Enc): 9284 cycles
-InnerProd (Dec): 15452 cycles
+NTTs (median of 10000 measurements): 1530 cycles
+NTT_heavy (median of 10000 measurements): 2031
+asymmetric_muls (dim x base_mul) (median of 10000 measurements): 2765 cycles
+iNTT (median of 10000 measurements): 1892 cycles
+MatrixVectorMul (median of 10000 measurements): 34286 cycles
+InnerProd (Enc) (median of 10000 measurements): 9236 cycles
+InnerProd (Dec) (median of 10000 measurements): 15518 cycles

@@ -1,7 +1,0 @@
-NTT cycles: 1200
-point_mul cycles: 234
-asymmetric_mul cycles: 721
-iNTT cycles: 1285
-MatrixVectorMul cycles: 6849
-InnerProd (Enc) cycles: 2000
-InnerProd (Dec) cycles: 4844
