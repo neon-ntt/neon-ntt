@@ -4,9 +4,6 @@
 .align 2
 .global __asm_ntt_SIMD_top
 .global ___asm_ntt_SIMD_top
-#ifndef __clang__
-.type __asm_ntt_SIMD_top, %function
-#endif
 __asm_ntt_SIMD_top:
 ___asm_ntt_SIMD_top:
 
@@ -185,9 +182,6 @@ ___asm_ntt_SIMD_top:
 .align 2
 .global __asm_ntt_SIMD_bot
 .global ___asm_ntt_SIMD_bot
-#ifndef __clang__
-.type __asm_ntt_SIMD_bot, %function
-#endif
 __asm_ntt_SIMD_bot:
 ___asm_ntt_SIMD_bot:
 

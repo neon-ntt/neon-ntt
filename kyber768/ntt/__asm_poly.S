@@ -4,9 +4,6 @@
 .align 2
 .global __asm_add_reduce
 .global ___asm_add_reduce
-#ifndef __clang__
-.type __asm_add_reduce, %function
-#endif
 __asm_add_reduce:
 ___asm_add_reduce:
 
@@ -68,9 +65,6 @@ ___asm_add_reduce:
 .align 2
 .global __asm_sub_reduce
 .global ___asm_sub_reduce
-#ifndef __clang__
-.type __asm_sub_reduce, %function
-#endif
 __asm_sub_reduce:
 ___asm_sub_reduce:
 
@@ -132,9 +126,6 @@ ___asm_sub_reduce:
 .align 2
 .global __asm_add_add_reduce
 .global ___asm_add_add_reduce
-#ifndef __clang__
-.type __asm_add_add_reduce, %function
-#endif
 __asm_add_add_reduce:
 ___asm_add_add_reduce:
 

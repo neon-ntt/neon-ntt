@@ -4,9 +4,6 @@
 .align 2
 .global __asm_round
 .global ___asm_round
-#ifndef __clang__
-.type __asm_round, %function
-#endif
 __asm_round:
 ___asm_round:
 
@@ -53,9 +50,6 @@ ___asm_round:
 .align 2
 .global __asm_enc_add_msg
 .global ___asm_enc_add_msg
-#ifndef __clang__
-.type __asm_enc_add_msg, %function
-#endif
 __asm_enc_add_msg:
 ___asm_enc_add_msg:
 
@@ -143,9 +137,6 @@ ___asm_enc_add_msg:
 .align 2
 .global __asm_dec_get_msg
 .global ___asm_dec_get_msg
-#ifndef __clang__
-.type __asm_dec_get_msg, %function
-#endif
 __asm_dec_get_msg:
 ___asm_dec_get_msg:
 

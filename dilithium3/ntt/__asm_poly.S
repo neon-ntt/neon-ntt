@@ -5,9 +5,6 @@
 .align 2
 .global __asm_10_to_32
 .global ___asm_10_to_32
-#ifndef __clang__
-.type __asm_10_to_32, %function
-#endif
 __asm_10_to_32:
 ___asm_10_to_32:
 
@@ -81,9 +78,6 @@ ___asm_10_to_32:
 .align 2
 .global __asm_poly_reduce
 .global ___asm_poly_reduce
-#ifndef __clang__
-.type __asm_poly_reduce, %function
-#endif
 __asm_poly_reduce:
 ___asm_poly_reduce:
 
@@ -177,9 +171,6 @@ ___asm_poly_reduce:
 .align 2
 .global __asm_poly_caddq
 .global ___asm_poly_caddq
-#ifndef __clang__
-.type __asm_poly_caddq, %function
-#endif
 __asm_poly_caddq:
 ___asm_poly_caddq:
 
@@ -273,9 +264,6 @@ ___asm_poly_caddq:
 .align 2
 .global __asm_poly_freeze
 .global ___asm_poly_freeze
-#ifndef __clang__
-.type __asm_poly_freeze, %function
-#endif
 __asm_poly_freeze:
 ___asm_poly_freeze:
 
@@ -405,9 +393,6 @@ ___asm_poly_freeze:
 .align 2
 .global __asm_poly_power2round
 .global ___asm_poly_power2round
-#ifndef __clang__
-.type __asm_poly_power2round, %function
-#endif
 __asm_poly_power2round:
 ___asm_poly_power2round:
 
@@ -554,9 +539,6 @@ ___asm_poly_power2round:
 .align 2
 .global __asm_poly_add
 .global ___asm_poly_add
-#ifndef __clang__
-.type __asm_poly_add, %function
-#endif
 __asm_poly_add:
 ___asm_poly_add:
 
@@ -606,9 +588,6 @@ ___asm_poly_add:
 .align 2
 .global __asm_poly_sub
 .global ___asm_poly_sub
-#ifndef __clang__
-.type __asm_poly_sub, %function
-#endif
 __asm_poly_sub:
 ___asm_poly_sub:
 
@@ -658,9 +637,6 @@ ___asm_poly_sub:
 .align 2
 .global __asm_poly_shiftl
 .global ___asm_poly_shiftl
-#ifndef __clang__
-.type __asm_poly_shiftl, %function
-#endif
 __asm_poly_shiftl:
 ___asm_poly_shiftl:
 
@@ -728,9 +704,6 @@ ___asm_poly_shiftl:
 .align 2
 .global __asm_poly_pointwise_montgomery
 .global ___asm_poly_pointwise_montgomery
-#ifndef __clang__
-.type __asm_poly_pointwise_montgomery, %function
-#endif
 __asm_poly_pointwise_montgomery:
 ___asm_poly_pointwise_montgomery:
 
@@ -850,9 +823,6 @@ ___asm_poly_pointwise_montgomery:
 .align 2
 .global __asm_polyvecl_pointwise_acc_montgomery
 .global ___asm_polyvecl_pointwise_acc_montgomery
-#ifndef __clang__
-.type __asm_polyvecl_pointwise_acc_montgomery, %function
-#endif
 __asm_polyvecl_pointwise_acc_montgomery:
 ___asm_polyvecl_pointwise_acc_montgomery:
 

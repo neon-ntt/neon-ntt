@@ -2,9 +2,6 @@
 .align 2
 .global __asm_1_to_16
 .global ___asm_1_to_16
-#ifndef __clang__
-.type __asm_1_to_16, %function
-#endif
 __asm_1_to_16:
 ___asm_1_to_16:
 
@@ -47,9 +44,6 @@ ___asm_1_to_16:
 .align 2
 .global __asm_4_to_16
 .global ___asm_4_to_16
-#ifndef __clang__
-.type __asm_4_to_16, %function
-#endif
 __asm_4_to_16:
 ___asm_4_to_16:
 
@@ -85,9 +79,6 @@ ___asm_4_to_16:
 .align 2
 .global __asm_10_to_32
 .global ___asm_10_to_32
-#ifndef __clang__
-.type __asm_10_to_32, %function
-#endif
 __asm_10_to_32:
 ___asm_10_to_32:
 
@@ -161,9 +152,6 @@ ___asm_10_to_32:
 .align 2
 .global __asm_13_to_32
 .global ___asm_13_to_32
-#ifndef __clang__
-.type __asm_13_to_32, %function
-#endif
 __asm_13_to_32:
 ___asm_13_to_32:
 
@@ -318,9 +306,6 @@ ___asm_13_to_32:
 .align 2
 .global __asm_16_to_32
 .global ___asm_16_to_32
-#ifndef __clang__
-.type __asm_16_to_32, %function
-#endif
 __asm_16_to_32:
 ___asm_16_to_32:
 

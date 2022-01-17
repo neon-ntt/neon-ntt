@@ -5,9 +5,6 @@
 .align 2
 .global __asm_asymmetric_mul
 .global ___asm_asymmetric_mul
-#ifndef __clang__
-.type __asm_asymmetric_mul, %function
-#endif
 __asm_asymmetric_mul:
 ___asm_asymmetric_mul:
 
@@ -94,9 +91,6 @@ ___asm_asymmetric_mul:
 .align 2
 .global __asm_point_mul_extended
 .global ___asm_point_mul_extended
-#ifndef __clang__
-.type __asm_point_mul_extended, %function
-#endif
 __asm_point_mul_extended:
 ___asm_point_mul_extended:
 
