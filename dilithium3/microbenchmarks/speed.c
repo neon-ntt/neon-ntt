@@ -12,7 +12,7 @@
 
 #define DILITHIUM_L L
 #define DILITHIUM_K K
-#define ITERATIONS 1000
+#define ITERATIONS 10000
 
 #define QINV 58728449
 
@@ -53,7 +53,7 @@ int main()
     }
 
     qsort(times, ITERATIONS, sizeof(uint64_t), cmp_uint64_t);
-    printf("NTTs: %ld cycles\n", times[ITERATIONS >> 1]);
+    printf("NTTs (median of %d measurements): %ld cycles\n", ITERATIONS, times[ITERATIONS >> 1]);
 
     for (int i = 0; i < ITERATIONS; i++)
     {
@@ -68,7 +68,7 @@ int main()
     }
 
     qsort(times, ITERATIONS, sizeof(uint64_t), cmp_uint64_t);
-    printf("polyvecl_pointwise_acc_montgomerys: %ld cycles\n", times[ITERATIONS >> 1]);
+    printf("polyvecl_pointwise_acc_montgomerys (median of %d measurements): %ld cycles\n", ITERATIONS, times[ITERATIONS >> 1]);
 
     for (int i = 0; i < ITERATIONS; i++)
     {
@@ -83,7 +83,7 @@ int main()
     }
 
     qsort(times, ITERATIONS, sizeof(uint64_t), cmp_uint64_t);
-    printf("iNTTs: %ld cycles\n", times[ITERATIONS >> 1]);
+    printf("iNTTs (median of %d measurements): %ld cycles\n", ITERATIONS, times[ITERATIONS >> 1]);
 
     for (int i = 0; i < ITERATIONS; i++)
     {
@@ -111,5 +111,5 @@ int main()
     }
 
     qsort(times, ITERATIONS, sizeof(uint64_t), cmp_uint64_t);
-    printf("MatrixVectorMul: %ld cycles\n", times[ITERATIONS >> 1]);
+    printf("MatrixVectorMul (median of %d measurements): %ld cycles\n", ITERATIONS, times[ITERATIONS >> 1]);
 }

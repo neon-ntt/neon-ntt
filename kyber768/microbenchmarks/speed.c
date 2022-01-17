@@ -10,7 +10,7 @@
 #include "params.h"
 #include "NTT_params.h"
 
-#define ITERATIONS 1000
+#define ITERATIONS 10000
 uint64_t t0, t1;
 uint64_t times[ITERATIONS];
 
@@ -44,7 +44,7 @@ int main()
     }
 
     qsort(times, ITERATIONS, sizeof(uint64_t), cmp_uint64_t);
-    printf("NTT cycles: %ld\n", times[ITERATIONS >> 1]);
+    printf("NTT cycles (median of %d measurements): %ld\n", ITERATIONS, times[ITERATIONS >> 1]);
 
     for (int i = 0; i < ITERATIONS; i++)
     {
@@ -59,7 +59,7 @@ int main()
     }
 
     qsort(times, ITERATIONS, sizeof(uint64_t), cmp_uint64_t);
-    printf("point_mul cycles: %ld\n", times[ITERATIONS >> 1]);
+    printf("point_mul cycles (median of %d measurements): %ld\n", ITERATIONS, times[ITERATIONS >> 1]);
 
     for (int i = 0; i < ITERATIONS; i++)
     {
@@ -74,7 +74,7 @@ int main()
     }
 
     qsort(times, ITERATIONS, sizeof(uint64_t), cmp_uint64_t);
-    printf("asymmetric_mul cycles: %ld\n", times[ITERATIONS >> 1]);
+    printf("asymmetric_mul cycles (median of %d measurements): %ld\n", ITERATIONS, times[ITERATIONS >> 1]);
 
     for (int i = 0; i < ITERATIONS; i++)
     {
@@ -89,7 +89,7 @@ int main()
     }
 
     qsort(times, ITERATIONS, sizeof(uint64_t), cmp_uint64_t);
-    printf("iNTT cycles: %ld\n", times[ITERATIONS >> 1]);
+    printf("iNTT cycles (median of %d measurements): %ld\n", ITERATIONS, times[ITERATIONS >> 1]);
 
     for (int i = 0; i < ITERATIONS; i++)
     {
@@ -118,7 +118,7 @@ int main()
     }
 
     qsort(times, ITERATIONS, sizeof(uint64_t), cmp_uint64_t);
-    printf("MatrixVectorMul cycles: %ld\n", times[ITERATIONS >> 1]);
+    printf("MatrixVectorMul cycles (median of %d measurements): %ld\n", ITERATIONS, times[ITERATIONS >> 1]);
 
     for (int i = 0; i < ITERATIONS; i++)
     {
@@ -135,7 +135,7 @@ int main()
     }
 
     qsort(times, ITERATIONS, sizeof(uint64_t), cmp_uint64_t);
-    printf("InnerProd (Enc) cycles: %ld\n", times[ITERATIONS >> 1]);
+    printf("InnerProd (Enc) cycles (median of %d measurements): %ld\n", ITERATIONS, times[ITERATIONS >> 1]);
 
     for (int i = 0; i < ITERATIONS; i++)
     {
@@ -158,5 +158,5 @@ int main()
     }
 
     qsort(times, ITERATIONS, sizeof(uint64_t), cmp_uint64_t);
-    printf("InnerProd (Dec) cycles: %ld\n", times[ITERATIONS >> 1]);
+    printf("InnerProd (Dec) cycles (median of %d measurements): %ld\n", ITERATIONS, times[ITERATIONS >> 1]);
 }
