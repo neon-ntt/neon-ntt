@@ -1,0 +1,10 @@
+crypto_kem_keypair: 33014
+crypto_kem_enc: 48942
+crypto_kem_dec: 44029
+MatrixVectorMul: 3247
+InnerProd (Enc): 509
+InnerProd (Dec): 1536
+NTT: 263
+NTT_heavy: 299
+asymmetric_mul: 247
+iNTT: 262

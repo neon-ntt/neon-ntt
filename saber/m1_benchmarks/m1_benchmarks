@@ -1,0 +1,14 @@
+crypto_kem_keypair: 32847
+crypto_kem_enc: 44906
+crypto_kem_dec: 44023
+shake128x2 matrix: 11367
+shake128x2 secret: 2513
+shake128 matrix: 16682
+shake128 secret: 4047
+MatrixVectorMul: 7478
+InnerProd(Enc): 2082
+InnerProd(Dec): 3313
+NTT: 301
+NTT_heavy: 411
+asymmetric_mul: 790
+iNTT: 390
