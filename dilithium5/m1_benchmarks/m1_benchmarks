@@ -1,0 +1,7 @@
+crypto_sign_keypair: 178157
+crypto_sign: 427260
+crypto_sign_open: 167688
+MatrixVectorMul: 11352
+NTT: 478
+long base_mul acc: 366
+iNTT: 582
