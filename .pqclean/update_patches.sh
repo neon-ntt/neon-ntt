@@ -1,7 +1,6 @@
 #!/bin/bash
 BASE=`dirname $0`
 BASE=`cd ${BASE} && pwd`
-cd ${BASE}
 
 PATCHES=${BASE}/pqclean-patches
 WORK=work
@@ -9,7 +8,7 @@ WORKPATCHED=work-patched
 
 if [ ! -e "${WORK}" ]
 then
-  echo "${BASE}/${WORK} not found"
+  echo "${WORK} not found"
   exit
 fi
 
@@ -18,16 +17,16 @@ mkdir -p ${PATCHES}/tmp/
 for scheme in {kyber512,kyber768,kyber1024,lightsaber,saber,firesaber,dilithium2,dilithium3,dilithium5}
 do
   echo $scheme;
-  V1=${WORK}/${scheme}
+  V1=${WORK}/${scheme}/scheme/
   if [ ! -e "${V1}" ]
   then
-    echo "${BASE}/${V1} not found"
+    echo "${V1} not found"
     exit
   fi
-  V2=${WORKPATCHED}/${scheme}
+  V2=${WORKPATCHED}/${scheme}/scheme
   if [ ! -e "${V2}" ]
   then
-    echo "${BASE}/${V2} not found"
+    echo "${V2} not found"
     exit
   fi
   mkdir -p ${PATCHES}/tmp/${scheme}

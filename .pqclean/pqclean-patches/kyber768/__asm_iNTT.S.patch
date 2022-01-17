@@ -1,42 +1,24 @@
 --- work/kyber768/scheme/__asm_iNTT.S
 +++ work-patched/kyber768/scheme/__asm_iNTT.S
-@@ -1,14 +1,14 @@
- 
--#include "macros.i"
-+#include "macros.inc"
- 
+@@ -4,8 +4,8 @@
  .align 2
--.global __asm_intt_SIMD_bot
--.global ___asm_intt_SIMD_bot
-+.global PQCLEAN_NAMESPACE_asm_intt_SIMD_bot
-+.global _PQCLEAN_NAMESPACE_asm_intt_SIMD_bot
- #ifndef __clang__
--.type __asm_intt_SIMD_bot, %function
-+.type PQCLEAN_NAMESPACE_asm_intt_SIMD_bot, %function
- #endif
+ .global __asm_intt_SIMD_bot
+ .global ___asm_intt_SIMD_bot
 -__asm_intt_SIMD_bot:
 -___asm_intt_SIMD_bot:
-+PQCLEAN_NAMESPACE_asm_intt_SIMD_bot:
-+_PQCLEAN_NAMESPACE_asm_intt_SIMD_bot:
++PQCLEAN_NAMESPACE__asm_intt_SIMD_bot:
++_PQCLEAN_NAMESPACE__asm_intt_SIMD_bot:
  
      push_all
      Q         .req w20
-@@ -88,13 +88,13 @@
-     br lr
- 
+@@ -87,8 +87,8 @@
  .align 2
--.global __asm_intt_SIMD_top
--.global ___asm_intt_SIMD_top
-+.global PQCLEAN_NAMESPACE_asm_intt_SIMD_top
-+.global _PQCLEAN_NAMESPACE_asm_intt_SIMD_top
- #ifndef __clang__
--.type __asm_intt_SIMD_top, %function
-+.type PQCLEAN_NAMESPACE_asm_intt_SIMD_top, %function
- #endif
+ .global __asm_intt_SIMD_top
+ .global ___asm_intt_SIMD_top
 -__asm_intt_SIMD_top:
 -___asm_intt_SIMD_top:
-+PQCLEAN_NAMESPACE_asm_intt_SIMD_top:
-+_PQCLEAN_NAMESPACE_asm_intt_SIMD_top:
++PQCLEAN_NAMESPACE__asm_intt_SIMD_top:
++_PQCLEAN_NAMESPACE__asm_intt_SIMD_top:
  
      push_all
      Q         .req w20

@@ -1,195 +1,112 @@
 --- work/dilithium2/scheme/__asm_poly.S
 +++ work-patched/dilithium2/scheme/__asm_poly.S
-@@ -1,15 +1,15 @@
- 
--#include "macros.i"
-+#include "macros.inc"
- #include "params.h"
- 
+@@ -5,8 +5,8 @@
  .align 2
--.global __asm_10_to_32
--.global ___asm_10_to_32
-+.global PQCLEAN_NAMESPACE_asm_10_to_32
-+.global _PQCLEAN_NAMESPACE_asm_10_to_32
- #ifndef __clang__
--.type __asm_10_to_32, %function
-+.type PQCLEAN_NAMESPACE_asm_10_to_32, %function
- #endif
+ .global __asm_10_to_32
+ .global ___asm_10_to_32
 -__asm_10_to_32:
 -___asm_10_to_32:
-+PQCLEAN_NAMESPACE_asm_10_to_32:
-+_PQCLEAN_NAMESPACE_asm_10_to_32:
++PQCLEAN_NAMESPACE__asm_10_to_32:
++_PQCLEAN_NAMESPACE__asm_10_to_32:
  
      mov x7, #16
      _10_to_32_loop:
-@@ -79,13 +79,13 @@
-     br lr
- 
+@@ -78,8 +78,8 @@
  .align 2
--.global __asm_poly_reduce
--.global ___asm_poly_reduce
-+.global PQCLEAN_NAMESPACE_asm_poly_reduce
-+.global _PQCLEAN_NAMESPACE_asm_poly_reduce
- #ifndef __clang__
--.type __asm_poly_reduce, %function
-+.type PQCLEAN_NAMESPACE_asm_poly_reduce, %function
- #endif
+ .global __asm_poly_reduce
+ .global ___asm_poly_reduce
 -__asm_poly_reduce:
 -___asm_poly_reduce:
-+PQCLEAN_NAMESPACE_asm_poly_reduce:
-+_PQCLEAN_NAMESPACE_asm_poly_reduce:
++PQCLEAN_NAMESPACE__asm_poly_reduce:
++_PQCLEAN_NAMESPACE__asm_poly_reduce:
  
      ldr w4, [x1]
  
-@@ -175,13 +175,13 @@
-     br lr
- 
+@@ -171,8 +171,8 @@
  .align 2
--.global __asm_poly_caddq
--.global ___asm_poly_caddq
-+.global PQCLEAN_NAMESPACE_asm_poly_caddq
-+.global _PQCLEAN_NAMESPACE_asm_poly_caddq
- #ifndef __clang__
--.type __asm_poly_caddq, %function
-+.type PQCLEAN_NAMESPACE_asm_poly_caddq, %function
- #endif
+ .global __asm_poly_caddq
+ .global ___asm_poly_caddq
 -__asm_poly_caddq:
 -___asm_poly_caddq:
-+PQCLEAN_NAMESPACE_asm_poly_caddq:
-+_PQCLEAN_NAMESPACE_asm_poly_caddq:
++PQCLEAN_NAMESPACE__asm_poly_caddq:
++_PQCLEAN_NAMESPACE__asm_poly_caddq:
  
      ldr w4, [x1]
  
-@@ -271,13 +271,13 @@
-     br lr
- 
+@@ -264,8 +264,8 @@
  .align 2
--.global __asm_poly_freeze
--.global ___asm_poly_freeze
-+.global PQCLEAN_NAMESPACE_asm_poly_freeze
-+.global _PQCLEAN_NAMESPACE_asm_poly_freeze
- #ifndef __clang__
--.type __asm_poly_freeze, %function
-+.type PQCLEAN_NAMESPACE_asm_poly_freeze, %function
- #endif
+ .global __asm_poly_freeze
+ .global ___asm_poly_freeze
 -__asm_poly_freeze:
 -___asm_poly_freeze:
-+PQCLEAN_NAMESPACE_asm_poly_freeze:
-+_PQCLEAN_NAMESPACE_asm_poly_freeze:
++PQCLEAN_NAMESPACE__asm_poly_freeze:
++_PQCLEAN_NAMESPACE__asm_poly_freeze:
  
      ldr w4, [x1]
  
-@@ -403,13 +403,13 @@
-     br lr
- 
+@@ -393,8 +393,8 @@
  .align 2
--.global __asm_poly_power2round
--.global ___asm_poly_power2round
-+.global PQCLEAN_NAMESPACE_asm_poly_power2round
-+.global _PQCLEAN_NAMESPACE_asm_poly_power2round
- #ifndef __clang__
--.type __asm_poly_power2round, %function
-+.type PQCLEAN_NAMESPACE_asm_poly_power2round, %function
- #endif
+ .global __asm_poly_power2round
+ .global ___asm_poly_power2round
 -__asm_poly_power2round:
 -___asm_poly_power2round:
-+PQCLEAN_NAMESPACE_asm_poly_power2round:
-+_PQCLEAN_NAMESPACE_asm_poly_power2round:
++PQCLEAN_NAMESPACE__asm_poly_power2round:
++_PQCLEAN_NAMESPACE__asm_poly_power2round:
  
      mov w4, #1
  
-@@ -552,13 +552,13 @@
-     br lr
- 
+@@ -539,8 +539,8 @@
  .align 2
--.global __asm_poly_add
--.global ___asm_poly_add
-+.global PQCLEAN_NAMESPACE_asm_poly_add
-+.global _PQCLEAN_NAMESPACE_asm_poly_add
- #ifndef __clang__
--.type __asm_poly_add, %function
-+.type PQCLEAN_NAMESPACE_asm_poly_add, %function
- #endif
+ .global __asm_poly_add
+ .global ___asm_poly_add
 -__asm_poly_add:
 -___asm_poly_add:
-+PQCLEAN_NAMESPACE_asm_poly_add:
-+_PQCLEAN_NAMESPACE_asm_poly_add:
++PQCLEAN_NAMESPACE__asm_poly_add:
++_PQCLEAN_NAMESPACE__asm_poly_add:
  
      ld1 {v0.4S}, [x1], #16
      ld1 {v4.4S}, [x2], #16
-@@ -604,13 +604,13 @@
-     br lr
- 
+@@ -588,8 +588,8 @@
  .align 2
--.global __asm_poly_sub
--.global ___asm_poly_sub
-+.global PQCLEAN_NAMESPACE_asm_poly_sub
-+.global _PQCLEAN_NAMESPACE_asm_poly_sub
- #ifndef __clang__
--.type __asm_poly_sub, %function
-+.type PQCLEAN_NAMESPACE_asm_poly_sub, %function
- #endif
+ .global __asm_poly_sub
+ .global ___asm_poly_sub
 -__asm_poly_sub:
 -___asm_poly_sub:
-+PQCLEAN_NAMESPACE_asm_poly_sub:
-+_PQCLEAN_NAMESPACE_asm_poly_sub:
++PQCLEAN_NAMESPACE__asm_poly_sub:
++_PQCLEAN_NAMESPACE__asm_poly_sub:
  
      ld1 {v0.4S}, [x1], #16
      ld1 {v4.4S}, [x2], #16
-@@ -656,13 +656,13 @@
-     br lr
- 
+@@ -637,8 +637,8 @@
  .align 2
--.global __asm_poly_shiftl
--.global ___asm_poly_shiftl
-+.global PQCLEAN_NAMESPACE_asm_poly_shiftl
-+.global _PQCLEAN_NAMESPACE_asm_poly_shiftl
- #ifndef __clang__
--.type __asm_poly_shiftl, %function
-+.type PQCLEAN_NAMESPACE_asm_poly_shiftl, %function
- #endif
+ .global __asm_poly_shiftl
+ .global ___asm_poly_shiftl
 -__asm_poly_shiftl:
 -___asm_poly_shiftl:
-+PQCLEAN_NAMESPACE_asm_poly_shiftl:
-+_PQCLEAN_NAMESPACE_asm_poly_shiftl:
++PQCLEAN_NAMESPACE__asm_poly_shiftl:
++_PQCLEAN_NAMESPACE__asm_poly_shiftl:
  
      add x1, x0, #0
  
-@@ -726,13 +726,13 @@
-     br lr
- 
+@@ -704,8 +704,8 @@
  .align 2
--.global __asm_poly_pointwise_montgomery
--.global ___asm_poly_pointwise_montgomery
-+.global PQCLEAN_NAMESPACE_asm_poly_pointwise_montgomery
-+.global _PQCLEAN_NAMESPACE_asm_poly_pointwise_montgomery
- #ifndef __clang__
--.type __asm_poly_pointwise_montgomery, %function
-+.type PQCLEAN_NAMESPACE_asm_poly_pointwise_montgomery, %function
- #endif
+ .global __asm_poly_pointwise_montgomery
+ .global ___asm_poly_pointwise_montgomery
 -__asm_poly_pointwise_montgomery:
 -___asm_poly_pointwise_montgomery:
-+PQCLEAN_NAMESPACE_asm_poly_pointwise_montgomery:
-+_PQCLEAN_NAMESPACE_asm_poly_pointwise_montgomery:
++PQCLEAN_NAMESPACE__asm_poly_pointwise_montgomery:
++_PQCLEAN_NAMESPACE__asm_poly_pointwise_montgomery:
  
      push_all
  
-@@ -848,13 +848,13 @@
- 
- 
+@@ -823,8 +823,8 @@
  .align 2
--.global __asm_polyvecl_pointwise_acc_montgomery
--.global ___asm_polyvecl_pointwise_acc_montgomery
-+.global PQCLEAN_NAMESPACE_asm_polyvecl_pointwise_acc_montgomery
-+.global _PQCLEAN_NAMESPACE_asm_polyvecl_pointwise_acc_montgomery
- #ifndef __clang__
--.type __asm_polyvecl_pointwise_acc_montgomery, %function
-+.type PQCLEAN_NAMESPACE_asm_polyvecl_pointwise_acc_montgomery, %function
- #endif
+ .global __asm_polyvecl_pointwise_acc_montgomery
+ .global ___asm_polyvecl_pointwise_acc_montgomery
 -__asm_polyvecl_pointwise_acc_montgomery:
 -___asm_polyvecl_pointwise_acc_montgomery:
-+PQCLEAN_NAMESPACE_asm_polyvecl_pointwise_acc_montgomery:
-+_PQCLEAN_NAMESPACE_asm_polyvecl_pointwise_acc_montgomery:
++PQCLEAN_NAMESPACE__asm_polyvecl_pointwise_acc_montgomery:
++_PQCLEAN_NAMESPACE__asm_polyvecl_pointwise_acc_montgomery:
  
      push_all
  

@@ -1,59 +1,35 @@
 --- work/lightsaber/scheme/__asm_narrow.S
 +++ work-patched/lightsaber/scheme/__asm_narrow.S
-@@ -2,13 +2,13 @@
- #include "SABER_params.h"
- 
+@@ -4,8 +4,8 @@
  .align 2
--.global __asm_round
--.global ___asm_round
-+.global PQCLEAN_NAMESPACE_asm_round
-+.global _PQCLEAN_NAMESPACE_asm_round
- #ifndef __clang__
--.type __asm_round, %function
-+.type PQCLEAN_NAMESPACE_asm_round, %function
- #endif
+ .global __asm_round
+ .global ___asm_round
 -__asm_round:
 -___asm_round:
-+PQCLEAN_NAMESPACE_asm_round:
-+_PQCLEAN_NAMESPACE_asm_round:
++PQCLEAN_NAMESPACE__asm_round:
++_PQCLEAN_NAMESPACE__asm_round:
  
  
      .equ srv, (SABER_EQ-SABER_EP)
-@@ -51,13 +51,13 @@
-     br lr
- 
+@@ -50,8 +50,8 @@
  .align 2
--.global __asm_enc_add_msg
--.global ___asm_enc_add_msg
-+.global PQCLEAN_NAMESPACE_asm_enc_add_msg
-+.global _PQCLEAN_NAMESPACE_asm_enc_add_msg
- #ifndef __clang__
--.type __asm_enc_add_msg, %function
-+.type PQCLEAN_NAMESPACE_asm_enc_add_msg, %function
- #endif
+ .global __asm_enc_add_msg
+ .global ___asm_enc_add_msg
 -__asm_enc_add_msg:
 -___asm_enc_add_msg:
-+PQCLEAN_NAMESPACE_asm_enc_add_msg:
-+_PQCLEAN_NAMESPACE_asm_enc_add_msg:
++PQCLEAN_NAMESPACE__asm_enc_add_msg:
++_PQCLEAN_NAMESPACE__asm_enc_add_msg:
  
      .equ srv, (SABER_EP-SABER_ET)
      .equ slv, (SABER_EP-1)
-@@ -141,13 +141,13 @@
- 
- 
+@@ -137,8 +137,8 @@
  .align 2
--.global __asm_dec_get_msg
--.global ___asm_dec_get_msg
-+.global PQCLEAN_NAMESPACE_asm_dec_get_msg
-+.global _PQCLEAN_NAMESPACE_asm_dec_get_msg
- #ifndef __clang__
--.type __asm_dec_get_msg, %function
-+.type PQCLEAN_NAMESPACE_asm_dec_get_msg, %function
- #endif
+ .global __asm_dec_get_msg
+ .global ___asm_dec_get_msg
 -__asm_dec_get_msg:
 -___asm_dec_get_msg:
-+PQCLEAN_NAMESPACE_asm_dec_get_msg:
-+_PQCLEAN_NAMESPACE_asm_dec_get_msg:
++PQCLEAN_NAMESPACE__asm_dec_get_msg:
++_PQCLEAN_NAMESPACE__asm_dec_get_msg:
  
      .equ srv, (SABER_EP-1)
      .equ slv, (SABER_EP-SABER_ET)
