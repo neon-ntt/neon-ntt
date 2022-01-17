@@ -1,3 +1,3 @@
 [submodule "gen_table/multi-moduli-ntt-saber"]
 	path = gen_table/multi-moduli-ntt-saber
-	url = git@github.com:multi-moduli-ntt-saber/multi-moduli-ntt-saber.git
+	url = https://github.com/multi-moduli-ntt-saber/multi-moduli-ntt-saber.git
