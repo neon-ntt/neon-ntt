@@ -19,8 +19,8 @@ extern void __asm_intt_SIMD_bot(int *des, const int *table, const int *_constant
         __asm_intt_SIMD_top(in, streamlined_inv_CT_table_Q1_extended, constants); \
     }
 
-void ntt(int32_t a[N]);
-void invntt_tomont(int32_t a[N]);
+void ntt(int32_t a[ARRAY_N]);
+void invntt_tomont(int32_t a[ARRAY_N]);
 
 static const int constants[16] = {
 Q1, -Q1prime, RmodQ1_prime_half, RmodQ1_doubleprime,
