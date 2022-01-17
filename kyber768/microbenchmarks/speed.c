@@ -50,6 +50,21 @@ int main()
     {
 
         t0 = hal_get_time();
+        NTT((int16_t *)(&poly2[0][0]));
+        __asm_point_mul_extended((int16_t *)(&poly2_asymmetric[0][0]), (int16_t *)(&poly2[0][0]), pre_asymmetric_table_Q1_extended, asymmetric_const);
+
+        t1 = hal_get_time();
+
+        times[i] = t1 - t0;
+    }
+
+    qsort(times, ITERATIONS, sizeof(uint64_t), cmp_uint64_t);
+    printf("NTT_heavy (median of %d measurements): %ld\n", ITERATIONS, times[ITERATIONS >> 1]);
+
+    for (int i = 0; i < ITERATIONS; i++)
+    {
+
+        t0 = hal_get_time();
 
         __asm_point_mul_extended((int16_t *)(&poly2_asymmetric[0][0]), (int16_t *)(&poly2[0][0]), pre_asymmetric_table_Q1_extended, asymmetric_const);
 
@@ -60,6 +75,7 @@ int main()
 
     qsort(times, ITERATIONS, sizeof(uint64_t), cmp_uint64_t);
     printf("point_mul cycles (median of %d measurements): %ld\n", ITERATIONS, times[ITERATIONS >> 1]);
+
 
     for (int i = 0; i < ITERATIONS; i++)
     {
@@ -74,7 +90,7 @@ int main()
     }
 
     qsort(times, ITERATIONS, sizeof(uint64_t), cmp_uint64_t);
-    printf("asymmetric_mul cycles (median of %d measurements): %ld\n", ITERATIONS, times[ITERATIONS >> 1]);
+    printf("asymmetric_mul  (dim x base_mul) cycles (median of %d measurements): %ld\n", ITERATIONS, times[ITERATIONS >> 1]);
 
     for (int i = 0; i < ITERATIONS; i++)
     {

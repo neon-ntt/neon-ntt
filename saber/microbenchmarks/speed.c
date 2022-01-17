@@ -72,7 +72,7 @@ int main()
     }
 
     qsort(times, ITERATIONS, sizeof(uint64_t), cmp_uint64_t);
-    printf("asymmetric_muls (median of %d measurements): %ld cycles\n", ITERATIONS, times[ITERATIONS >> 1]);
+    printf("asymmetric_muls (dim x base_mul) (median of %d measurements): %ld cycles\n", ITERATIONS, times[ITERATIONS >> 1]);
 
     for (int i = 0; i < ITERATIONS; i++)
     {
