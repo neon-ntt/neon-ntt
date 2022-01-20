@@ -39,7 +39,7 @@ void indcpa_kem_keypair(uint8_t pk[SABER_INDCPA_PUBLICKEYBYTES], uint8_t sk[SABE
     shake128(seed_A, SABER_SEEDBYTES, seed_A, SABER_SEEDBYTES); // for not revealing system RNG state
     randombytes(seed_s, SABER_NOISE_SEEDBYTES);
 
-    #ifdef __ARM_ARCH_8_3__ /* SHA-3 instructions available; shake128x2 is faster than shake128 */
+    #if (__APPLE__ && __ARM_FEATURE_CRYPTO) || __ARM_FEATURE_SHA3
     uint8_t shake_A_buf_dummy[SABER_L * SABER_POLYVECBYTES];
     uint8_t shake_s_buf_dummy[SABER_L * SABER_POLYCOINBYTES];
     shake128x2(shake_A_buf, shake_A_buf_dummy, sizeof(shake_A_buf), seed_A, seed_A, SABER_SEEDBYTES);
@@ -105,7 +105,7 @@ void indcpa_kem_enc(const uint8_t m[SABER_KEYBYTES], const uint8_t seed_sp[SABER
     uint8_t shake_A_buf[SABER_L * SABER_L * SABER_POLYBYTES];
     uint8_t shake_s_buf[SABER_L * SABER_POLYCOINBYTES];
 
-    #ifdef __ARM_ARCH_8_3__ /* SHA-3 instructions available; shake128x2 is faster than shake128 */
+    #if (__APPLE__ && __ARM_FEATURE_CRYPTO) || __ARM_FEATURE_SHA3
     uint8_t shake_A_buf_dummy[SABER_L * SABER_POLYVECBYTES];
     uint8_t shake_s_buf_dummy[SABER_L * SABER_POLYCOINBYTES];
     shake128x2(shake_A_buf, shake_A_buf_dummy, sizeof(shake_A_buf), seed_A, seed_A, SABER_SEEDBYTES);

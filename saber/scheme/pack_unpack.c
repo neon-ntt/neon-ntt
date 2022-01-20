@@ -1,9 +1,9 @@
 /*=============================================================================
-This file has been adapted from the implementation 
-(available at, Public Domain https://github.com/KULeuven-COSIC/SABER) 
+This file has been adapted from the implementation
+(available at, Public Domain https://github.com/KULeuven-COSIC/SABER)
 of "Saber: Module-LWR based key exchange, CPA-secure encryption and CCA-secure KEM"
 by : Jan-Pieter D'Anvers, Angshuman Karmakar, Sujoy Sinha Roy, and Frederik Vercauteren
-Jose Maria Bermudo Mera, Michiel Van Beirendonck, Andrea Basso. 
+Jose Maria Bermudo Mera, Michiel Van Beirendonck, Andrea Basso.
 =============================================================================*/
 
 
@@ -47,10 +47,11 @@ void POLT2BS(uint8_t bytes[SABER_SCALEBYTES_KEM], const uint16_t data[SABER_N])
 /* This function does NOT reduce its output mod T */
 void BS2POLT(const uint8_t bytes[SABER_SCALEBYTES_KEM], uint16_t data[SABER_N])
 {
+
+#if SABER_ET == 3 // LightSaber
     size_t j;
     const uint8_t *in = bytes;
     uint16_t *out = data;
-#if SABER_ET == 3 // LightSaber
     for (j = 0; j < SABER_N / 8; j++) {
         out[0] = in[0];
         out[1] = in[0] >> 3;
@@ -66,6 +67,9 @@ void BS2POLT(const uint8_t bytes[SABER_SCALEBYTES_KEM], uint16_t data[SABER_N])
 #elif SABER_ET == 4 // Saber
     __asm_4_to_16(&(data[0]), &(bytes[0]));
 #elif SABER_ET == 6 // FireSaber
+    size_t j;
+    const uint8_t *in = bytes;
+    uint16_t *out = data;
     for (j = 0; j < SABER_N / 4; j++) {
         out[0] = in[0];
         out[1] = (in[0] >> 6) | (in[1] << 2);
