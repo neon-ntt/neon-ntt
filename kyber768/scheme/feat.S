@@ -1,3 +1,6 @@
+
+#if (__APPLE__ && __ARM_FEATURE_CRYPTO) || (__ARM_FEATURE_SHA3)
+
 .macro round
     ; Execute theta, but without xoring into the state yet.
     ; Compute parities p[i] = a[i] ^ a[5+i] ^ ... ^ a[20+i].
@@ -134,3 +137,5 @@ loop:
     ldp d8,  d9,  [sp], #16
 
     ret lr
+
+#endif

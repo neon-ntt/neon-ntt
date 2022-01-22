@@ -1,1 +1,1 @@
-../../kyber768/m1_benchmarks/feat.s
+../../kyber768/m1_benchmarks/feat.S

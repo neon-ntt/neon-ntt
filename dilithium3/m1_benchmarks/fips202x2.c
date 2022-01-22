@@ -1,1 +1,1 @@
-../../dilithium2/m1_benchmarks/fips202x2.c
+../scheme/fips202x2.c
