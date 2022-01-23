@@ -78,7 +78,7 @@ The following instructions allow you to reproduce the microbenchmarks in Table 4
 The following instructions should allow to benchmark the full schemes (Table 6) using SUPERCOP on the Raspberry Pi4 running Ubuntu 21.04:
 - Download https://bench.cr.yp.to/supercop/supercop-20210604.tar.xz
 - Remove every line except the first from okcompilers/c and okcompilers/cpp to speed up benchmarking.
-- Remove `#include <sys/sysctl.h>` from cpucycles/armv8.h
+- Remove `#include <sys/sysctl.h>` from `cpucycles/armv8.c`
 - Make sure that the access to the cycle counters from user mdoe is enabled before proceeding.
 - Run `./do-part used` (this will take a couple of hours)
 - Copy over the scheme you want
