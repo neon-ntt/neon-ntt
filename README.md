@@ -110,15 +110,19 @@ The following instructions should allow to benchmark the full schemes (Table 6) 
 Probably access to the PMU cycle counters from user space is not enabled. For enabling it, see https://github.com/mupq/pqax#enable-access-to-performance-counters.
 
 ## `kpc_set_config failed` or `kpc_get_thread_counters failed` on Apple M1
-Using `m1cycles.c` requires root. Re-runt he executable with `sudo.
+Using `m1cycles.c` requires root. Re-runt he executable with `sudo.`
 
 # License
 
 This repository includes code from other sources that has the following license/license waivers
+- `feat.S` modified from https://github.com/bwesterb/armed-keccak: MIT
 - Kyber reference code https://github.com/pq-crystals/kyber/blob/master/LICENSE: CC0
 - Saber reference code https://github.com/KULeuven-COSIC/SABER/blob/master/LICENSE: public domain
 - Dilithium reference code https://github.com/pq-crystals/dilithium/blob/master/LICENSE: CC0
-- fips202.{c,h} http://bench.cr.yp.to/supercop.html: public domain
-- fips202x2.{c,h} https://github.com/cothan/kyber/blob/master/neon/fips202x2.c: CC0
+- `fips202.{c,h}` http://bench.cr.yp.to/supercop.html: public domain
+- `fips202x2.{c,h}` https://github.com/cothan/kyber/blob/master/neon/fips202x2.c: CC0
 
 All remaining code is covered by CC0.
+
+
+
