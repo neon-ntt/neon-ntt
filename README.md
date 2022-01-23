@@ -80,7 +80,10 @@ The following instructions should allow to benchmark the full schemes (Table 6) 
 - Remove every line except the first from okcompilers/c and okcompilers/cpp to speed up benchmarking.
 - Remove `#include <sys/sysctl.h>` from `cpucycles/armv8.c`
 - Make sure that the access to the cycle counters from user mdoe is enabled before proceeding.
-- Run `./do-part used` (this will take a couple of hours)
+- Run `./do-part used` (this will take a couple of hours) or alternatively, build `randombytes` as follows (this is the only dependency to SUPERCOP):
+  - `./do-part init`
+  - `./do-part crypto_stream chacha20`
+  - `./do-part crypto_rng chacha20`
 - Copy over the scheme you want
   - e.g., `cp -rL kyber768/scheme <SUPERCOP_PATH>/crypto_kem/kyber768/`
   - Note that for Dilithium the testvectors have changed: https://groups.google.com/a/list.nist.gov/g/pqc-forum/c/BjfjRMIdnhM/m/W7kkVOFDBAAJ
