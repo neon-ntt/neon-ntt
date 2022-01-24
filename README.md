@@ -86,6 +86,7 @@ The following instructions should allow to benchmark the full schemes (Table 6) 
   - `./do-part crypto_rng chacha20`
 - Copy over the scheme you want
   - e.g., `cp -rL kyber768/scheme <SUPERCOP_PATH>/crypto_kem/kyber768/`
+  - or, run `sh cp2supercop.sh`
   - Note that for Dilithium the testvectors have changed: https://groups.google.com/a/list.nist.gov/g/pqc-forum/c/BjfjRMIdnhM/m/W7kkVOFDBAAJ
   - You will have to copy over the updated testvectors
   - e.g., `cp dilithium2/checksum* <SUPERCOP_PATH>/crypto_sign/dilithium2`
@@ -121,8 +122,14 @@ This repository includes code from other sources that has the following license/
 - Dilithium reference code https://github.com/pq-crystals/dilithium/blob/master/LICENSE: CC0
 - `fips202.{c,h}` http://bench.cr.yp.to/supercop.html: public domain
 - `fips202x2.{c,h}` https://github.com/cothan/kyber/blob/master/neon/fips202x2.c: CC0
+- `gen_table/common` from https://github.com/multi-moduli-ntt-saber/multi-moduli-ntt-saber: CC0
 
 All remaining code is covered by CC0.
+
+
+
+
+
 
 
 
