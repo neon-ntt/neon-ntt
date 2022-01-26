@@ -122,6 +122,7 @@ This repository includes code from other sources that has the following license/
 - Dilithium reference code https://github.com/pq-crystals/dilithium/blob/master/LICENSE: CC0
 - `fips202.{c,h}` http://bench.cr.yp.to/supercop.html: public domain
 - `fips202x2.{c,h}` https://github.com/cothan/kyber/blob/master/neon/fips202x2.c: CC0
+- `m1cycles.{c, h}`: https://github.com/cothan/SABER/blob/master/Cortex-A_Implementation_KEM/m1cycles.c: public domain
 - `gen_table/common` from https://github.com/multi-moduli-ntt-saber/multi-moduli-ntt-saber: CC0
 
 All remaining code is covered by CC0.
