@@ -73,7 +73,7 @@ int main(){
         twiddle_ptr[2 * i + 0] = twiddle_ptr[2 * i + 1] = buff2[i];
     }
 
-    scale_int16 = -Q1prime2;
+    aux_int16 = -Q1prime2;
     mod_int16 = Q1;
     extend_table_int16(
         buff_extended,
@@ -156,7 +156,7 @@ int main(){
         twiddle_ptr[2 * i + 0] = twiddle_ptr[2 * i + 1] = buff2[i];
     }
 
-    scale_int16 = -Q1prime2;
+    aux_int16 = -Q1prime2;
     mod_int16 = Q1;
     extend_table_int16(
         buff_extended,
