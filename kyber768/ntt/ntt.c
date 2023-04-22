@@ -51,7 +51,7 @@ void ntt(int16_t r[256]){
 *              multiplication by Montgomery factor 2^16.
 *              Input is in bitreversed order, output is in standard order
 *
-* Arguments:   - int16_t r[256] in {-(q-1)/2,...,(q-1)/2} 
+* Arguments:   - int16_t r[256] in {-(q-1)/2,...,(q-1)/2}
 *              pointer to input/output vector of elements of Zq
 **************************************************/
 void invntt(int16_t r[256])
