@@ -1,5 +1,10 @@
 
 /*
+ * This file was originally licensed
+ * under Apache 2.0 or
+ * public domain at https://github.com/pq-crystals/dilithium/tree/master/ref
+ *
+ * We choose
  * CC0 1.0 Universal or the following MIT License
  *
  * MIT License
