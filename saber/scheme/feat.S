@@ -3,6 +3,7 @@
 MIT License
 
 Copyright (c) 2020 Bas Westerbaan
+Copyright (c) 2023: Hanno Becker, Vincent Hwang, Matthias J. Kannwischer, Bo-Yin Yang, and Shang-Yi Yang
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -34,11 +35,11 @@ SOFTWARE.
     eor3.16b v28, v3, v8, v13
     eor3.16b v29, v4, v9, v14
 
-    eor3.16b v25, v25, v15, v20 
-    eor3.16b v26, v26, v16, v21 
-    eor3.16b v27, v27, v17, v22 
-    eor3.16b v28, v28, v18, v23 
-    eor3.16b v29, v29, v19, v24 
+    eor3.16b v25, v25, v15, v20
+    eor3.16b v26, v26, v16, v21
+    eor3.16b v27, v27, v17, v22
+    eor3.16b v28, v28, v18, v23
+    eor3.16b v29, v29, v19, v24
 
     rax1.2d v30, v29, v26 ; d[0] = rotl(p[1], 1) ^ p[4]
     rax1.2d v29, v27, v29 ; d[3] = rotl(p[4], 1) ^ p[2]
@@ -99,7 +100,7 @@ SOFTWARE.
     bcax.16b v14, v14,  v11,  v10
     mov.16b v10, v25
     mov.16b v11, v26
-    
+
     bcax.16b v25, v15,  v17,  v16
     bcax.16b v26, v16,  v18,  v17
     bcax.16b v17, v17,  v19,  v18
@@ -107,7 +108,7 @@ SOFTWARE.
     bcax.16b v19, v19,  v16,  v15
     mov.16b v15, v25
     mov.16b v16, v26
-    
+
     bcax.16b v25, v20,  v22,  v21
     bcax.16b v26, v21,  v23,  v22
     bcax.16b v22, v22,  v24,  v23
