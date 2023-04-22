@@ -1,3 +1,4 @@
+
 CC ?= /usr/bin/cc
 CFLAGS += -Wall -Wextra -Wpedantic -Wmissing-prototypes -Wredundant-decls \
           -Wshadow -Wpointer-arith -fomit-frame-pointer -mtune=native -O3
