@@ -1,3 +1,10 @@
+
+/*
+ * This file is licensed
+ * under Apache 2.0 or
+ * public domain at https://github.com/pq-crystals/kyber/tree/master/ref
+ */
+
 #ifndef KEM_H
 #define KEM_H
 
