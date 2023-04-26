@@ -439,7 +439,7 @@ void indcpa_enc(uint8_t c[KYBER_INDCPA_BYTES],
   neon_poly_getnoise_eta2(&(epp[0]), coins, 4);
 #elif KYBER_K == 3
 #if KYBER_ETA1 == KYBER_ETA2
-  // Because ETA1 == ETA2 
+  // Because ETA1 == ETA2
   neon_poly_getnoise_eta1_2x(&(sp[0][0]), &(sp[1][0]), coins, 0, 1);
   neon_poly_getnoise_eta1_2x(&(sp[2][0]), &(ep[0][0]), coins, 2, 3);
   neon_poly_getnoise_eta1_2x(&(ep[1][0]), &(ep[2][0]), coins, 4, 5);

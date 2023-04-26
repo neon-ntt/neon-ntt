@@ -1,3 +1,9 @@
+
+/*
+ * This file is dual licensed
+ * under Apache 2.0 or public domain at https://github.com/pq-crystals/dilithium
+ */
+
 #ifndef POLYVEC_H
 #define POLYVEC_H
 #include "params.h"

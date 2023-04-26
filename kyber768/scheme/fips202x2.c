@@ -1,3 +1,36 @@
+
+/*
+ * This file was originally licensed
+ * under Apache 2.0 at https://github.com/GMUCERG/PQC_NEON/blob/main/neon/kyber or
+ * public domain at https://github.com/cothan/kyber/blob/master/neon
+ *
+ * We choose
+ * CC0 1.0 Universal or the following MIT License for this file.
+ *
+ * MIT License
+ *
+ * Copyright (c) 2023: Hanno Becker, Vincent Hwang, Matthias J. Kannwischer, Bo-Yin Yang, and Shang-Yi Yang
+ *
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 #include <arm_neon.h>
 #include <stddef.h>
 #include "fips202x2.h"
@@ -71,7 +104,7 @@ static const uint64_t neon_KeccakF_RoundConstants[NROUNDS] = {
 * Arguments:   - uint64_t *state: pointer to input/output Keccak state
 **************************************************/
 extern void f1600x2(v128*, const uint64_t*);
-static inline 
+static inline
 void KeccakF1600_StatePermutex2(v128 state[25])
 {
 #if (__APPLE__ && __ARM_FEATURE_CRYPTO) || (__ARM_FEATURE_SHA3) /* although not sure what is being implemented, we find something fast */
@@ -473,7 +506,7 @@ void keccakx2_absorb(v128 s[25],
 *              - unsigned int r: rate in bytes (e.g., 168 for SHAKE128)
 *              - uint64_t *s: pointer to input/output Keccak state
 **************************************************/
-static 
+static
 void keccakx2_squeezeblocks(uint8_t *out0,
                             uint8_t *out1,
                             size_t nblocks,
