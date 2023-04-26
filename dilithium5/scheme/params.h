@@ -1,1 +1,1 @@
-../microbenchmarks/params.h
+../ntt/params.h

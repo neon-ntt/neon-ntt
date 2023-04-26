@@ -1,1 +1,1 @@
-../../dilithium3/microbenchmarks/hal.c
+../../common/hal.c

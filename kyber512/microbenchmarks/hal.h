@@ -1,1 +1,1 @@
-../../kyber768/microbenchmarks/hal.h
+../../common/hal.h

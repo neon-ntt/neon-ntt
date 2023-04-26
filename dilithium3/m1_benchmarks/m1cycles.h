@@ -1,1 +1,1 @@
-../../dilithium2/m1_benchmarks/m1cycles.h
+../../common/m1cycles.h
