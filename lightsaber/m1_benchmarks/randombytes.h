@@ -1,1 +1,1 @@
-../../saber/m1_benchmarks/randombytes.h
+../../common/randombytes.h

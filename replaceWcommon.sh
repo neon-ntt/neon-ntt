@@ -20,6 +20,8 @@ do
     rmln $x/m1_benchmarks/fips202.c ../../common/fips202.c
     rmln $x/m1_benchmarks/fips202x2.h ../../common/fips202x2.h
     rmln $x/m1_benchmarks/fips202x2.c ../../common/fips202x2.c
+    rmln $x/m1_benchmarks/randombytes.h ../../common/randombytes.h
+    rmln $x/m1_benchmarks/randombytes.c ../../common/randombytes.c
     rmln $x/microbenchmarks/hal.h ../../common/hal.h
     rmln $x/microbenchmarks/hal.c ../../common/hal.c
 done

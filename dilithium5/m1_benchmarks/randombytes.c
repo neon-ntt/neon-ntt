@@ -1,1 +1,1 @@
-../../dilithium2/m1_benchmarks/randombytes.c
+../../common/randombytes.c
