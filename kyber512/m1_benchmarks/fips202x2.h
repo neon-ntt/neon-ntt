@@ -1,1 +1,1 @@
-../../kyber768/m1_benchmarks/fips202x2.h
+../../common/fips202x2.h

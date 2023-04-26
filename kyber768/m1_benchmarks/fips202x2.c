@@ -1,1 +1,1 @@
-../scheme/fips202x2.c
+../../common/fips202x2.c

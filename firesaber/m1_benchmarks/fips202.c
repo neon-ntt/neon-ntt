@@ -1,1 +1,1 @@
-../../saber/m1_benchmarks/fips202.c
+../../common/fips202.c

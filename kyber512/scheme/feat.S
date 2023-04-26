@@ -1,1 +1,1 @@
-../../kyber768/scheme/feat.S
+../../common/feat.S

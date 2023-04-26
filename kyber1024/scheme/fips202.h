@@ -1,1 +1,1 @@
-../../kyber768/scheme/fips202.h
+../../common/fips202.h

@@ -1,1 +1,1 @@
-../../saber/microbenchmarks/hal.c
+../../common/hal.c

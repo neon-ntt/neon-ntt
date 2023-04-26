@@ -1,1 +1,1 @@
-../../dilithium2/m1_benchmarks/feat.S
+../../common/feat.S

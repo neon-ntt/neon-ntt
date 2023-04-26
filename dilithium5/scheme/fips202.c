@@ -1,1 +1,1 @@
-../../dilithium3/scheme/fips202.c
+../../common/fips202.c
