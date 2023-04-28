@@ -1,7 +1,8 @@
 
 /*
  * This file is licensed
- * under Apache 2.0 at https://github.com/GMUCERG/PQC_NEON/blob/main/neon/kyber or
+ * under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.html)
+ * at https://github.com/GMUCERG/PQC_NEON/blob/main/neon/kyber or
  * public domain at https://github.com/cothan/kyber/blob/master/neon
  */
 
@@ -29,7 +30,7 @@
 // long c = a - b
 #define vsublh8(c, a, b) c = (int16x8_t)vsubl_high_u8(a, b);
 
-static 
+static
 void neon_cbd2(int16_t *r, const uint8_t buf[2 * KYBER_N / 4])
 {
     uint8x16x2_t t, d;      // 4

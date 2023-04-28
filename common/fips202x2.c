@@ -1,7 +1,8 @@
 
 /*
  * This file was originally licensed
- * under Apache 2.0 at https://github.com/GMUCERG/PQC_NEON/blob/main/neon/kyber or
+ * under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.html)
+ * at https://github.com/GMUCERG/PQC_NEON/blob/main/neon/kyber or
  * public domain at https://github.com/cothan/kyber/blob/master/neon
  *
  * We choose
@@ -104,7 +105,7 @@ static const uint64_t neon_KeccakF_RoundConstants[NROUNDS] = {
 * Arguments:   - uint64_t *state: pointer to input/output Keccak state
 **************************************************/
 extern void f1600x2(v128*, const uint64_t*);
-static inline 
+static inline
 void KeccakF1600_StatePermutex2(v128 state[25])
 {
 #if (__APPLE__ && __ARM_FEATURE_CRYPTO) || (__ARM_FEATURE_SHA3) /* although not sure what is being implemented, we find something fast */
@@ -506,7 +507,7 @@ void keccakx2_absorb(v128 s[25],
 *              - unsigned int r: rate in bytes (e.g., 168 for SHAKE128)
 *              - uint64_t *s: pointer to input/output Keccak state
 **************************************************/
-static 
+static
 void keccakx2_squeezeblocks(uint8_t *out0,
                             uint8_t *out1,
                             size_t nblocks,

@@ -1,7 +1,8 @@
 
 /*
  * This file was originally licensed
- * under Apache 2.0 at https://github.com/GMUCERG/PQC_NEON/blob/main/neon/kyber or
+ * under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.html)
+ * at https://github.com/GMUCERG/PQC_NEON/blob/main/neon/kyber or
  * public domain at https://github.com/cothan/kyber/blob/master/neon
  *
  * We choose
@@ -51,7 +52,7 @@
 **************************************************/
 void neon_kyber_shake128_absorb(keccakx2_state *state,
                                 const uint8_t seed[KYBER_SYMBYTES],
-                                uint8_t x1, uint8_t x2, 
+                                uint8_t x1, uint8_t x2,
                                 uint8_t y1, uint8_t y2)
 {
   unsigned int i;
