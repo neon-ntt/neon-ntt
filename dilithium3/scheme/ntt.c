@@ -1,7 +1,7 @@
 
 /*
  * This file was originally licensed
- * under Apache 2.0 or
+ * under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.html) or
  * public domain at https://github.com/pq-crystals/dilithium/tree/master/ref
  *
  * We choose
