@@ -1,19 +1,21 @@
 #!/bin/bash
 BASE=`dirname $0`
 BASE=`cd ${BASE} && pwd`
+echo ${BASE}
 WORK=work
 WORKPATCHED=work-patched
+PQCleanPATH=~/Desktop/git/public/PQClean
 
 rm -rf ${WORK} ${WORKPATCHED}
 mkdir -p ${WORK} ${WORKPATCHED}
 
 # patch implementations
-for scheme in {kyber512,kyber768,kyber1024,saber,lightsaber,firesaber,dilithium2,dilithium3,dilithium5}
+for scheme in kyber512 kyber768 kyber1024 saber lightsaber firesaber dilithium2 dilithium3 dilithium5
 do
     cp -rL ${scheme} ${WORK}
 
     # delete non scheme files
-    rm -rf ${WORK}/${scheme}/ntt ${WORK}/${scheme}/microbenchmarks
+    rm -rf ${WORK}/${scheme}/ntt ${WORK}/${scheme}/microbenchmarks ${WORK}/${scheme}/m1_benchmarks
 
     # delete fips202.[ch]
     rm ${WORK}/${scheme}/scheme/fips202.[ch]
@@ -40,7 +42,8 @@ done
 # process and copy to PQClean
 cd ${WORKPATCHED}
 # kyber
-for k in {2,3,4}; do
+for k in 2 3 4
+do
     ka=$((k*256));
     if [ $k -eq 2 ]
     then
@@ -56,41 +59,43 @@ for k in {2,3,4}; do
         polycomp=128
         polyvec=$((k*320))
     fi
-    cp -rL kyber$ka/scheme/* ~/git/PQClean/crypto_kem/kyber$ka/aarch64/
-    unifdef -m -DKYBER_K=$k -U KYBER_90S -DKYBER_POLYVECCOMPRESSEDBYTES=$polyvec -UPROFILE_HASHING -DKYBER_ETA1=$eta1 -DKYBER_ETA2=2 -DKYBER_POLYCOMPRESSEDBYTES=$polycomp -DKYBER_N=256 -DKYBER_INDCPA_MSGBYTES=32 ~/git/PQClean/crypto_kem/kyber$ka/aarch64/*.[ch]
+    cp -rL kyber$ka/scheme/* ${PQCleanPATH}/crypto_kem/kyber$ka/aarch64/
+    unifdef -m -DKYBER_K=$k -U KYBER_90S -DKYBER_POLYVECCOMPRESSEDBYTES=$polyvec -UPROFILE_HASHING -DKYBER_ETA1=$eta1 -DKYBER_ETA2=2 -DKYBER_POLYCOMPRESSEDBYTES=$polycomp -DKYBER_N=256 -DKYBER_INDCPA_MSGBYTES=32 ${PQCleanPATH}/crypto_kem/kyber$ka/aarch64/*.[ch]
     namespc="s/PQCLEAN_NAMESPACE/PQCLEAN_KYBER${ka}_AARCH64/g"
-    sed -i $namespc ~/git/PQClean/crypto_kem/kyber$ka/aarch64/*.[chS]
+    sed -i $namespc ${PQCleanPATH}/crypto_kem/kyber$ka/aarch64/*.[chS]
 done
 
-# saber
-for k in {2,3,4}; do
-    if [ $k -eq 2 ]
-    then
-        scheme=lightsaber
-        mu=10
-        et=3
-    fi
-    if [ $k -eq 3 ]
-    then
-        scheme=saber
-        mu=8
-        et=4
-    fi
-    if [ $k -eq 4 ]
-    then
-        scheme=firesaber
-        mu=6
-        et=6
-    fi
+# # saber
+# for k in 2 3 4
+# do
+#     if [ $k -eq 2 ]
+#     then
+#         scheme=lightsaber
+#         mu=10
+#         et=3
+#     fi
+#     if [ $k -eq 3 ]
+#     then
+#         scheme=saber
+#         mu=8
+#         et=4
+#     fi
+#     if [ $k -eq 4 ]
+#     then
+#         scheme=firesaber
+#         mu=6
+#         et=6
+#     fi
 
-    cp -rL ${scheme}/scheme/* ~/git/PQClean/crypto_kem/${scheme}/aarch64
-    unifdef -m -DSABER_L=$k -DSABER_MU=$mu -DSABER_ET=$et -U__ARM_ARCH_8_3__ -UPROFILE_HASHING ~/git/PQClean/crypto_kem/${scheme}/aarch64/*.[ch]
-    namespc="s/PQCLEAN_NAMESPACE/PQCLEAN_${scheme^^}_AARCH64/g"
-    sed -i $namespc ~/git/PQClean/crypto_kem/${scheme}/aarch64/*.[chS]
-done
+#     cp -rL ${scheme}/scheme/* ${PQCleanPATH}/crypto_kem/${scheme}/aarch64
+#     unifdef -m -DSABER_L=$k -DSABER_MU=$mu -DSABER_ET=$et -U__ARM_ARCH_8_3__ -UPROFILE_HASHING ~/git/PQClean/crypto_kem/${scheme}/aarch64/*.[ch]
+#     namespc="s/PQCLEAN_NAMESPACE/PQCLEAN_${scheme^^}_AARCH64/g"
+#     sed -i $namespc ${PQCleanPATH}/crypto_kem/${scheme}/aarch64/*.[chS]
+# done
 
 #dilithium
-for k in {2,3,5}; do
+for k in 2 3 5 
+do
     if [ $k -eq 2 ]
     then
         gamma2=95232
@@ -113,8 +118,8 @@ for k in {2,3,5}; do
     fi
 
     scheme=dilithium$k
-    cp -rL ${scheme}/scheme/* ~/git/PQClean/crypto_sign/${scheme}/aarch64
-    unifdef -m -DDILITHIUM_Q=8380417 -DDILITHIUM_MODE=$k -DGAMMA1=$gamma1 -DGAMMA2=$gamma2 -DETA=$eta -UPROFILE_HASHING ~/git/PQClean/crypto_sign/${scheme}/aarch64/*.[ch]
+    cp -rL ${scheme}/scheme/* ${PQCleanPATH}/crypto_sign/${scheme}/aarch64
+    unifdef -m -DDILITHIUM_Q=8380417 -DDILITHIUM_MODE=$k -DGAMMA1=$gamma1 -DGAMMA2=$gamma2 -DETA=$eta -UPROFILE_HASHING ${PQCleanPATH}/crypto_sign/${scheme}/aarch64/*.[ch]
     namespc="s/PQCLEAN_NAMESPACE/PQCLEAN_${scheme^^}_AARCH64/g"
-    sed -i $namespc ~/git/PQClean/crypto_sign/${scheme}/aarch64/*.[chS]
+    sed -i $namespc ${PQCleanPATH}/crypto_sign/${scheme}/aarch64/*.[chS]
 done
