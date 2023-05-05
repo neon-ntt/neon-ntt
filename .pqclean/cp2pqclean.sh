@@ -88,7 +88,7 @@ done
 #     fi
 
 #     cp -rL ${scheme}/scheme/* ${PQCleanPATH}/crypto_kem/${scheme}/aarch64
-#     unifdef -m -DSABER_L=$k -DSABER_MU=$mu -DSABER_ET=$et -U__ARM_ARCH_8_3__ -UPROFILE_HASHING ~/git/PQClean/crypto_kem/${scheme}/aarch64/*.[ch]
+#     unifdef -m -DSABER_L=$k -DSABER_MU=$mu -DSABER_ET=$et -U__ARM_ARCH_8_3__ -UPROFILE_HASHING ${PQCleanPATH}/crypto_kem/${scheme}/aarch64/*.[ch]
 #     namespc="s/PQCLEAN_NAMESPACE/PQCLEAN_${scheme^^}_AARCH64/g"
 #     sed -i $namespc ${PQCleanPATH}/crypto_kem/${scheme}/aarch64/*.[chS]
 # done
@@ -120,6 +120,6 @@ do
     scheme=dilithium$k
     cp -rL ${scheme}/scheme/* ${PQCleanPATH}/crypto_sign/${scheme}/aarch64
     unifdef -m -DDILITHIUM_Q=8380417 -DDILITHIUM_MODE=$k -DGAMMA1=$gamma1 -DGAMMA2=$gamma2 -DETA=$eta -UPROFILE_HASHING ${PQCleanPATH}/crypto_sign/${scheme}/aarch64/*.[ch]
-    namespc="s/PQCLEAN_NAMESPACE/PQCLEAN_${scheme^^}_AARCH64/g"
+    namespc="s/PQCLEAN_NAMESPACE/PQCLEAN_${scheme}_AARCH64/g"
     sed -i $namespc ${PQCleanPATH}/crypto_sign/${scheme}/aarch64/*.[chS]
 done
