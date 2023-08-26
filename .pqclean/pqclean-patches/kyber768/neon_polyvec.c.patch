@@ -1,22 +1,6 @@
 --- work/kyber768/scheme/neon_polyvec.c
 +++ work-patched/kyber768/scheme/neon_polyvec.c
-@@ -1,11 +1,10 @@
--#include <arm_neon.h>
--#include "params.h"
--#include "reduce.h"
-+#include "NTT_params.h"
- #include "ntt.h"
-+#include "params.h"
- #include "poly.h"
- #include "polyvec.h"
--
--#include "NTT_params.h"
-+#include "reduce.h"
-+#include <arm_neon.h>
- 
- #define _V (((1U << 26) + KYBER_Q / 2) / KYBER_Q)
- 
-@@ -16,13 +15,11 @@
+@@ -50,13 +50,11 @@
  *
  * Arguments:   - polyvec *r: pointer to in/output vector of polynomials
  **************************************************/
@@ -35,7 +19,7 @@
  }
  
  /*************************************************
-@@ -33,11 +30,11 @@
+@@ -67,11 +65,11 @@
  *
  * Arguments:   - polyvec *r: pointer to in/output vector of polynomials
  **************************************************/
@@ -52,7 +36,7 @@
  }
  
  /*************************************************
-@@ -51,14 +48,12 @@
+@@ -85,14 +83,12 @@
  *            - const polyvec *a: pointer to first input vector of polynomials
  *            - const polyvec *b: pointer to second input vector of polynomials
  **************************************************/

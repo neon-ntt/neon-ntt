@@ -1,6 +1,6 @@
 --- work/dilithium3/scheme/packing.c
 +++ work-patched/dilithium3/scheme/packing.c
-@@ -14,8 +14,8 @@
+@@ -21,8 +21,8 @@
  *              - const polyveck *t1: pointer to vector t1
  **************************************************/
  void pack_pk(uint8_t pk[CRYPTO_PUBLICKEYBYTES],
@@ -11,7 +11,7 @@
      unsigned int i;
  
      for (i = 0; i < SEEDBYTES; ++i) {
-@@ -38,8 +38,8 @@
+@@ -45,8 +45,8 @@
  *              - uint8_t pk[]: byte array containing bit-packed pk
  **************************************************/
  void unpack_pk(uint8_t rho[SEEDBYTES],
@@ -22,7 +22,7 @@
      unsigned int i;
  
      for (i = 0; i < SEEDBYTES; ++i) {
-@@ -66,12 +66,12 @@
+@@ -73,12 +73,12 @@
  *              - const polyveck *s2: pointer to vector s2
  **************************************************/
  void pack_sk(uint8_t sk[CRYPTO_SECRETKEYBYTES],
@@ -41,7 +41,7 @@
      unsigned int i;
  
      for (i = 0; i < SEEDBYTES; ++i) {
-@@ -118,12 +118,12 @@
+@@ -125,12 +125,12 @@
  *              - uint8_t sk[]: byte array containing bit-packed sk
  **************************************************/
  void unpack_sk(uint8_t rho[SEEDBYTES],
@@ -60,7 +60,7 @@
      unsigned int i;
  
      for (i = 0; i < SEEDBYTES; ++i) {
-@@ -167,9 +167,9 @@
+@@ -174,9 +174,9 @@
  *              - const polyveck *h: pointer to hint vector h
  **************************************************/
  void pack_sig(uint8_t sig[CRYPTO_BYTES],
@@ -73,7 +73,7 @@
      unsigned int i, j, k;
  
      for (i = 0; i < SEEDBYTES; ++i) {
-@@ -213,9 +213,9 @@
+@@ -220,9 +220,9 @@
  * Returns 1 in case of malformed signature; otherwise 0.
  **************************************************/
  int unpack_sig(uint8_t c[SEEDBYTES],

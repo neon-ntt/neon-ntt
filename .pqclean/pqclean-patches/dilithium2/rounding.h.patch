@@ -1,6 +1,6 @@
 --- work/dilithium2/scheme/rounding.h
 +++ work-patched/dilithium2/scheme/rounding.h
-@@ -3,12 +3,16 @@
+@@ -10,12 +10,16 @@
  #include "params.h"
  #include <stdint.h>
  

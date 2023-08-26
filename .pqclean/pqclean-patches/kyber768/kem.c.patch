@@ -1,24 +1,16 @@
 --- work/kyber768/scheme/kem.c
 +++ work-patched/kyber768/scheme/kem.c
-@@ -1,11 +1,11 @@
--#include <stddef.h>
--#include <stdint.h>
--#include "params.h"
- #include "indcpa.h"
--#include "verify.h"
--#include "symmetric.h"
-+#include "kem.h"
-+#include "params.h"
+@@ -12,8 +12,7 @@
+ #include "verify.h"
+ #include "symmetric.h"
  #include "randombytes.h"
 -#include "crypto_kem.h"
-+#include "symmetric.h"
-+#include "verify.h"
-+#include <stddef.h>
-+#include <stdint.h>
- 
+-
++#include "kem.h"
  
  /*************************************************
-@@ -21,17 +21,17 @@
+ * Name:        crypto_kem_keypair
+@@ -28,17 +27,17 @@
  *
  * Returns 0 (success)
  **************************************************/
@@ -47,7 +39,7 @@
  }
  
  /*************************************************
-@@ -49,30 +49,29 @@
+@@ -56,30 +55,29 @@
  *
  * Returns 0 (success)
  **************************************************/
@@ -101,7 +93,7 @@
  }
  
  /*************************************************
-@@ -92,37 +91,37 @@
+@@ -99,37 +97,37 @@
  *
  * On failure, ss will contain a pseudo-random value.
  **************************************************/

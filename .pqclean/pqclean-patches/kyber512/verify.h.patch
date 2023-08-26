@@ -1,6 +1,6 @@
 --- work/kyber512/scheme/verify.h
 +++ work-patched/kyber512/scheme/verify.h
-@@ -1,9 +1,9 @@
+@@ -8,9 +8,9 @@
  #ifndef VERIFY_H
  #define VERIFY_H
  

@@ -1,16 +1,6 @@
 --- work/kyber512/scheme/rejsample.c
 +++ work-patched/kyber512/scheme/rejsample.c
-@@ -1,7 +1,7 @@
--#include <arm_neon.h>
- #include "params.h"
--#include "symmetric.h"
- #include "rejsample.h"
-+#include "symmetric.h"
-+#include <arm_neon.h>
- 
- // Define NEON operation
- // Load 8x16
-@@ -338,22 +338,22 @@
+@@ -346,22 +346,22 @@
  unsigned int rej_uniform(int16_t *r,
                           unsigned int len,
                           const uint8_t *buf,
@@ -39,7 +29,7 @@
      }
      return ctr;
  }
-@@ -370,8 +370,7 @@
+@@ -378,8 +378,7 @@
  *
  * Returns number of sampled 16-bit integers (at most len)
  **************************************************/
@@ -49,7 +39,7 @@
      uint8x16x3_t neon_buf;
      uint16x8x4_t tmp, value, sign;
  
-@@ -386,8 +385,7 @@
+@@ -394,8 +393,7 @@
      unsigned int reduce_indexes[4], ctr[4];
      unsigned int i, count = 0;
  
@@ -59,7 +49,7 @@
          // 0, 3, 6, 9
          // 1, 4, 7, 10
          // 2, 5, 8, 11
-@@ -467,8 +465,7 @@
+@@ -475,8 +473,7 @@
  
      int16_t local_buf[48];
      unsigned int local_index = 0;
@@ -69,7 +59,7 @@
          neon_buf8 = vld3_u8(&buf[i]);
  
          // Val0: 0-1 | 3-4 | 6-7| 9-10
-@@ -537,8 +534,7 @@
+@@ -545,8 +542,7 @@
          i += 24;
      } while ((local_index < KYBER_N - count) && (i < UPPER_BOUND));
  

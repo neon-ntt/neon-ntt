@@ -1,6 +1,9 @@
 --- work/kyber1024/scheme/api.h
 +++ work-patched/kyber1024/scheme/api.h
-@@ -1,6 +1,36 @@
+@@ -6,9 +6,39 @@
+  */
+ 
+ 
 +#ifndef PQCLEAN_NAMESPACE_API_H
 +#define PQCLEAN_NAMESPACE_API_H
 +

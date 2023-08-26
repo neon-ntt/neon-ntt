@@ -1,6 +1,6 @@
 --- work/kyber512/scheme/kem.h
 +++ work-patched/kyber512/scheme/kem.h
-@@ -1,8 +1,8 @@
+@@ -8,8 +8,8 @@
  #ifndef KEM_H
  #define KEM_H
  
@@ -10,7 +10,7 @@
  
  #define CRYPTO_SECRETKEYBYTES  KYBER_SECRETKEYBYTES
  #define CRYPTO_PUBLICKEYBYTES  KYBER_PUBLICKEYBYTES
-@@ -29,13 +29,10 @@
+@@ -36,13 +36,10 @@
  #endif
  #endif
  

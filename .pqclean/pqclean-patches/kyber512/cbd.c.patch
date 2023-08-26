@@ -1,28 +1,6 @@
 --- work/kyber512/scheme/cbd.c
 +++ work-patched/kyber512/scheme/cbd.c
-@@ -1,7 +1,7 @@
-+#include "cbd.h"
-+#include "params.h"
- #include <arm_neon.h>
- #include <stdint.h>
--#include "params.h"
--#include "cbd.h"
- 
- #define vload2(c, ptr) c = vld2q_u8(ptr);
- 
-@@ -22,9 +22,8 @@
- // long c = a - b
- #define vsublh8(c, a, b) c = (int16x8_t)vsubl_high_u8(a, b);
- 
--static 
--void neon_cbd2(int16_t *r, const uint8_t buf[2 * KYBER_N / 4])
--{
-+static
-+void neon_cbd2(int16_t *r, const uint8_t buf[2 * KYBER_N / 4]) {
-     uint8x16x2_t t, d;      // 4
-     uint8x16x2_t a, b;      // 4
-     int16x8x4_t res1, res2; // 4
-@@ -35,8 +34,7 @@
+@@ -43,8 +43,7 @@
  
      // Total SIMD register: 18
      unsigned int j = 0;
@@ -32,7 +10,7 @@
          // 0, 2, 4 , 6,...
          // 1, 3, 5 , 7,...
          vload2(t, &buf[i]);
-@@ -122,13 +120,12 @@
+@@ -130,13 +129,12 @@
  * Returns 32-bit unsigned integer loaded from x (most significant byte is zero)
  **************************************************/
  #if KYBER_ETA1 == 3
@@ -52,7 +30,7 @@
  }
  #endif
  
-@@ -144,43 +141,40 @@
+@@ -152,43 +150,40 @@
  *              - const uint8_t *buf: pointer to input byte array
  **************************************************/
  #if KYBER_ETA1 == 3

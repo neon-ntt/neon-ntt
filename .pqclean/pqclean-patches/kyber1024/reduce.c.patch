@@ -1,14 +1,6 @@
 --- work/kyber1024/scheme/reduce.c
 +++ work-patched/kyber1024/scheme/reduce.c
-@@ -1,6 +1,6 @@
--#include <stdint.h>
- #include "params.h"
- #include "reduce.h"
-+#include <stdint.h>
- 
- /*************************************************
- * Name:        montgomery_reduce
-@@ -13,13 +13,12 @@
+@@ -20,13 +20,12 @@
  *
  * Returns:     integer in {-q+1,...,q-1} congruent to a * R^-1 modulo q.
  **************************************************/
@@ -27,7 +19,7 @@
  }
  
  /*************************************************
-@@ -33,10 +32,10 @@
+@@ -40,10 +39,10 @@
  * Returns:     integer in {-(q-1)/2,...,(q-1)/2} congruent to a modulo q.
  **************************************************/
  int16_t barrett_reduce(int16_t a) {

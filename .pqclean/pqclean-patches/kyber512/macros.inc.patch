@@ -1,6 +1,6 @@
 --- work/kyber512/scheme/macros.inc
 +++ work-patched/kyber512/scheme/macros.inc
-@@ -2,7 +2,7 @@
+@@ -28,7 +28,7 @@
  #ifndef MACROS_S
  #define MACROS_S
  

@@ -1,6 +1,6 @@
 --- work/kyber512/scheme/rejsample.h
 +++ work-patched/kyber512/scheme/rejsample.h
-@@ -1,8 +1,8 @@
+@@ -9,8 +9,8 @@
  #ifndef REJSAMPLE_H
  #define REJSAMPLE_H
  

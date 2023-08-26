@@ -1,6 +1,6 @@
 --- work/kyber768/scheme/symmetric.h
 +++ work-patched/kyber768/scheme/symmetric.h
-@@ -1,9 +1,9 @@
+@@ -9,9 +9,9 @@
  #ifndef SYMMETRIC_H
  #define SYMMETRIC_H
  
@@ -11,7 +11,7 @@
  
  #ifdef KYBER_90S
  
-@@ -77,13 +77,13 @@
+@@ -85,13 +85,13 @@
  #define XOF_BLOCKBYTES SHAKE128_RATE
  
  #define neon_prf(OUT1, OUT2, OUTBYTES, KEY, NONCE1, NONCE2) \

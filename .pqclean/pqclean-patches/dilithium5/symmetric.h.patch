@@ -1,6 +1,6 @@
 --- work/dilithium5/scheme/symmetric.h
 +++ work-patched/dilithium5/scheme/symmetric.h
-@@ -9,21 +9,24 @@
+@@ -41,21 +41,24 @@
  typedef shake128incctx stream128_state;
  typedef shake256incctx stream256_state;
  

@@ -1,6 +1,6 @@
 --- work/kyber1024/scheme/cbd.h
 +++ work-patched/kyber1024/scheme/cbd.h
-@@ -1,14 +1,14 @@
+@@ -8,14 +8,14 @@
  #ifndef CBD_H
  #define CBD_H
  

@@ -1,6 +1,6 @@
 --- work/kyber512/scheme/reduce.h
 +++ work-patched/kyber512/scheme/reduce.h
-@@ -1,11 +1,11 @@
+@@ -8,11 +8,11 @@
  #ifndef REDUCE_H
  #define REDUCE_H
  

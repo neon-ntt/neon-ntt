@@ -1,6 +1,6 @@
 --- work/kyber768/scheme/indcpa.h
 +++ work-patched/kyber768/scheme/indcpa.h
-@@ -1,9 +1,9 @@
+@@ -8,9 +8,9 @@
  #ifndef INDCPA_H
  #define INDCPA_H
  

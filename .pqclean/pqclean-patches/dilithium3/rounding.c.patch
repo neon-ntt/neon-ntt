@@ -1,6 +1,6 @@
 --- work/dilithium3/scheme/rounding.c
 +++ work-patched/dilithium3/scheme/rounding.c
-@@ -40,21 +40,21 @@
+@@ -47,21 +47,21 @@
      int32_t a1;
  
      a1  = (a + 127) >> 7;
@@ -28,7 +28,7 @@
  
      *a0  = a - a1 * 2 * GAMMA2;
      *a0 -= (((DILITHIUM_Q - 1) / 2 - *a0) >> 31) & DILITHIUM_Q;
-@@ -98,20 +98,18 @@
+@@ -105,20 +105,18 @@
          return a1;
      }
  

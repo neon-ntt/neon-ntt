@@ -1,33 +1,49 @@
 --- work/kyber768/scheme/__asm_poly.S
 +++ work-patched/kyber768/scheme/__asm_poly.S
-@@ -4,8 +4,8 @@
+@@ -25,13 +25,13 @@
+  * SOFTWARE.
+  */
+ 
+-#include "macros.i"
++#include "macros.inc"
+ 
  .align 2
- .global __asm_add_reduce
- .global ___asm_add_reduce
+-.global __asm_add_reduce
+-.global ___asm_add_reduce
 -__asm_add_reduce:
 -___asm_add_reduce:
++.global PQCLEAN_NAMESPACE__asm_add_reduce
++.global _PQCLEAN_NAMESPACE__asm_add_reduce
 +PQCLEAN_NAMESPACE__asm_add_reduce:
 +_PQCLEAN_NAMESPACE__asm_add_reduce:
  
      mov w4, #3329
      mov w5, #25519
-@@ -65,8 +65,8 @@
+@@ -89,10 +89,10 @@
+     br lr
+ 
  .align 2
- .global __asm_sub_reduce
- .global ___asm_sub_reduce
+-.global __asm_sub_reduce
+-.global ___asm_sub_reduce
 -__asm_sub_reduce:
 -___asm_sub_reduce:
++.global PQCLEAN_NAMESPACE__asm_sub_reduce
++.global _PQCLEAN_NAMESPACE__asm_sub_reduce
 +PQCLEAN_NAMESPACE__asm_sub_reduce:
 +_PQCLEAN_NAMESPACE__asm_sub_reduce:
  
      mov w4, #3329
      mov w5, #25519
-@@ -126,8 +126,8 @@
+@@ -150,10 +150,10 @@
+     br lr
+ 
  .align 2
- .global __asm_add_add_reduce
- .global ___asm_add_add_reduce
+-.global __asm_add_add_reduce
+-.global ___asm_add_add_reduce
 -__asm_add_add_reduce:
 -___asm_add_add_reduce:
++.global PQCLEAN_NAMESPACE__asm_add_add_reduce
++.global _PQCLEAN_NAMESPACE__asm_add_add_reduce
 +PQCLEAN_NAMESPACE__asm_add_add_reduce:
 +_PQCLEAN_NAMESPACE__asm_add_add_reduce:
  

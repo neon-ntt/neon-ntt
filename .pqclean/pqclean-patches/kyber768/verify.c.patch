@@ -1,14 +1,6 @@
 --- work/kyber768/scheme/verify.c
 +++ work-patched/kyber768/scheme/verify.c
-@@ -1,6 +1,6 @@
-+#include "verify.h"
- #include <stddef.h>
- #include <stdint.h>
--#include "verify.h"
- 
- /*************************************************
- * Name:        verify
-@@ -13,15 +13,15 @@
+@@ -20,15 +20,15 @@
  *
  * Returns 0 if the byte arrays are equal, 1 otherwise
  **************************************************/
@@ -31,7 +23,7 @@
  }
  
  /*************************************************
-@@ -37,11 +37,11 @@
+@@ -44,11 +44,11 @@
  *              size_t len:       Amount of bytes to be copied
  *              uint8_t b:        Condition bit; has to be in {0,1}
  **************************************************/

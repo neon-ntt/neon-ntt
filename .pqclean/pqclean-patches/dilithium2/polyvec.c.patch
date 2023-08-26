@@ -1,6 +1,6 @@
 --- work/dilithium2/scheme/polyvec.c
 +++ work-patched/dilithium2/scheme/polyvec.c
-@@ -6,7 +6,7 @@
+@@ -38,7 +38,7 @@
  #include "reduce.h"
  
  static const int32_t l_montgomery_const[4] = {
@@ -9,7 +9,7 @@
  };
  
  /*************************************************
-@@ -24,7 +24,7 @@
+@@ -56,7 +56,7 @@
      unsigned int i, j;
  
      for (j = 0; j < L; ++j) {
@@ -18,7 +18,7 @@
              poly_uniformx2(&mat[i + 0].vec[j], &mat[i + 1].vec[j], rho, (uint16_t) ((i << 8) + j), (uint16_t) (((i + 1) << 8) + j));
          }
      }
-@@ -53,10 +53,10 @@
+@@ -85,10 +85,10 @@
  void polyvecl_uniform_gamma1(polyvecl *v, const uint8_t seed[CRHBYTES], uint16_t nonce) {
      unsigned int i;
  
@@ -31,7 +31,7 @@
          poly_uniform_gamma1(&v->vec[i], seed, (uint16_t) (L * nonce + L - 1));
      }
  }
-@@ -146,11 +146,11 @@
+@@ -178,11 +178,11 @@
  *              - const polyvecl *u: pointer to first input vector
  *              - const polyvecl *v: pointer to second input vector
  **************************************************/
@@ -47,7 +47,7 @@
  }
  
  /*************************************************
-@@ -184,7 +184,7 @@
+@@ -216,7 +216,7 @@
  void polyveck_uniform_eta(polyveck *v, const uint8_t seed[CRHBYTES], uint16_t nonce) {
      unsigned int i;
  
@@ -56,7 +56,7 @@
          poly_uniform_eta(&v->vec[i], seed, nonce++);
      }
  
-@@ -414,8 +414,8 @@
+@@ -446,8 +446,8 @@
  * Returns number of 1 bits.
  **************************************************/
  unsigned int polyveck_make_hint(polyveck *h,

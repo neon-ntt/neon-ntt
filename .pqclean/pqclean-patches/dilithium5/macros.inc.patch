@@ -1,6 +1,9 @@
 --- work/dilithium5/scheme/macros.inc
 +++ work-patched/dilithium5/scheme/macros.inc
-@@ -1,4 +1,4 @@
+@@ -25,7 +25,7 @@
+  * SOFTWARE.
+  */
+ 
 -#include "macros_common.i"
 +#include "macros_common.inc"
  

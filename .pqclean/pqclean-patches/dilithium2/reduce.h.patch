@@ -1,6 +1,6 @@
 --- work/dilithium2/scheme/reduce.h
 +++ work-patched/dilithium2/scheme/reduce.h
-@@ -5,12 +5,16 @@
+@@ -12,12 +12,16 @@
  
  #define DILITHIUM_QINV 58728449 // q^(-1) mod 2^32
  

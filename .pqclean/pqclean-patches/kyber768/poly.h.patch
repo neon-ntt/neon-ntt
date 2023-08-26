@@ -1,6 +1,6 @@
 --- work/kyber768/scheme/poly.h
 +++ work-patched/kyber768/scheme/poly.h
-@@ -1,15 +1,15 @@
+@@ -9,15 +9,15 @@
  #ifndef POLY_H
  #define POLY_H
  
@@ -19,7 +19,7 @@
  } poly;
  
  #define poly_compress KYBER_NAMESPACE(poly_compress)
-@@ -24,7 +24,7 @@
+@@ -32,7 +32,7 @@
  #define poly_frommsg KYBER_NAMESPACE(poly_frommsg)
  void poly_frommsg(int16_t r[KYBER_N], const uint8_t msg[KYBER_INDCPA_MSGBYTES]);
  #define poly_tomsg KYBER_NAMESPACE(poly_tomsg)

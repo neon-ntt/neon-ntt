@@ -1,6 +1,7 @@
 --- work/dilithium3/scheme/packing.h
 +++ work-patched/dilithium3/scheme/packing.h
-@@ -1,32 +1,37 @@
+@@ -7,33 +7,38 @@
+ 
  #ifndef PACKING_H
  #define PACKING_H
 -#include "api.h"

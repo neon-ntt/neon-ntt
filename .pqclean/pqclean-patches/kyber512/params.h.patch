@@ -1,6 +1,6 @@
 --- work/kyber512/scheme/params.h
 +++ work-patched/kyber512/scheme/params.h
-@@ -2,33 +2,13 @@
+@@ -9,33 +9,13 @@
  #define PARAMS_H
  
  #ifndef KYBER_K
@@ -38,7 +38,7 @@
  
  #define KYBER_N 256
  #define KYBER_Q 3329
-@@ -36,8 +16,8 @@
+@@ -43,8 +23,8 @@
  #define KYBER_SYMBYTES 32   /* size in bytes of hashes, and seeds */
  #define KYBER_SSBYTES  32   /* size in bytes of shared key */
  
@@ -49,7 +49,7 @@
  
  #if KYBER_K == 2
  #define KYBER_ETA1 3
-@@ -65,4 +45,4 @@
+@@ -72,4 +52,4 @@
  #define KYBER_SECRETKEYBYTES  (KYBER_INDCPA_SECRETKEYBYTES + KYBER_INDCPA_PUBLICKEYBYTES + 2*KYBER_SYMBYTES)
  #define KYBER_CIPHERTEXTBYTES (KYBER_INDCPA_BYTES)
  

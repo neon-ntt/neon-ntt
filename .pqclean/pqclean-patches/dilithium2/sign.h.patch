@@ -1,6 +1,6 @@
 --- work/dilithium2/scheme/sign.h
 +++ work-patched/dilithium2/scheme/sign.h
-@@ -6,16 +6,15 @@
+@@ -13,16 +13,15 @@
  #include <stddef.h>
  #include <stdint.h>
  
@@ -20,7 +20,7 @@
  int crypto_sign_signature(uint8_t *sig, size_t *siglen,
                            const uint8_t *m, size_t mlen,
                            const uint8_t *sk);
-@@ -25,12 +24,12 @@
+@@ -32,12 +31,12 @@
                  const uint8_t *m, size_t mlen,
                  const uint8_t *sk);
  

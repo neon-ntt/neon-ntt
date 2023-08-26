@@ -1,6 +1,6 @@
 --- work/dilithium3/scheme/polyvec.h
 +++ work-patched/dilithium3/scheme/polyvec.h
-@@ -9,24 +9,34 @@
+@@ -16,24 +16,34 @@
      poly vec[L];
  } polyvecl;
  
@@ -37,7 +37,7 @@
  int polyvecl_chknorm(const polyvecl *v, int32_t B);
  
  
-@@ -36,33 +46,51 @@
+@@ -43,33 +53,51 @@
      poly vec[K];
  } polyveck;
  

@@ -1,19 +1,6 @@
 --- work/kyber768/scheme/neon_poly.c
 +++ work-patched/kyber768/scheme/neon_poly.c
-@@ -1,9 +1,9 @@
--#include <arm_neon.h>
-+#include "cbd.h"
-+#include "ntt.h"
- #include "params.h"
- #include "poly.h"
--#include "ntt.h"
--#include "cbd.h"
- #include "symmetric.h"
-+#include <arm_neon.h>
- 
- 
- /*************************************************
-@@ -20,13 +20,12 @@
+@@ -54,13 +54,12 @@
  **************************************************/
  void neon_poly_getnoise_eta1_2x(int16_t vec1[KYBER_N], int16_t vec2[KYBER_N],
                                  const uint8_t seed[KYBER_SYMBYTES],
@@ -33,7 +20,7 @@
  }
  
  /*************************************************
-@@ -44,22 +43,20 @@
+@@ -78,22 +77,20 @@
  **************************************************/
  void neon_poly_getnoise_eta2_2x(int16_t vec1[KYBER_N], int16_t vec2[KYBER_N],
                                  const uint8_t seed[KYBER_SYMBYTES],
@@ -66,7 +53,7 @@
  }
  
  /*************************************************
-@@ -71,9 +68,8 @@
+@@ -105,9 +102,8 @@
  *
  * Arguments:   - uint16_t *r: pointer to in/output polynomial
  **************************************************/
@@ -78,7 +65,7 @@
  }
  
  /*************************************************
-@@ -85,9 +81,8 @@
+@@ -119,9 +115,8 @@
  *
  * Arguments:   - uint16_t *a: pointer to in/output polynomial
  **************************************************/
@@ -90,7 +77,7 @@
  }
  
  
-@@ -102,14 +97,14 @@
+@@ -136,14 +131,14 @@
  *            - const poly *a: pointer to first input polynomial
  *            - const poly *b: pointer to second input polynomial
  **************************************************/
@@ -111,7 +98,7 @@
  }
  
  /*************************************************
-@@ -123,7 +118,7 @@
+@@ -157,7 +152,7 @@
  *            - const poly *a: pointer to first input polynomial
  *            - const poly *b: pointer to second input polynomial
  **************************************************/

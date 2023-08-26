@@ -1,6 +1,9 @@
 --- work/dilithium3/scheme/api.h
 +++ work-patched/dilithium3/scheme/api.h
-@@ -1,33 +1,32 @@
+@@ -5,36 +5,35 @@
+  * or public domain at https://github.com/pq-crystals/dilithium
+  */
+ 
 -#ifndef API_H
 -#define API_H
 +#ifndef PQCLEAN_NAMESPACE_API_H

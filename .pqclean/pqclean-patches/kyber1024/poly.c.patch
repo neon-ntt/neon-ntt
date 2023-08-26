@@ -1,20 +1,6 @@
 --- work/kyber1024/scheme/poly.c
 +++ work-patched/kyber1024/scheme/poly.c
-@@ -1,10 +1,10 @@
--#include <arm_neon.h>
-+#include "cbd.h"
-+#include "ntt.h"
- #include "params.h"
- #include "poly.h"
--#include "ntt.h"
- #include "reduce.h"
--#include "cbd.h"
- #include "symmetric.h"
-+#include <arm_neon.h>
- 
- /*************************************************
- * Name:        poly_compress
-@@ -15,46 +15,45 @@
+@@ -48,46 +48,45 @@
  *                            (of length KYBER_POLYCOMPRESSEDBYTES)
  *              - const poly *a: pointer to input polynomial
  **************************************************/
@@ -99,7 +85,7 @@
  }
  
  /*************************************************
-@@ -67,36 +66,36 @@
+@@ -100,36 +99,36 @@
  *              - const uint8_t *a: pointer to input byte array
  *                                  (of length KYBER_POLYCOMPRESSEDBYTES bytes)
  **************************************************/
@@ -165,7 +151,7 @@
  }
  
  /*************************************************
-@@ -108,21 +107,20 @@
+@@ -141,21 +140,20 @@
  *                            (needs space for KYBER_POLYBYTES bytes)
  *              - const poly *a: pointer to input polynomial
  **************************************************/
@@ -201,7 +187,7 @@
  }
  
  /*************************************************
-@@ -135,42 +133,40 @@
+@@ -168,42 +166,40 @@
  *              - const uint8_t *a: pointer to input byte array
  *                                  (of KYBER_POLYBYTES bytes)
  **************************************************/
@@ -278,7 +264,7 @@
  }
  
  /*************************************************
-@@ -181,21 +177,20 @@
+@@ -214,21 +210,20 @@
  * Arguments:   - poly *r: pointer to output polynomial
  *              - const uint8_t *msg: pointer to input message
  **************************************************/
@@ -310,7 +296,7 @@
  }
  
  /*************************************************
-@@ -206,19 +201,18 @@
+@@ -239,19 +234,18 @@
  * Arguments:   - uint8_t *msg: pointer to output message
  *              - const poly *a: pointer to input polynomial
  **************************************************/

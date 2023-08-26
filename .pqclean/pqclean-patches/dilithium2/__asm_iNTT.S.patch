@@ -1,7 +1,11 @@
 --- work/dilithium2/scheme/__asm_iNTT.S
 +++ work-patched/dilithium2/scheme/__asm_iNTT.S
-@@ -2,10 +2,10 @@
- #include "macros.i"
+@@ -25,13 +25,13 @@
+  * SOFTWARE.
+  */
+ 
+-#include "macros.i"
++#include "macros.inc"
  
  .align 2
 -.global __asm_intt_SIMD_top
@@ -15,7 +19,7 @@
  
      push_all
      Q         .req w20
-@@ -409,10 +409,10 @@
+@@ -435,10 +435,10 @@
      br lr
  
  .align 2

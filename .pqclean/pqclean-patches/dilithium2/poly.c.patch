@@ -1,6 +1,6 @@
 --- work/dilithium2/scheme/poly.c
 +++ work-patched/dilithium2/scheme/poly.c
-@@ -11,7 +11,7 @@
+@@ -43,7 +43,7 @@
  #include "ntt.h"
  
  static const int32_t montgomery_const[4] = {
@@ -9,7 +9,7 @@
  };
  
  #define DBENCH_START()
-@@ -25,11 +25,11 @@
+@@ -57,11 +57,11 @@
  *
  * Arguments:   - poly *a: pointer to input/output polynomial
  **************************************************/
@@ -23,7 +23,7 @@
  
      DBENCH_STOP(*tred);
  }
-@@ -42,11 +42,11 @@
+@@ -74,11 +74,11 @@
  *
  * Arguments:   - poly *a: pointer to input/output polynomial
  **************************************************/
@@ -37,7 +37,7 @@
  
      DBENCH_STOP(*tred);
  }
-@@ -59,11 +59,11 @@
+@@ -91,11 +91,11 @@
  *
  * Arguments:   - poly *a: pointer to input/output polynomial
  **************************************************/
@@ -51,7 +51,7 @@
  
      DBENCH_STOP(*tred);
  }
-@@ -173,11 +173,11 @@
+@@ -205,11 +205,11 @@
  *              - const poly *a: pointer to first input polynomial
  *              - const poly *b: pointer to second input polynomial
  **************************************************/
@@ -65,7 +65,7 @@
  
      DBENCH_STOP(*tmul);
  }
-@@ -194,11 +194,11 @@
+@@ -226,11 +226,11 @@
  *              - poly *a0: pointer to output polynomial with coefficients c0
  *              - const poly *a: pointer to input polynomial
  **************************************************/
@@ -79,7 +79,7 @@
  
      DBENCH_STOP(*tround);
  }
-@@ -363,8 +363,8 @@
+@@ -395,8 +395,8 @@
  
  #define POLY_UNIFORM_NBLOCKS ((768 + STREAM128_BLOCKBYTES - 1)/STREAM128_BLOCKBYTES)
  void poly_uniform(poly *a,
@@ -90,7 +90,7 @@
      unsigned int i, ctr, off;
      unsigned int buflen = POLY_UNIFORM_NBLOCKS * STREAM128_BLOCKBYTES;
      uint8_t buf[POLY_UNIFORM_NBLOCKS * STREAM128_BLOCKBYTES + 2];
-@@ -389,8 +389,8 @@
+@@ -421,8 +421,8 @@
  }
  
  void poly_uniformx2(poly *a0, poly *a1,
@@ -101,7 +101,7 @@
      unsigned int ctr0, ctr1;
      unsigned int buflen = POLY_UNIFORM_NBLOCKS * STREAM128_BLOCKBYTES;
      uint8_t buf0[POLY_UNIFORM_NBLOCKS * STREAM128_BLOCKBYTES + 2];
-@@ -439,7 +439,7 @@
+@@ -471,7 +471,7 @@
          t0 = buf[pos] & 0x0F;
          t1 = buf[pos++] >> 4;
  
@@ -110,7 +110,7 @@
  
          if (t0 < 15) {
              t0 = t0 - (205 * t0 >> 10) * 5;
-@@ -450,20 +450,20 @@
+@@ -482,20 +482,20 @@
              a[ctr++] = 2 - t1;
          }
  
@@ -135,7 +135,7 @@
  
  
      }
-@@ -489,8 +489,8 @@
+@@ -521,8 +521,8 @@
  #define POLY_UNIFORM_ETA_NBLOCKS ((227 + STREAM256_BLOCKBYTES - 1)/STREAM256_BLOCKBYTES)
  #endif
  void poly_uniform_eta(poly *a,
@@ -146,7 +146,7 @@
      unsigned int ctr;
      unsigned int buflen = POLY_UNIFORM_ETA_NBLOCKS * STREAM256_BLOCKBYTES;
      uint8_t buf[POLY_UNIFORM_ETA_NBLOCKS * STREAM256_BLOCKBYTES];
-@@ -509,8 +509,8 @@
+@@ -541,8 +541,8 @@
  }
  
  void poly_uniform_etax2(poly *a0, poly *a1,
@@ -157,7 +157,7 @@
      unsigned int ctr0, ctr1;
      unsigned int buflen = POLY_UNIFORM_ETA_NBLOCKS * STREAM256_BLOCKBYTES;
  
-@@ -545,8 +545,8 @@
+@@ -577,8 +577,8 @@
  **************************************************/
  #define POLY_UNIFORM_GAMMA1_NBLOCKS ((POLYZ_PACKEDBYTES + STREAM256_BLOCKBYTES - 1)/STREAM256_BLOCKBYTES)
  void poly_uniform_gamma1(poly *a,
@@ -168,7 +168,7 @@
      uint8_t buf[POLY_UNIFORM_GAMMA1_NBLOCKS * STREAM256_BLOCKBYTES];
      stream256_state state;
  
-@@ -557,8 +557,8 @@
+@@ -589,8 +589,8 @@
  }
  
  void poly_uniform_gamma1x2(poly *a0, poly *a1,
@@ -179,7 +179,7 @@
  
      uint8_t buf0[POLY_UNIFORM_GAMMA1_NBLOCKS * STREAM256_BLOCKBYTES];
      uint8_t buf1[POLY_UNIFORM_GAMMA1_NBLOCKS * STREAM256_BLOCKBYTES];
-@@ -634,36 +634,36 @@
+@@ -666,36 +666,36 @@
      uint8_t t[8];
      DBENCH_START();
  
@@ -239,7 +239,7 @@
  
      DBENCH_STOP(*tpack);
  }
-@@ -680,42 +680,42 @@
+@@ -712,42 +712,42 @@
      unsigned int i;
      DBENCH_START();
  
@@ -312,7 +312,7 @@
  
      DBENCH_STOP(*tpack);
  }
-@@ -754,11 +754,11 @@
+@@ -786,11 +786,11 @@
  * Arguments:   - poly *r: pointer to output polynomial
  *              - const uint8_t *a: byte array with bit-packed polynomial
  **************************************************/
@@ -326,7 +326,7 @@
  
      DBENCH_STOP(*tpack);
  }
-@@ -889,47 +889,47 @@
+@@ -921,47 +921,47 @@
      uint32_t t[4];
      DBENCH_START();
  
@@ -409,7 +409,7 @@
  
      DBENCH_STOP(*tpack);
  }
-@@ -947,57 +947,57 @@
+@@ -979,57 +979,57 @@
      unsigned int i;
      DBENCH_START();
  
@@ -511,7 +511,7 @@
  
      DBENCH_STOP(*tpack);
  }
-@@ -1016,27 +1016,28 @@
+@@ -1048,27 +1048,28 @@
      unsigned int i;
      DBENCH_START();
  

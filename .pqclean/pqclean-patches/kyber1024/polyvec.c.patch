@@ -1,15 +1,6 @@
 --- work/kyber1024/scheme/polyvec.c
 +++ work-patched/kyber1024/scheme/polyvec.c
-@@ -1,7 +1,7 @@
--#include <stdint.h>
- #include "params.h"
- #include "poly.h"
- #include "polyvec.h"
-+#include <stdint.h>
- 
- /*************************************************
- * Name:        polyvec_compress
-@@ -12,55 +12,54 @@
+@@ -19,55 +19,54 @@
  *                            (needs space for KYBER_POLYVECCOMPRESSEDBYTES)
  *              - const polyvec *a: pointer to input vector of polynomials
  **************************************************/
@@ -111,7 +102,7 @@
  }
  
  /*************************************************
-@@ -73,45 +72,46 @@
+@@ -80,45 +79,46 @@
  *              - const uint8_t *a: pointer to input byte array
  *                                  (of length KYBER_POLYVECCOMPRESSEDBYTES)
  **************************************************/
@@ -169,9 +160,7 @@
 +                r[i][8 * j + k] = ((uint32_t)(t[k] & 0x7FF) * KYBER_Q + 1024) >> 11;
 +            }
 +        }
-     }
--  }
--#else
++    }
 +    #elif (KYBER_POLYVECCOMPRESSEDBYTES == (KYBER_K * 320))
 +    uint16_t t[4];
 +    for (i = 0; i < KYBER_K; i++) {
@@ -186,7 +175,9 @@
 +                r[i][4 * j + k] = ((uint32_t)(t[k] & 0x3FF) * KYBER_Q + 512) >> 10;
 +            }
 +        }
-+    }
+     }
+-  }
+-#else
 +    #else
  #error "KYBER_POLYVECCOMPRESSEDBYTES needs to be in {320*KYBER_K, 352*KYBER_K}"
 -#endif
@@ -194,7 +185,7 @@
  }
  
  /*************************************************
-@@ -123,11 +123,11 @@
+@@ -130,11 +130,11 @@
  *                            (needs space for KYBER_POLYVECBYTES)
  *              - const polyvec *a: pointer to input vector of polynomials
  **************************************************/
@@ -211,7 +202,7 @@
  }
  
  /*************************************************
-@@ -140,10 +140,10 @@
+@@ -147,10 +147,10 @@
  *              - const polyvec *a: pointer to input vector of polynomials
  *                                  (of length KYBER_POLYVECBYTES)
  **************************************************/

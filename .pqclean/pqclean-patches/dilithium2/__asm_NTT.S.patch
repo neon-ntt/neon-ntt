@@ -1,25 +1,33 @@
 --- work/dilithium2/scheme/__asm_NTT.S
 +++ work-patched/dilithium2/scheme/__asm_NTT.S
-@@ -3,9 +3,9 @@
+@@ -25,13 +25,13 @@
+  * SOFTWARE.
+  */
+ 
+-#include "macros.i"
++#include "macros.inc"
  
  .align 2
- .global __asm_ntt_SIMD_top
+-.global __asm_ntt_SIMD_top
 -.global ___asm_ntt_SIMD_top
 -__asm_ntt_SIMD_top:
 -___asm_ntt_SIMD_top:
++.global PQCLEAN_NAMESPACE__asm_ntt_SIMD_top
 +.global _PQCLEAN_NAMESPACE__asm_ntt_SIMD_top
 +PQCLEAN_NAMESPACE__asm_ntt_SIMD_top:
 +_PQCLEAN_NAMESPACE__asm_ntt_SIMD_top:
  
      push_all
      Q         .req w20
-@@ -181,9 +181,9 @@
+@@ -206,10 +206,10 @@
+     br lr
  
  .align 2
- .global __asm_ntt_SIMD_bot
+-.global __asm_ntt_SIMD_bot
 -.global ___asm_ntt_SIMD_bot
 -__asm_ntt_SIMD_bot:
 -___asm_ntt_SIMD_bot:
++.global PQCLEAN_NAMESPACE__asm_ntt_SIMD_bot
 +.global _PQCLEAN_NAMESPACE__asm_ntt_SIMD_bot
 +PQCLEAN_NAMESPACE__asm_ntt_SIMD_bot:
 +_PQCLEAN_NAMESPACE__asm_ntt_SIMD_bot:
