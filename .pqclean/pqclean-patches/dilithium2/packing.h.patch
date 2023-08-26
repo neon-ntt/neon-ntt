@@ -1,9 +1,9 @@
 --- work/dilithium2/scheme/packing.h
 +++ work-patched/dilithium2/scheme/packing.h
 @@ -7,33 +7,38 @@
+  * or public domain at https://github.com/pq-crystals/dilithium
+  */
  
- #ifndef PACKING_H
- #define PACKING_H
 -#include "api.h"
  #include "params.h"
  #include "polyvec.h"

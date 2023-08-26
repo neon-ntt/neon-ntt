@@ -1,9 +1,9 @@
 --- work/dilithium5/scheme/ntt.h
 +++ work-patched/dilithium5/scheme/ntt.h
 @@ -32,44 +32,45 @@
+  * SOFTWARE.
+  */
  
- #ifndef NTT_H
- #define NTT_H
 -#include <stdint.h>
  #include "NTT_params.h"
 +#include "params.h"

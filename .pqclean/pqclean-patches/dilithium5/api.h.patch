@@ -1,31 +1,31 @@
 --- work/dilithium5/scheme/api.h
 +++ work-patched/dilithium5/scheme/api.h
-@@ -5,36 +5,36 @@
-  * or public domain at https://github.com/pq-crystals/dilithium
-  */
- 
+@@ -1,5 +1,5 @@
 -#ifndef API_H
 -#define API_H
 +#ifndef PQCLEAN_NAMESPACE_API_H
 +#define PQCLEAN_NAMESPACE_API_H
-+
+ 
+ /*
+  * This file is dual licensed
+@@ -9,31 +9,30 @@
  
  #include <stddef.h>
  #include <stdint.h>
 -#include "params.h"
--
  
--#define CRYPTO_PUBLICKEYBYTES DILITHIUM_CRYPTO_PUBLICKEYBYTES
--#define CRYPTO_SECRETKEYBYTES DILITHIUM_CRYPTO_SECRETKEYBYTES
--#define CRYPTO_BYTES DILITHIUM_CRYPTO_BYTES
 +#define PQCLEAN_NAMESPACE_CRYPTO_PUBLICKEYBYTES 2592
 +#define PQCLEAN_NAMESPACE_CRYPTO_SECRETKEYBYTES 4864
 +#define PQCLEAN_NAMESPACE_CRYPTO_BYTES 4595
 +#define PQCLEAN_NAMESPACE_CRYPTO_ALGNAME "Dilithium5"
  
+-#define CRYPTO_PUBLICKEYBYTES DILITHIUM_CRYPTO_PUBLICKEYBYTES
+-#define CRYPTO_SECRETKEYBYTES DILITHIUM_CRYPTO_SECRETKEYBYTES
+-#define CRYPTO_BYTES DILITHIUM_CRYPTO_BYTES
  
 +int PQCLEAN_NAMESPACE_crypto_sign_keypair(uint8_t *pk, uint8_t *sk);
  
+-
 -int crypto_sign_keypair(uint8_t *pk, uint8_t *sk);
 -
 -int crypto_sign_signature(

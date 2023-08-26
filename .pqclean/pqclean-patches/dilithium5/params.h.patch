@@ -1,6 +1,6 @@
 --- work/dilithium5/scheme/params.h
 +++ work-patched/dilithium5/scheme/params.h
-@@ -12,6 +12,12 @@
+@@ -11,6 +11,12 @@
  //#define DILITHIUM_MODE 3
  #define DILITHIUM_MODE 5
  
@@ -13,7 +13,7 @@
  #define SEEDBYTES 32
  #define CRHBYTES 64
  #define N 256
-@@ -84,11 +90,11 @@
+@@ -83,11 +89,11 @@
  #define POLYETA_PACKEDBYTES 128
  #endif
  
