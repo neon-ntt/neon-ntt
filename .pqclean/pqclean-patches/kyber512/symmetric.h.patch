@@ -1,8 +1,8 @@
 --- work/kyber512/scheme/symmetric.h
 +++ work-patched/kyber512/scheme/symmetric.h
-@@ -9,9 +9,9 @@
- #ifndef SYMMETRIC_H
- #define SYMMETRIC_H
+@@ -8,9 +8,9 @@
+  * public domain at https://github.com/cothan/kyber/blob/master/neon
+  */
  
 +#include "params.h"
  #include <stddef.h>
@@ -11,7 +11,7 @@
  
  #ifdef KYBER_90S
  
-@@ -85,13 +85,13 @@
+@@ -84,13 +84,13 @@
  #define XOF_BLOCKBYTES SHAKE128_RATE
  
  #define neon_prf(OUT1, OUT2, OUTBYTES, KEY, NONCE1, NONCE2) \

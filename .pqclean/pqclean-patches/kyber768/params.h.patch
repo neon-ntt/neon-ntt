@@ -1,8 +1,8 @@
 --- work/kyber768/scheme/params.h
 +++ work-patched/kyber768/scheme/params.h
-@@ -8,7 +8,7 @@
- #ifndef PARAMS_H
- #define PARAMS_H
+@@ -7,7 +7,7 @@
+  * public domain at https://github.com/pq-crystals/kyber/tree/master/ref
+  */
  
 -#define KYBER_NAMESPACE(s) CRYPTO_NAMESPACE(s)
 +#define KYBER_NAMESPACE(s) PQCLEAN_KYBER768_AARCH64_##s

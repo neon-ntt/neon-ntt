@@ -1,3 +1,5 @@
+#ifndef FIPS202X2_H
+#define FIPS202X2_H
 
 /*
  * This file is licensed
@@ -5,9 +7,6 @@
  * at https://github.com/GMUCERG/PQC_NEON/blob/main/neon/kyber or
  * public domain at https://github.com/cothan/kyber/blob/master/neon
  */
-
-#ifndef FIPS202X2_H
-#define FIPS202X2_H
 
 #include <stddef.h>
 #include <arm_neon.h>

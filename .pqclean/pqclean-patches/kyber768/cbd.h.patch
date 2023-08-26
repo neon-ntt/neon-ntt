@@ -1,8 +1,8 @@
 --- work/kyber768/scheme/cbd.h
 +++ work-patched/kyber768/scheme/cbd.h
-@@ -8,14 +8,14 @@
- #ifndef CBD_H
- #define CBD_H
+@@ -7,14 +7,14 @@
+  * public domain at https://github.com/pq-crystals/kyber/tree/master/ref
+  */
  
 -#include <stdint.h>
  #include "params.h"

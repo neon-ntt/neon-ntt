@@ -1,8 +1,8 @@
 --- work/dilithium3/scheme/fips202x2.h
 +++ work-patched/dilithium3/scheme/fips202x2.h
-@@ -9,8 +9,9 @@
- #ifndef FIPS202X2_H
- #define FIPS202X2_H
+@@ -8,8 +8,9 @@
+  * public domain at https://github.com/cothan/kyber/blob/master/neon
+  */
  
 -#include <stddef.h>
 +#include "params.h"
@@ -11,7 +11,7 @@
  
  typedef uint64x2_t v128;
  
-@@ -21,29 +22,35 @@
+@@ -20,29 +21,35 @@
  
  
  typedef struct {
@@ -48,7 +48,7 @@
  void shake128x2(uint8_t *out0,
                  uint8_t *out1,
                  size_t outlen,
-@@ -51,11 +58,11 @@
+@@ -50,11 +57,11 @@
                  const uint8_t *in1,
                  size_t inlen);
  

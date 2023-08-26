@@ -1,8 +1,18 @@
 --- work/kyber1024/scheme/params.h
 +++ work-patched/kyber1024/scheme/params.h
-@@ -9,33 +9,14 @@
- #define PARAMS_H
+@@ -1,3 +1,5 @@
++#ifndef PARAMS_H
++#define PARAMS_H
  
+ /*
+  * This file is licensed
+@@ -5,37 +7,15 @@
+  * public domain at https://github.com/pq-crystals/kyber/tree/master/ref
+  */
+ 
+-#ifndef PARAMS_H
+-#define PARAMS_H
+-
  #ifndef KYBER_K
 -#define KYBER_K 4	/* Change this for different security strengths */
 +#define KYBER_K 4   /* Change this for different security strengths */
@@ -39,7 +49,7 @@
  
  #define KYBER_N 256
  #define KYBER_Q 3329
-@@ -43,8 +24,8 @@
+@@ -43,8 +23,8 @@
  #define KYBER_SYMBYTES 32   /* size in bytes of hashes, and seeds */
  #define KYBER_SSBYTES  32   /* size in bytes of shared key */
  

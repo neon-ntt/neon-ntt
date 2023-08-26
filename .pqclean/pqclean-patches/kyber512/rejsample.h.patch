@@ -1,8 +1,8 @@
 --- work/kyber512/scheme/rejsample.h
 +++ work-patched/kyber512/scheme/rejsample.h
-@@ -9,8 +9,8 @@
- #ifndef REJSAMPLE_H
- #define REJSAMPLE_H
+@@ -8,8 +8,8 @@
+  * public domain at https://github.com/cothan/kyber/blob/master/neon
+  */
  
 -#include <stdint.h>
  #include "params.h"

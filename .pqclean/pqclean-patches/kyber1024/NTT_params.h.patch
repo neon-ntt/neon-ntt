@@ -1,6 +1,6 @@
 --- work/kyber1024/scheme/NTT_params.h
 +++ work-patched/kyber1024/scheme/NTT_params.h
-@@ -41,27 +41,27 @@
+@@ -40,27 +40,27 @@
  #define invomegaQ1 1175
  // R = 2^15 below
  // RmodQ1 = 2^15 mod^{+-} Q1

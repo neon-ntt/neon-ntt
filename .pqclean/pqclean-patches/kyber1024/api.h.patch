@@ -1,18 +1,25 @@
 --- work/kyber1024/scheme/api.h
 +++ work-patched/kyber1024/scheme/api.h
-@@ -6,9 +6,39 @@
-  */
- 
- 
+@@ -1,3 +1,5 @@
 +#ifndef PQCLEAN_NAMESPACE_API_H
 +#define PQCLEAN_NAMESPACE_API_H
-+
+ 
+ /*
+  * This file is licensed
+@@ -5,10 +7,36 @@
+  * public domain at https://github.com/pq-crystals/kyber/tree/master/ref
+  */
+ 
 +#include <stdint.h>
-+
+ 
 +#ifndef KYBER_K
  #include "params.h"
 +#endif
-+
+ 
+-#define CRYPTO_PUBLICKEYBYTES KYBER_PUBLICKEYBYTES
+-#define CRYPTO_SECRETKEYBYTES KYBER_SECRETKEYBYTES
+-#define CRYPTO_CIPHERTEXTBYTES KYBER_CIPHERTEXTBYTES
+-#define CRYPTO_BYTES KYBER_SSBYTES
 +#if KYBER_K == 2
 +#define PQCLEAN_NAMESPACE_CRYPTO_SECRETKEYBYTES  1632
 +#define PQCLEAN_NAMESPACE_CRYPTO_PUBLICKEYBYTES  800
@@ -38,10 +45,6 @@
 +int PQCLEAN_NAMESPACE_crypto_kem_enc(uint8_t *ct, uint8_t *ss, const uint8_t *pk);
 +
 +int PQCLEAN_NAMESPACE_crypto_kem_dec(uint8_t *ss, const uint8_t *ct, const uint8_t *sk);
- 
--#define CRYPTO_PUBLICKEYBYTES KYBER_PUBLICKEYBYTES
--#define CRYPTO_SECRETKEYBYTES KYBER_SECRETKEYBYTES
--#define CRYPTO_CIPHERTEXTBYTES KYBER_CIPHERTEXTBYTES
--#define CRYPTO_BYTES KYBER_SSBYTES
++
 +#endif
 

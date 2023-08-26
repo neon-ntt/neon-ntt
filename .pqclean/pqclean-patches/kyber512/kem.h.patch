@@ -1,8 +1,8 @@
 --- work/kyber512/scheme/kem.h
 +++ work-patched/kyber512/scheme/kem.h
-@@ -8,8 +8,8 @@
- #ifndef KEM_H
- #define KEM_H
+@@ -7,8 +7,8 @@
+  * public domain at https://github.com/pq-crystals/kyber/tree/master/ref
+  */
  
 -#include <stdint.h>
  #include "params.h"
@@ -10,7 +10,7 @@
  
  #define CRYPTO_SECRETKEYBYTES  KYBER_SECRETKEYBYTES
  #define CRYPTO_PUBLICKEYBYTES  KYBER_PUBLICKEYBYTES
-@@ -36,13 +36,10 @@
+@@ -35,13 +35,10 @@
  #endif
  #endif
  
