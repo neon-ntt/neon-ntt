@@ -8,26 +8,23 @@
  
  /*
   * This file is dual licensed
-@@ -9,31 +9,29 @@
+@@ -9,28 +9,29 @@
  
  #include <stddef.h>
  #include <stdint.h>
 -#include "params.h"
  
+-#define CRYPTO_PUBLICKEYBYTES DILITHIUM_CRYPTO_PUBLICKEYBYTES
+-#define CRYPTO_SECRETKEYBYTES DILITHIUM_CRYPTO_SECRETKEYBYTES
+-#define CRYPTO_BYTES DILITHIUM_CRYPTO_BYTES
 +#define PQCLEAN_NAMESPACE_CRYPTO_PUBLICKEYBYTES 1312
 +#define PQCLEAN_NAMESPACE_CRYPTO_SECRETKEYBYTES 2528
 +#define PQCLEAN_NAMESPACE_CRYPTO_BYTES 2420
 +#define PQCLEAN_NAMESPACE_CRYPTO_ALGNAME "Dilithium2"
  
--#define CRYPTO_PUBLICKEYBYTES DILITHIUM_CRYPTO_PUBLICKEYBYTES
--#define CRYPTO_SECRETKEYBYTES DILITHIUM_CRYPTO_SECRETKEYBYTES
--#define CRYPTO_BYTES DILITHIUM_CRYPTO_BYTES
+-int crypto_sign_keypair(uint8_t *pk, uint8_t *sk);
 +int PQCLEAN_NAMESPACE_crypto_sign_keypair(uint8_t *pk, uint8_t *sk);
  
--
--
--int crypto_sign_keypair(uint8_t *pk, uint8_t *sk);
--
 -int crypto_sign_signature(
 +int PQCLEAN_NAMESPACE_crypto_sign_signature(
      uint8_t *sig, size_t *siglen,

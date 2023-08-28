@@ -33,23 +33,23 @@ void poly_use_hint(poly *b, const poly *a, const poly *h);
 
 int poly_chknorm(const poly *a, int32_t B);
 void poly_uniform(poly *a,
-        const uint8_t seed[SEEDBYTES],
-        uint16_t nonce);
+                  const uint8_t seed[SEEDBYTES],
+                  uint16_t nonce);
 void poly_uniformx2(poly *a0, poly *a1,
-	const uint8_t seed[SEEDBYTES],
-	uint16_t nonce0, uint16_t nonce1);
+                    const uint8_t seed[SEEDBYTES],
+                    uint16_t nonce0, uint16_t nonce1);
 void poly_uniform_eta(poly *a,
-        const uint8_t seed[CRHBYTES],
-        uint16_t nonce);
+                      const uint8_t seed[CRHBYTES],
+                      uint16_t nonce);
 void poly_uniform_etax2(poly *a0, poly *a1,
-        const uint8_t seed[CRHBYTES],
-        uint16_t nonce0, uint16_t nonce1);
+                        const uint8_t seed[CRHBYTES],
+                        uint16_t nonce0, uint16_t nonce1);
 void poly_uniform_gamma1(poly *a,
-        const uint8_t seed[CRHBYTES],
-        uint16_t nonce);
+                         const uint8_t seed[CRHBYTES],
+                         uint16_t nonce);
 void poly_uniform_gamma1x2(poly *a0, poly *a1,
-        const uint8_t seed[CRHBYTES],
-        uint16_t nonce0, uint16_t nonce1);
+                           const uint8_t seed[CRHBYTES],
+                           uint16_t nonce0, uint16_t nonce1);
 void poly_challenge(poly *c, const uint8_t seed[SEEDBYTES]);
 
 void polyeta_pack(uint8_t *r, const poly *a);

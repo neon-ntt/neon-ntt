@@ -38,8 +38,8 @@
 #include "params.h"
 #include "poly.h"
 
-typedef struct{
-  poly vec[KYBER_K];
+typedef struct {
+    poly vec[KYBER_K];
 } polyvec;
 
 #define polyvec_compress KYBER_NAMESPACE(polyvec_compress)
@@ -62,6 +62,5 @@ void neon_polyvec_invntt_to_mont(int16_t r[KYBER_K][KYBER_N]);
 
 #define neon_polyvec_add_reduce KYBER_NAMESPACE(polyvec_add_reduce)
 void neon_polyvec_add_reduce(int16_t c[KYBER_K][KYBER_N], const int16_t a[KYBER_K][KYBER_N]);
-
 
 #endif

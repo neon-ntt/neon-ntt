@@ -64,7 +64,6 @@
 #define POLYT0_PACKEDBYTES  416
 #define POLYVECH_PACKEDBYTES (OMEGA + K)
 
-
 #if GAMMA1 == (1 << 17)
 #define POLYZ_PACKEDBYTES   576
 #elif GAMMA1 == (1 << 19)

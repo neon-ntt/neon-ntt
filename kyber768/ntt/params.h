@@ -9,7 +9,6 @@
 
 #define KYBER_NAMESPACE(s) CRYPTO_NAMESPACE(s)
 
-
 #define KYBER_N 256
 #define KYBER_Q 3329
 

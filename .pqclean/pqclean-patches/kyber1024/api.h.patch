@@ -6,20 +6,16 @@
  
  /*
   * This file is licensed
-@@ -5,10 +7,36 @@
+@@ -5,9 +7,36 @@
   * public domain at https://github.com/pq-crystals/kyber/tree/master/ref
   */
  
 +#include <stdint.h>
- 
++
 +#ifndef KYBER_K
  #include "params.h"
 +#endif
- 
--#define CRYPTO_PUBLICKEYBYTES KYBER_PUBLICKEYBYTES
--#define CRYPTO_SECRETKEYBYTES KYBER_SECRETKEYBYTES
--#define CRYPTO_CIPHERTEXTBYTES KYBER_CIPHERTEXTBYTES
--#define CRYPTO_BYTES KYBER_SSBYTES
++
 +#if KYBER_K == 2
 +#define PQCLEAN_NAMESPACE_CRYPTO_SECRETKEYBYTES  1632
 +#define PQCLEAN_NAMESPACE_CRYPTO_PUBLICKEYBYTES  800
@@ -45,6 +41,10 @@
 +int PQCLEAN_NAMESPACE_crypto_kem_enc(uint8_t *ct, uint8_t *ss, const uint8_t *pk);
 +
 +int PQCLEAN_NAMESPACE_crypto_kem_dec(uint8_t *ss, const uint8_t *ct, const uint8_t *sk);
-+
+ 
+-#define CRYPTO_PUBLICKEYBYTES KYBER_PUBLICKEYBYTES
+-#define CRYPTO_SECRETKEYBYTES KYBER_SECRETKEYBYTES
+-#define CRYPTO_CIPHERTEXTBYTES KYBER_CIPHERTEXTBYTES
+-#define CRYPTO_BYTES KYBER_SSBYTES
 +#endif
 

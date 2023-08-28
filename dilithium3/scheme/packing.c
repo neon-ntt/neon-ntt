@@ -10,7 +10,6 @@
 #include "poly.h"
 #include "polyvec.h"
 
-
 /*************************************************
 * Name:        pack_pk
 *
@@ -21,8 +20,8 @@
 *              - const polyveck *t1: pointer to vector t1
 **************************************************/
 void pack_pk(uint8_t pk[CRYPTO_PUBLICKEYBYTES],
-                                      const uint8_t rho[SEEDBYTES],
-                                      const polyveck *t1) {
+             const uint8_t rho[SEEDBYTES],
+             const polyveck *t1) {
     unsigned int i;
 
     for (i = 0; i < SEEDBYTES; ++i) {
@@ -45,8 +44,8 @@ void pack_pk(uint8_t pk[CRYPTO_PUBLICKEYBYTES],
 *              - uint8_t pk[]: byte array containing bit-packed pk
 **************************************************/
 void unpack_pk(uint8_t rho[SEEDBYTES],
-                                        polyveck *t1,
-                                        const uint8_t pk[CRYPTO_PUBLICKEYBYTES]) {
+               polyveck *t1,
+               const uint8_t pk[CRYPTO_PUBLICKEYBYTES]) {
     unsigned int i;
 
     for (i = 0; i < SEEDBYTES; ++i) {
@@ -73,12 +72,12 @@ void unpack_pk(uint8_t rho[SEEDBYTES],
 *              - const polyveck *s2: pointer to vector s2
 **************************************************/
 void pack_sk(uint8_t sk[CRYPTO_SECRETKEYBYTES],
-                                      const uint8_t rho[SEEDBYTES],
-                                      const uint8_t tr[SEEDBYTES],
-                                      const uint8_t key[SEEDBYTES],
-                                      const polyveck *t0,
-                                      const polyvecl *s1,
-                                      const polyveck *s2) {
+             const uint8_t rho[SEEDBYTES],
+             const uint8_t tr[SEEDBYTES],
+             const uint8_t key[SEEDBYTES],
+             const polyveck *t0,
+             const polyvecl *s1,
+             const polyveck *s2) {
     unsigned int i;
 
     for (i = 0; i < SEEDBYTES; ++i) {
@@ -125,12 +124,12 @@ void pack_sk(uint8_t sk[CRYPTO_SECRETKEYBYTES],
 *              - uint8_t sk[]: byte array containing bit-packed sk
 **************************************************/
 void unpack_sk(uint8_t rho[SEEDBYTES],
-                                        uint8_t tr[SEEDBYTES],
-                                        uint8_t key[SEEDBYTES],
-                                        polyveck *t0,
-                                        polyvecl *s1,
-                                        polyveck *s2,
-                                        const uint8_t sk[CRYPTO_SECRETKEYBYTES]) {
+               uint8_t tr[SEEDBYTES],
+               uint8_t key[SEEDBYTES],
+               polyveck *t0,
+               polyvecl *s1,
+               polyveck *s2,
+               const uint8_t sk[CRYPTO_SECRETKEYBYTES]) {
     unsigned int i;
 
     for (i = 0; i < SEEDBYTES; ++i) {
@@ -174,9 +173,9 @@ void unpack_sk(uint8_t rho[SEEDBYTES],
 *              - const polyveck *h: pointer to hint vector h
 **************************************************/
 void pack_sig(uint8_t sig[CRYPTO_BYTES],
-                                       const uint8_t c[SEEDBYTES],
-                                       const polyvecl *z,
-                                       const polyveck *h) {
+              const uint8_t c[SEEDBYTES],
+              const polyvecl *z,
+              const polyveck *h) {
     unsigned int i, j, k;
 
     for (i = 0; i < SEEDBYTES; ++i) {
@@ -220,9 +219,9 @@ void pack_sig(uint8_t sig[CRYPTO_BYTES],
 * Returns 1 in case of malformed signature; otherwise 0.
 **************************************************/
 int unpack_sig(uint8_t c[SEEDBYTES],
-                                        polyvecl *z,
-                                        polyveck *h,
-                                        const uint8_t sig[CRYPTO_BYTES]) {
+               polyvecl *z,
+               polyveck *h,
+               const uint8_t sig[CRYPTO_BYTES]) {
     unsigned int i, j, k;
 
     for (i = 0; i < SEEDBYTES; ++i) {

@@ -11,21 +11,4 @@
  
  #ifdef KYBER_90S
  
-@@ -84,13 +84,13 @@
- #define XOF_BLOCKBYTES SHAKE128_RATE
- 
- #define neon_prf(OUT1, OUT2, OUTBYTES, KEY, NONCE1, NONCE2) \
--        neon_kyber_shake256_prf(OUT1, OUT2, OUTBYTES, KEY, NONCE1, NONCE2);
-+    neon_kyber_shake256_prf(OUT1, OUT2, OUTBYTES, KEY, NONCE1, NONCE2);
- 
- #define neon_xof_absorb(STATE, SEED, X1, X2, Y1, Y2)\
--        neon_kyber_shake128_absorb(STATE, SEED, X1, X2, Y1, Y2)
-+    neon_kyber_shake128_absorb(STATE, SEED, X1, X2, Y1, Y2)
- 
- #define neon_xof_squeezeblocks(OUT0, OUT1, OUTBLOCKS, STATE) \
--        shake128x2_squeezeblocks(OUT0, OUT1, OUTBLOCKS, STATE)
-+    shake128x2_squeezeblocks(OUT0, OUT1, OUTBLOCKS, STATE)
- 
- #endif /* KYBER_90S */
- 
 

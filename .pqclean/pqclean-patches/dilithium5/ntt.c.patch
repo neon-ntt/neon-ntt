@@ -1,0 +1,11 @@
+--- work/dilithium5/scheme/ntt.c
++++ work-patched/dilithium5/scheme/ntt.c
+@@ -38,6 +38,7 @@
+ #include "NTT_params.h"
+ #include "ntt.h"
+ 
++
+ /*************************************************
+ * Name:        ntt
+ *
+

@@ -50,13 +50,11 @@
 *
 * Arguments:   - polyvec *r: pointer to in/output vector of polynomials
 **************************************************/
-void neon_polyvec_ntt(int16_t r[KYBER_K][KYBER_N])
-{
-  unsigned int i;
-  for (i = 0; i < KYBER_K; i++)
-  {
-    neon_poly_ntt(r[i]);
-  }
+void neon_polyvec_ntt(int16_t r[KYBER_K][KYBER_N]) {
+    unsigned int i;
+    for (i = 0; i < KYBER_K; i++) {
+        neon_poly_ntt(r[i]);
+    }
 }
 
 /*************************************************
@@ -67,11 +65,11 @@ void neon_polyvec_ntt(int16_t r[KYBER_K][KYBER_N])
 *
 * Arguments:   - polyvec *r: pointer to in/output vector of polynomials
 **************************************************/
-void neon_polyvec_invntt_to_mont(int16_t r[KYBER_K][KYBER_N])
-{
-  unsigned int i;
-  for (i = 0; i < KYBER_K; i++)
-    neon_poly_invntt_tomont(r[i]);
+void neon_polyvec_invntt_to_mont(int16_t r[KYBER_K][KYBER_N]) {
+    unsigned int i;
+    for (i = 0; i < KYBER_K; i++) {
+        neon_poly_invntt_tomont(r[i]);
+    }
 }
 
 /*************************************************
@@ -85,14 +83,11 @@ void neon_polyvec_invntt_to_mont(int16_t r[KYBER_K][KYBER_N])
 *            - const polyvec *a: pointer to first input vector of polynomials
 *            - const polyvec *b: pointer to second input vector of polynomials
 **************************************************/
-void neon_polyvec_add_reduce(int16_t c[KYBER_K][KYBER_N], const int16_t a[KYBER_K][KYBER_N])
-{
-  unsigned int i;
-  for (i = 0; i < KYBER_K; i++)
-  {
-    // c = c + a;
-    // c = reduce(c);
-    neon_poly_add_reduce(c[i], a[i]);
-  }
+void neon_polyvec_add_reduce(int16_t c[KYBER_K][KYBER_N], const int16_t a[KYBER_K][KYBER_N]) {
+    unsigned int i;
+    for (i = 0; i < KYBER_K; i++) {
+        // c = c + a;
+        // c = reduce(c);
+        neon_poly_add_reduce(c[i], a[i]);
+    }
 }
-

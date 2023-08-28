@@ -15,8 +15,8 @@
  * Elements of R_q = Z_q[X]/(X^n + 1). Represents polynomial
  * coeffs[0] + X*coeffs[1] + X^2*xoeffs[2] + ... + X^{n-1}*coeffs[n-1]
  */
-typedef struct{
-  int16_t coeffs[KYBER_N];
+typedef struct {
+    int16_t coeffs[KYBER_N];
 } poly;
 
 #define poly_compress KYBER_NAMESPACE(poly_compress)
@@ -26,7 +26,6 @@ void poly_decompress(int16_t r[KYBER_N], const uint8_t a[KYBER_POLYCOMPRESSEDBYT
 
 #define poly_tobytes KYBER_NAMESPACE(poly_tobytes)
 void poly_tobytes(uint8_t r[KYBER_POLYBYTES], const int16_t a[KYBER_N]);
-
 
 #define poly_frommsg KYBER_NAMESPACE(poly_frommsg)
 void poly_frommsg(int16_t r[KYBER_N], const uint8_t msg[KYBER_INDCPA_MSGBYTES]);

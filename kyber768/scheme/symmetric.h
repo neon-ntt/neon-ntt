@@ -44,8 +44,6 @@ void kyber_aes256ctr_prf(uint8_t *out, size_t outlen, const uint8_t key[32], uin
 
 typedef shake128ctx xof_state;
 
-
-
 #define kyber_shake128_absorb KYBER_NAMESPACE(kyber_shake128_absorb)
 void kyber_shake128_absorb(shake128ctx *s,
                            const uint8_t seed[KYBER_SYMBYTES],
@@ -84,13 +82,13 @@ void neon_kyber_shake256_prf(uint8_t *out1, uint8_t *out2,
 #define XOF_BLOCKBYTES SHAKE128_RATE
 
 #define neon_prf(OUT1, OUT2, OUTBYTES, KEY, NONCE1, NONCE2) \
-        neon_kyber_shake256_prf(OUT1, OUT2, OUTBYTES, KEY, NONCE1, NONCE2);
+    neon_kyber_shake256_prf(OUT1, OUT2, OUTBYTES, KEY, NONCE1, NONCE2);
 
 #define neon_xof_absorb(STATE, SEED, X1, X2, Y1, Y2)\
-        neon_kyber_shake128_absorb(STATE, SEED, X1, X2, Y1, Y2)
+    neon_kyber_shake128_absorb(STATE, SEED, X1, X2, Y1, Y2)
 
 #define neon_xof_squeezeblocks(OUT0, OUT1, OUTBLOCKS, STATE) \
-        shake128x2_squeezeblocks(OUT0, OUT1, OUTBLOCKS, STATE)
+    shake128x2_squeezeblocks(OUT0, OUT1, OUTBLOCKS, STATE)
 
 #endif /* KYBER_90S */
 

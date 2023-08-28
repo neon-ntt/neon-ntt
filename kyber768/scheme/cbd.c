@@ -31,8 +31,7 @@
 #define vsublh8(c, a, b) c = (int16x8_t)vsubl_high_u8(a, b);
 
 static
-void neon_cbd2(int16_t *r, const uint8_t buf[2 * KYBER_N / 4])
-{
+void neon_cbd2(int16_t *r, const uint8_t buf[2 * KYBER_N / 4]) {
     uint8x16x2_t t, d;      // 4
     uint8x16x2_t a, b;      // 4
     int16x8x4_t res1, res2; // 4
@@ -43,8 +42,7 @@ void neon_cbd2(int16_t *r, const uint8_t buf[2 * KYBER_N / 4])
 
     // Total SIMD register: 18
     unsigned int j = 0;
-    for (unsigned int i = 0; i < KYBER_N / 2; i += 16 * 2)
-    {
+    for (unsigned int i = 0; i < KYBER_N / 2; i += 16 * 2) {
         // 0, 2, 4 , 6,...
         // 1, 3, 5 , 7,...
         vload2(t, &buf[i]);
@@ -130,13 +128,12 @@ void neon_cbd2(int16_t *r, const uint8_t buf[2 * KYBER_N / 4])
 * Returns 32-bit unsigned integer loaded from x (most significant byte is zero)
 **************************************************/
 #if KYBER_ETA1 == 3
-static uint32_t load24_littleendian(const uint8_t x[3])
-{
-  uint32_t r;
-  r  = (uint32_t)x[0];
-  r |= (uint32_t)x[1] << 8;
-  r |= (uint32_t)x[2] << 16;
-  return r;
+static uint32_t load24_littleendian(const uint8_t x[3]) {
+    uint32_t r;
+    r  = (uint32_t)x[0];
+    r |= (uint32_t)x[1] << 8;
+    r |= (uint32_t)x[2] << 16;
+    return r;
 }
 #endif
 
@@ -152,43 +149,40 @@ static uint32_t load24_littleendian(const uint8_t x[3])
 *              - const uint8_t *buf: pointer to input byte array
 **************************************************/
 #if KYBER_ETA1 == 3
-static void cbd3(int16_t *r, const uint8_t buf[3*KYBER_N/4])
-{
-  unsigned int i,j;
-  uint32_t t,d;
-  int16_t a,b;
+static void cbd3(int16_t *r, const uint8_t buf[3 * KYBER_N / 4]) {
+    unsigned int i, j;
+    uint32_t t, d;
+    int16_t a, b;
 
-  for(i=0;i<KYBER_N/4;i++) {
-    t  = load24_littleendian(buf+3*i);
-    d  = t & 0x00249249;
-    d += (t>>1) & 0x00249249;
-    d += (t>>2) & 0x00249249;
+    for (i = 0; i < KYBER_N / 4; i++) {
+        t  = load24_littleendian(buf + 3 * i);
+        d  = t & 0x00249249;
+        d += (t >> 1) & 0x00249249;
+        d += (t >> 2) & 0x00249249;
 
-    for(j=0;j<4;j++) {
-      a = (d >> (6*j+0)) & 0x7;
-      b = (d >> (6*j+3)) & 0x7;
-      r[4*i+j] = a - b;
+        for (j = 0; j < 4; j++) {
+            a = (d >> (6 * j + 0)) & 0x7;
+            b = (d >> (6 * j + 3)) & 0x7;
+            r[4 * i + j] = a - b;
+        }
     }
-  }
 }
 #endif
 
-void poly_cbd_eta1(int16_t *r, const uint8_t buf[KYBER_ETA1*KYBER_N/4])
-{
-#if KYBER_ETA1 == 2
-  neon_cbd2(r, buf);
-#elif KYBER_ETA1 == 3
-  cbd3(r, buf);
-#else
+void poly_cbd_eta1(int16_t *r, const uint8_t buf[KYBER_ETA1 * KYBER_N / 4]) {
+    #if KYBER_ETA1 == 2
+    neon_cbd2(r, buf);
+    #elif KYBER_ETA1 == 3
+    cbd3(r, buf);
+    #else
 #error "This implementation requires eta1 in {2,3}"
-#endif
+    #endif
 }
 
-void poly_cbd_eta2(int16_t *r, const uint8_t buf[KYBER_ETA2*KYBER_N/4])
-{
-#if KYBER_ETA2 == 2
-  neon_cbd2(r, buf);
-#else
+void poly_cbd_eta2(int16_t *r, const uint8_t buf[KYBER_ETA2 * KYBER_N / 4]) {
+    #if KYBER_ETA2 == 2
+    neon_cbd2(r, buf);
+    #else
 #error "This implementation requires eta2 = 2"
-#endif
+    #endif
 }

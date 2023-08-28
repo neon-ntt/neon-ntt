@@ -63,6 +63,7 @@ for k in {2,3,4}; do
     unifdef -m -DKYBER_K=$k -U KYBER_90S -DKYBER_POLYVECCOMPRESSEDBYTES=$polyvec -UPROFILE_HASHING -DKYBER_ETA1=$eta1 -DKYBER_ETA2=2 -DKYBER_POLYCOMPRESSEDBYTES=$polycomp -DKYBER_N=256 -DKYBER_INDCPA_MSGBYTES=32 ~/git/PQClean/crypto_kem/kyber$ka/aarch64/*.[ch]
     namespc="s/PQCLEAN_NAMESPACE/PQCLEAN_KYBER${ka}_AARCH64/g"
     sed -i $namespc ~/git/PQClean/crypto_kem/kyber$ka/aarch64/*.[chS]
+    astyle --project ~/git/PQClean/crypto_kem/kyber$ka/aarch64/*.[ch]
 done
 
 # saber
@@ -120,4 +121,5 @@ for k in {2,3,5}; do
     unifdef -m -DDILITHIUM_Q=8380417 -DDILITHIUM_MODE=$k -DGAMMA1=$gamma1 -DGAMMA2=$gamma2 -DETA=$eta -UPROFILE_HASHING ~/git/PQClean/crypto_sign/${scheme}/aarch64/*.[ch]
     namespc="s/PQCLEAN_NAMESPACE/PQCLEAN_${scheme^^}_AARCH64/g"
     sed -i $namespc ~/git/PQClean/crypto_sign/${scheme}/aarch64/*.[chS]
+    astyle --project ~/git/PQClean/crypto_sign/${scheme}/aarch64/*.[ch]
 done

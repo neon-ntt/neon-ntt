@@ -18,9 +18,8 @@ typedef uint64x2_t v128;
 #define SHA3_256_RATE 136
 #define SHA3_512_RATE 72
 
-
 typedef struct {
-  v128 s[25];
+    v128 s[25];
 } keccakx2_state;
 
 void shake128x2_absorb(keccakx2_state *state,
