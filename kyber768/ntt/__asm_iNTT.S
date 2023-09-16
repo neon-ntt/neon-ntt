@@ -76,11 +76,11 @@ ___asm_intt_SIMD_bot:
     mov v1.H[0], BarrettM
 
     do_butterfly_vec_bot v28, v30, v18, v19, v29, v31,  v0, v12, v13, v14, v15
-    do_butterfly_vec_mixed_rev v28, v30, v18, v19, v29, v31, v24, v26, v16, v17, v25, v27,  v0, v12, v13, v14, v15,  v8,  v9, v10, v11
-    do_butterfly_vec_mixed_rev v24, v26, v16, v17, v25, v27, v28, v29, v18, v19, v30, v31,  v0,  v8,  v9, v10, v11,  v6,  v7,  v6,  v7
-    do_butterfly_vec_mixed_rev v28, v29, v18, v19, v30, v31, v24, v25, v16, v17, v26, v27,  v0,  v6,  v7,  v6,  v7,  v4,  v5,  v4,  v5
-    do_butterfly_vec_mixed_rev v24, v25, v16, v17, v26, v27, v24, v25, v18, v19, v28, v29,  v0,  v4,  v5,  v4,  v5,  v2,  v3,  v2,  v3
-    do_butterfly_vec_mixed_rev v24, v25, v18, v19, v28, v29, v26, v27, v16, v17, v30, v31,  v0,  v2,  v3,  v2,  v3,  v2,  v3,  v2,  v3
+    do_butterfly_vec_mix_rev v28, v30, v18, v19, v29, v31, v24, v26, v16, v17, v25, v27,  v0, v12, v13, v14, v15,  v8,  v9, v10, v11
+    do_butterfly_vec_mix_rev v24, v26, v16, v17, v25, v27, v28, v29, v18, v19, v30, v31,  v0,  v8,  v9, v10, v11,  v6,  v7,  v6,  v7
+    do_butterfly_vec_mix_rev v28, v29, v18, v19, v30, v31, v24, v25, v16, v17, v26, v27,  v0,  v6,  v7,  v6,  v7,  v4,  v5,  v4,  v5
+    do_butterfly_vec_mix_rev v24, v25, v16, v17, v26, v27, v24, v25, v18, v19, v28, v29,  v0,  v4,  v5,  v4,  v5,  v2,  v3,  v2,  v3
+    do_butterfly_vec_mix_rev v24, v25, v18, v19, v28, v29, v26, v27, v16, v17, v30, v31,  v0,  v2,  v3,  v2,  v3,  v2,  v3,  v2,  v3
     do_butterfly_vec_top v26, v27, v16, v17, v30, v31,  v0,  v2,  v3,   v2, v3
 
     qo_barrett v24, v25, v26, v27, v16, v17, v18, v19,  v1,  #11,  v0
@@ -190,11 +190,11 @@ ___asm_intt_SIMD_top:
     ld1 {v19.8H}, [src15]
 
     qo_butterfly_bot v12, v14, v16, v18, v28, v29, v30, v31, v13, v15, v17, v19,  v0,  v3, 0, 1,  v3, 2, 3,  v3, 4, 5,  v3, 6, 7
-    qo_butterfly_mixed_rev v12, v14, v16, v18, v28, v29, v30, v31, v13, v15, v17, v19,  v4,  v6,  v8, v10, v20, v21, v22, v23,  v5,  v7,  v9, v11,  v0,  v3, 0, 1,  v3, 2, 3,  v3, 4, 5,  v3, 6, 7,  v3, 0, 1,  v3, 2, 3,  v3, 4, 5,  v3, 6, 7
-    qo_butterfly_mixed_rev  v4,  v6,  v8, v10, v20, v21, v22, v23,  v5,  v7,  v9, v11, v12, v13, v16, v17, v28, v29, v30, v31, v14, v15, v18, v19,  v0,  v2, 0, 1,  v2, 2, 3,  v2, 4, 5,  v2, 6, 7,  v1, 4, 5,  v1, 4, 5,  v1, 6, 7,  v1, 6, 7
-    qo_butterfly_mixed_rev v12, v13, v16, v17, v28, v29, v30, v31, v14, v15, v18, v19,  v4,  v5,  v8,  v9, v20, v21, v22, v23,  v6,  v7, v10, v11,  v0,  v1, 4, 5,  v1, 4, 5,  v1, 6, 7,  v1, 6, 7,  v1, 0, 1,  v1, 0, 1,  v1, 2, 3,  v1, 2, 3
-    qo_butterfly_mixed_rev  v4,  v5,  v8,  v9, v20, v21, v22, v23,  v6,  v7, v10, v11, v12, v13, v14, v15, v28, v29, v30, v31, v16, v17, v18, v19,  v0,  v1, 0, 1,  v1, 0, 1,  v1, 2, 3,  v1, 2, 3,  v0, 6, 7,  v0, 6, 7,  v0, 6, 7,  v0, 6, 7
-    qo_butterfly_mixed_rev v12, v13, v14, v15, v28, v29, v30, v31, v16, v17, v18, v19,  v4,  v5,  v6,  v7, v20, v21, v22, v23,  v8,  v9, v10, v11,  v0,  v0, 6, 7,  v0, 6, 7,  v0, 6, 7,  v0, 6, 7,  v0, 4, 5,  v0, 4, 5,  v0, 4, 5,  v0, 4, 5
+    qo_butterfly_mix_rev v12, v14, v16, v18, v28, v29, v30, v31, v13, v15, v17, v19,  v4,  v6,  v8, v10, v20, v21, v22, v23,  v5,  v7,  v9, v11,  v0,  v3, 0, 1,  v3, 2, 3,  v3, 4, 5,  v3, 6, 7,  v3, 0, 1,  v3, 2, 3,  v3, 4, 5,  v3, 6, 7
+    qo_butterfly_mix_rev  v4,  v6,  v8, v10, v20, v21, v22, v23,  v5,  v7,  v9, v11, v12, v13, v16, v17, v28, v29, v30, v31, v14, v15, v18, v19,  v0,  v2, 0, 1,  v2, 2, 3,  v2, 4, 5,  v2, 6, 7,  v1, 4, 5,  v1, 4, 5,  v1, 6, 7,  v1, 6, 7
+    qo_butterfly_mix_rev v12, v13, v16, v17, v28, v29, v30, v31, v14, v15, v18, v19,  v4,  v5,  v8,  v9, v20, v21, v22, v23,  v6,  v7, v10, v11,  v0,  v1, 4, 5,  v1, 4, 5,  v1, 6, 7,  v1, 6, 7,  v1, 0, 1,  v1, 0, 1,  v1, 2, 3,  v1, 2, 3
+    qo_butterfly_mix_rev  v4,  v5,  v8,  v9, v20, v21, v22, v23,  v6,  v7, v10, v11, v12, v13, v14, v15, v28, v29, v30, v31, v16, v17, v18, v19,  v0,  v1, 0, 1,  v1, 0, 1,  v1, 2, 3,  v1, 2, 3,  v0, 6, 7,  v0, 6, 7,  v0, 6, 7,  v0, 6, 7
+    qo_butterfly_mix_rev v12, v13, v14, v15, v28, v29, v30, v31, v16, v17, v18, v19,  v4,  v5,  v6,  v7, v20, v21, v22, v23,  v8,  v9, v10, v11,  v0,  v0, 6, 7,  v0, 6, 7,  v0, 6, 7,  v0, 6, 7,  v0, 4, 5,  v0, 4, 5,  v0, 4, 5,  v0, 4, 5
     qo_butterfly_top  v4,  v5,  v6,  v7, v20, v21, v22, v23,  v8,  v9, v10, v11,  v0,  v0, 4, 5,  v0, 4, 5,  v0, 4, 5,  v0, 4, 5
 
     qo_barrett_vec  v4,  v5,  v12,  v13, v20, v21, v22, v23, v25, #11, v24
@@ -202,7 +202,7 @@ ___asm_intt_SIMD_top:
     mov v0.S[1], invN_f
 
     qo_butterfly_bot  v4,  v5,  v6,  v7, v28, v29, v30, v31, v12, v13, v14, v15,  v0,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3
-    qo_butterfly_mixed_rev  v4,  v5,  v6,  v7, v28, v29, v30, v31, v12, v13, v14, v15,  v8,  v9, v10, v11, v20, v21, v22, v23, v16, v17, v18, v19,  v0,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3
+    qo_butterfly_mix_rev  v4,  v5,  v6,  v7, v28, v29, v30, v31, v12, v13, v14, v15,  v8,  v9, v10, v11, v20, v21, v22, v23, v16, v17, v18, v19,  v0,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3
     qo_butterfly_top  v8,  v9, v10, v11, v20, v21, v22, v23, v16, v17, v18, v19,  v0,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3
 
     mov v0.S[1], invN
@@ -269,11 +269,11 @@ ___asm_intt_SIMD_top:
     ld1 {v19.8H}, [src15]
 
     qo_butterfly_bot v12, v14, v16, v18, v28, v29, v30, v31, v13, v15, v17, v19,  v0,  v3, 0, 1,  v3, 2, 3,  v3, 4, 5,  v3, 6, 7
-    qo_butterfly_mixed_rev v12, v14, v16, v18, v28, v29, v30, v31, v13, v15, v17, v19,  v4,  v6,  v8, v10, v20, v21, v22, v23,  v5,  v7,  v9, v11,  v0,  v3, 0, 1,  v3, 2, 3,  v3, 4, 5,  v3, 6, 7,  v3, 0, 1,  v3, 2, 3,  v3, 4, 5,  v3, 6, 7
-    qo_butterfly_mixed_rev  v4,  v6,  v8, v10, v20, v21, v22, v23,  v5,  v7,  v9, v11, v12, v13, v16, v17, v28, v29, v30, v31, v14, v15, v18, v19,  v0,  v2, 0, 1,  v2, 2, 3,  v2, 4, 5,  v2, 6, 7,  v1, 4, 5,  v1, 4, 5,  v1, 6, 7,  v1, 6, 7
-    qo_butterfly_mixed_rev v12, v13, v16, v17, v28, v29, v30, v31, v14, v15, v18, v19,  v4,  v5,  v8,  v9, v20, v21, v22, v23,  v6,  v7, v10, v11,  v0,  v1, 4, 5,  v1, 4, 5,  v1, 6, 7,  v1, 6, 7,  v1, 0, 1,  v1, 0, 1,  v1, 2, 3,  v1, 2, 3
-    qo_butterfly_mixed_rev  v4,  v5,  v8,  v9, v20, v21, v22, v23,  v6,  v7, v10, v11, v12, v13, v14, v15, v28, v29, v30, v31, v16, v17, v18, v19,  v0,  v1, 0, 1,  v1, 0, 1,  v1, 2, 3,  v1, 2, 3,  v0, 6, 7,  v0, 6, 7,  v0, 6, 7,  v0, 6, 7
-    qo_butterfly_mixed_rev v12, v13, v14, v15, v28, v29, v30, v31, v16, v17, v18, v19,  v4,  v5,  v6,  v7, v20, v21, v22, v23,  v8,  v9, v10, v11,  v0,  v0, 6, 7,  v0, 6, 7,  v0, 6, 7,  v0, 6, 7,  v0, 4, 5,  v0, 4, 5,  v0, 4, 5,  v0, 4, 5
+    qo_butterfly_mix_rev v12, v14, v16, v18, v28, v29, v30, v31, v13, v15, v17, v19,  v4,  v6,  v8, v10, v20, v21, v22, v23,  v5,  v7,  v9, v11,  v0,  v3, 0, 1,  v3, 2, 3,  v3, 4, 5,  v3, 6, 7,  v3, 0, 1,  v3, 2, 3,  v3, 4, 5,  v3, 6, 7
+    qo_butterfly_mix_rev  v4,  v6,  v8, v10, v20, v21, v22, v23,  v5,  v7,  v9, v11, v12, v13, v16, v17, v28, v29, v30, v31, v14, v15, v18, v19,  v0,  v2, 0, 1,  v2, 2, 3,  v2, 4, 5,  v2, 6, 7,  v1, 4, 5,  v1, 4, 5,  v1, 6, 7,  v1, 6, 7
+    qo_butterfly_mix_rev v12, v13, v16, v17, v28, v29, v30, v31, v14, v15, v18, v19,  v4,  v5,  v8,  v9, v20, v21, v22, v23,  v6,  v7, v10, v11,  v0,  v1, 4, 5,  v1, 4, 5,  v1, 6, 7,  v1, 6, 7,  v1, 0, 1,  v1, 0, 1,  v1, 2, 3,  v1, 2, 3
+    qo_butterfly_mix_rev  v4,  v5,  v8,  v9, v20, v21, v22, v23,  v6,  v7, v10, v11, v12, v13, v14, v15, v28, v29, v30, v31, v16, v17, v18, v19,  v0,  v1, 0, 1,  v1, 0, 1,  v1, 2, 3,  v1, 2, 3,  v0, 6, 7,  v0, 6, 7,  v0, 6, 7,  v0, 6, 7
+    qo_butterfly_mix_rev v12, v13, v14, v15, v28, v29, v30, v31, v16, v17, v18, v19,  v4,  v5,  v6,  v7, v20, v21, v22, v23,  v8,  v9, v10, v11,  v0,  v0, 6, 7,  v0, 6, 7,  v0, 6, 7,  v0, 6, 7,  v0, 4, 5,  v0, 4, 5,  v0, 4, 5,  v0, 4, 5
     qo_butterfly_top  v4,  v5,  v6,  v7, v20, v21, v22, v23,  v8,  v9, v10, v11,  v0,  v0, 4, 5,  v0, 4, 5,  v0, 4, 5,  v0, 4, 5
 
     qo_barrett_vec  v4,  v5,  v12,  v13, v20, v21, v22, v23, v25, #11, v24
@@ -281,7 +281,7 @@ ___asm_intt_SIMD_top:
     mov v0.S[1], invN_f
 
     qo_butterfly_bot  v4,  v5,  v6,  v7, v28, v29, v30, v31, v12, v13, v14, v15,  v0,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3
-    qo_butterfly_mixed_rev  v4,  v5,  v6,  v7, v28, v29, v30, v31, v12, v13, v14, v15,  v8,  v9, v10, v11, v20, v21, v22, v23, v16, v17, v18, v19,  v0,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3
+    qo_butterfly_mix_rev  v4,  v5,  v6,  v7, v28, v29, v30, v31, v12, v13, v14, v15,  v8,  v9, v10, v11, v20, v21, v22, v23, v16, v17, v18, v19,  v0,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3
     qo_butterfly_top  v8,  v9, v10, v11, v20, v21, v22, v23, v16, v17, v18, v19,  v0,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3
 
     mov v0.S[1], invN
