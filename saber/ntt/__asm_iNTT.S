@@ -79,11 +79,11 @@ ___asm_intt_SIMD_top:
 
     dq_butterfly_top  v1,  v5,  v3,  v7, v16, v17, v20, v21, 2, 3, v21, 2, 3
 
-    dq_butterfly_mixed  v1,  v5,  v3,  v7, v16, v17,  v9, v13, v11, v15, v18, v19, v20, v21, 2, 3, v21, 2, 3, v21, 2, 3, v21, 2, 3
-    dq_butterfly_mixed  v9, v13, v11, v15, v18, v19,  v0,  v1,  v4,  v5, v28, v29, v20, v21, 2, 3, v21, 2, 3, v22, 0, 1, v22, 2, 3
-    dq_butterfly_mixed  v0,  v1,  v4,  v5, v28, v29,  v2,  v3,  v6,  v7, v30, v31, v20, v22, 0, 1, v22, 2, 3, v23, 0, 1, v23, 2, 3
-    dq_butterfly_mixed  v2,  v3,  v6,  v7, v30, v31,  v8,  v9, v12, v13, v16, v17, v20, v23, 0, 1, v23, 2, 3, v22, 0, 1, v22, 2, 3
-    dq_butterfly_mixed  v8,  v9, v12, v13, v16, v17, v10, v11, v14, v15, v18, v19, v20, v22, 0, 1, v22, 2, 3, v23, 0, 1, v23, 2, 3
+    dq_butterfly_mix  v1,  v5,  v3,  v7, v16, v17,  v9, v13, v11, v15, v18, v19, v20, v21, 2, 3, v21, 2, 3, v21, 2, 3, v21, 2, 3
+    dq_butterfly_mix  v9, v13, v11, v15, v18, v19,  v0,  v1,  v4,  v5, v28, v29, v20, v21, 2, 3, v21, 2, 3, v22, 0, 1, v22, 2, 3
+    dq_butterfly_mix  v0,  v1,  v4,  v5, v28, v29,  v2,  v3,  v6,  v7, v30, v31, v20, v22, 0, 1, v22, 2, 3, v23, 0, 1, v23, 2, 3
+    dq_butterfly_mix  v2,  v3,  v6,  v7, v30, v31,  v8,  v9, v12, v13, v16, v17, v20, v23, 0, 1, v23, 2, 3, v22, 0, 1, v22, 2, 3
+    dq_butterfly_mix  v8,  v9, v12, v13, v16, v17, v10, v11, v14, v15, v18, v19, v20, v22, 0, 1, v22, 2, 3, v23, 0, 1, v23, 2, 3
     dq_butterfly_bot v10, v11, v14, v15, v18, v19, v20, v23, 0, 1, v23, 2, 3
 
     mov counter, #3
@@ -130,11 +130,11 @@ ___asm_intt_SIMD_top:
 
     dq_butterfly_top  v1,  v5,  v3,  v7, v16, v17, v20, v21, 2, 3, v21, 2, 3
 
-    dq_butterfly_mixed  v1,  v5,  v3,  v7, v16, v17,  v9, v13, v11, v15, v18, v19, v20, v21, 2, 3, v21, 2, 3, v21, 2, 3, v21, 2, 3
-    dq_butterfly_mixed  v9, v13, v11, v15, v18, v19,  v0,  v1,  v4,  v5, v28, v29, v20, v21, 2, 3, v21, 2, 3, v22, 0, 1, v22, 2, 3
-    dq_butterfly_mixed  v0,  v1,  v4,  v5, v28, v29,  v2,  v3,  v6,  v7, v30, v31, v20, v22, 0, 1, v22, 2, 3, v23, 0, 1, v23, 2, 3
-    dq_butterfly_mixed  v2,  v3,  v6,  v7, v30, v31,  v8,  v9, v12, v13, v16, v17, v20, v23, 0, 1, v23, 2, 3, v22, 0, 1, v22, 2, 3
-    dq_butterfly_mixed  v8,  v9, v12, v13, v16, v17, v10, v11, v14, v15, v18, v19, v20, v22, 0, 1, v22, 2, 3, v23, 0, 1, v23, 2, 3
+    dq_butterfly_mix  v1,  v5,  v3,  v7, v16, v17,  v9, v13, v11, v15, v18, v19, v20, v21, 2, 3, v21, 2, 3, v21, 2, 3, v21, 2, 3
+    dq_butterfly_mix  v9, v13, v11, v15, v18, v19,  v0,  v1,  v4,  v5, v28, v29, v20, v21, 2, 3, v21, 2, 3, v22, 0, 1, v22, 2, 3
+    dq_butterfly_mix  v0,  v1,  v4,  v5, v28, v29,  v2,  v3,  v6,  v7, v30, v31, v20, v22, 0, 1, v22, 2, 3, v23, 0, 1, v23, 2, 3
+    dq_butterfly_mix  v2,  v3,  v6,  v7, v30, v31,  v8,  v9, v12, v13, v16, v17, v20, v23, 0, 1, v23, 2, 3, v22, 0, 1, v22, 2, 3
+    dq_butterfly_mix  v8,  v9, v12, v13, v16, v17, v10, v11, v14, v15, v18, v19, v20, v22, 0, 1, v22, 2, 3, v23, 0, 1, v23, 2, 3
     dq_butterfly_bot v10, v11, v14, v15, v18, v19, v20, v23, 0, 1, v23, 2, 3
 
     sub counter, counter, #1
@@ -241,11 +241,11 @@ ___asm_intt_SIMD_bot:
     dup v26.4S, nQhalf
 
     dq_butterfly_top  v4,  v6,  v5,  v7, v18, v19, v24, v20, 2, 3, v20, 2, 3
-    dq_butterfly_mixed  v4,  v6,  v5,  v7, v18, v19,  v0,  v2,  v1,  v3, v16, v17, v24, v20, 2, 3, v20, 2, 3, v20, 2, 3, v20, 2, 3
-    dq_butterfly_mixed  v0,  v2,  v1,  v3, v16, v17,  v4,  v5,  v6,  v7, v18, v19, v24, v20, 2, 3, v20, 2, 3, v21, 0, 1, v21, 2, 3
-    dq_butterfly_mixed  v4,  v5,  v6,  v7, v18, v19,  v0,  v1,  v2,  v3, v16, v17, v24, v21, 0, 1, v21, 2, 3, v21, 0, 1, v21, 2, 3
-    dq_butterfly_mixed  v0,  v1,  v2,  v3, v16, v17,  v2,  v3,  v6,  v7, v18, v19, v24, v21, 0, 1, v21, 2, 3, v23, 0, 1, v23, 2, 3
-    dq_butterfly_mixed  v2,  v3,  v6,  v7, v18, v19,  v0,  v1,  v4,  v5, v16, v17, v24, v23, 0, 1, v23, 2, 3, v22, 0, 1, v22, 2, 3
+    dq_butterfly_mix  v4,  v6,  v5,  v7, v18, v19,  v0,  v2,  v1,  v3, v16, v17, v24, v20, 2, 3, v20, 2, 3, v20, 2, 3, v20, 2, 3
+    dq_butterfly_mix  v0,  v2,  v1,  v3, v16, v17,  v4,  v5,  v6,  v7, v18, v19, v24, v20, 2, 3, v20, 2, 3, v21, 0, 1, v21, 2, 3
+    dq_butterfly_mix  v4,  v5,  v6,  v7, v18, v19,  v0,  v1,  v2,  v3, v16, v17, v24, v21, 0, 1, v21, 2, 3, v21, 0, 1, v21, 2, 3
+    dq_butterfly_mix  v0,  v1,  v2,  v3, v16, v17,  v2,  v3,  v6,  v7, v18, v19, v24, v21, 0, 1, v21, 2, 3, v23, 0, 1, v23, 2, 3
+    dq_butterfly_mix  v2,  v3,  v6,  v7, v18, v19,  v0,  v1,  v4,  v5, v16, v17, v24, v23, 0, 1, v23, 2, 3, v22, 0, 1, v22, 2, 3
     dq_butterfly_bot  v0,  v1,  v4,  v5, v16, v17, v24, v22, 0, 1, v22, 2, 3
 
     ld2 { v8.4S,  v9.4S}, [twistT0], #32
@@ -356,11 +356,11 @@ ___asm_intt_SIMD_bot:
     dup v26.4S, nQhalf
 
     dq_butterfly_top  v4,  v6,  v5,  v7, v18, v19, v24, v20, 2, 3, v20, 2, 3
-    dq_butterfly_mixed  v4,  v6,  v5,  v7, v18, v19,  v0,  v2,  v1,  v3, v16, v17, v24, v20, 2, 3, v20, 2, 3, v20, 2, 3, v20, 2, 3
-    dq_butterfly_mixed  v0,  v2,  v1,  v3, v16, v17,  v4,  v5,  v6,  v7, v18, v19, v24, v20, 2, 3, v20, 2, 3, v21, 0, 1, v21, 2, 3
-    dq_butterfly_mixed  v4,  v5,  v6,  v7, v18, v19,  v0,  v1,  v2,  v3, v16, v17, v24, v21, 0, 1, v21, 2, 3, v21, 0, 1, v21, 2, 3
-    dq_butterfly_mixed  v0,  v1,  v2,  v3, v16, v17,  v2,  v3,  v6,  v7, v18, v19, v24, v21, 0, 1, v21, 2, 3, v23, 0, 1, v23, 2, 3
-    dq_butterfly_mixed  v2,  v3,  v6,  v7, v18, v19,  v0,  v1,  v4,  v5, v16, v17, v24, v23, 0, 1, v23, 2, 3, v22, 0, 1, v22, 2, 3
+    dq_butterfly_mix  v4,  v6,  v5,  v7, v18, v19,  v0,  v2,  v1,  v3, v16, v17, v24, v20, 2, 3, v20, 2, 3, v20, 2, 3, v20, 2, 3
+    dq_butterfly_mix  v0,  v2,  v1,  v3, v16, v17,  v4,  v5,  v6,  v7, v18, v19, v24, v20, 2, 3, v20, 2, 3, v21, 0, 1, v21, 2, 3
+    dq_butterfly_mix  v4,  v5,  v6,  v7, v18, v19,  v0,  v1,  v2,  v3, v16, v17, v24, v21, 0, 1, v21, 2, 3, v21, 0, 1, v21, 2, 3
+    dq_butterfly_mix  v0,  v1,  v2,  v3, v16, v17,  v2,  v3,  v6,  v7, v18, v19, v24, v21, 0, 1, v21, 2, 3, v23, 0, 1, v23, 2, 3
+    dq_butterfly_mix  v2,  v3,  v6,  v7, v18, v19,  v0,  v1,  v4,  v5, v16, v17, v24, v23, 0, 1, v23, 2, 3, v22, 0, 1, v22, 2, 3
     dq_butterfly_bot  v0,  v1,  v4,  v5, v16, v17, v24, v22, 0, 1, v22, 2, 3
 
     ld2 { v8.4S,  v9.4S}, [twistT0], #32
