@@ -48,66 +48,66 @@ int main()
   setup_rdtsc();
 //
 
-  TIME(start);
-  for(i=0;i<NTESTS;i++) {
-    crypto_kem_keypair(pk, sk);
-  }
-  TIME(stop);
-  ns = CALC(start, stop);
-  printf("crypto_kem_keypair: %lld\n", ns);
+  // TIME(start);
+  // for(i=0;i<NTESTS;i++) {
+  //   crypto_kem_keypair(pk, sk);
+  // }
+  // TIME(stop);
+  // ns = CALC(start, stop);
+  // printf("crypto_kem_keypair: %lld\n", ns);
 
-  TIME(start);
-  for(i=0;i<NTESTS;i++) {
-    crypto_kem_enc(ct, key_b, pk);
-  }
-  TIME(stop);
-  ns = CALC(start, stop);
-  printf("crypto_kem_enc: %lld\n", ns);
+  // TIME(start);
+  // for(i=0;i<NTESTS;i++) {
+  //   crypto_kem_enc(ct, key_b, pk);
+  // }
+  // TIME(stop);
+  // ns = CALC(start, stop);
+  // printf("crypto_kem_enc: %lld\n", ns);
 
-  TIME(start);
-  for(i=0;i<NTESTS;i++) {
-    crypto_kem_dec(key_a, ct, sk);
-  }
-  TIME(stop);
-  ns = CALC(start, stop);
-  printf("crypto_kem_dec: %lld\n", ns);
+  // TIME(start);
+  // for(i=0;i<NTESTS;i++) {
+  //   crypto_kem_dec(key_a, ct, sk);
+  // }
+  // TIME(stop);
+  // ns = CALC(start, stop);
+  // printf("crypto_kem_dec: %lld\n", ns);
 
 //
 
-  TIME(start);
-  for(i=0;i<NTESTS;i++) {
-    neon_polyvec_ntt(s);
-    for(j = 0; j < KYBER_K; j++){
-      __asm_point_mul_extended(&(s_asymmetric[j][0]), &(s[j][0]), pre_asymmetric_table_Q1_extended, asymmetric_const);
-    }
-    for(j = 0; j < KYBER_K; j++){
-      __asm_asymmetric_mul(&(a[j][0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const, acc[j]);
-    }
-    neon_polyvec_invntt_to_mont(acc);
+  // TIME(start);
+  // for(i=0;i<NTESTS;i++) {
+  //   neon_polyvec_ntt(s);
+  //   for(j = 0; j < KYBER_K; j++){
+  //     __asm_point_mul_extended(&(s_asymmetric[j][0]), &(s[j][0]), pre_asymmetric_table_Q1_extended, asymmetric_const);
+  //   }
+  //   for(j = 0; j < KYBER_K; j++){
+  //     __asm_asymmetric_mul(&(a[j][0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const, acc[j]);
+  //   }
+  //   neon_polyvec_invntt_to_mont(acc);
 
-  }
-  TIME(stop);
-  ns = CALC(start, stop);
-  printf("MatrixVectorMul: %lld\n", ns);
+  // }
+  // TIME(stop);
+  // ns = CALC(start, stop);
+  // printf("MatrixVectorMul: %lld\n", ns);
 
-  TIME(start);
-  for(i=0;i<NTESTS;i++) {
-    __asm_asymmetric_mul(&(vec[0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const, poly);
-    neon_poly_invntt_tomont(poly);
-  }
-  TIME(stop);
-  ns = CALC(start, stop);
-  printf("InnerProd (Enc): %lld\n", ns);
+  // TIME(start);
+  // for(i=0;i<NTESTS;i++) {
+  //   __asm_asymmetric_mul(&(vec[0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const, poly);
+  //   neon_poly_invntt_tomont(poly);
+  // }
+  // TIME(stop);
+  // ns = CALC(start, stop);
+  // printf("InnerProd (Enc): %lld\n", ns);
 
-  TIME(start);
-  for(i=0;i<NTESTS;i++) {
-    neon_polyvec_ntt(s);
-    __asm_asymmetric_mul(&(vec[0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const, poly);
-    neon_poly_invntt_tomont(poly);
-  }
-  TIME(stop);
-  ns = CALC(start, stop);
-  printf("InnerProd (Dec): %lld\n", ns);
+  // TIME(start);
+  // for(i=0;i<NTESTS;i++) {
+  //   neon_polyvec_ntt(s);
+  //   __asm_asymmetric_mul(&(vec[0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const, poly);
+  //   neon_poly_invntt_tomont(poly);
+  // }
+  // TIME(stop);
+  // ns = CALC(start, stop);
+  // printf("InnerProd (Dec): %lld\n", ns);
 
 //
 

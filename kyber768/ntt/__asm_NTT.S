@@ -27,6 +27,8 @@
 
 #include "macros.i"
 
+.if 0
+
 .align 2
 .global __asm_ntt_SIMD_top
 .global ___asm_ntt_SIMD_top
@@ -192,6 +194,7 @@ ___asm_ntt_SIMD_top:
 
     br lr
 
+.endif
 
 .align 2
 .global __asm_ntt_SIMD_bot
@@ -321,10 +324,10 @@ ___asm_ntt_SIMD_bot:
 
 
 .align 2
-.global __asm_ntt_SIMD_top_schedule
-.global ___asm_ntt_SIMD_top_schedule
-__asm_ntt_SIMD_top_schedule:
-___asm_ntt_SIMD_top_schedule:
+.global __asm_ntt_SIMD_top
+.global ___asm_ntt_SIMD_top
+__asm_ntt_SIMD_top:
+___asm_ntt_SIMD_top:
 
     push_all
     Q         .req w20
@@ -411,19 +414,20 @@ ___asm_ntt_SIMD_top_schedule:
                       v0, \
                       v2, 0, 1,  v2, 2, 3,  v2, 4, 5,  v2, 6, 7
 
-    str  q4, [src, # 0*32]
     str  q5, [src, # 1*32]
-    str  q6, [src, # 2*32]
     str  q7, [src, # 3*32]
-    str  q8, [src, # 4*32]
     str  q9, [src, # 5*32]
-    str q10, [src, # 6*32]
     str q11, [src, # 7*32]
 
     ldr  q5, [src, #(16+ 1*32)]
     ldr  q7, [src, #(16+ 3*32)]
     ldr  q9, [src, #(16+ 5*32)]
     ldr q11, [src, #(16+ 7*32)]
+
+    str  q4, [src, # 0*32]
+    str  q6, [src, # 2*32]
+    str  q8, [src, # 4*32]
+    str q10, [src, # 6*32]
 
     ldr  q4, [src, #(16+ 0*32)]
     ldr  q6, [src, #(16+ 2*32)]
@@ -448,14 +452,9 @@ ___asm_ntt_SIMD_top_schedule:
     ldr q17, [src, #(16+13*32)]
     ldr q19, [src, #(16+15*32)]
 
-
-
     qo_butterfly_top  v5,  v7,  v9, v11, v13, v15, v17, v19, v28, v29, v30, v31, \
                       v0, \
                       v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3
-
-
-
 
 
     qo_butterfly_bot  v5,  v7,  v9, v11, v13, v15, v17, v19, v28, v29, v30, v31, \
