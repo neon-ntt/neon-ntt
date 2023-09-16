@@ -16,24 +16,15 @@
 uint64_t t0, t1;
 uint64_t times[ITERATIONS];
 
-static int cmp_uint64_t(const void *a, const void *b)
-{
-    return (int)((*((const uint64_t *)a)) - (*((const uint64_t *)b)));
-}
-
 int main()
 {
-    int16_t A[KYBER_K][KYBER_K][256];
-    int16_t s[KYBER_K][256];
-    int16_t s_asymmetric[KYBER_K][256];
-    int16_t acc[KYBER_K][256];
+
     int16_t t;
 
 
-    int poly1[KYBER_K][256];
-    int poly2[KYBER_K][256];
-    int poly2_asymmetric[KYBER_K][128];
-    int polyout[KYBER_K][256];
+    int16_t poly1[KYBER_K][256];
+    int16_t poly2[KYBER_K][256];
+    int16_t poly2_asymmetric[KYBER_K][128];
 
     for(size_t i = 0; i < 256; i++){
         t = rand() % Q1;

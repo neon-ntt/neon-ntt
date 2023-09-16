@@ -328,22 +328,7 @@ ___asm_ntt_SIMD_top_schedule:
 
     push_all
     Q         .req w20
-    src0      .req x0
-    src1      .req x1
-    src2      .req x2
-    src3      .req x3
-    src4      .req x4
-    src5      .req x5
-    src6      .req x6
-    src7      .req x7
-    src8      .req x8
-    src9      .req x9
-    src10     .req x10
-    src11     .req x11
-    src12     .req x12
-    src13     .req x13
-    src14     .req x14
-    src15     .req x15
+    src       .req x0
     table     .req x28
     counter   .req x19
 
@@ -351,88 +336,27 @@ ___asm_ntt_SIMD_top_schedule:
 
     mov table, x1
 
-    add  src0, x0,  #32*0
-    add  src1, x0,  #32*1
-    add  src2, x0,  #32*2
-    add  src3, x0,  #32*3
-    add  src4, x0,  #32*4
-    add  src5, x0,  #32*5
-    add  src6, x0,  #32*6
-    add  src7, x0,  #32*7
-    add  src8, x0,  #32*8
-    add  src9, x0,  #32*9
-    add src10, x0, #32*10
-    add src11, x0, #32*11
-    add src12, x0, #32*12
-    add src13, x0, #32*13
-    add src14, x0, #32*14
-    add src15, x0, #32*15
-
     ld1 { v0.8H,  v1.8H,  v2.8H,  v3.8H}, [table], #64
 
     mov v0.H[0], Q
 
-    ld1 { v4.8H}, [ src0]
-    ld1 { v5.8H}, [ src1]
-    ld1 { v6.8H}, [ src2]
-    ld1 { v7.8H}, [ src3]
-    ld1 { v8.8H}, [ src4]
-    ld1 { v9.8H}, [ src5]
-    ld1 {v10.8H}, [ src6]
-    ld1 {v11.8H}, [ src7]
+    ldr  q4, [src, # 0*32]
+    ldr  q5, [src, # 1*32]
+    ldr  q6, [src, # 2*32]
+    ldr  q7, [src, # 3*32]
+    ldr  q8, [src, # 4*32]
+    ldr  q9, [src, # 5*32]
+    ldr q10, [src, # 6*32]
+    ldr q11, [src, # 7*32]
 
-    ld1 {v12.8H}, [ src8]
-    ld1 {v13.8H}, [ src9]
-    ld1 {v14.8H}, [src10]
-    ld1 {v15.8H}, [src11]
-    ld1 {v16.8H}, [src12]
-    ld1 {v17.8H}, [src13]
-    ld1 {v18.8H}, [src14]
-    ld1 {v19.8H}, [src15]
-
-    qo_butterfly_top  v5,  v7,  v9, v11, v13, v15, v17, v19, v28, v29, v30, v31,  v0,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3
-    qo_butterfly_mixed  v5,  v7,  v9, v11, v13, v15, v17, v19, v28, v29, v30, v31,  v4,  v6,  v8, v10, v12, v14, v16, v18, v20, v21, v22, v23,  v0,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3
-    qo_butterfly_mixed  v4,  v6,  v8, v10, v12, v14, v16, v18, v20, v21, v22, v23,  v5,  v7, v13, v15,  v9, v11, v17, v19, v28, v29, v30, v31,  v0,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 4, 5,  v0, 4, 5,  v0, 6, 7,  v0, 6, 7
-    qo_butterfly_mixed  v5,  v7, v13, v15,  v9, v11, v17, v19, v28, v29, v30, v31,  v4,  v6, v12, v14,  v8, v10, v16, v18, v20, v21, v22, v23,  v0,  v0, 4, 5,  v0, 4, 5,  v0, 6, 7,  v0, 6, 7,  v0, 4, 5,  v0, 4, 5,  v0, 6, 7,  v0, 6, 7
-    qo_butterfly_mixed  v4,  v6, v12, v14,  v8, v10, v16, v18, v20, v21, v22, v23,  v5,  v9, v13, v17,  v7, v11, v15, v19, v28, v29, v30, v31,  v0,  v0, 4, 5,  v0, 4, 5,  v0, 6, 7,  v0, 6, 7,  v1, 0, 1,  v1, 2, 3,  v1, 4, 5,  v1, 6, 7
-    qo_butterfly_mixed  v5,  v9, v13, v17,  v7, v11, v15, v19, v28, v29, v30, v31,  v4,  v8, v12, v16,  v6, v10, v14, v18, v20, v21, v22, v23,  v0,  v1, 0, 1,  v1, 2, 3,  v1, 4, 5,  v1, 6, 7,  v1, 0, 1,  v1, 2, 3,  v1, 4, 5,  v1, 6, 7
-    qo_butterfly_mixed  v4,  v8, v12, v16,  v6, v10, v14, v18, v20, v21, v22, v23,  v4,  v6,  v8, v10,  v5,  v7,  v9, v11, v28, v29, v30, v31,  v0,  v1, 0, 1,  v1, 2, 3,  v1, 4, 5,  v1, 6, 7,  v2, 0, 1,  v2, 2, 3,  v2, 4, 5,  v2, 6, 7
-    qo_butterfly_mixed  v4,  v6,  v8, v10,  v5,  v7,  v9, v11, v28, v29, v30, v31, v12, v14, v16, v18, v13, v15, v17, v19, v20, v21, v22, v23,  v0,  v2, 0, 1,  v2, 2, 3,  v2, 4, 5,  v2, 6, 7,  v3, 0, 1,  v3, 2, 3,  v3, 4, 5,  v3, 6, 7
-    qo_butterfly_bot v12, v14, v16, v18, v13, v15, v17, v19, v20, v21, v22, v23,  v0,  v3, 0, 1,  v3, 2, 3,  v3, 4, 5,  v3, 6, 7
-
-    st1 { v4.8H}, [ src0], #16
-    ld1 { v4.8H}, [ src0]
-    st1 { v5.8H}, [ src1], #16
-    ld1 { v5.8H}, [ src1]
-    st1 { v6.8H}, [ src2], #16
-    ld1 { v6.8H}, [ src2]
-    st1 { v7.8H}, [ src3], #16
-    ld1 { v7.8H}, [ src3]
-    st1 { v8.8H}, [ src4], #16
-    ld1 { v8.8H}, [ src4]
-    st1 { v9.8H}, [ src5], #16
-    ld1 { v9.8H}, [ src5]
-    st1 {v10.8H}, [ src6], #16
-    ld1 {v10.8H}, [ src6]
-    st1 {v11.8H}, [ src7], #16
-    ld1 {v11.8H}, [ src7]
-
-    st1 {v12.8H}, [ src8], #16
-    ld1 {v12.8H}, [ src8]
-    st1 {v13.8H}, [ src9], #16
-    ld1 {v13.8H}, [ src9]
-    st1 {v14.8H}, [src10], #16
-    ld1 {v14.8H}, [src10]
-    st1 {v15.8H}, [src11], #16
-    ld1 {v15.8H}, [src11]
-    st1 {v16.8H}, [src12], #16
-    ld1 {v16.8H}, [src12]
-    st1 {v17.8H}, [src13], #16
-    ld1 {v17.8H}, [src13]
-    st1 {v18.8H}, [src14], #16
-    ld1 {v18.8H}, [src14]
-    st1 {v19.8H}, [src15], #16
-    ld1 {v19.8H}, [src15]
+    ldr q12, [src, # 8*32]
+    ldr q13, [src, # 9*32]
+    ldr q14, [src, #10*32]
+    ldr q15, [src, #11*32]
+    ldr q16, [src, #12*32]
+    ldr q17, [src, #13*32]
+    ldr q18, [src, #14*32]
+    ldr q19, [src, #15*32]
 
     qo_butterfly_top  v5,  v7,  v9, v11, v13, v15, v17, v19, v28, v29, v30, v31,  v0,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3
     qo_butterfly_mixed  v5,  v7,  v9, v11, v13, v15, v17, v19, v28, v29, v30, v31,  v4,  v6,  v8, v10, v12, v14, v16, v18, v20, v21, v22, v23,  v0,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3
@@ -444,41 +368,72 @@ ___asm_ntt_SIMD_top_schedule:
     qo_butterfly_mixed  v4,  v6,  v8, v10,  v5,  v7,  v9, v11, v28, v29, v30, v31, v12, v14, v16, v18, v13, v15, v17, v19, v20, v21, v22, v23,  v0,  v2, 0, 1,  v2, 2, 3,  v2, 4, 5,  v2, 6, 7,  v3, 0, 1,  v3, 2, 3,  v3, 4, 5,  v3, 6, 7
     qo_butterfly_bot v12, v14, v16, v18, v13, v15, v17, v19, v20, v21, v22, v23,  v0,  v3, 0, 1,  v3, 2, 3,  v3, 4, 5,  v3, 6, 7
 
-    st1 { v4.8H}, [ src0], #16
-    st1 { v5.8H}, [ src1], #16
-    st1 { v6.8H}, [ src2], #16
-    st1 { v7.8H}, [ src3], #16
-    st1 { v8.8H}, [ src4], #16
-    st1 { v9.8H}, [ src5], #16
-    st1 {v10.8H}, [ src6], #16
-    st1 {v11.8H}, [ src7], #16
+    str  q4, [src, # 0*32]
+    str  q5, [src, # 1*32]
+    str  q6, [src, # 2*32]
+    str  q7, [src, # 3*32]
+    str  q8, [src, # 4*32]
+    str  q9, [src, # 5*32]
+    str q10, [src, # 6*32]
+    str q11, [src, # 7*32]
 
-    st1 {v12.8H}, [ src8], #16
-    st1 {v13.8H}, [ src9], #16
-    st1 {v14.8H}, [src10], #16
-    st1 {v15.8H}, [src11], #16
-    st1 {v16.8H}, [src12], #16
-    st1 {v17.8H}, [src13], #16
-    st1 {v18.8H}, [src14], #16
-    st1 {v19.8H}, [src15], #16
+    str q12, [src, # 8*32]
+    str q13, [src, # 9*32]
+    str q14, [src, #10*32]
+    str q15, [src, #11*32]
+    str q16, [src, #12*32]
+    str q17, [src, #13*32]
+    str q18, [src, #14*32]
+    str q19, [src, #15*32]
+
+    ldr  q4, [src, #(16+ 0*32)]
+    ldr  q5, [src, #(16+ 1*32)]
+    ldr  q6, [src, #(16+ 2*32)]
+    ldr  q7, [src, #(16+ 3*32)]
+    ldr  q8, [src, #(16+ 4*32)]
+    ldr  q9, [src, #(16+ 5*32)]
+    ldr q10, [src, #(16+ 6*32)]
+    ldr q11, [src, #(16+ 7*32)]
+
+    ldr q12, [src, #(16+ 8*32)]
+    ldr q13, [src, #(16+ 9*32)]
+    ldr q14, [src, #(16+10*32)]
+    ldr q15, [src, #(16+11*32)]
+    ldr q16, [src, #(16+12*32)]
+    ldr q17, [src, #(16+13*32)]
+    ldr q18, [src, #(16+14*32)]
+    ldr q19, [src, #(16+15*32)]
+
+    qo_butterfly_top  v5,  v7,  v9, v11, v13, v15, v17, v19, v28, v29, v30, v31,  v0,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3
+    qo_butterfly_mixed  v5,  v7,  v9, v11, v13, v15, v17, v19, v28, v29, v30, v31,  v4,  v6,  v8, v10, v12, v14, v16, v18, v20, v21, v22, v23,  v0,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3
+    qo_butterfly_mixed  v4,  v6,  v8, v10, v12, v14, v16, v18, v20, v21, v22, v23,  v5,  v7, v13, v15,  v9, v11, v17, v19, v28, v29, v30, v31,  v0,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 4, 5,  v0, 4, 5,  v0, 6, 7,  v0, 6, 7
+    qo_butterfly_mixed  v5,  v7, v13, v15,  v9, v11, v17, v19, v28, v29, v30, v31,  v4,  v6, v12, v14,  v8, v10, v16, v18, v20, v21, v22, v23,  v0,  v0, 4, 5,  v0, 4, 5,  v0, 6, 7,  v0, 6, 7,  v0, 4, 5,  v0, 4, 5,  v0, 6, 7,  v0, 6, 7
+    qo_butterfly_mixed  v4,  v6, v12, v14,  v8, v10, v16, v18, v20, v21, v22, v23,  v5,  v9, v13, v17,  v7, v11, v15, v19, v28, v29, v30, v31,  v0,  v0, 4, 5,  v0, 4, 5,  v0, 6, 7,  v0, 6, 7,  v1, 0, 1,  v1, 2, 3,  v1, 4, 5,  v1, 6, 7
+    qo_butterfly_mixed  v5,  v9, v13, v17,  v7, v11, v15, v19, v28, v29, v30, v31,  v4,  v8, v12, v16,  v6, v10, v14, v18, v20, v21, v22, v23,  v0,  v1, 0, 1,  v1, 2, 3,  v1, 4, 5,  v1, 6, 7,  v1, 0, 1,  v1, 2, 3,  v1, 4, 5,  v1, 6, 7
+    qo_butterfly_mixed  v4,  v8, v12, v16,  v6, v10, v14, v18, v20, v21, v22, v23,  v4,  v6,  v8, v10,  v5,  v7,  v9, v11, v28, v29, v30, v31,  v0,  v1, 0, 1,  v1, 2, 3,  v1, 4, 5,  v1, 6, 7,  v2, 0, 1,  v2, 2, 3,  v2, 4, 5,  v2, 6, 7
+    qo_butterfly_mixed  v4,  v6,  v8, v10,  v5,  v7,  v9, v11, v28, v29, v30, v31, v12, v14, v16, v18, v13, v15, v17, v19, v20, v21, v22, v23,  v0,  v2, 0, 1,  v2, 2, 3,  v2, 4, 5,  v2, 6, 7,  v3, 0, 1,  v3, 2, 3,  v3, 4, 5,  v3, 6, 7
+    qo_butterfly_bot v12, v14, v16, v18, v13, v15, v17, v19, v20, v21, v22, v23,  v0,  v3, 0, 1,  v3, 2, 3,  v3, 4, 5,  v3, 6, 7
+
+    str  q4, [src, #(16+ 0*32)]
+    str  q5, [src, #(16+ 1*32)]
+    str  q6, [src, #(16+ 2*32)]
+    str  q7, [src, #(16+ 3*32)]
+    str  q8, [src, #(16+ 4*32)]
+    str  q9, [src, #(16+ 5*32)]
+    str q10, [src, #(16+ 6*32)]
+    str q11, [src, #(16+ 7*32)]
+
+    str q12, [src, #(16+ 8*32)]
+    str q13, [src, #(16+ 9*32)]
+    str q14, [src, #(16+10*32)]
+    str q15, [src, #(16+11*32)]
+    str q16, [src, #(16+12*32)]
+    str q17, [src, #(16+13*32)]
+    str q18, [src, #(16+14*32)]
+    str q19, [src, #(16+15*32)]
 
     .unreq    Q
-    .unreq    src0
-    .unreq    src1
-    .unreq    src2
-    .unreq    src3
-    .unreq    src4
-    .unreq    src5
-    .unreq    src6
-    .unreq    src7
-    .unreq    src8
-    .unreq    src9
-    .unreq    src10
-    .unreq    src11
-    .unreq    src12
-    .unreq    src13
-    .unreq    src14
-    .unreq    src15
+    .unreq    src
     .unreq    table
     .unreq    counter
     pop_all
