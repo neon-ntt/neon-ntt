@@ -346,7 +346,7 @@ ___asm_ntt_SIMD_top_schedule:
     ldr q19, [src, #15*32]
 
     qo_butterfly_topl \
-            v5,  v7,  v9, v11, v13, v15, v17, v19, v28, v29, v30, v31, \
+            v13, v15, v17, v19, v28, v29, v30, v31, \
             v0, \
             v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3, \
             src, \
@@ -430,7 +430,7 @@ ___asm_ntt_SIMD_top_schedule:
              #8*32, #10*32, #12*32, #14*32
 
     qo_butterfly_topl \
-             v5,  v7,  v9, v11, v13, v15, v17, v19, v28, v29, v30, v31, \
+             v13, v15, v17, v19, v28, v29, v30, v31, \
              v0, \
              v0, 2, 3,  v0, 2, 3,  v0, 2, 3,  v0, 2, 3, \
             src, \
@@ -495,8 +495,6 @@ ___asm_ntt_SIMD_top_schedule:
 
     qo_butterfly_botss \
             v12, v14, v16, v18, v13, v15, v17, v19, v20, v21, v22, v23, \
-            v0, \
-            v3, 0, 1,  v3, 2, 3,  v3, 4, 5,  v3, 6, 7, \
             src, \
             q13, q15, q17, q19, \
             #(16+9*32), #(16+11*32), #(16+13*32), #(16+15*32), \

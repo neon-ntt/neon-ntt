@@ -138,7 +138,7 @@
 
 .endm
 
-.macro wrap_qX_butterfly_topl a0, a1, a2, a3, b0, b1, b2, b3, t0, t1, t2, t3, mod, z0, l0, h0, z1, l1, h1, z2, l2, h2, z3, l3, h3, wX, nX, src_ptr, c0, c1, c2, c3, mem0, mem1, mem2, mem3
+.macro wrap_qX_butterfly_topl b0, b1, b2, b3, t0, t1, t2, t3, mod, z0, l0, h0, z1, l1, h1, z2, l2, h2, z3, l3, h3, wX, nX, src_ptr, c0, c1, c2, c3, mem0, mem1, mem2, mem3
 
     mul      \t0\wX, \b0\wX, \z0\nX[\h0]
     mul      \t1\wX, \b1\wX, \z1\nX[\h1]
@@ -152,6 +152,56 @@
     ldr         \c2, [\src_ptr, \mem2]
     sqrdmulh \b2\wX, \b2\wX, \z2\nX[\l2]
     ldr         \c3, [\src_ptr, \mem3]
+    sqrdmulh \b3\wX, \b3\wX, \z3\nX[\l3]
+
+    mls      \t0\wX, \b0\wX, \mod\nX[0]
+    mls      \t1\wX, \b1\wX, \mod\nX[0]
+    mls      \t2\wX, \b2\wX, \mod\nX[0]
+    mls      \t3\wX, \b3\wX, \mod\nX[0]
+
+.endm
+
+.macro wrap_qX_butterfly_tops b0, b1, b2, b3, t0, t1, t2, t3, mod, z0, l0, h0, z1, l1, h1, z2, l2, h2, z3, l3, h3, wX, nX, src_ptr, c0, c1, c2, c3, mem0, mem1, mem2, mem3
+
+    mul      \t0\wX, \b0\wX, \z0\nX[\h0]
+    mul      \t1\wX, \b1\wX, \z1\nX[\h1]
+    mul      \t2\wX, \b2\wX, \z2\nX[\h2]
+    mul      \t3\wX, \b3\wX, \z3\nX[\h3]
+
+    str         \c0, [\src_ptr, \mem0]
+    sqrdmulh \b0\wX, \b0\wX, \z0\nX[\l0]
+    str         \c1, [\src_ptr, \mem1]
+    sqrdmulh \b1\wX, \b1\wX, \z1\nX[\l1]
+    str         \c2, [\src_ptr, \mem2]
+    sqrdmulh \b2\wX, \b2\wX, \z2\nX[\l2]
+    str         \c3, [\src_ptr, \mem3]
+    sqrdmulh \b3\wX, \b3\wX, \z3\nX[\l3]
+
+    mls      \t0\wX, \b0\wX, \mod\nX[0]
+    mls      \t1\wX, \b1\wX, \mod\nX[0]
+    mls      \t2\wX, \b2\wX, \mod\nX[0]
+    mls      \t3\wX, \b3\wX, \mod\nX[0]
+
+.endm
+
+.macro wrap_qX_butterfly_topsl b0, b1, b2, b3, t0, t1, t2, t3, mod, z0, l0, h0, z1, l1, h1, z2, l2, h2, z3, l3, h3, wX, nX, srcc_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3, srcd_ptr, d0, d1, d2, d3, memd0, memd1, memd2, memd3
+
+    mul      \t0\wX, \b0\wX, \z0\nX[\h0]
+    mul      \t1\wX, \b1\wX, \z1\nX[\h1]
+    mul      \t2\wX, \b2\wX, \z2\nX[\h2]
+    mul      \t3\wX, \b3\wX, \z3\nX[\h3]
+
+    str         \c0, [\srcc_ptr, \memc0]
+    ldr         \d0, [\srcd_ptr, \memd0]
+    sqrdmulh \b0\wX, \b0\wX, \z0\nX[\l0]
+    str         \c1, [\srcc_ptr, \memc1]
+    ldr         \d1, [\srcd_ptr, \memd1]
+    sqrdmulh \b1\wX, \b1\wX, \z1\nX[\l1]
+    str         \c2, [\srcc_ptr, \memc2]
+    ldr         \d2, [\srcd_ptr, \memd2]
+    sqrdmulh \b2\wX, \b2\wX, \z2\nX[\l2]
+    str         \c3, [\srcc_ptr, \memc3]
+    ldr         \d3, [\srcd_ptr, \memd3]
     sqrdmulh \b3\wX, \b3\wX, \z3\nX[\l3]
 
     mls      \t0\wX, \b0\wX, \mod\nX[0]
@@ -175,7 +225,51 @@
 
 .endm
 
-.macro wrap_qX_butterfly_botss a0, a1, a2, a3, b0, b1, b2, b3, t0, t1, t2, t3, mod, z0, l0, h0, z1, l1, h1, z2, l2, h2, z3, l3, h3, wX, nX, srcc_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3, srcd_ptr, d0, d1, d2, d3, memd0, memd1, memd2, memd3
+.macro wrap_qX_butterfly_botll a0, a1, a2, a3, b0, b1, b2, b3, t0, t1, t2, t3, wX, nX, srcc_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3, srcd_ptr, d0, d1, d2, d3, memd0, memd1, memd2, memd3
+
+    sub     \b0\wX, \a0\wX, \t0\wX
+    ldr        \c0, [\srcc_ptr, \memc0]
+    sub     \b1\wX, \a1\wX, \t1\wX
+    ldr        \c1, [\srcc_ptr, \memc1]
+    sub     \b2\wX, \a2\wX, \t2\wX
+    ldr        \c2, [\srcc_ptr, \memc2]
+    sub     \b3\wX, \a3\wX, \t3\wX
+    ldr        \c3, [\srcc_ptr, \memc3]
+
+    add     \a0\wX, \a0\wX, \t0\wX
+    ldr        \d0, [\srcd_ptr, \memd0]
+    add     \a1\wX, \a1\wX, \t1\wX
+    ldr        \d1, [\srcd_ptr, \memd1]
+    add     \a2\wX, \a2\wX, \t2\wX
+    ldr        \d2, [\srcd_ptr, \memd2]
+    add     \a3\wX, \a3\wX, \t3\wX
+    ldr        \d3, [\srcd_ptr, \memd3]
+
+.endm
+
+.macro wrap_qX_butterfly_botsl a0, a1, a2, a3, b0, b1, b2, b3, t0, t1, t2, t3, wX, nX, srcc_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3, srcd_ptr, d0, d1, d2, d3, memd0, memd1, memd2, memd3
+
+    sub     \b0\wX, \a0\wX, \t0\wX
+    str        \c0, [\srcc_ptr, \memc0]
+    sub     \b1\wX, \a1\wX, \t1\wX
+    str        \c1, [\srcc_ptr, \memc1]
+    sub     \b2\wX, \a2\wX, \t2\wX
+    str        \c2, [\srcc_ptr, \memc2]
+    sub     \b3\wX, \a3\wX, \t3\wX
+    str        \c3, [\srcc_ptr, \memc3]
+
+    add     \a0\wX, \a0\wX, \t0\wX
+    ldr        \d0, [\srcd_ptr, \memd0]
+    add     \a1\wX, \a1\wX, \t1\wX
+    ldr        \d1, [\srcd_ptr, \memd1]
+    add     \a2\wX, \a2\wX, \t2\wX
+    ldr        \d2, [\srcd_ptr, \memd2]
+    add     \a3\wX, \a3\wX, \t3\wX
+    ldr        \d3, [\srcd_ptr, \memd3]
+
+.endm
+
+.macro wrap_qX_butterfly_botss a0, a1, a2, a3, b0, b1, b2, b3, t0, t1, t2, t3, wX, nX, srcc_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3, srcd_ptr, d0, d1, d2, d3, memd0, memd1, memd2, memd3
 
     sub     \b0\wX, \a0\wX, \t0\wX
     str        \c0, [\srcc_ptr, \memc0]
@@ -220,6 +314,41 @@
     str        \e2, [\srce_ptr, \meme2]
     add     \a3\wX, \a3\wX, \t3\wX
     str        \e3, [\srce_ptr, \meme3]
+
+.endm
+
+.macro wrap_qX_butterfly_botsl_mul a0, a1, a2, a3, b0, b1, b2, b3, t0, t1, t2, t3, wX, nX, srcc_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3, srcd_ptr, d0, d1, d2, d3, memd0, memd1, memd2, memd3, a4, a5, a6, a7, t4, t5, t6, t7, mod, z4, l4, h4, z5, l5, h5, z6, l6, h6, z7, l7, h7
+
+    sqrdmulh \t4\wX, \a4\wX,  \z4\nX[\h4]
+    sub      \b0\wX, \a0\wX,  \t0\wX
+    str         \c0, [\srcc_ptr, \memc0]
+    sqrdmulh \t5\wX, \a5\wX,  \z5\nX[\h5]
+    sub      \b1\wX, \a1\wX,  \t1\wX
+    str         \c1, [\srcc_ptr, \memc1]
+    sqrdmulh \t6\wX, \a6\wX,  \z6\nX[\h6]
+    sub      \b2\wX, \a2\wX,  \t2\wX
+    str         \c2, [\srcc_ptr, \memc2]
+    sqrdmulh \t7\wX, \a7\wX,  \z7\nX[\h7]
+    sub      \b3\wX, \a3\wX,  \t3\wX
+    str         \c3, [\srcc_ptr, \memc3]
+
+    mul      \a4\wX, \a4\wX,  \z4\nX[\l4]
+    add      \a0\wX, \a0\wX,  \t0\wX
+    ldr         \d0, [\srcd_ptr, \memd0]
+    mul      \a5\wX, \a5\wX,  \z5\nX[\l5]
+    add      \a1\wX, \a1\wX,  \t1\wX
+    ldr         \d1, [\srcd_ptr, \memd1]
+    mul      \a6\wX, \a6\wX,  \z6\nX[\l6]
+    add      \a2\wX, \a2\wX,  \t2\wX
+    ldr         \d2, [\srcd_ptr, \memd2]
+    mul      \a7\wX, \a7\wX,  \z7\nX[\l7]
+    add      \a3\wX, \a3\wX,  \t3\wX
+    ldr         \d3, [\srcd_ptr, \memd3]
+
+    mls      \a4\wX, \t4\wX,  \mod\nX[0]
+    mls      \a5\wX, \t5\wX,  \mod\nX[0]
+    mls      \a6\wX, \t6\wX,  \mod\nX[0]
+    mls      \a7\wX, \t7\wX,  \mod\nX[0]
 
 .endm
 
@@ -569,6 +698,47 @@
 
 .endm
 
+.macro wrap_dX_butterfly_vec_mix_rev_l4 b0, b1, t0, t1, a2, a3, b2, b3, t2, t3, mod, l0, h0, l1, h1, wX, nX, srcc_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3
+
+    ldr         \c0, [\srcc_ptr, \memc0]
+    mul      \t0\wX, \b0\wX, \h0\wX
+    sub      \b2\wX, \a2\wX, \t2\wX
+    ldr         \c1, [\srcc_ptr, \memc1]
+    mul      \t1\wX, \b1\wX, \h1\wX
+    sub      \b3\wX, \a3\wX, \t3\wX
+
+    ldr         \c2, [\srcc_ptr, \memc2]
+    sqrdmulh \b0\wX, \b0\wX, \l0\wX
+    add      \a2\wX, \a2\wX, \t2\wX
+    ldr         \c3, [\srcc_ptr, \memc3]
+    sqrdmulh \b1\wX, \b1\wX, \l1\wX
+    add      \a3\wX, \a3\wX, \t3\wX
+
+    mls      \t0\wX, \b0\wX, \mod\nX[0]
+    mls      \t1\wX, \b1\wX, \mod\nX[0]
+
+.endm
+
+.macro wrap_dX_butterfly_vec_mix_rev_l3 b0, b1, t0, t1, a2, a3, b2, b3, t2, t3, mod, l0, h0, l1, h1, wX, nX, srcc_ptr, c1, c2, c3, memc1, memc2, memc3
+
+    mul      \t0\wX, \b0\wX, \h0\wX
+    sub      \b2\wX, \a2\wX, \t2\wX
+    ldr         \c1, [\srcc_ptr, \memc1]
+    mul      \t1\wX, \b1\wX, \h1\wX
+    sub      \b3\wX, \a3\wX, \t3\wX
+
+    ldr         \c2, [\srcc_ptr, \memc2]
+    sqrdmulh \b0\wX, \b0\wX, \l0\wX
+    add      \a2\wX, \a2\wX, \t2\wX
+    ldr         \c3, [\srcc_ptr, \memc3]
+    sqrdmulh \b1\wX, \b1\wX, \l1\wX
+    add      \a3\wX, \a3\wX, \t3\wX
+
+    mls      \t0\wX, \b0\wX, \mod\nX[0]
+    mls      \t1\wX, \b1\wX, \mod\nX[0]
+
+.endm
+
 // vector-scalar Barrett reduction
 
 .macro wrap_qX_barrett a0, a1, a2, a3, t0, t1, t2, t3, barrett_const, shrv, Q, wX, nX
@@ -697,6 +867,100 @@
     mls      \b3\wX, \t3\wX, \mod\nX[0]
 
 .endm
+
+.macro wrap_qX_montgomery_mul_in b0, b1, b2, b3, t0, t1, t2, t3, mod, z0, l0, h0, z1, l1, h1, z2, l2, h2, z3, l3, h3, wX, nX
+
+    sqrdmulh \t0\wX, \b0\wX, \z0\nX[\l0]
+    sqrdmulh \t1\wX, \b1\wX, \z1\nX[\l1]
+    sqrdmulh \t2\wX, \b2\wX, \z2\nX[\l2]
+    sqrdmulh \t3\wX, \b3\wX, \z3\nX[\l3]
+
+    mul      \b0\wX, \b0\wX, \z0\nX[\h0]
+    mul      \b1\wX, \b1\wX, \z1\nX[\h1]
+    mul      \b2\wX, \b2\wX, \z2\nX[\h2]
+    mul      \b3\wX, \b3\wX, \z3\nX[\h3]
+
+    mls      \b0\wX, \t0\wX, \mod\nX[0]
+    mls      \b1\wX, \t1\wX, \mod\nX[0]
+    mls      \b2\wX, \t2\wX, \mod\nX[0]
+    mls      \b3\wX, \t3\wX, \mod\nX[0]
+
+.endm
+
+.macro wrap_qX_montgomery_mul_ins b0, b1, b2, b3, t0, t1, t2, t3, mod, z0, l0, h0, z1, l1, h1, z2, l2, h2, z3, l3, h3, wX, nX, srcc_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3
+
+    str         \c0, [\srcc_ptr, \memc0]
+    sqrdmulh \t0\wX, \b0\wX, \z0\nX[\h0]
+    str         \c1, [\srcc_ptr, \memc1]
+    sqrdmulh \t1\wX, \b1\wX, \z1\nX[\h1]
+    str         \c2, [\srcc_ptr, \memc2]
+    sqrdmulh \t2\wX, \b2\wX, \z2\nX[\h2]
+    str         \c3, [\srcc_ptr, \memc3]
+    sqrdmulh \t3\wX, \b3\wX, \z3\nX[\h3]
+
+    mul      \b0\wX, \b0\wX, \z0\nX[\l0]
+    mul      \b1\wX, \b1\wX, \z1\nX[\l1]
+    mul      \b2\wX, \b2\wX, \z2\nX[\l2]
+    mul      \b3\wX, \b3\wX, \z3\nX[\l3]
+
+    mls      \b0\wX, \t0\wX, \mod\nX[0]
+    mls      \b1\wX, \t1\wX, \mod\nX[0]
+    mls      \b2\wX, \t2\wX, \mod\nX[0]
+    mls      \b3\wX, \t3\wX, \mod\nX[0]
+
+.endm
+
+.macro wrap_qX_montgomery_mul_inl b0, b1, b2, b3, t0, t1, t2, t3, mod, z0, l0, h0, z1, l1, h1, z2, l2, h2, z3, l3, h3, wX, nX, srcc_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3
+
+    ldr         \c0, [\srcc_ptr, \memc0]
+    sqrdmulh \t0\wX, \b0\wX, \z0\nX[\h0]
+    ldr         \c1, [\srcc_ptr, \memc1]
+    sqrdmulh \t1\wX, \b1\wX, \z1\nX[\h1]
+    ldr         \c2, [\srcc_ptr, \memc2]
+    sqrdmulh \t2\wX, \b2\wX, \z2\nX[\h2]
+    ldr         \c3, [\srcc_ptr, \memc3]
+    sqrdmulh \t3\wX, \b3\wX, \z3\nX[\h3]
+
+    mul      \b0\wX, \b0\wX, \z0\nX[\l0]
+    mul      \b1\wX, \b1\wX, \z1\nX[\l1]
+    mul      \b2\wX, \b2\wX, \z2\nX[\l2]
+    mul      \b3\wX, \b3\wX, \z3\nX[\l3]
+
+    mls      \b0\wX, \t0\wX, \mod\nX[0]
+    mls      \b1\wX, \t1\wX, \mod\nX[0]
+    mls      \b2\wX, \t2\wX, \mod\nX[0]
+    mls      \b3\wX, \t3\wX, \mod\nX[0]
+
+.endm
+
+.macro wrap_qX_montgomery_mul_insl b0, b1, b2, b3, t0, t1, t2, t3, mod, z0, l0, h0, z1, l1, h1, z2, l2, h2, z3, l3, h3, wX, nX, srcc_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3, srcd_ptr, d0, d1, d2, d3, memd0, memd1, memd2, memd3
+
+    str         \c0, [\srcc_ptr, \memc0]
+    ldr         \d0, [\srcd_ptr, \memd0]
+    sqrdmulh \t0\wX, \b0\wX, \z0\nX[\h0]
+    str         \c1, [\srcc_ptr, \memc1]
+    ldr         \d1, [\srcd_ptr, \memd1]
+    sqrdmulh \t1\wX, \b1\wX, \z1\nX[\h1]
+    str         \c2, [\srcc_ptr, \memc2]
+    ldr         \d2, [\srcd_ptr, \memd2]
+    sqrdmulh \t2\wX, \b2\wX, \z2\nX[\h2]
+    str         \c3, [\srcc_ptr, \memc3]
+    ldr         \d3, [\srcd_ptr, \memd3]
+    sqrdmulh \t3\wX, \b3\wX, \z3\nX[\h3]
+
+    mul      \b0\wX, \b0\wX, \z0\nX[\l0]
+    mul      \b1\wX, \b1\wX, \z1\nX[\l1]
+    mul      \b2\wX, \b2\wX, \z2\nX[\l2]
+    mul      \b3\wX, \b3\wX, \z3\nX[\l3]
+
+    mls      \b0\wX, \t0\wX, \mod\nX[0]
+    mls      \b1\wX, \t1\wX, \mod\nX[0]
+    mls      \b2\wX, \t2\wX, \mod\nX[0]
+    mls      \b3\wX, \t3\wX, \mod\nX[0]
+
+.endm
+
+
 
 // Montgomery reduction with long
 

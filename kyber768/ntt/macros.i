@@ -62,6 +62,24 @@
 
 .endm
 
+.macro trn_4x4_2l4 a0, a1, a2, a3, t0, t1, t2, t3, src0_ptr, src1_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3
+
+    ldr        \c0, [\src0_ptr, \memc0]
+    trn1 \t0\().4S, \a0\().4S, \a1\().4S
+    trn2 \t1\().4S, \a0\().4S, \a1\().4S
+    ldr        \c1, [\src1_ptr, \memc1]
+    trn1 \t2\().4S, \a2\().4S, \a3\().4S
+    trn2 \t3\().4S, \a2\().4S, \a3\().4S
+
+    ldr        \c2, [\src0_ptr, \memc2]
+    trn1 \a0\().2D, \t0\().2D, \t2\().2D
+    trn2 \a2\().2D, \t0\().2D, \t2\().2D
+    ldr        \c3, [\src1_ptr, \memc3]
+    trn1 \a1\().2D, \t1\().2D, \t3\().2D
+    trn2 \a3\().2D, \t1\().2D, \t3\().2D
+
+.endm
+
 .macro trn_4x4_2s4 a0, a1, a2, a3, t0, t1, t2, t3, src0_ptr, src1_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3
 
     str        \c0, [\src0_ptr, \memc0]
@@ -102,22 +120,44 @@
     wrap_qX_butterfly_top \a0, \a1, \a2, \a3, \b0, \b1, \b2, \b3, \t0, \t1, \t2, \t3, \mod, \z0, \l0, \h0, \z1, \l1, \h1, \z2, \l2, \h2, \z3, \l3, \h3, .8H, .H
 .endm
 
-.macro qo_butterfly_topl a0, a1, a2, a3, b0, b1, b2, b3, t0, t1, t2, t3, mod, z0, l0, h0, z1, l1, h1, z2, l2, h2, z3, l3, h3, src_ptr, c0, c1, c2, c3, mem0, mem1, mem2, mem3
-    wrap_qX_butterfly_topl \a0, \a1, \a2, \a3, \b0, \b1, \b2, \b3, \t0, \t1, \t2, \t3, \mod, \z0, \l0, \h0, \z1, \l1, \h1, \z2, \l2, \h2, \z3, \l3, \h3, .8H, .H, \src_ptr, \c0, \c1, \c2, \c3, \mem0, \mem1, \mem2, \mem3
+.macro qo_butterfly_topl b0, b1, b2, b3, t0, t1, t2, t3, mod, z0, l0, h0, z1, l1, h1, z2, l2, h2, z3, l3, h3, src_ptr, c0, c1, c2, c3, mem0, mem1, mem2, mem3
+    wrap_qX_butterfly_topl \b0, \b1, \b2, \b3, \t0, \t1, \t2, \t3, \mod, \z0, \l0, \h0, \z1, \l1, \h1, \z2, \l2, \h2, \z3, \l3, \h3, .8H, .H, \src_ptr, \c0, \c1, \c2, \c3, \mem0, \mem1, \mem2, \mem3
 .endm
+
+.macro qo_butterfly_tops b0, b1, b2, b3, t0, t1, t2, t3, mod, z0, l0, h0, z1, l1, h1, z2, l2, h2, z3, l3, h3, src_ptr, c0, c1, c2, c3, mem0, mem1, mem2, mem3
+    wrap_qX_butterfly_tops \b0, \b1, \b2, \b3, \t0, \t1, \t2, \t3, \mod, \z0, \l0, \h0, \z1, \l1, \h1, \z2, \l2, \h2, \z3, \l3, \h3, .8H, .H, \src_ptr, \c0, \c1, \c2, \c3, \mem0, \mem1, \mem2, \mem3
+.endm
+
+.macro qo_butterfly_topsl b0, b1, b2, b3, t0, t1, t2, t3, mod, z0, l0, h0, z1, l1, h1, z2, l2, h2, z3, l3, h3, srcc_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3, srcd_ptr, d0, d1, d2, d3, memd0, memd1, memd2, memd3
+    wrap_qX_butterfly_topsl \b0, \b1, \b2, \b3, \t0, \t1, \t2, \t3, \mod, \z0, \l0, \h0, \z1, \l1, \h1, \z2, \l2, \h2, \z3, \l3, \h3, .8H, .H, \srcc_ptr, \c0, \c1, \c2, \c3, \memc0, \memc1, \memc2, \memc3, \srcd_ptr, \d0, \d1, \d2, \d3, \memd0, \memd1, \memd2, \memd3
+.endm
+
 
 
 .macro qo_butterfly_bot a0, a1, a2, a3, b0, b1, b2, b3, t0, t1, t2, t3, mod, z0, l0, h0, z1, l1, h1, z2, l2, h2, z3, l3, h3
     wrap_qX_butterfly_bot \a0, \a1, \a2, \a3, \b0, \b1, \b2, \b3, \t0, \t1, \t2, \t3, \mod, \z0, \l0, \h0, \z1, \l1, \h1, \z2, \l2, \h2, \z3, \l3, \h3, .8H, .H
 .endm
 
-.macro qo_butterfly_botss a0, a1, a2, a3, b0, b1, b2, b3, t0, t1, t2, t3, mod, z0, l0, h0, z1, l1, h1, z2, l2, h2, z3, l3, h3, srcc_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3, srcd_ptr, d0, d1, d2, d3, memd0, memd1, memd2, memd3
-    wrap_qX_butterfly_botss \a0, \a1, \a2, \a3, \b0, \b1, \b2, \b3, \t0, \t1, \t2, \t3, \mod, \z0, \l0, \h0, \z1, \l1, \h1, \z2, \l2, \h2, \z3, \l3, \h3, .8H, .H, \srcc_ptr, \c0, \c1, \c2, \c3, \memc0, \memc1, \memc2, \memc3, \srcd_ptr, \d0, \d1, \d2, \d3, \memd0, \memd1, \memd2, \memd3
+.macro qo_butterfly_botll a0, a1, a2, a3, b0, b1, b2, b3, t0, t1, t2, t3, srcc_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3, srcd_ptr, d0, d1, d2, d3, memd0, memd1, memd2, memd3
+    wrap_qX_butterfly_botll \a0, \a1, \a2, \a3, \b0, \b1, \b2, \b3, \t0, \t1, \t2, \t3, .8H, .H, \srcc_ptr, \c0, \c1, \c2, \c3, \memc0, \memc1, \memc2, \memc3, \srcd_ptr, \d0, \d1, \d2, \d3, \memd0, \memd1, \memd2, \memd3
+.endm
+
+.macro qo_butterfly_botss a0, a1, a2, a3, b0, b1, b2, b3, t0, t1, t2, t3, srcc_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3, srcd_ptr, d0, d1, d2, d3, memd0, memd1, memd2, memd3
+    wrap_qX_butterfly_botss \a0, \a1, \a2, \a3, \b0, \b1, \b2, \b3, \t0, \t1, \t2, \t3, .8H, .H, \srcc_ptr, \c0, \c1, \c2, \c3, \memc0, \memc1, \memc2, \memc3, \srcd_ptr, \d0, \d1, \d2, \d3, \memd0, \memd1, \memd2, \memd3
+.endm
+
+.macro qo_butterfly_botsl a0, a1, a2, a3, b0, b1, b2, b3, t0, t1, t2, t3, srcc_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3, srcd_ptr, d0, d1, d2, d3, memd0, memd1, memd2, memd3
+    wrap_qX_butterfly_botsl \a0, \a1, \a2, \a3, \b0, \b1, \b2, \b3, \t0, \t1, \t2, \t3, .8H, .H, \srcc_ptr, \c0, \c1, \c2, \c3, \memc0, \memc1, \memc2, \memc3, \srcd_ptr, \d0, \d1, \d2, \d3, \memd0, \memd1, \memd2, \memd3
 .endm
 
 .macro qo_butterfly_botsls a0, a1, a2, a3, b0, b1, b2, b3, t0, t1, t2, t3, mod, z0, l0, h0, z1, l1, h1, z2, l2, h2, z3, l3, h3, srcc_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3, srcd_ptr, d0, d1, d2, d3, memd0, memd1, memd2, memd3, srce_ptr, e0, e1, e2, e3, meme0, meme1, meme2, meme3
     wrap_qX_butterfly_botsls \a0, \a1, \a2, \a3, \b0, \b1, \b2, \b3, \t0, \t1, \t2, \t3, \mod, \z0, \l0, \h0, \z1, \l1, \h1, \z2, \l2, \h2, \z3, \l3, \h3, .8H, .H, \srcc_ptr, \c0, \c1, \c2, \c3, \memc0, \memc1, \memc2, \memc3, \srcd_ptr, \d0, \d1, \d2, \d3, \memd0, \memd1, \memd2, \memd3, \srce_ptr, \e0, \e1, \e2, \e3, \meme0, \meme1, \meme2, \meme3
 .endm
+
+.macro qo_butterfly_botsl_mul a0, a1, a2, a3, b0, b1, b2, b3, t0, t1, t2, t3, srcc_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3, srcd_ptr, d0, d1, d2, d3, memd0, memd1, memd2, memd3, a4, a5, a6, a7, t4, t5, t6, t7, mod, z4, l4, h4, z5, l5, h5, z6, l6, h6, z7, l7, h7
+    wrap_qX_butterfly_botsl_mul \a0, \a1, \a2, \a3, \b0, \b1, \b2, \b3, \t0, \t1, \t2, \t3, .8H, .H, \srcc_ptr, \c0, \c1, \c2, \c3, \memc0, \memc1, \memc2, \memc3, \srcd_ptr, \d0, \d1, \d2, \d3, \memd0, \memd1, \memd2, \memd3, \a4, \a5, \a6, \a7, \t4, \t5, \t6, \t7, \mod, \z4, \l4, \h4, \z5, \l5, \h5, \z6, \l6, \h6, \z7, \l7, \h7
+.endm
+
 
 
 .macro qo_butterfly_mix a0, a1, a2, a3, b0, b1, b2, b3, t0, t1, t2, t3, a4, a5, a6, a7, b4, b5, b6, b7, t4, t5, t6, t7, mod, z0, l0, h0, z1, l1, h1, z2, l2, h2, z3, l3, h3, z4, l4, h4, z5, l5, h5, z6, l6, h6, z7, l7, h7
@@ -139,8 +179,6 @@
 .macro qo_butterfly_mixsls a0, a1, a2, a3, b0, b1, b2, b3, t0, t1, t2, t3, b4, b5, b6, b7, t4, t5, t6, t7, mod, z4, l4, h4, z5, l5, h5, z6, l6, h6, z7, l7, h7, srcc_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3, srcd_ptr, d0, d1, d2, d3, memd0, memd1, memd2, memd3, srce_ptr, e0, e1, e2, e3, meme0, meme1, meme2, meme3
     wrap_qX_butterfly_mixsls \a0, \a1, \a2, \a3, \b0, \b1, \b2, \b3, \t0, \t1, \t2, \t3, \b4, \b5, \b6, \b7, \t4, \t5, \t6, \t7, \mod, \z4, \l4, \h4, \z5, \l5, \h5, \z6, \l6, \h6, \z7, \l7, \h7, .8H, .H, \srcc_ptr, \c0, \c1, \c2, \c3, \memc0, \memc1, \memc2, \memc3, \srcd_ptr, \d0, \d1, \d2, \d3, \memd0, \memd1, \memd2, \memd3, \srce_ptr, \e0, \e1, \e2, \e3, \meme0, \meme1, \meme2, \meme3
 .endm
-
-
 
 .macro qo_butterfly_mix_rev a0, a1, a2, a3, b0, b1, b2, b3, t0, t1, t2, t3, a4, a5, a6, a7, b4, b5, b6, b7, t4, t5, t6, t7, mod, z0, l0, h0, z1, l1, h1, z2, l2, h2, z3, l3, h3, z4, l4, h4, z5, l5, h5, z6, l6, h6, z7, l7, h7
     wrap_qX_butterfly_mix_rev \a0, \a1, \a2, \a3, \b0, \b1, \b2, \b3, \t0, \t1, \t2, \t3, \a4, \a5, \a6, \a7, \b4, \b5, \b6, \b7, \t4, \t5, \t6, \t7, \mod, \z0, \l0, \h0, \z1, \l1, \h1, \z2, \l2, \h2, \z3, \l3, \h3, \z4, \l4, \h4, \z5, \l5, \h5, \z6, \l6, \h6, \z7, \l7, \h7, .8H, .H
@@ -174,6 +212,31 @@
 .macro do_butterfly_vec_mix_rev a0, a1, b0, b1, t0, t1, a2, a3, b2, b3, t2, t3, mod, l0, h0, l1, h1, l2, h2, l3, h3
     wrap_dX_butterfly_vec_mix_rev \a0, \a1, \b0, \b1, \t0, \t1, \a2, \a3, \b2, \b3, \t2, \t3, \mod, \l0, \h0, \l1, \h1, \l2, \h2, \l3, \h3, .8H, .H
 .endm
+
+.macro do_butterfly_vec_mix_rev_l4 b0, b1, t0, t1, a2, a3, b2, b3, t2, t3, mod, l0, h0, l1, h1, srcc_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3
+    wrap_dX_butterfly_vec_mix_rev_l4 \b0, \b1, \t0, \t1, \a2, \a3, \b2, \b3, \t2, \t3, \mod, \l0, \h0, \l1, \h1, .8H, .H, \srcc_ptr, \c0, \c1, \c2, \c3, \memc0, \memc1, \memc2, \memc3
+.endm
+
+.macro do_butterfly_vec_mix_rev_l3 b0, b1, t0, t1, a2, a3, b2, b3, t2, t3, mod, l0, h0, l1, h1, srcc_ptr, c1, c2, c3, memc1, memc2, memc3
+    wrap_dX_butterfly_vec_mix_rev_l3 \b0, \b1, \t0, \t1, \a2, \a3, \b2, \b3, \t2, \t3, \mod, \l0, \h0, \l1, \h1, .8H, .H, \srcc_ptr, \c1, \c2, \c3, \memc1, \memc2, \memc3
+.endm
+
+.macro qo_montgomery_mul_in b0, b1, b2, b3, t0, t1, t2, t3, mod, z0, l0, h0, z1, l1, h1, z2, l2, h2, z3, l3, h3
+    wrap_qX_montgomery_mul_in \b0, \b1, \b2, \b3, \t0, \t1, \t2, \t3, \mod, \z0, \l0, \h0, \z1, \l1, \h1, \z2, \l2, \h2, \z3, \l3, \h3, .8H, .H
+.endm
+
+.macro qo_montgomery_mul_inl b0, b1, b2, b3, t0, t1, t2, t3, mod, z0, l0, h0, z1, l1, h1, z2, l2, h2, z3, l3, h3, srcc_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3
+    wrap_qX_montgomery_mul_inl \b0, \b1, \b2, \b3, \t0, \t1, \t2, \t3, \mod, \z0, \l0, \h0, \z1, \l1, \h1, \z2, \l2, \h2, \z3, \l3, \h3, .8H, .H, \srcc_ptr, \c0, \c1, \c2, \c3, \memc0, \memc1, \memc2, \memc3
+.endm
+
+.macro qo_montgomery_mul_ins b0, b1, b2, b3, t0, t1, t2, t3, mod, z0, l0, h0, z1, l1, h1, z2, l2, h2, z3, l3, h3, srcc_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3
+    wrap_qX_montgomery_mul_ins \b0, \b1, \b2, \b3, \t0, \t1, \t2, \t3, \mod, \z0, \l0, \h0, \z1, \l1, \h1, \z2, \l2, \h2, \z3, \l3, \h3, .8H, .H, \srcc_ptr, \c0, \c1, \c2, \c3, \memc0, \memc1, \memc2, \memc3
+.endm
+
+.macro qo_montgomery_mul_insl b0, b1, b2, b3, t0, t1, t2, t3, mod, z0, l0, h0, z1, l1, h1, z2, l2, h2, z3, l3, h3, srcc_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3, srcd_ptr, d0, d1, d2, d3, memd0, memd1, memd2, memd3
+    wrap_qX_montgomery_mul_insl \b0, \b1, \b2, \b3, \t0, \t1, \t2, \t3, \mod, \z0, \l0, \h0, \z1, \l1, \h1, \z2, \l2, \h2, \z3, \l3, \h3, .8H, .H, \srcc_ptr, \c0, \c1, \c2, \c3, \memc0, \memc1, \memc2, \memc3, \srcd_ptr, \d0, \d1, \d2, \d3, \memd0, \memd1, \memd2, \memd3
+.endm
+
 
 
 #endif
