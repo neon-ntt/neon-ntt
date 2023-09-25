@@ -13,10 +13,10 @@
 -.global ___asm_10_to_32
 -__asm_10_to_32:
 -___asm_10_to_32:
-+.global PQCLEAN_NAMESPACE__asm_10_to_32
-+.global _PQCLEAN_NAMESPACE__asm_10_to_32
-+PQCLEAN_NAMESPACE__asm_10_to_32:
-+_PQCLEAN_NAMESPACE__asm_10_to_32:
++.global PQCLEAN_NAMESPACE_asm_10_to_32
++.global _PQCLEAN_NAMESPACE_asm_10_to_32
++PQCLEAN_NAMESPACE_asm_10_to_32:
++_PQCLEAN_NAMESPACE_asm_10_to_32:
  
      mov x7, #16
      _10_to_32_loop:
@@ -28,10 +28,10 @@
 -.global ___asm_poly_reduce
 -__asm_poly_reduce:
 -___asm_poly_reduce:
-+.global PQCLEAN_NAMESPACE__asm_poly_reduce
-+.global _PQCLEAN_NAMESPACE__asm_poly_reduce
-+PQCLEAN_NAMESPACE__asm_poly_reduce:
-+_PQCLEAN_NAMESPACE__asm_poly_reduce:
++.global PQCLEAN_NAMESPACE_asm_poly_reduce
++.global _PQCLEAN_NAMESPACE_asm_poly_reduce
++PQCLEAN_NAMESPACE_asm_poly_reduce:
++_PQCLEAN_NAMESPACE_asm_poly_reduce:
  
      ldr w4, [x1]
  
@@ -43,10 +43,10 @@
 -.global ___asm_poly_caddq
 -__asm_poly_caddq:
 -___asm_poly_caddq:
-+.global PQCLEAN_NAMESPACE__asm_poly_caddq
-+.global _PQCLEAN_NAMESPACE__asm_poly_caddq
-+PQCLEAN_NAMESPACE__asm_poly_caddq:
-+_PQCLEAN_NAMESPACE__asm_poly_caddq:
++.global PQCLEAN_NAMESPACE_asm_poly_caddq
++.global _PQCLEAN_NAMESPACE_asm_poly_caddq
++PQCLEAN_NAMESPACE_asm_poly_caddq:
++_PQCLEAN_NAMESPACE_asm_poly_caddq:
  
      ldr w4, [x1]
  
@@ -58,10 +58,10 @@
 -.global ___asm_poly_freeze
 -__asm_poly_freeze:
 -___asm_poly_freeze:
-+.global PQCLEAN_NAMESPACE__asm_poly_freeze
-+.global _PQCLEAN_NAMESPACE__asm_poly_freeze
-+PQCLEAN_NAMESPACE__asm_poly_freeze:
-+_PQCLEAN_NAMESPACE__asm_poly_freeze:
++.global PQCLEAN_NAMESPACE_asm_poly_freeze
++.global _PQCLEAN_NAMESPACE_asm_poly_freeze
++PQCLEAN_NAMESPACE_asm_poly_freeze:
++_PQCLEAN_NAMESPACE_asm_poly_freeze:
  
      ldr w4, [x1]
  
@@ -73,10 +73,10 @@
 -.global ___asm_poly_power2round
 -__asm_poly_power2round:
 -___asm_poly_power2round:
-+.global PQCLEAN_NAMESPACE__asm_poly_power2round
-+.global _PQCLEAN_NAMESPACE__asm_poly_power2round
-+PQCLEAN_NAMESPACE__asm_poly_power2round:
-+_PQCLEAN_NAMESPACE__asm_poly_power2round:
++.global PQCLEAN_NAMESPACE_asm_poly_power2round
++.global _PQCLEAN_NAMESPACE_asm_poly_power2round
++PQCLEAN_NAMESPACE_asm_poly_power2round:
++_PQCLEAN_NAMESPACE_asm_poly_power2round:
  
      mov w4, #1
  
@@ -88,10 +88,10 @@
 -.global ___asm_poly_add
 -__asm_poly_add:
 -___asm_poly_add:
-+.global PQCLEAN_NAMESPACE__asm_poly_add
-+.global _PQCLEAN_NAMESPACE__asm_poly_add
-+PQCLEAN_NAMESPACE__asm_poly_add:
-+_PQCLEAN_NAMESPACE__asm_poly_add:
++.global PQCLEAN_NAMESPACE_asm_poly_add
++.global _PQCLEAN_NAMESPACE_asm_poly_add
++PQCLEAN_NAMESPACE_asm_poly_add:
++_PQCLEAN_NAMESPACE_asm_poly_add:
  
      ld1 {v0.4S}, [x1], #16
      ld1 {v4.4S}, [x2], #16
@@ -103,10 +103,10 @@
 -.global ___asm_poly_sub
 -__asm_poly_sub:
 -___asm_poly_sub:
-+.global PQCLEAN_NAMESPACE__asm_poly_sub
-+.global _PQCLEAN_NAMESPACE__asm_poly_sub
-+PQCLEAN_NAMESPACE__asm_poly_sub:
-+_PQCLEAN_NAMESPACE__asm_poly_sub:
++.global PQCLEAN_NAMESPACE_asm_poly_sub
++.global _PQCLEAN_NAMESPACE_asm_poly_sub
++PQCLEAN_NAMESPACE_asm_poly_sub:
++_PQCLEAN_NAMESPACE_asm_poly_sub:
  
      ld1 {v0.4S}, [x1], #16
      ld1 {v4.4S}, [x2], #16
@@ -118,10 +118,10 @@
 -.global ___asm_poly_shiftl
 -__asm_poly_shiftl:
 -___asm_poly_shiftl:
-+.global PQCLEAN_NAMESPACE__asm_poly_shiftl
-+.global _PQCLEAN_NAMESPACE__asm_poly_shiftl
-+PQCLEAN_NAMESPACE__asm_poly_shiftl:
-+_PQCLEAN_NAMESPACE__asm_poly_shiftl:
++.global PQCLEAN_NAMESPACE_asm_poly_shiftl
++.global _PQCLEAN_NAMESPACE_asm_poly_shiftl
++PQCLEAN_NAMESPACE_asm_poly_shiftl:
++_PQCLEAN_NAMESPACE_asm_poly_shiftl:
  
      add x1, x0, #0
  
@@ -133,10 +133,10 @@
 -.global ___asm_poly_pointwise_montgomery
 -__asm_poly_pointwise_montgomery:
 -___asm_poly_pointwise_montgomery:
-+.global PQCLEAN_NAMESPACE__asm_poly_pointwise_montgomery
-+.global _PQCLEAN_NAMESPACE__asm_poly_pointwise_montgomery
-+PQCLEAN_NAMESPACE__asm_poly_pointwise_montgomery:
-+_PQCLEAN_NAMESPACE__asm_poly_pointwise_montgomery:
++.global PQCLEAN_NAMESPACE_asm_poly_pointwise_montgomery
++.global _PQCLEAN_NAMESPACE_asm_poly_pointwise_montgomery
++PQCLEAN_NAMESPACE_asm_poly_pointwise_montgomery:
++_PQCLEAN_NAMESPACE_asm_poly_pointwise_montgomery:
  
      push_all
  
@@ -148,10 +148,10 @@
 -.global ___asm_polyvecl_pointwise_acc_montgomery
 -__asm_polyvecl_pointwise_acc_montgomery:
 -___asm_polyvecl_pointwise_acc_montgomery:
-+.global PQCLEAN_NAMESPACE__asm_polyvecl_pointwise_acc_montgomery
-+.global _PQCLEAN_NAMESPACE__asm_polyvecl_pointwise_acc_montgomery
-+PQCLEAN_NAMESPACE__asm_polyvecl_pointwise_acc_montgomery:
-+_PQCLEAN_NAMESPACE__asm_polyvecl_pointwise_acc_montgomery:
++.global PQCLEAN_NAMESPACE_asm_polyvecl_pointwise_acc_montgomery
++.global _PQCLEAN_NAMESPACE_asm_polyvecl_pointwise_acc_montgomery
++PQCLEAN_NAMESPACE_asm_polyvecl_pointwise_acc_montgomery:
++_PQCLEAN_NAMESPACE_asm_polyvecl_pointwise_acc_montgomery:
  
      push_all
  
