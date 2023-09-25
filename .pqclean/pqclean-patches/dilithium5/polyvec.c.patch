@@ -1,6 +1,6 @@
 --- work/dilithium5/scheme/polyvec.c
 +++ work-patched/dilithium5/scheme/polyvec.c
-@@ -178,11 +178,11 @@
+@@ -177,11 +177,11 @@
  *              - const polyvecl *u: pointer to first input vector
  *              - const polyvecl *v: pointer to second input vector
  **************************************************/
@@ -14,7 +14,7 @@
  }
  
  /*************************************************
-@@ -364,6 +364,7 @@
+@@ -363,6 +363,7 @@
      }
  }
  
