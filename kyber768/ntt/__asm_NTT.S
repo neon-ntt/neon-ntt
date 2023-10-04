@@ -325,11 +325,11 @@ ___asm_ntt_SIMD_bot:
 __asm_ntt_SIMD_top_schedule:
 ___asm_ntt_SIMD_top_schedule:
 
-    push_all
-    Q         .req w20
+    push_simd
+    Q         .req w8
     src       .req x0
     table     .req x1
-    counter   .req x19
+    counter   .req x11
 
     ldrsh Q, [x2, #0]
 
@@ -417,8 +417,6 @@ ___asm_ntt_SIMD_top_schedule:
 
     qo_butterfly_botsls \
             v12, v14, v16, v18, v13, v15, v17, v19, v20, v21, v22, v23, \
-             v0, \
-             v3, 0, 1,  v3, 2, 3,  v3, 4, 5,  v3, 6, 7, \
             src, \
             q13, q15, q17, q19, \
              #9*32, #11*32, #13*32, #15*32, \
@@ -506,7 +504,7 @@ ___asm_ntt_SIMD_top_schedule:
     .unreq    src
     .unreq    table
     .unreq    counter
-    pop_all
+    pop_simd
 
     br lr
 
@@ -516,13 +514,13 @@ ___asm_ntt_SIMD_top_schedule:
 __asm_ntt_SIMD_bot_schedule:
 ___asm_ntt_SIMD_bot_schedule:
 
-    push_all
-    Q         .req w20
-    BarrettM  .req w21
+    push_simd
+    Q         .req w8
+    BarrettM  .req w9
     src0      .req x0
     src1      .req x1
-    table     .req x28
-    counter   .req x19
+    table     .req x10
+    counter   .req x11
 
     ldrsh Q, [x2, #0]
     ldrsh BarrettM, [x2, #8]
@@ -660,7 +658,7 @@ ___asm_ntt_SIMD_bot_schedule:
     .unreq    src1
     .unreq    table
     .unreq    counter
-    pop_all
+    pop_simd
 
     br lr
 
