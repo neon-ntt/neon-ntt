@@ -45,7 +45,7 @@ ___asm_10_to_32:
     str w4, [x0], #4
     ubfx w5, w2, #20, #10
     str w5, [x0], #4
-    lsr w6, w2, #30    
+    lsr w6, w2, #30
 
     ldr w2, [x1], #4
 
@@ -117,7 +117,7 @@ ___asm_poly_reduce:
     ld1 { v1.4S}, [x1], #16
     ld1 { v2.4S}, [x1], #16
     ld1 { v3.4S}, [x1], #16
-    
+
     ld1 { v4.4S}, [x1], #16
     srshr  v16.4S, v0.4S, #23
     ld1 { v5.4S}, [x1], #16
@@ -126,7 +126,7 @@ ___asm_poly_reduce:
     srshr  v18.4S, v2.4S, #23
     ld1 { v7.4S}, [x1], #16
     srshr  v19.4S, v3.4S, #23
-    
+
     srshr  v20.4S, v4.4S, #23
     mls     v0.4S, v16.4S, v24.4S
     srshr  v21.4S, v5.4S, #23
@@ -135,7 +135,7 @@ ___asm_poly_reduce:
     mls     v2.4S, v18.4S, v24.4S
     srshr  v23.4S, v7.4S, #23
     mls     v3.4S, v19.4S, v24.4S
-    
+
     mls     v4.4S, v20.4S, v24.4S
     st1 { v0.4S}, [x0], #16
     mls     v5.4S, v21.4S, v24.4S
@@ -312,7 +312,7 @@ ___asm_poly_freeze:
     srshr  v18.4S, v2.4S, #23
     ld1 { v7.4S}, [x1], #16
     srshr  v19.4S, v3.4S, #23
-    
+
     srshr  v20.4S, v4.4S, #23
     mls     v0.4S, v16.4S, v24.4S
     srshr  v21.4S, v5.4S, #23
@@ -321,7 +321,7 @@ ___asm_poly_freeze:
     mls     v2.4S, v18.4S, v24.4S
     srshr  v23.4S, v7.4S, #23
     mls     v3.4S, v19.4S, v24.4S
-    
+
     mls     v4.4S, v20.4S, v24.4S
     sshr  v16.4S, v0.4S, #31
     mls     v5.4S, v21.4S, v24.4S
@@ -330,7 +330,7 @@ ___asm_poly_freeze:
     sshr  v18.4S, v2.4S, #31
     mls     v7.4S, v23.4S, v24.4S
     sshr  v19.4S, v3.4S, #31
-    
+
     sshr  v20.4S, v4.4S, #31
     mls     v0.4S, v16.4S, v24.4S
     sshr  v21.4S, v5.4S, #31
@@ -339,7 +339,7 @@ ___asm_poly_freeze:
     mls     v2.4S, v18.4S, v24.4S
     sshr  v23.4S, v7.4S, #31
     mls     v3.4S, v19.4S, v24.4S
-    
+
     mls     v4.4S, v20.4S, v24.4S
     st1 { v0.4S}, [x0], #16
     mls     v5.4S, v21.4S, v24.4S
@@ -632,7 +632,7 @@ ___asm_poly_sub:
 
     mov x16, #15
     _poly_sub_loop:
-    
+
     st1 {v16.4S}, [x0], #16
     ld1 {v0.4S}, [x1], #16
     ld1 {v4.4S}, [x2], #16
@@ -910,90 +910,90 @@ ___asm_polyvecl_pointwise_acc_montgomery:
 
     smlal  v12.2D,  v0.2S,  v4.2S
     smlal2 v16.2D,  v0.4S,  v4.4S
-    ld1 { v0.4S}, [ x7], #16 
-    ld1 { v4.4S}, [ x8], #16 
+    ld1 { v0.4S}, [ x7], #16
+    ld1 { v4.4S}, [ x8], #16
     smlal  v13.2D,  v1.2S,  v5.2S
     smlal2 v17.2D,  v1.4S,  v5.4S
-    ld1 { v1.4S}, [ x7], #16 
-    ld1 { v5.4S}, [ x8], #16 
+    ld1 { v1.4S}, [ x7], #16
+    ld1 { v5.4S}, [ x8], #16
     smlal  v14.2D,  v2.2S,  v6.2S
     smlal2 v18.2D,  v2.4S,  v6.4S
-    ld1 { v2.4S}, [ x7], #16 
-    ld1 { v6.4S}, [ x8], #16 
+    ld1 { v2.4S}, [ x7], #16
+    ld1 { v6.4S}, [ x8], #16
     smlal  v15.2D,  v3.2S,  v7.2S
     smlal2 v19.2D,  v3.4S,  v7.4S
-    ld1 { v3.4S}, [ x7], #16 
+    ld1 { v3.4S}, [ x7], #16
     ld1 { v7.4S}, [ x8], #16
 
     smlal  v12.2D,  v0.2S,  v4.2S
     smlal2 v16.2D,  v0.4S,  v4.4S
-    ld1 { v0.4S}, [ x9], #16 
-    ld1 { v4.4S}, [x10], #16 
+    ld1 { v0.4S}, [ x9], #16
+    ld1 { v4.4S}, [x10], #16
     smlal  v13.2D,  v1.2S,  v5.2S
     smlal2 v17.2D,  v1.4S,  v5.4S
-    ld1 { v1.4S}, [ x9], #16 
-    ld1 { v5.4S}, [x10], #16 
+    ld1 { v1.4S}, [ x9], #16
+    ld1 { v5.4S}, [x10], #16
     smlal  v14.2D,  v2.2S,  v6.2S
     smlal2 v18.2D,  v2.4S,  v6.4S
-    ld1 { v2.4S}, [ x9], #16 
-    ld1 { v6.4S}, [x10], #16 
+    ld1 { v2.4S}, [ x9], #16
+    ld1 { v6.4S}, [x10], #16
     smlal  v15.2D,  v3.2S,  v7.2S
     smlal2 v19.2D,  v3.4S,  v7.4S
-    ld1 { v3.4S}, [ x9], #16 
+    ld1 { v3.4S}, [ x9], #16
     ld1 { v7.4S}, [x10], #16
 
 #if L > 4
     smlal  v12.2D,  v0.2S,  v4.2S
     smlal2 v16.2D,  v0.4S,  v4.4S
-    ld1 { v0.4S}, [x11], #16 
-    ld1 { v4.4S}, [x12], #16 
+    ld1 { v0.4S}, [x11], #16
+    ld1 { v4.4S}, [x12], #16
     smlal  v13.2D,  v1.2S,  v5.2S
     smlal2 v17.2D,  v1.4S,  v5.4S
-    ld1 { v1.4S}, [x11], #16 
-    ld1 { v5.4S}, [x12], #16 
+    ld1 { v1.4S}, [x11], #16
+    ld1 { v5.4S}, [x12], #16
     smlal  v14.2D,  v2.2S,  v6.2S
     smlal2 v18.2D,  v2.4S,  v6.4S
-    ld1 { v2.4S}, [x11], #16 
-    ld1 { v6.4S}, [x12], #16 
+    ld1 { v2.4S}, [x11], #16
+    ld1 { v6.4S}, [x12], #16
     smlal  v15.2D,  v3.2S,  v7.2S
     smlal2 v19.2D,  v3.4S,  v7.4S
-    ld1 { v3.4S}, [x11], #16 
+    ld1 { v3.4S}, [x11], #16
     ld1 { v7.4S}, [x12], #16
 #endif
 
 #if L > 5
     smlal  v12.2D,  v0.2S,  v4.2S
     smlal2 v16.2D,  v0.4S,  v4.4S
-    ld1 { v0.4S}, [x13], #16 
-    ld1 { v4.4S}, [x14], #16 
+    ld1 { v0.4S}, [x13], #16
+    ld1 { v4.4S}, [x14], #16
     smlal  v13.2D,  v1.2S,  v5.2S
     smlal2 v17.2D,  v1.4S,  v5.4S
-    ld1 { v1.4S}, [x13], #16 
-    ld1 { v5.4S}, [x14], #16 
+    ld1 { v1.4S}, [x13], #16
+    ld1 { v5.4S}, [x14], #16
     smlal  v14.2D,  v2.2S,  v6.2S
     smlal2 v18.2D,  v2.4S,  v6.4S
-    ld1 { v2.4S}, [x13], #16 
-    ld1 { v6.4S}, [x14], #16 
+    ld1 { v2.4S}, [x13], #16
+    ld1 { v6.4S}, [x14], #16
     smlal  v15.2D,  v3.2S,  v7.2S
     smlal2 v19.2D,  v3.4S,  v7.4S
-    ld1 { v3.4S}, [x13], #16 
+    ld1 { v3.4S}, [x13], #16
     ld1 { v7.4S}, [x14], #16
 
     smlal  v12.2D,  v0.2S,  v4.2S
     smlal2 v16.2D,  v0.4S,  v4.4S
-    ld1 { v0.4S}, [x15], #16 
-    ld1 { v4.4S}, [x19], #16 
+    ld1 { v0.4S}, [x15], #16
+    ld1 { v4.4S}, [x19], #16
     smlal  v13.2D,  v1.2S,  v5.2S
     smlal2 v17.2D,  v1.4S,  v5.4S
-    ld1 { v1.4S}, [x15], #16 
-    ld1 { v5.4S}, [x19], #16 
+    ld1 { v1.4S}, [x15], #16
+    ld1 { v5.4S}, [x19], #16
     smlal  v14.2D,  v2.2S,  v6.2S
     smlal2 v18.2D,  v2.4S,  v6.4S
-    ld1 { v2.4S}, [x15], #16 
-    ld1 { v6.4S}, [x19], #16 
+    ld1 { v2.4S}, [x15], #16
+    ld1 { v6.4S}, [x19], #16
     smlal  v15.2D,  v3.2S,  v7.2S
     smlal2 v19.2D,  v3.4S,  v7.4S
-    ld1 { v3.4S}, [x15], #16 
+    ld1 { v3.4S}, [x15], #16
     ld1 { v7.4S}, [x19], #16
 #endif
 
@@ -1064,90 +1064,90 @@ ___asm_polyvecl_pointwise_acc_montgomery:
 
     smlal  v12.2D,  v0.2S,  v4.2S
     smlal2 v16.2D,  v0.4S,  v4.4S
-    ld1 { v0.4S}, [ x7], #16 
-    ld1 { v4.4S}, [ x8], #16 
+    ld1 { v0.4S}, [ x7], #16
+    ld1 { v4.4S}, [ x8], #16
     smlal  v13.2D,  v1.2S,  v5.2S
     smlal2 v17.2D,  v1.4S,  v5.4S
-    ld1 { v1.4S}, [ x7], #16 
-    ld1 { v5.4S}, [ x8], #16 
+    ld1 { v1.4S}, [ x7], #16
+    ld1 { v5.4S}, [ x8], #16
     smlal  v14.2D,  v2.2S,  v6.2S
     smlal2 v18.2D,  v2.4S,  v6.4S
-    ld1 { v2.4S}, [ x7], #16 
-    ld1 { v6.4S}, [ x8], #16 
+    ld1 { v2.4S}, [ x7], #16
+    ld1 { v6.4S}, [ x8], #16
     smlal  v15.2D,  v3.2S,  v7.2S
     smlal2 v19.2D,  v3.4S,  v7.4S
-    ld1 { v3.4S}, [ x7], #16 
+    ld1 { v3.4S}, [ x7], #16
     ld1 { v7.4S}, [ x8], #16
 
     smlal  v12.2D,  v0.2S,  v4.2S
     smlal2 v16.2D,  v0.4S,  v4.4S
-    ld1 { v0.4S}, [ x9], #16 
-    ld1 { v4.4S}, [x10], #16 
+    ld1 { v0.4S}, [ x9], #16
+    ld1 { v4.4S}, [x10], #16
     smlal  v13.2D,  v1.2S,  v5.2S
     smlal2 v17.2D,  v1.4S,  v5.4S
-    ld1 { v1.4S}, [ x9], #16 
-    ld1 { v5.4S}, [x10], #16 
+    ld1 { v1.4S}, [ x9], #16
+    ld1 { v5.4S}, [x10], #16
     smlal  v14.2D,  v2.2S,  v6.2S
     smlal2 v18.2D,  v2.4S,  v6.4S
-    ld1 { v2.4S}, [ x9], #16 
-    ld1 { v6.4S}, [x10], #16 
+    ld1 { v2.4S}, [ x9], #16
+    ld1 { v6.4S}, [x10], #16
     smlal  v15.2D,  v3.2S,  v7.2S
     smlal2 v19.2D,  v3.4S,  v7.4S
-    ld1 { v3.4S}, [ x9], #16 
+    ld1 { v3.4S}, [ x9], #16
     ld1 { v7.4S}, [x10], #16
 
 #if L > 4
     smlal  v12.2D,  v0.2S,  v4.2S
     smlal2 v16.2D,  v0.4S,  v4.4S
-    ld1 { v0.4S}, [x11], #16 
-    ld1 { v4.4S}, [x12], #16 
+    ld1 { v0.4S}, [x11], #16
+    ld1 { v4.4S}, [x12], #16
     smlal  v13.2D,  v1.2S,  v5.2S
     smlal2 v17.2D,  v1.4S,  v5.4S
-    ld1 { v1.4S}, [x11], #16 
-    ld1 { v5.4S}, [x12], #16 
+    ld1 { v1.4S}, [x11], #16
+    ld1 { v5.4S}, [x12], #16
     smlal  v14.2D,  v2.2S,  v6.2S
     smlal2 v18.2D,  v2.4S,  v6.4S
-    ld1 { v2.4S}, [x11], #16 
-    ld1 { v6.4S}, [x12], #16 
+    ld1 { v2.4S}, [x11], #16
+    ld1 { v6.4S}, [x12], #16
     smlal  v15.2D,  v3.2S,  v7.2S
     smlal2 v19.2D,  v3.4S,  v7.4S
-    ld1 { v3.4S}, [x11], #16 
+    ld1 { v3.4S}, [x11], #16
     ld1 { v7.4S}, [x12], #16
 #endif
 
 #if L > 5
     smlal  v12.2D,  v0.2S,  v4.2S
     smlal2 v16.2D,  v0.4S,  v4.4S
-    ld1 { v0.4S}, [x13], #16 
-    ld1 { v4.4S}, [x14], #16 
+    ld1 { v0.4S}, [x13], #16
+    ld1 { v4.4S}, [x14], #16
     smlal  v13.2D,  v1.2S,  v5.2S
     smlal2 v17.2D,  v1.4S,  v5.4S
-    ld1 { v1.4S}, [x13], #16 
-    ld1 { v5.4S}, [x14], #16 
+    ld1 { v1.4S}, [x13], #16
+    ld1 { v5.4S}, [x14], #16
     smlal  v14.2D,  v2.2S,  v6.2S
     smlal2 v18.2D,  v2.4S,  v6.4S
-    ld1 { v2.4S}, [x13], #16 
-    ld1 { v6.4S}, [x14], #16 
+    ld1 { v2.4S}, [x13], #16
+    ld1 { v6.4S}, [x14], #16
     smlal  v15.2D,  v3.2S,  v7.2S
     smlal2 v19.2D,  v3.4S,  v7.4S
-    ld1 { v3.4S}, [x13], #16 
+    ld1 { v3.4S}, [x13], #16
     ld1 { v7.4S}, [x14], #16
 
     smlal  v12.2D,  v0.2S,  v4.2S
     smlal2 v16.2D,  v0.4S,  v4.4S
-    ld1 { v0.4S}, [x15], #16 
-    ld1 { v4.4S}, [x19], #16 
+    ld1 { v0.4S}, [x15], #16
+    ld1 { v4.4S}, [x19], #16
     smlal  v13.2D,  v1.2S,  v5.2S
     smlal2 v17.2D,  v1.4S,  v5.4S
-    ld1 { v1.4S}, [x15], #16 
-    ld1 { v5.4S}, [x19], #16 
+    ld1 { v1.4S}, [x15], #16
+    ld1 { v5.4S}, [x19], #16
     smlal  v14.2D,  v2.2S,  v6.2S
     smlal2 v18.2D,  v2.4S,  v6.4S
-    ld1 { v2.4S}, [x15], #16 
-    ld1 { v6.4S}, [x19], #16 
+    ld1 { v2.4S}, [x15], #16
+    ld1 { v6.4S}, [x19], #16
     smlal  v15.2D,  v3.2S,  v7.2S
     smlal2 v19.2D,  v3.4S,  v7.4S
-    ld1 { v3.4S}, [x15], #16 
+    ld1 { v3.4S}, [x15], #16
     ld1 { v7.4S}, [x19], #16
 #endif
 
