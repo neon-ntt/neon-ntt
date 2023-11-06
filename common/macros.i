@@ -5,6 +5,7 @@
  * MIT License
  *
  * Copyright (c) 2023: Hanno Becker, Vincent Hwang, Matthias J. Kannwischer, Bo-Yin Yang, and Shang-Yi Yang
+ * Copyright (c) 2023: Vincent Hwang
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -288,6 +289,10 @@
     wrap_dX_butterfly_vec_top_trn_4x4 \a0, \a1, \b0, \b1, \t0, \t1, \mod, \l0, \h0, \l1, \h1, .4S, .S, \trns0, \trns1, \trns2, \trns3, \trnt0, \trnt1, \trnt2, \trnt3
 .endm
 
+.macro dq_butterfly_vec_top_ltrn_4x4 b0, b1, t0, t1, mod, l0, h0, l1, h1, src0_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3, trns0, trns1, trns2, trns3, trnt0, trnt1, trnt2, trnt3
+    wrap_dX_butterfly_vec_top_ltrn_4x4 \b0, \b1, \t0, \t1, \mod, \l0, \h0, \l1, \h1, .4S, .S, \src0_ptr, \c0, \c1, \c2, \c3, \memc0, \memc1, \memc2, \memc3, \trns0, \trns1, \trns2, \trns3, \trnt0, \trnt1, \trnt2, \trnt3
+.endm
+
 .macro dq_butterfly_vec_mix a0, a1, b0, b1, t0, t1, a2, a3, b2, b3, t2, t3, mod, l0, h0, l1, h1, l2, h2, l3, h3
     wrap_dX_butterfly_vec_mix \a0, \a1, \b0, \b1, \t0, \t1, \a2, \a3, \b2, \b3, \t2, \t3, \mod, \l0, \h0, \l1, \h1, \l2, \h2, \l3, \h3, .4S, .S
 .endm
@@ -347,6 +352,10 @@
 
 .macro qq_butterfly_bot a0, a1, a2, a3, b0, b1, b2, b3, t0, t1, t2, t3, mod, z0, l0, h0, z1, l1, h1, z2, l2, h2, z3, l3, h3
     wrap_qX_butterfly_bot \a0, \a1, \a2, \a3, \b0, \b1, \b2, \b3, \t0, \t1, \t2, \t3, \mod, \z0, \l0, \h0, \z1, \l1, \h1, \z2, \l2, \h2, \z3, \l3, \h3, .4S, .S
+.endm
+
+.macro qq_butterfly_botll a0, a1, a2, a3, b0, b1, b2, b3, t0, t1, t2, t3, srcc_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3, srcd_ptr, d0, d1, d2, d3, memd0, memd1, memd2, memd3
+    wrap_qX_butterfly_botll \a0, \a1, \a2, \a3, \b0, \b1, \b2, \b3, \t0, \t1, \t2, \t3, .4S, .S, \srcc_ptr, \c0, \c1, \c2, \c3, \memc0, \memc1, \memc2, \memc3, \srcd_ptr, \d0, \d1, \d2, \d3, \memd0, \memd1, \memd2, \memd3
 .endm
 
 .macro qq_butterfly_botss a0, a1, a2, a3, b0, b1, b2, b3, t0, t1, t2, t3, srcc_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3, srcd_ptr, d0, d1, d2, d3, memd0, memd1, memd2, memd3

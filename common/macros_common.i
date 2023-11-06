@@ -5,6 +5,7 @@
  * MIT License
  *
  * Copyright (c) 2023: Hanno Becker, Vincent Hwang, Matthias J. Kannwischer, Bo-Yin Yang, and Shang-Yi Yang
+ * Copyright (c) 2023: Vincent Hwang
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -700,6 +701,32 @@
     trn2   \trns2\().2D, \trnt0\().2D, \trnt2\().2D
 
     trn1   \trns1\().2D, \trnt1\().2D, \trnt3\().2D
+    trn2   \trns3\().2D, \trnt1\().2D, \trnt3\().2D
+
+.endm
+
+.macro wrap_dX_butterfly_vec_top_ltrn_4x4 b0, b1, t0, t1, mod, l0, h0, l1, h1, wX, nX, src0_ptr, c0, c1, c2, c3, memc0, memc1, memc2, memc3, trns0, trns1, trns2, trns3, trnt0, trnt1, trnt2, trnt3
+
+    ldr         \c0, [\src0_ptr, \memc0]
+    mul      \t0\wX, \b0\wX, \h0\wX
+    ldr         \c1, [\src0_ptr, \memc1]
+    mul      \t1\wX, \b1\wX, \h1\wX
+
+    ldr         \c2, [\src0_ptr, \memc2]
+    trn1   \trnt0\().4S, \trns0\().4S, \trns1\().4S
+    trn2   \trnt1\().4S, \trns0\().4S, \trns1\().4S
+    ldr         \c3, [\src0_ptr, \memc3]
+    trn1   \trnt2\().4S, \trns2\().4S, \trns3\().4S
+    trn2   \trnt3\().4S, \trns2\().4S, \trns3\().4S
+
+    sqrdmulh \b0\wX, \b0\wX, \l0\wX
+    trn1   \trns0\().2D, \trnt0\().2D, \trnt2\().2D
+    sqrdmulh \b1\wX, \b1\wX, \l1\wX
+    trn2   \trns2\().2D, \trnt0\().2D, \trnt2\().2D
+
+    mls      \t0\wX, \b0\wX, \mod\nX[0]
+    trn1   \trns1\().2D, \trnt1\().2D, \trnt3\().2D
+    mls      \t1\wX, \b1\wX, \mod\nX[0]
     trn2   \trns3\().2D, \trnt1\().2D, \trnt3\().2D
 
 .endm

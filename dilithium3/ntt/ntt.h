@@ -12,6 +12,7 @@
  * MIT License
  *
  * Copyright (c) 2023: Hanno Becker, Vincent Hwang, Matthias J. Kannwischer, Bo-Yin Yang, and Shang-Yi Yang
+ * Copyright (c) 2023: Vincent Hwang
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,15 +39,8 @@
 extern void __asm_ntt_SIMD_top(int32_t *des, const int32_t *table, const int32_t *_constants);
 extern void __asm_ntt_SIMD_bot(int32_t *des, const int32_t *table, const int32_t *_constants);
 
-extern void __asm_ntt_SIMD_top_schedule(int32_t *des, const int32_t *table, const int32_t *_constants);
-extern void __asm_ntt_SIMD_bot_schedule(int32_t *des, const int32_t *table, const int32_t *_constants);
-
-
 extern void __asm_intt_SIMD_top(int32_t *des, const int32_t *table, const int32_t *_constants);
 extern void __asm_intt_SIMD_bot(int32_t *des, const int32_t *table, const int32_t *_constants);
-
-extern void __asm_intt_SIMD_top_schedule(int32_t *des, const int32_t *table, const int32_t *_constants);
-extern void __asm_intt_SIMD_bot_schedule(int32_t *des, const int32_t *table, const int32_t *_constants);
 
 extern
 const int32_t constants[16];
@@ -64,23 +58,13 @@ extern
 const int32_t streamlined_GS_itable_Q1_jump_extended[((NTT_N - 1) + (1 << 0) + (1 << 4)) << 1];
 
 #define NTT(in) do { \
-        __asm_ntt_SIMD_top(in, streamlined_CT_negacyclic_table_Q1_extended, constants); \
-        __asm_ntt_SIMD_bot(in, streamlined_CT_negacyclic_table_Q1_extended, constants); \
+        __asm_ntt_SIMD_top(in, streamlined_CT_negacyclic_table_Q1_jump_extended, constants); \
+        __asm_ntt_SIMD_bot(in, streamlined_CT_negacyclic_table_Q1_jump_extended, constants); \
     } while(0)
 
 #define iNTT(in) do { \
-        __asm_intt_SIMD_bot(in, streamlined_GS_itable_Q1_extended, constants); \
-        __asm_intt_SIMD_top(in, streamlined_GS_itable_Q1_extended, constants); \
-    } while(0)
-
-#define NTT_schedule(in) do { \
-        __asm_ntt_SIMD_top_schedule(in, streamlined_CT_negacyclic_table_Q1_jump_extended, constants); \
-        __asm_ntt_SIMD_bot_schedule(in, streamlined_CT_negacyclic_table_Q1_jump_extended, constants); \
-    } while(0)
-
-#define iNTT_schedule(in) do { \
-        __asm_intt_SIMD_bot_schedule(in, streamlined_GS_itable_Q1_jump_extended, constants); \
-        __asm_intt_SIMD_top_schedule(in, streamlined_GS_itable_Q1_jump_extended, constants); \
+        __asm_intt_SIMD_bot(in, streamlined_GS_itable_Q1_jump_extended, constants); \
+        __asm_intt_SIMD_top(in, streamlined_GS_itable_Q1_jump_extended, constants); \
     } while(0)
 
 void ntt(int32_t a[ARRAY_N]);
