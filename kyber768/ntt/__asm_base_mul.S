@@ -51,15 +51,32 @@ ___asm_point_mul_extended:
     mov counter, #4
     _point_mul_extended_loop:
 
-    ld2 { v0.8H,  v1.8H}, [src1], #32
-    ld2 { v2.8H,  v3.8H}, [src1], #32
-    ld2 { v4.8H,  v5.8H}, [src1], #32
-    ld2 { v6.8H,  v7.8H}, [src1], #32
+    ldr  q0, [src1, #0*16]
+    ldr  q1, [src1, #1*16]
+    ldr  q2, [src1, #2*16]
+    ldr  q3, [src1, #3*16]
+    ldr  q4, [src1, #4*16]
+    ldr  q5, [src1, #5*16]
+    ldr  q6, [src1, #6*16]
+    ldr  q7, [src1, #7*16]
 
-    ld2 { v8.8H,  v9.8H}, [src2ex], #32
-    ld2 {v10.8H, v11.8H}, [src2ex], #32
-    ld2 {v12.8H, v13.8H}, [src2ex], #32
-    ld2 {v14.8H, v15.8H}, [src2ex], #32
+    add src1, src1, #8*16
+
+    uzp2 v1.8H, v0.8H, v1.8H
+    uzp2 v3.8H, v2.8H, v3.8H
+    uzp2 v5.8H, v4.8H, v5.8H
+    uzp2 v7.8H, v6.8H, v7.8H
+
+    ldr  q8, [src2ex, #0*16]
+    ldr q10, [src2ex, #2*16]
+    ldr q12, [src2ex, #4*16]
+    ldr q14, [src2ex, #6*16]
+    ldr  q9, [src2ex, #1*16]
+    ldr q11, [src2ex, #3*16]
+    ldr q13, [src2ex, #5*16]
+    ldr q15, [src2ex, #7*16]
+
+    add src2ex, src2ex, #8*16
 
     sqrdmulh  v0.8H,  v1.8H,  v8.8H
     sqrdmulh  v2.8H,  v3.8H, v10.8H
@@ -76,10 +93,12 @@ ___asm_point_mul_extended:
     mls       v5.8H,  v4.8H, v20.8H
     mls       v7.8H,  v6.8H, v20.8H
 
-    st1 { v1.8H}, [des], #16
-    st1 { v3.8H}, [des], #16
-    st1 { v5.8H}, [des], #16
-    st1 { v7.8H}, [des], #16
+    str  q1, [des, #0*16]
+    str  q3, [des, #1*16]
+    str  q5, [des, #2*16]
+    str  q7, [des, #3*16]
+
+    add des, des, #4*16
 
     sub counter, counter, #1
     cbnz counter, _point_mul_extended_loop
