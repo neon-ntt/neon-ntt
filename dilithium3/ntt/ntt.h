@@ -46,13 +46,7 @@ extern
 const int32_t constants[16];
 
 extern
-const int32_t streamlined_CT_negacyclic_table_Q1_extended[(NTT_N + (1 << 0) + (1 << 4)) << 1];
-
-extern
 const int32_t streamlined_CT_negacyclic_table_Q1_jump_extended[((NTT_N - 1) + (1 << 0) + (1 << 4)) << 1];
-
-extern
-const int32_t streamlined_GS_itable_Q1_extended[(NTT_N + (1 << 0) + (1 << 4)) << 1];
 
 extern
 const int32_t streamlined_GS_itable_Q1_jump_extended[((NTT_N - 1) + (1 << 0) + (1 << 4)) << 1];
