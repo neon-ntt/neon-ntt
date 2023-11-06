@@ -86,7 +86,7 @@ ___asm_add_reduce:
     st1 { v4.8H,  v5.8H,  v6.8H,  v7.8H}, [x0], #64
     st1 {v16.8H, v17.8H, v18.8H, v19.8H}, [x0], #64
 
-    br lr
+    ret
 
 .align 2
 .global __asm_sub_reduce
@@ -147,7 +147,7 @@ ___asm_sub_reduce:
     st1 { v4.8H,  v5.8H,  v6.8H,  v7.8H}, [x0], #64
     st1 {v16.8H, v17.8H, v18.8H, v19.8H}, [x0], #64
 
-    br lr
+    ret
 
 .align 2
 .global __asm_add_add_reduce
@@ -232,7 +232,7 @@ ___asm_add_add_reduce:
     st1 { v4.8H,  v5.8H,  v6.8H,  v7.8H}, [x0], #64
     st1 {v20.8H, v21.8H, v22.8H, v23.8H}, [x0], #64
 
-    br lr
+    ret
 
 
 

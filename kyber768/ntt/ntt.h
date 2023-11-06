@@ -39,17 +39,12 @@ void ntt(int16_t r[256]);
 
 void invntt(int16_t r[256]);
 
+
 extern void __asm_ntt_SIMD_top(int16_t *, const int16_t *, const int16_t *);
 extern void __asm_ntt_SIMD_bot(int16_t *, const int16_t *, const int16_t *);
 
-extern void __asm_ntt_SIMD_top_schedule(int16_t *, const int16_t *, const int16_t *);
-extern void __asm_ntt_SIMD_bot_schedule(int16_t *, const int16_t *, const int16_t *);
-
 extern void __asm_intt_SIMD_bot(int16_t *, const int16_t *, const int16_t *);
 extern void __asm_intt_SIMD_top(int16_t *, const int16_t *, const int16_t *);
-
-extern void __asm_intt_SIMD_bot_schedule(int16_t *, const int16_t *, const int16_t *);
-extern void __asm_intt_SIMD_top_schedule(int16_t *, const int16_t *, const int16_t *);
 
 
 extern void __asm_point_mul_extended(int16_t *, const int16_t *, const int16_t *, const int16_t *);
@@ -71,24 +66,15 @@ const int16_t streamlined_inv_GS_negacyclic_table_Q1_extended[(NTT_N + (1 << 0) 
 extern
 const int16_t streamlined_inv_GS_negacyclic_table_Q1_jump_extended[((NTT_N - 1) + (1 << 0) + (1 << 4) + NTT_N) << 1];
 
-#define NTT(in) { \
-        __asm_ntt_SIMD_top(in, streamlined_CT_negacyclic_table_Q1_extended, constants); \
-        __asm_ntt_SIMD_bot(in, streamlined_CT_negacyclic_table_Q1_extended, constants); \
-    }
 
-#define NTT_schedule(in) { \
-        __asm_ntt_SIMD_top_schedule(in, streamlined_CT_negacyclic_table_Q1_jump_extended, constants); \
-        __asm_ntt_SIMD_bot_schedule(in, streamlined_CT_negacyclic_table_Q1_jump_extended, constants); \
+#define NTT(in) { \
+        __asm_ntt_SIMD_top(in, streamlined_CT_negacyclic_table_Q1_jump_extended, constants); \
+        __asm_ntt_SIMD_bot(in, streamlined_CT_negacyclic_table_Q1_jump_extended, constants); \
     }
 
 #define iNTT(in) { \
-        __asm_intt_SIMD_bot(in, streamlined_inv_GS_negacyclic_table_Q1_extended, constants); \
-        __asm_intt_SIMD_top(in, streamlined_inv_GS_negacyclic_table_Q1_extended, constants); \
-    }
-
-#define iNTT_schedule(in) { \
-        __asm_intt_SIMD_bot_schedule(in, streamlined_inv_GS_negacyclic_table_Q1_jump_extended, constants); \
-        __asm_intt_SIMD_top_schedule(in, streamlined_inv_GS_negacyclic_table_Q1_jump_extended, constants); \
+        __asm_intt_SIMD_bot(in, streamlined_inv_GS_negacyclic_table_Q1_jump_extended, constants); \
+        __asm_intt_SIMD_top(in, streamlined_inv_GS_negacyclic_table_Q1_jump_extended, constants); \
     }
 
 

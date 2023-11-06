@@ -100,7 +100,7 @@ ___asm_10_to_32:
     sub x7, x7, #1
     cbnz x7, _10_to_32_loop
 
-    br lr
+    ret
 
 .align 2
 .global __asm_poly_reduce
@@ -193,7 +193,7 @@ ___asm_poly_reduce:
     st1 { v6.4S}, [x0], #16
     st1 { v7.4S}, [x0], #16
 
-    br lr
+    ret
 
 .align 2
 .global __asm_poly_caddq
@@ -286,7 +286,7 @@ ___asm_poly_caddq:
     st1 { v6.4S}, [x0], #16
     st1 { v7.4S}, [x0], #16
 
-    br lr
+    ret
 
 .align 2
 .global __asm_poly_freeze
@@ -415,7 +415,7 @@ ___asm_poly_freeze:
     st1 { v6.4S}, [x0], #16
     st1 { v7.4S}, [x0], #16
 
-    br lr
+    ret
 
 .align 2
 .global __asm_poly_power2round
@@ -561,7 +561,7 @@ ___asm_poly_power2round:
     st1 {v30.4S}, [x1], #16
     st1 {v31.4S}, [x1], #16
 
-    br lr
+    ret
 
 .align 2
 .global __asm_poly_add
@@ -610,7 +610,7 @@ ___asm_poly_add:
     st1 {v18.4S}, [x0], #16
     st1 {v19.4S}, [x0], #16
 
-    br lr
+    ret
 
 .align 2
 .global __asm_poly_sub
@@ -659,7 +659,7 @@ ___asm_poly_sub:
     st1 {v18.4S}, [x0], #16
     st1 {v19.4S}, [x0], #16
 
-    br lr
+    ret
 
 .align 2
 .global __asm_poly_shiftl
@@ -726,7 +726,7 @@ ___asm_poly_shiftl:
     st1 {v22.4S}, [x0], #16
     st1 {v23.4S}, [x0], #16
 
-    br lr
+    ret
 
 .align 2
 .global __asm_poly_pointwise_montgomery
@@ -844,7 +844,7 @@ ___asm_poly_pointwise_montgomery:
 
     pop_all
 
-    br lr
+    ret
 
 
 .align 2
@@ -1195,7 +1195,7 @@ ___asm_polyvecl_pointwise_acc_montgomery:
 
     pop_all
 
-    br lr
+    ret
 
 
 
