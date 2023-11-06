@@ -30,16 +30,13 @@
  * SOFTWARE.
  */
 
+#include <stdint.h>
+
 #include "params.h"
 #include "poly.h"
 #include "polyvec.h"
-#include <stdint.h>
-
+#include "ntt.h"
 #include "reduce.h"
-
-static const int32_t l_montgomery_const[4] = {
-    DILITHIUM_Q, DILITHIUM_QINV
-};
 
 /*************************************************
 * Name:        expand_mat
@@ -182,7 +179,7 @@ extern void __asm_polyvecl_pointwise_acc_montgomery(int32_t *, const int32_t *, 
 void polyvecl_pointwise_acc_montgomery(poly *w,
                                        const polyvecl *u,
                                        const polyvecl *v) {
-    __asm_polyvecl_pointwise_acc_montgomery(w->coeffs, u->vec[0].coeffs, v->vec[0].coeffs, l_montgomery_const);
+    __asm_polyvecl_pointwise_acc_montgomery(w->coeffs, u->vec[0].coeffs, v->vec[0].coeffs, constants);
 }
 
 /*************************************************

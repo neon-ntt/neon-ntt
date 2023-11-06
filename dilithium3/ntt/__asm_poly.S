@@ -769,14 +769,14 @@ ___asm_poly_pointwise_montgomery:
     mul    v26.4S, v22.4S, v31.4S
     mul    v27.4S, v23.4S, v31.4S
 
-    smlsl  v12.2D, v24.2S, v30.2S
-    smlsl2 v16.2D, v24.4S, v30.4S
-    smlsl  v13.2D, v25.2S, v30.2S
-    smlsl2 v17.2D, v25.4S, v30.4S
-    smlsl  v14.2D, v26.2S, v30.2S
-    smlsl2 v18.2D, v26.4S, v30.4S
-    smlsl  v15.2D, v27.2S, v30.2S
-    smlsl2 v19.2D, v27.4S, v30.4S
+    smlal  v12.2D, v24.2S, v30.2S
+    smlal2 v16.2D, v24.4S, v30.4S
+    smlal  v13.2D, v25.2S, v30.2S
+    smlal2 v17.2D, v25.4S, v30.4S
+    smlal  v14.2D, v26.2S, v30.2S
+    smlal2 v18.2D, v26.4S, v30.4S
+    smlal  v15.2D, v27.2S, v30.2S
+    smlal2 v19.2D, v27.4S, v30.4S
 
     uzp2   v24.4S, v12.4S, v16.4S
     uzp2   v25.4S, v13.4S, v17.4S
@@ -819,14 +819,14 @@ ___asm_poly_pointwise_montgomery:
     mul    v26.4S, v22.4S, v31.4S
     mul    v27.4S, v23.4S, v31.4S
 
-    smlsl  v12.2D, v24.2S, v30.2S
-    smlsl2 v16.2D, v24.4S, v30.4S
-    smlsl  v13.2D, v25.2S, v30.2S
-    smlsl2 v17.2D, v25.4S, v30.4S
-    smlsl  v14.2D, v26.2S, v30.2S
-    smlsl2 v18.2D, v26.4S, v30.4S
-    smlsl  v15.2D, v27.2S, v30.2S
-    smlsl2 v19.2D, v27.4S, v30.4S
+    smlal  v12.2D, v24.2S, v30.2S
+    smlal2 v16.2D, v24.4S, v30.4S
+    smlal  v13.2D, v25.2S, v30.2S
+    smlal2 v17.2D, v25.4S, v30.4S
+    smlal  v14.2D, v26.2S, v30.2S
+    smlal2 v18.2D, v26.4S, v30.4S
+    smlal  v15.2D, v27.2S, v30.2S
+    smlal2 v19.2D, v27.4S, v30.4S
 
     uzp2   v24.4S, v12.4S, v16.4S
     uzp2   v25.4S, v13.4S, v17.4S
@@ -1027,14 +1027,14 @@ ___asm_polyvecl_pointwise_acc_montgomery:
     mul    v27.4S, v23.4S, v31.4S
     ld1 { v7.4S}, [x2], #16
 
-    smlsl  v12.2D, v24.2S, v30.2S
-    smlsl2 v16.2D, v24.4S, v30.4S
-    smlsl  v13.2D, v25.2S, v30.2S
-    smlsl2 v17.2D, v25.4S, v30.4S
-    smlsl  v14.2D, v26.2S, v30.2S
-    smlsl2 v18.2D, v26.4S, v30.4S
-    smlsl  v15.2D, v27.2S, v30.2S
-    smlsl2 v19.2D, v27.4S, v30.4S
+    smlal  v12.2D, v24.2S, v30.2S
+    smlal2 v16.2D, v24.4S, v30.4S
+    smlal  v13.2D, v25.2S, v30.2S
+    smlal2 v17.2D, v25.4S, v30.4S
+    smlal  v14.2D, v26.2S, v30.2S
+    smlal2 v18.2D, v26.4S, v30.4S
+    smlal  v15.2D, v27.2S, v30.2S
+    smlal2 v19.2D, v27.4S, v30.4S
 
     uzp2   v24.4S, v12.4S, v16.4S
     uzp2   v25.4S, v13.4S, v17.4S
@@ -1173,14 +1173,14 @@ ___asm_polyvecl_pointwise_acc_montgomery:
     mul    v26.4S, v22.4S, v31.4S
     mul    v27.4S, v23.4S, v31.4S
 
-    smlsl  v12.2D, v24.2S, v30.2S
-    smlsl2 v16.2D, v24.4S, v30.4S
-    smlsl  v13.2D, v25.2S, v30.2S
-    smlsl2 v17.2D, v25.4S, v30.4S
-    smlsl  v14.2D, v26.2S, v30.2S
-    smlsl2 v18.2D, v26.4S, v30.4S
-    smlsl  v15.2D, v27.2S, v30.2S
-    smlsl2 v19.2D, v27.4S, v30.4S
+    smlal  v12.2D, v24.2S, v30.2S
+    smlal2 v16.2D, v24.4S, v30.4S
+    smlal  v13.2D, v25.2S, v30.2S
+    smlal2 v17.2D, v25.4S, v30.4S
+    smlal  v14.2D, v26.2S, v30.2S
+    smlal2 v18.2D, v26.4S, v30.4S
+    smlal  v15.2D, v27.2S, v30.2S
+    smlal2 v19.2D, v27.4S, v30.4S
 
     uzp2   v24.4S, v12.4S, v16.4S
     uzp2   v25.4S, v13.4S, v17.4S
