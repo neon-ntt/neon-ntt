@@ -4,7 +4,7 @@ BASE=`cd ${BASE} && pwd`
 echo $BASE
 WORK=work
 WORKPATCHED=work-patched
-PQCleanPATH=~/Desktop/git/public/PQClean
+PQCleanPATH=~/git/public/PQClean
 
 SRC_PATH=../
 
