@@ -736,66 +736,62 @@ ___asm_poly_pointwise_montgomery:
 
     push_all
 
-    ldr w20, [x3, #0]
-    ldr w21, [x3, #4]
+    ldr d28, [x3]
 
-    dup v30.4S, w20
-    dup v31.4S, w21
-
-    ld1 { v0.4S}, [x1], #16
-    ld1 { v1.4S}, [x1], #16
-    ld1 { v2.4S}, [x1], #16
-    ld1 { v3.4S}, [x1], #16
-    ld1 { v4.4S}, [x2], #16
-    ld1 { v5.4S}, [x2], #16
-    ld1 { v6.4S}, [x2], #16
-    ld1 { v7.4S}, [x2], #16
-
-    smull  v12.2D,  v0.2S,  v4.2S
-    smull2 v16.2D,  v0.4S,  v4.4S
-    smull  v13.2D,  v1.2S,  v5.2S
-    smull2 v17.2D,  v1.4S,  v5.4S
-    smull  v14.2D,  v2.2S,  v6.2S
-    smull2 v18.2D,  v2.4S,  v6.4S
-    smull  v15.2D,  v3.2S,  v7.2S
-    smull2 v19.2D,  v3.4S,  v7.4S
-
-    uzp1   v20.4S, v12.4S, v16.4S
-    uzp1   v21.4S, v13.4S, v17.4S
-    uzp1   v22.4S, v14.4S, v18.4S
-    uzp1   v23.4S, v15.4S, v19.4S
-
-    mul    v24.4S, v20.4S, v31.4S
-    mul    v25.4S, v21.4S, v31.4S
-    mul    v26.4S, v22.4S, v31.4S
-    mul    v27.4S, v23.4S, v31.4S
-
-    smlal  v12.2D, v24.2S, v30.2S
-    smlal2 v16.2D, v24.4S, v30.4S
-    smlal  v13.2D, v25.2S, v30.2S
-    smlal2 v17.2D, v25.4S, v30.4S
-    smlal  v14.2D, v26.2S, v30.2S
-    smlal2 v18.2D, v26.4S, v30.4S
-    smlal  v15.2D, v27.2S, v30.2S
-    smlal2 v19.2D, v27.4S, v30.4S
-
-    uzp2   v24.4S, v12.4S, v16.4S
-    uzp2   v25.4S, v13.4S, v17.4S
-    uzp2   v26.4S, v14.4S, v18.4S
-    uzp2   v27.4S, v15.4S, v19.4S
-
-    mov x16, #15
+    mov x16, #8
     _poly_pointwise_montgomery_loop:
 
-    st1 {v24.4S}, [x0], #16
     ld1 { v0.4S}, [x1], #16
-    st1 {v25.4S}, [x0], #16
     ld1 { v1.4S}, [x1], #16
-    st1 {v26.4S}, [x0], #16
     ld1 { v2.4S}, [x1], #16
-    st1 {v27.4S}, [x0], #16
     ld1 { v3.4S}, [x1], #16
+    ld1 {v16.4S}, [x2], #16
+    ld1 {v17.4S}, [x2], #16
+    ld1 {v18.4S}, [x2], #16
+    ld1 {v19.4S}, [x2], #16
 
+    smull  v12.2D,  v0.2S, v16.2S
+    smull2 v16.2D,  v0.4S, v16.4S
+    smull  v13.2D,  v1.2S, v17.2S
+    smull2 v17.2D,  v1.4S, v17.4S
+    smull  v14.2D,  v2.2S, v18.2S
+    smull2 v18.2D,  v2.4S, v18.4S
+    smull  v15.2D,  v3.2S, v19.2S
+    smull2 v19.2D,  v3.4S, v19.4S
+
+    uzp1   v20.4S, v12.4S, v16.4S
+    uzp1   v21.4S, v13.4S, v17.4S
+    uzp1   v22.4S, v14.4S, v18.4S
+    uzp1   v23.4S, v15.4S, v19.4S
+
+    mul    v20.4S, v20.4S, v29.S[1]
+    mul    v21.4S, v21.4S, v29.S[1]
+    mul    v22.4S, v22.4S, v29.S[1]
+    mul    v23.4S, v23.4S, v29.S[1]
+
+    smlal  v12.2D, v20.2S, v28.S[0]
+    smlal2 v16.2D, v20.4S, v28.S[0]
+    smlal  v13.2D, v21.2S, v28.S[0]
+    smlal2 v17.2D, v21.4S, v28.S[0]
+    smlal  v14.2D, v22.2S, v28.S[0]
+    smlal2 v18.2D, v22.4S, v28.S[0]
+    smlal  v15.2D, v23.2S, v28.S[0]
+    smlal2 v19.2D, v23.4S, v28.S[0]
+
+    uzp2   v20.4S, v12.4S, v16.4S
+    uzp2   v21.4S, v13.4S, v17.4S
+    uzp2   v22.4S, v14.4S, v18.4S
+    uzp2   v23.4S, v15.4S, v19.4S
+
+    st1 {v20.4S}, [x0], #16
+    st1 {v21.4S}, [x0], #16
+    st1 {v22.4S}, [x0], #16
+    st1 {v23.4S}, [x0], #16
+
+    ld1 { v0.4S}, [x1], #16
+    ld1 { v1.4S}, [x1], #16
+    ld1 { v2.4S}, [x1], #16
+    ld1 { v3.4S}, [x1], #16
     ld1 { v4.4S}, [x2], #16
     ld1 { v5.4S}, [x2], #16
     ld1 { v6.4S}, [x2], #16
@@ -810,37 +806,39 @@ ___asm_poly_pointwise_montgomery:
     smull  v15.2D,  v3.2S,  v7.2S
     smull2 v19.2D,  v3.4S,  v7.4S
 
-    uzp1   v20.4S, v12.4S, v16.4S
-    uzp1   v21.4S, v13.4S, v17.4S
-    uzp1   v22.4S, v14.4S, v18.4S
-    uzp1   v23.4S, v15.4S, v19.4S
+    uzp1   v24.4S, v12.4S, v16.4S
+    uzp1   v25.4S, v13.4S, v17.4S
+    uzp1   v26.4S, v14.4S, v18.4S
+    uzp1   v27.4S, v15.4S, v19.4S
 
-    mul    v24.4S, v20.4S, v31.4S
-    mul    v25.4S, v21.4S, v31.4S
-    mul    v26.4S, v22.4S, v31.4S
-    mul    v27.4S, v23.4S, v31.4S
+    mul    v24.4S, v24.4S, v29.S[1]
+    mul    v25.4S, v25.4S, v29.S[1]
+    mul    v26.4S, v26.4S, v29.S[1]
+    mul    v27.4S, v27.4S, v29.S[1]
 
-    smlal  v12.2D, v24.2S, v30.2S
-    smlal2 v16.2D, v24.4S, v30.4S
-    smlal  v13.2D, v25.2S, v30.2S
-    smlal2 v17.2D, v25.4S, v30.4S
-    smlal  v14.2D, v26.2S, v30.2S
-    smlal2 v18.2D, v26.4S, v30.4S
-    smlal  v15.2D, v27.2S, v30.2S
-    smlal2 v19.2D, v27.4S, v30.4S
+    smlal  v12.2D, v24.2S, v28.S[0]
+    smlal2 v16.2D, v24.4S, v28.S[0]
+    smlal  v13.2D, v25.2S, v28.S[0]
+    smlal2 v17.2D, v25.4S, v28.S[0]
+    smlal  v14.2D, v26.2S, v28.S[0]
+    smlal2 v18.2D, v26.4S, v28.S[0]
+    smlal  v15.2D, v27.2S, v28.S[0]
+    smlal2 v19.2D, v27.4S, v28.S[0]
 
     uzp2   v24.4S, v12.4S, v16.4S
     uzp2   v25.4S, v13.4S, v17.4S
     uzp2   v26.4S, v14.4S, v18.4S
     uzp2   v27.4S, v15.4S, v19.4S
+
+    st1 {v24.4S}, [x0], #16
+    st1 {v25.4S}, [x0], #16
+    st1 {v26.4S}, [x0], #16
+    st1 {v27.4S}, [x0], #16
 
     sub x16, x16, #1
     cbnz x16, _poly_pointwise_montgomery_loop
 
-    st1 {v24.4S}, [x0], #16
-    st1 {v25.4S}, [x0], #16
-    st1 {v26.4S}, [x0], #16
-    st1 {v27.4S}, [x0], #16
+
 
     pop_all
 

@@ -287,10 +287,6 @@ ___asm_asymmetric_mul:
     add  src2asy_3, src2asy_0, #256*3
 #endif
 
-    // TODO:interleaving
-    mov counter, #16
-    _asymmetric_mul_loop:
-
     ldr q20, [src1_0, #0*16]
     ldr q21, [src1_0, #1*16]
     ldr q22, [src2_0, #0*16]
@@ -417,6 +413,152 @@ ___asm_asymmetric_mul:
 
 #endif
 
+    // TODO:interleaving
+    mov counter, #15
+    _asymmetric_mul_loop:
+
+    ldr q20, [src1_0, #0*16]
+    uzp1    v6.8H, v16.8H, v18.8H
+    ldr q21, [src1_0, #1*16]
+    uzp1    v7.8H, v17.8H, v19.8H
+
+    ldr q22, [src2_0, #0*16]
+    mul     v6.8H,  v6.8H, v4.H[1]
+    ldr q23, [src2_0, #1*16]
+    mul     v7.8H,  v7.8H, v4.H[1]
+
+    add src1_0, src1_0, #32
+    add src2_0, src2_0, #32
+
+    smlal  v16.4S,  v6.4H, v4.H[0]
+    uzp1  v0.8H, v20.8H, v21.8H
+    smlal2 v18.4S,  v6.8H, v4.H[0]
+    uzp2  v1.8H, v20.8H, v21.8H
+    smlal  v17.4S,  v7.4H, v4.H[0]
+    uzp1  v2.8H, v22.8H, v23.8H
+    smlal2 v19.4S,  v7.8H, v4.H[0]
+    uzp2  v3.8H, v22.8H, v23.8H
+
+    ld1 {v28.8H}, [src2asy_0], #16
+    uzp2    v6.8H, v16.8H, v18.8H
+    uzp2    v7.8H, v17.8H, v19.8H
+
+    st2 { v6.8H,  v7.8H}, [des], #32
+
+    smull  v16.4S,  v0.4H,  v2.4H
+    ldr q20, [src1_1, #0*16]
+    smull2 v18.4S,  v0.8H,  v2.8H
+    ldr q21, [src1_1, #1*16]
+    smull  v17.4S,  v0.4H,  v3.4H
+    ldr q22, [src2_1, #0*16]
+    smull2 v19.4S,  v0.8H,  v3.8H
+    ldr q23, [src2_1, #1*16]
+
+    add src1_1, src1_1, #32
+    add src2_1, src2_1, #32
+
+    smlal  v16.4S,  v1.4H, v28.4H
+    uzp1  v8.8H, v20.8H, v21.8H
+    smlal2 v18.4S,  v1.8H, v28.8H
+    uzp2  v9.8H, v20.8H, v21.8H
+    smlal  v17.4S,  v1.4H,  v2.4H
+    uzp1 v10.8H, v22.8H, v23.8H
+    smlal2 v19.4S,  v1.8H,  v2.8H
+    uzp2 v11.8H, v22.8H, v23.8H
+
+    ld1 {v29.8H}, [src2asy_1], #16
+
+#if KYBER_K > 2
+
+    smlal  v16.4S,  v8.4H, v10.4H
+    ldr q20, [src1_2, #0*16]
+    smlal2 v18.4S,  v8.8H, v10.8H
+    ldr q21, [src1_2, #1*16]
+    smlal  v17.4S,  v8.4H, v11.4H
+    ldr q22, [src2_2, #0*16]
+    smlal2 v19.4S,  v8.8H, v11.8H
+    ldr q23, [src2_2, #1*16]
+
+    add src1_2, src1_2, #32
+    add src2_2, src2_2, #32
+
+    smlal  v16.4S,  v9.4H, v29.4H
+    uzp1 v12.8H, v20.8H, v21.8H
+    smlal2 v18.4S,  v9.8H, v29.8H
+    uzp2 v13.8H, v20.8H, v21.8H
+    smlal  v17.4S,  v9.4H, v10.4H
+    uzp1 v14.8H, v22.8H, v23.8H
+    smlal2 v19.4S,  v9.8H, v10.8H
+    uzp2 v15.8H, v22.8H, v23.8H
+
+    ld1 {v30.8H}, [src2asy_2], #16
+
+#if KYBER_K > 3
+
+    smlal  v16.4S, v12.4H, v14.4H
+    ldr q20, [src1_3, #0*16]
+    smlal2 v18.4S, v12.8H, v14.8H
+    ldr q21, [src1_3, #1*16]
+    smlal  v17.4S, v12.4H, v15.4H
+    ldr q22, [src2_3, #0*16]
+    smlal2 v19.4S, v12.8H, v15.8H
+    ldr q23, [src2_3, #1*16]
+
+    add src1_3, src1_3, #32
+    add src2_3, src2_3, #32
+
+    smlal  v16.4S, v13.4H, v30.4H
+    uzp1 v24.8H, v20.8H, v21.8H
+    smlal2 v18.4S, v13.8H, v30.8H
+    uzp2 v25.8H, v20.8H, v21.8H
+    smlal  v17.4S, v13.4H, v14.4H
+    uzp1 v26.8H, v22.8H, v23.8H
+    smlal2 v19.4S, v13.8H, v14.8H
+    uzp2 v27.8H, v22.8H, v23.8H
+
+    ld1 {v31.8H}, [src2asy_3], #16
+
+    smlal  v16.4S, v24.4H, v26.4H
+    smlal2 v18.4S, v24.8H, v26.8H
+    smlal  v17.4S, v24.4H, v27.4H
+    smlal2 v19.4S, v24.8H, v27.8H
+
+    smlal  v16.4S, v25.4H, v31.4H
+    smlal2 v18.4S, v25.8H, v31.8H
+    smlal  v17.4S, v25.4H, v26.4H
+    smlal2 v19.4S, v25.8H, v26.8H
+
+#else
+
+    smlal  v16.4S, v12.4H, v14.4H
+    smlal2 v18.4S, v12.8H, v14.8H
+    smlal  v17.4S, v12.4H, v15.4H
+    smlal2 v19.4S, v12.8H, v15.8H
+
+    smlal  v16.4S, v13.4H, v30.4H
+    smlal2 v18.4S, v13.8H, v30.8H
+    smlal  v17.4S, v13.4H, v14.4H
+    smlal2 v19.4S, v13.8H, v14.8H
+
+#endif
+
+#else
+
+    smlal  v16.4S,  v8.4H, v10.4H
+    smlal2 v18.4S,  v8.8H, v10.8H
+    smlal  v17.4S,  v8.4H, v11.4H
+    smlal2 v19.4S,  v8.8H, v11.8H
+
+    smlal  v16.4S,  v9.4H, v29.4H
+    smlal2 v18.4S,  v9.8H, v29.8H
+    smlal  v17.4S,  v9.4H, v10.4H
+    smlal2 v19.4S,  v9.8H, v10.8H
+
+#endif
+
+    sub counter, counter, #1
+    cbnz counter, _asymmetric_mul_loop
+
     uzp1    v6.8H, v16.8H, v18.8H
     uzp1    v7.8H, v17.8H, v19.8H
 
@@ -432,9 +574,6 @@ ___asm_asymmetric_mul:
     uzp2    v7.8H, v17.8H, v19.8H
 
     st2 { v6.8H,  v7.8H}, [des], #32
-
-    sub counter, counter, #1
-    cbnz counter, _asymmetric_mul_loop
 
     .unreq    des
     .unreq    src1_0
@@ -497,10 +636,6 @@ ___asm_asymmetric_mul_montgomery:
     add  src2asy_3, src2asy_0, #256*3
 #endif
 
-    // TODO: interleaving
-    mov counter, #16
-    _asymmetric_mul_montgomery_loop:
-
     ldr q20, [src1_0, #0*16]
     ldr q21, [src1_0, #1*16]
     ldr q22, [src2_0, #0*16]
@@ -627,6 +762,162 @@ ___asm_asymmetric_mul_montgomery:
 
 #endif
 
+    // TODO: interleaving
+    mov counter, #15
+    _asymmetric_mul_montgomery_loop:
+
+    uzp1    v6.8H, v16.8H, v18.8H
+    uzp1    v7.8H, v17.8H, v19.8H
+
+    mul     v6.8H,  v6.8H, v4.H[1]
+    mul     v7.8H,  v7.8H, v4.H[1]
+
+    ldr q20, [src1_0, #0*16]
+    smlal  v16.4S,  v6.4H, v4.H[0]
+    ldr q21, [src1_0, #1*16]
+    smlal2 v18.4S,  v6.8H, v4.H[0]
+    ldr q22, [src2_0, #0*16]
+    smlal  v17.4S,  v7.4H, v4.H[0]
+    ldr q23, [src2_0, #1*16]
+    smlal2 v19.4S,  v7.8H, v4.H[0]
+
+    add src1_0, src1_0, #32
+    add src2_0, src2_0, #32
+
+    uzp2    v6.8H, v16.8H, v18.8H
+    uzp2    v7.8H, v17.8H, v19.8H
+
+    uzp1  v0.8H, v20.8H, v21.8H
+    sqrdmulh v16.8H,  v6.8H,  v4.H[4]
+    uzp2  v1.8H, v20.8H, v21.8H
+    sqrdmulh v17.8H,  v7.8H,  v4.H[4]
+
+    uzp1  v2.8H, v22.8H, v23.8H
+    mul       v6.8H,  v6.8H,  v4.H[5]
+    uzp2  v3.8H, v22.8H, v23.8H
+    mul       v7.8H,  v7.8H,  v4.H[5]
+
+    mls       v6.8H, v16.8H,  v4.H[0]
+    mls       v7.8H, v17.8H,  v4.H[0]
+
+    st2 { v6.8H,  v7.8H}, [des], #32
+
+    ld1 {v28.8H}, [src2asy_0], #16
+
+    smull  v16.4S,  v0.4H,  v2.4H
+    ldr q20, [src1_1, #0*16]
+    smull2 v18.4S,  v0.8H,  v2.8H
+    ldr q21, [src1_1, #1*16]
+    smull  v17.4S,  v0.4H,  v3.4H
+    ldr q22, [src2_1, #0*16]
+    smull2 v19.4S,  v0.8H,  v3.8H
+    ldr q23, [src2_1, #1*16]
+
+    add src1_1, src1_1, #32
+    add src2_1, src2_1, #32
+
+    smlal  v16.4S,  v1.4H, v28.4H
+    uzp1  v8.8H, v20.8H, v21.8H
+    smlal2 v18.4S,  v1.8H, v28.8H
+    uzp2  v9.8H, v20.8H, v21.8H
+    smlal  v17.4S,  v1.4H,  v2.4H
+    uzp1 v10.8H, v22.8H, v23.8H
+    smlal2 v19.4S,  v1.8H,  v2.8H
+    uzp2 v11.8H, v22.8H, v23.8H
+
+    ld1 {v29.8H}, [src2asy_1], #16
+
+#if KYBER_K > 2
+
+    smlal  v16.4S,  v8.4H, v10.4H
+    ldr q20, [src1_2, #0*16]
+    smlal2 v18.4S,  v8.8H, v10.8H
+    ldr q21, [src1_2, #1*16]
+    smlal  v17.4S,  v8.4H, v11.4H
+    ldr q22, [src2_2, #0*16]
+    smlal2 v19.4S,  v8.8H, v11.8H
+    ldr q23, [src2_2, #1*16]
+
+    add src1_2, src1_2, #32
+    add src2_2, src2_2, #32
+
+    smlal  v16.4S,  v9.4H, v29.4H
+    uzp1 v12.8H, v20.8H, v21.8H
+    smlal2 v18.4S,  v9.8H, v29.8H
+    uzp2 v13.8H, v20.8H, v21.8H
+    smlal  v17.4S,  v9.4H, v10.4H
+    uzp1 v14.8H, v22.8H, v23.8H
+    smlal2 v19.4S,  v9.8H, v10.8H
+    uzp2 v15.8H, v22.8H, v23.8H
+
+    ld1 {v30.8H}, [src2asy_2], #16
+
+#if KYBER_K > 3
+
+    smlal  v16.4S, v12.4H, v14.4H
+    ldr q20, [src1_3, #0*16]
+    smlal2 v18.4S, v12.8H, v14.8H
+    ldr q21, [src1_3, #1*16]
+    smlal  v17.4S, v12.4H, v15.4H
+    ldr q22, [src2_3, #0*16]
+    smlal2 v19.4S, v12.8H, v15.8H
+    ldr q23, [src2_3, #1*16]
+
+    add src1_3, src1_3, #32
+    add src2_3, src2_3, #32
+
+    smlal  v16.4S, v13.4H, v30.4H
+    uzp1 v24.8H, v20.8H, v21.8H
+    smlal2 v18.4S, v13.8H, v30.8H
+    uzp2 v25.8H, v20.8H, v21.8H
+    smlal  v17.4S, v13.4H, v14.4H
+    uzp1 v26.8H, v22.8H, v23.8H
+    smlal2 v19.4S, v13.8H, v14.8H
+    uzp2 v27.8H, v22.8H, v23.8H
+
+    ld1 {v31.8H}, [src2asy_3], #16
+
+    smlal  v16.4S, v24.4H, v26.4H
+    smlal2 v18.4S, v24.8H, v26.8H
+    smlal  v17.4S, v24.4H, v27.4H
+    smlal2 v19.4S, v24.8H, v27.8H
+
+    smlal  v16.4S, v25.4H, v31.4H
+    smlal2 v18.4S, v25.8H, v31.8H
+    smlal  v17.4S, v25.4H, v26.4H
+    smlal2 v19.4S, v25.8H, v26.8H
+
+#else
+
+    smlal  v16.4S, v12.4H, v14.4H
+    smlal2 v18.4S, v12.8H, v14.8H
+    smlal  v17.4S, v12.4H, v15.4H
+    smlal2 v19.4S, v12.8H, v15.8H
+
+    smlal  v16.4S, v13.4H, v30.4H
+    smlal2 v18.4S, v13.8H, v30.8H
+    smlal  v17.4S, v13.4H, v14.4H
+    smlal2 v19.4S, v13.8H, v14.8H
+
+#endif
+
+#else
+
+    smlal  v16.4S,  v8.4H, v10.4H
+    smlal2 v18.4S,  v8.8H, v10.8H
+    smlal  v17.4S,  v8.4H, v11.4H
+    smlal2 v19.4S,  v8.8H, v11.8H
+
+    smlal  v16.4S,  v9.4H, v29.4H
+    smlal2 v18.4S,  v9.8H, v29.8H
+    smlal  v17.4S,  v9.4H, v10.4H
+    smlal2 v19.4S,  v9.8H, v10.8H
+
+#endif
+
+    sub counter, counter, #1
+    cbnz counter, _asymmetric_mul_montgomery_loop
+
     uzp1    v6.8H, v16.8H, v18.8H
     uzp1    v7.8H, v17.8H, v19.8H
 
@@ -651,9 +942,6 @@ ___asm_asymmetric_mul_montgomery:
     mls       v7.8H, v17.8H,  v4.H[0]
 
     st2 { v6.8H,  v7.8H}, [des], #32
-
-    sub counter, counter, #1
-    cbnz counter, _asymmetric_mul_montgomery_loop
 
     .unreq    des
     .unreq    src1_0
