@@ -1,9 +1,12 @@
 #!/bin/bash
 BASE=`dirname $0`
 BASE=`cd ${BASE} && pwd`
+echo $BASE
 WORK=work
 WORKPATCHED=work-patched
 PQCleanPATH=~/Desktop/git/public/PQClean
+
+SRC_PATH=../
 
 rm -rf ${WORK} ${WORKPATCHED}
 mkdir -p ${WORK} ${WORKPATCHED}
@@ -11,7 +14,7 @@ mkdir -p ${WORK} ${WORKPATCHED}
 # patch implementations
 for scheme in kyber512 kyber768 kyber1024 dilithium2 dilithium3 dilithium5
 do
-    cp -rL ${scheme} ${WORK}
+    cp -rL ${SRC_PATH}/${scheme} ${WORK}
 
     # delete non scheme files
     rm -rf ${WORK}/${scheme}/ntt ${WORK}/${scheme}/microbenchmarks
