@@ -291,81 +291,147 @@ ___asm_asymmetric_mul:
     mov counter, #16
     _asymmetric_mul_loop:
 
-    ld2 { v0.8H,  v1.8H}, [   src1_0], #32
-    ld2 { v2.8H,  v3.8H}, [   src2_0], #32
-    ld1 { v5.8H}, [src2asy_0], #16
+    ldr q20, [src1_0, #0*16]
+    ldr q21, [src1_0, #1*16]
+    ldr q22, [src2_0, #0*16]
+    ldr q23, [src2_0, #1*16]
+
+    add src1_0, src1_0, #32
+    add src2_0, src2_0, #32
+
+    uzp1  v0.8H, v20.8H, v21.8H
+    uzp2  v1.8H, v20.8H, v21.8H
+    uzp1  v2.8H, v22.8H, v23.8H
+    uzp2  v3.8H, v22.8H, v23.8H
+
+    ld1 {v28.8H}, [src2asy_0], #16
 
     smull  v16.4S,  v0.4H,  v2.4H
-    smull2 v20.4S,  v0.8H,  v2.8H
+    ldr q20, [src1_1, #0*16]
+    smull2 v18.4S,  v0.8H,  v2.8H
+    ldr q21, [src1_1, #1*16]
     smull  v17.4S,  v0.4H,  v3.4H
-    smull2 v21.4S,  v0.8H,  v3.8H
+    ldr q22, [src2_1, #0*16]
+    smull2 v19.4S,  v0.8H,  v3.8H
+    ldr q23, [src2_1, #1*16]
 
-    smlal  v16.4S,  v1.4H,  v5.4H
-    smlal2 v20.4S,  v1.8H,  v5.8H
+    add src1_1, src1_1, #32
+    add src2_1, src2_1, #32
+
+    smlal  v16.4S,  v1.4H, v28.4H
+    uzp1  v8.8H, v20.8H, v21.8H
+    smlal2 v18.4S,  v1.8H, v28.8H
+    uzp2  v9.8H, v20.8H, v21.8H
     smlal  v17.4S,  v1.4H,  v2.4H
-    smlal2 v21.4S,  v1.8H,  v2.8H
+    uzp1 v10.8H, v22.8H, v23.8H
+    smlal2 v19.4S,  v1.8H,  v2.8H
+    uzp2 v11.8H, v22.8H, v23.8H
 
-    ld2 { v0.8H,  v1.8H}, [   src1_1], #32
-    ld2 { v2.8H,  v3.8H}, [   src2_1], #32
-    ld1 { v5.8H}, [src2asy_1], #16
-
-    smlal  v16.4S,  v0.4H,  v2.4H
-    smlal2 v20.4S,  v0.8H,  v2.8H
-    smlal  v17.4S,  v0.4H,  v3.4H
-    smlal2 v21.4S,  v0.8H,  v3.8H
-
-    smlal  v16.4S,  v1.4H,  v5.4H
-    smlal2 v20.4S,  v1.8H,  v5.8H
-    smlal  v17.4S,  v1.4H,  v2.4H
-    smlal2 v21.4S,  v1.8H,  v2.8H
+    ld1 {v29.8H}, [src2asy_1], #16
 
 #if KYBER_K > 2
-    ld2 { v0.8H,  v1.8H}, [   src1_2], #32
-    ld2 { v2.8H,  v3.8H}, [   src2_2], #32
-    ld1 { v5.8H}, [src2asy_2], #16
 
-    smlal  v16.4S,  v0.4H,  v2.4H
-    smlal2 v20.4S,  v0.8H,  v2.8H
-    smlal  v17.4S,  v0.4H,  v3.4H
-    smlal2 v21.4S,  v0.8H,  v3.8H
+    smlal  v16.4S,  v8.4H, v10.4H
+    ldr q20, [src1_2, #0*16]
+    smlal2 v18.4S,  v8.8H, v10.8H
+    ldr q21, [src1_2, #1*16]
+    smlal  v17.4S,  v8.4H, v11.4H
+    ldr q22, [src2_2, #0*16]
+    smlal2 v19.4S,  v8.8H, v11.8H
+    ldr q23, [src2_2, #1*16]
 
-    smlal  v16.4S,  v1.4H,  v5.4H
-    smlal2 v20.4S,  v1.8H,  v5.8H
-    smlal  v17.4S,  v1.4H,  v2.4H
-    smlal2 v21.4S,  v1.8H,  v2.8H
-#endif
+    add src1_2, src1_2, #32
+    add src2_2, src2_2, #32
+
+    smlal  v16.4S,  v9.4H, v29.4H
+    uzp1 v12.8H, v20.8H, v21.8H
+    smlal2 v18.4S,  v9.8H, v29.8H
+    uzp2 v13.8H, v20.8H, v21.8H
+    smlal  v17.4S,  v9.4H, v10.4H
+    uzp1 v14.8H, v22.8H, v23.8H
+    smlal2 v19.4S,  v9.8H, v10.8H
+    uzp2 v15.8H, v22.8H, v23.8H
+
+    ld1 {v30.8H}, [src2asy_2], #16
 
 #if KYBER_K > 3
-    ld2 { v0.8H,  v1.8H}, [   src1_3], #32
-    ld2 { v2.8H,  v3.8H}, [   src2_3], #32
-    ld1 { v5.8H}, [src2asy_3], #16
 
-    smlal  v16.4S,  v0.4H,  v2.4H
-    smlal2 v20.4S,  v0.8H,  v2.8H
-    smlal  v17.4S,  v0.4H,  v3.4H
-    smlal2 v21.4S,  v0.8H,  v3.8H
+    smlal  v16.4S, v12.4H, v14.4H
+    ldr q20, [src1_3, #0*16]
+    smlal2 v18.4S, v12.8H, v14.8H
+    ldr q21, [src1_3, #1*16]
+    smlal  v17.4S, v12.4H, v15.4H
+    ldr q22, [src2_3, #0*16]
+    smlal2 v19.4S, v12.8H, v15.8H
+    ldr q23, [src2_3, #1*16]
 
-    smlal  v16.4S,  v1.4H,  v5.4H
-    smlal2 v20.4S,  v1.8H,  v5.8H
-    smlal  v17.4S,  v1.4H,  v2.4H
-    smlal2 v21.4S,  v1.8H,  v2.8H
+    add src1_3, src1_3, #32
+    add src2_3, src2_3, #32
+
+    smlal  v16.4S, v13.4H, v30.4H
+    uzp1 v24.8H, v20.8H, v21.8H
+    smlal2 v18.4S, v13.8H, v30.8H
+    uzp2 v25.8H, v20.8H, v21.8H
+    smlal  v17.4S, v13.4H, v14.4H
+    uzp1 v26.8H, v22.8H, v23.8H
+    smlal2 v19.4S, v13.8H, v14.8H
+    uzp2 v27.8H, v22.8H, v23.8H
+
+    ld1 {v31.8H}, [src2asy_3], #16
+
+    smlal  v16.4S, v24.4H, v26.4H
+    smlal2 v18.4S, v24.8H, v26.8H
+    smlal  v17.4S, v24.4H, v27.4H
+    smlal2 v19.4S, v24.8H, v27.8H
+
+    smlal  v16.4S, v25.4H, v31.4H
+    smlal2 v18.4S, v25.8H, v31.8H
+    smlal  v17.4S, v25.4H, v26.4H
+    smlal2 v19.4S, v25.8H, v26.8H
+
+#else
+
+    smlal  v16.4S, v12.4H, v14.4H
+    smlal2 v18.4S, v12.8H, v14.8H
+    smlal  v17.4S, v12.4H, v15.4H
+    smlal2 v19.4S, v12.8H, v15.8H
+
+    smlal  v16.4S, v13.4H, v30.4H
+    smlal2 v18.4S, v13.8H, v30.8H
+    smlal  v17.4S, v13.4H, v14.4H
+    smlal2 v19.4S, v13.8H, v14.8H
+
 #endif
 
-    uzp1    v0.8H, v16.8H, v20.8H
-    uzp1    v1.8H, v17.8H, v21.8H
+#else
 
-    mul     v0.8H,  v0.8H, v4.H[1]
-    mul     v1.8H,  v1.8H, v4.H[1]
+    smlal  v16.4S,  v8.4H, v10.4H
+    smlal2 v18.4S,  v8.8H, v10.8H
+    smlal  v17.4S,  v8.4H, v11.4H
+    smlal2 v19.4S,  v8.8H, v11.8H
 
-    smlal  v16.4S,  v0.4H, v4.H[0]
-    smlal2 v20.4S,  v0.8H, v4.H[0]
-    smlal  v17.4S,  v1.4H, v4.H[0]
-    smlal2 v21.4S,  v1.8H, v4.H[0]
+    smlal  v16.4S,  v9.4H, v29.4H
+    smlal2 v18.4S,  v9.8H, v29.8H
+    smlal  v17.4S,  v9.4H, v10.4H
+    smlal2 v19.4S,  v9.8H, v10.8H
 
-    uzp2   v24.8H, v16.8H, v20.8H
-    uzp2   v25.8H, v17.8H, v21.8H
+#endif
 
-    st2 {v24.8H, v25.8H}, [des], #32
+    uzp1    v6.8H, v16.8H, v18.8H
+    uzp1    v7.8H, v17.8H, v19.8H
+
+    mul     v6.8H,  v6.8H, v4.H[1]
+    mul     v7.8H,  v7.8H, v4.H[1]
+
+    smlal  v16.4S,  v6.4H, v4.H[0]
+    smlal2 v18.4S,  v6.8H, v4.H[0]
+    smlal  v17.4S,  v7.4H, v4.H[0]
+    smlal2 v19.4S,  v7.8H, v4.H[0]
+
+    uzp2    v6.8H, v16.8H, v18.8H
+    uzp2    v7.8H, v17.8H, v19.8H
+
+    st2 { v6.8H,  v7.8H}, [des], #32
 
     sub counter, counter, #1
     cbnz counter, _asymmetric_mul_loop
