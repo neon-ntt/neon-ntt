@@ -252,8 +252,6 @@ __asm_asymmetric_mul:
 ___asm_asymmetric_mul:
 
     push_all
-    Q         .req w28
-    Qprime2   .req w27
     des       .req x11
     src1_0    .req x0
     src2_0    .req x1
@@ -269,8 +267,7 @@ ___asm_asymmetric_mul:
     src2asy_3 .req x14
     counter   .req x19
 
-    ldrsh Q, [x3, #0]
-    ldrsh Qprime2, [x3, #2]
+    ldr s4, [x3]
 
     add des, x4, #0
 
@@ -289,9 +286,6 @@ ___asm_asymmetric_mul:
     add     src2_3,    src2_0, #512*3
     add  src2asy_3, src2asy_0, #256*3
 #endif
-
-    dup v28.8H, Q
-    dup v29.8H, Qprime2
 
     // TODO:interleaving
     mov counter, #16
@@ -360,13 +354,13 @@ ___asm_asymmetric_mul:
     uzp1    v0.8H, v16.8H, v20.8H
     uzp1    v1.8H, v17.8H, v21.8H
 
-    mul     v0.8H,  v0.8H, v29.8H
-    mul     v1.8H,  v1.8H, v29.8H
+    mul     v0.8H,  v0.8H, v4.H[1]
+    mul     v1.8H,  v1.8H, v4.H[1]
 
-    smlal  v16.4S,  v0.4H, v28.4H
-    smlal2 v20.4S,  v0.8H, v28.8H
-    smlal  v17.4S,  v1.4H, v28.4H
-    smlal2 v21.4S,  v1.8H, v28.8H
+    smlal  v16.4S,  v0.4H, v4.H[0]
+    smlal2 v20.4S,  v0.8H, v4.H[0]
+    smlal  v17.4S,  v1.4H, v4.H[0]
+    smlal2 v21.4S,  v1.8H, v4.H[0]
 
     uzp2   v24.8H, v16.8H, v20.8H
     uzp2   v25.8H, v17.8H, v21.8H
@@ -376,8 +370,6 @@ ___asm_asymmetric_mul:
     sub counter, counter, #1
     cbnz counter, _asymmetric_mul_loop
 
-    .unreq    Q
-    .unreq    Qprime2
     .unreq    des
     .unreq    src1_0
     .unreq    src2_0
