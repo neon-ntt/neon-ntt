@@ -45,11 +45,7 @@ ___asm_point_mul_extended:
 
     ldrsh Q, [x3]
 
-    dup v20.8H, Q
-
-    // TODO: unroll this, currently we are using only 16 SIMD registers
-    mov counter, #4
-    _point_mul_extended_loop:
+    dup v28.8H, Q
 
     ldr  q0, [src1, #0*16]
     ldr  q1, [src1, #1*16]
@@ -62,10 +58,10 @@ ___asm_point_mul_extended:
 
     add src1, src1, #8*16
 
-    uzp2 v1.8H, v0.8H, v1.8H
-    uzp2 v3.8H, v2.8H, v3.8H
-    uzp2 v5.8H, v4.8H, v5.8H
-    uzp2 v7.8H, v6.8H, v7.8H
+    uzp2  v1.8H,  v0.8H,  v1.8H
+    uzp2  v3.8H,  v2.8H,  v3.8H
+    uzp2  v5.8H,  v4.8H,  v5.8H
+    uzp2  v7.8H,  v6.8H,  v7.8H
 
     ldr  q8, [src2ex, #0*16]
     ldr q10, [src2ex, #2*16]
@@ -78,30 +74,166 @@ ___asm_point_mul_extended:
 
     add src2ex, src2ex, #8*16
 
+    ldr q16, [src1, #0*16]
     sqrdmulh  v0.8H,  v1.8H,  v8.8H
+    ldr q17, [src1, #1*16]
     sqrdmulh  v2.8H,  v3.8H, v10.8H
+    ldr q18, [src1, #2*16]
     sqrdmulh  v4.8H,  v5.8H, v12.8H
+    ldr q19, [src1, #3*16]
     sqrdmulh  v6.8H,  v7.8H, v14.8H
 
+    ldr q20, [src1, #4*16]
     mul       v1.8H,  v1.8H,  v9.8H
+    uzp2 v17.8H, v16.8H, v17.8H
+    ldr q21, [src1, #5*16]
     mul       v3.8H,  v3.8H, v11.8H
+    uzp2 v19.8H, v18.8H, v19.8H
+    ldr q22, [src1, #6*16]
     mul       v5.8H,  v5.8H, v13.8H
+    uzp2 v21.8H, v20.8H, v21.8H
+    ldr q23, [src1, #7*16]
     mul       v7.8H,  v7.8H, v15.8H
+    uzp2 v23.8H, v22.8H, v23.8H
 
-    mls       v1.8H,  v0.8H, v20.8H
-    mls       v3.8H,  v2.8H, v20.8H
-    mls       v5.8H,  v4.8H, v20.8H
-    mls       v7.8H,  v6.8H, v20.8H
+    add src1, src1, #8*16
 
+    ldr  q8, [src2ex, #0*16]
+    mls       v1.8H,  v0.8H, v28.8H
+    ldr q10, [src2ex, #2*16]
+    mls       v3.8H,  v2.8H, v28.8H
+    ldr q12, [src2ex, #4*16]
+    mls       v5.8H,  v4.8H, v28.8H
+    ldr q14, [src2ex, #6*16]
+    mls       v7.8H,  v6.8H, v28.8H
+
+    ldr  q9, [src2ex, #1*16]
     str  q1, [des, #0*16]
+    ldr q11, [src2ex, #3*16]
     str  q3, [des, #1*16]
+    ldr q13, [src2ex, #5*16]
     str  q5, [des, #2*16]
+    ldr q15, [src2ex, #7*16]
     str  q7, [des, #3*16]
 
     add des, des, #4*16
 
-    sub counter, counter, #1
-    cbnz counter, _point_mul_extended_loop
+    add src2ex, src2ex, #8*16
+
+    ldr  q0, [src1, #0*16]
+    sqrdmulh v16.8H, v17.8H,  v8.8H
+    ldr  q1, [src1, #1*16]
+    sqrdmulh v18.8H, v19.8H, v10.8H
+    ldr  q2, [src1, #2*16]
+    sqrdmulh v20.8H, v21.8H, v12.8H
+    ldr  q3, [src1, #3*16]
+    sqrdmulh v22.8H, v23.8H, v14.8H
+
+    ldr  q4, [src1, #4*16]
+    mul      v17.8H, v17.8H,  v9.8H
+    uzp2  v1.8H,  v0.8H,  v1.8H
+    ldr  q5, [src1, #5*16]
+    mul      v19.8H, v19.8H, v11.8H
+    uzp2  v3.8H,  v2.8H,  v3.8H
+    ldr  q6, [src1, #6*16]
+    mul      v21.8H, v21.8H, v13.8H
+    uzp2  v5.8H,  v4.8H,  v5.8H
+    ldr  q7, [src1, #7*16]
+    mul      v23.8H, v23.8H, v15.8H
+    uzp2  v7.8H,  v6.8H,  v7.8H
+
+    add src1, src1, #8*16
+
+    ldr  q8, [src2ex, #0*16]
+    mls      v17.8H, v16.8H, v28.8H
+    ldr q10, [src2ex, #2*16]
+    mls      v19.8H, v18.8H, v28.8H
+    ldr q12, [src2ex, #4*16]
+    mls      v21.8H, v20.8H, v28.8H
+    ldr q14, [src2ex, #6*16]
+    mls      v23.8H, v22.8H, v28.8H
+
+    ldr  q9, [src2ex, #1*16]
+    str q17, [des, #0*16]
+    ldr q11, [src2ex, #3*16]
+    str q19, [des, #1*16]
+    ldr q13, [src2ex, #5*16]
+    str q21, [des, #2*16]
+    ldr q15, [src2ex, #7*16]
+    str q23, [des, #3*16]
+
+    add des, des, #4*16
+
+    add src2ex, src2ex, #8*16
+
+    ldr q16, [src1, #0*16]
+    sqrdmulh  v0.8H,  v1.8H,  v8.8H
+    ldr q17, [src1, #1*16]
+    sqrdmulh  v2.8H,  v3.8H, v10.8H
+    ldr q18, [src1, #2*16]
+    sqrdmulh  v4.8H,  v5.8H, v12.8H
+    ldr q19, [src1, #3*16]
+    sqrdmulh  v6.8H,  v7.8H, v14.8H
+
+    ldr q20, [src1, #4*16]
+    mul       v1.8H,  v1.8H,  v9.8H
+    uzp2 v17.8H, v16.8H, v17.8H
+    ldr q21, [src1, #5*16]
+    mul       v3.8H,  v3.8H, v11.8H
+    uzp2 v19.8H, v18.8H, v19.8H
+    ldr q22, [src1, #6*16]
+    mul       v5.8H,  v5.8H, v13.8H
+    uzp2 v21.8H, v20.8H, v21.8H
+    ldr q23, [src1, #7*16]
+    mul       v7.8H,  v7.8H, v15.8H
+    uzp2 v23.8H, v22.8H, v23.8H
+
+    add src1, src1, #8*16
+
+    ldr  q8, [src2ex, #0*16]
+    mls       v1.8H,  v0.8H, v28.8H
+    ldr q10, [src2ex, #2*16]
+    mls       v3.8H,  v2.8H, v28.8H
+    ldr q12, [src2ex, #4*16]
+    mls       v5.8H,  v4.8H, v28.8H
+    ldr q14, [src2ex, #6*16]
+    mls       v7.8H,  v6.8H, v28.8H
+
+    ldr  q9, [src2ex, #1*16]
+    str  q1, [des, #0*16]
+    ldr q11, [src2ex, #3*16]
+    str  q3, [des, #1*16]
+    ldr q13, [src2ex, #5*16]
+    str  q5, [des, #2*16]
+    ldr q15, [src2ex, #7*16]
+    str  q7, [des, #3*16]
+
+    add des, des, #4*16
+
+    add src2ex, src2ex, #8*16
+
+    sqrdmulh v16.8H, v17.8H,  v8.8H
+    sqrdmulh v18.8H, v19.8H, v10.8H
+    sqrdmulh v20.8H, v21.8H, v12.8H
+    sqrdmulh v22.8H, v23.8H, v14.8H
+
+    mul      v17.8H, v17.8H,  v9.8H
+    mul      v19.8H, v19.8H, v11.8H
+    mul      v21.8H, v21.8H, v13.8H
+    mul      v23.8H, v23.8H, v15.8H
+
+    mls      v17.8H, v16.8H, v28.8H
+    mls      v19.8H, v18.8H, v28.8H
+    mls      v21.8H, v20.8H, v28.8H
+    mls      v23.8H, v22.8H, v28.8H
+
+    str q17, [des, #0*16]
+    str q19, [des, #1*16]
+    str q21, [des, #2*16]
+    str q23, [des, #3*16]
+
+    add des, des, #4*16
+
 
     .unreq    Q
     .unreq    des
