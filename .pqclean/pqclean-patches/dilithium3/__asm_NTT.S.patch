@@ -12,10 +12,10 @@
 -.global ___asm_ntt_SIMD_top
 -__asm_ntt_SIMD_top:
 -___asm_ntt_SIMD_top:
-+.global PQCLEAN_NAMESPACE__asm_ntt_SIMD_top
-+.global _PQCLEAN_NAMESPACE__asm_ntt_SIMD_top
-+PQCLEAN_NAMESPACE__asm_ntt_SIMD_top:
-+_PQCLEAN_NAMESPACE__asm_ntt_SIMD_top:
++.global PQCLEAN_NAMESPACE_asm_ntt_SIMD_top
++.global _PQCLEAN_NAMESPACE_asm_ntt_SIMD_top
++PQCLEAN_NAMESPACE_asm_ntt_SIMD_top:
++_PQCLEAN_NAMESPACE_asm_ntt_SIMD_top:
  
      push_simd
      Q         .req w8
@@ -27,10 +27,10 @@
 -.global ___asm_ntt_SIMD_bot
 -__asm_ntt_SIMD_bot:
 -___asm_ntt_SIMD_bot:
-+.global PQCLEAN_NAMESPACE__asm_ntt_SIMD_bot
-+.global _PQCLEAN_NAMESPACE__asm_ntt_SIMD_bot
-+PQCLEAN_NAMESPACE__asm_ntt_SIMD_bot:
-+_PQCLEAN_NAMESPACE__asm_ntt_SIMD_bot:
++.global PQCLEAN_NAMESPACE_asm_ntt_SIMD_bot
++.global _PQCLEAN_NAMESPACE_asm_ntt_SIMD_bot
++PQCLEAN_NAMESPACE_asm_ntt_SIMD_bot:
++_PQCLEAN_NAMESPACE_asm_ntt_SIMD_bot:
  
      push_simd
      Q         .req w8

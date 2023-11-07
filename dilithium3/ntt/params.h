@@ -7,12 +7,14 @@
  * or public domain at https://github.com/pq-crystals/dilithium
  */
 
-//#define DILITHIUM_MODE 2
+// #define DILITHIUM_MODE 2
 #define DILITHIUM_MODE 3
 //#define DILITHIUM_MODE 5
 
 #define SEEDBYTES 32
 #define CRHBYTES 64
+#define TRBYTES 64
+#define RNDBYTES 32
 #define N 256
 #define DILITHIUM_Q 8380417
 #define D 13
@@ -29,7 +31,7 @@
 #define GAMMA2 ((DILITHIUM_Q-1)/88)
 #define OMEGA 80
 #define CRYPTO_ALGNAME "Dilithium2"
-
+#define CTILDEBYTES 32
 #elif DILITHIUM_MODE == 3
 
 #define K 6
@@ -41,7 +43,7 @@
 #define GAMMA2 ((DILITHIUM_Q-1)/32)
 #define OMEGA 55
 #define CRYPTO_ALGNAME "Dilithium3"
-
+#define CTILDEBYTES 48
 #elif DILITHIUM_MODE == 5
 
 #define K 8
@@ -53,12 +55,14 @@
 #define GAMMA2 ((DILITHIUM_Q-1)/32)
 #define OMEGA 75
 #define CRYPTO_ALGNAME "Dilithium5"
-
+#define CTILDEBYTES 64
 #else
 
 #error "No parameter specified!"
 
 #endif
+
+
 
 #define POLYT1_PACKEDBYTES  320
 #define POLYT0_PACKEDBYTES  416
@@ -83,10 +87,11 @@
 #endif
 
 #define DILITHIUM_CRYPTO_PUBLICKEYBYTES (SEEDBYTES + K*POLYT1_PACKEDBYTES)
-#define DILITHIUM_CRYPTO_SECRETKEYBYTES (3*SEEDBYTES \
+#define DILITHIUM_CRYPTO_SECRETKEYBYTES (2*SEEDBYTES \
+        + TRBYTES \
         + L*POLYETA_PACKEDBYTES \
         + K*POLYETA_PACKEDBYTES \
         + K*POLYT0_PACKEDBYTES)
-#define DILITHIUM_CRYPTO_BYTES (SEEDBYTES + L*POLYZ_PACKEDBYTES + POLYVECH_PACKEDBYTES)
+#define DILITHIUM_CRYPTO_BYTES (CTILDEBYTES + L*POLYZ_PACKEDBYTES + POLYVECH_PACKEDBYTES)
 
 #endif

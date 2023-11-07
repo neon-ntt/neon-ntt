@@ -1,48 +1,23 @@
-
-/*
- * This file was originally licensed
- * under Apache 2.0 or
- * public domain at https://github.com/pq-crystals/dilithium/tree/master/ref
- *
- * We choose
- * CC0 1.0 Universal or the following MIT License
- *
- * MIT License
- *
- * Copyright (c) 2023: Hanno Becker, Vincent Hwang, Matthias J. Kannwischer, Bo-Yin Yang, and Shang-Yi Yang
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
 #ifndef PARAMS_H
 #define PARAMS_H
+
+/*
+ * This file is dual licensed
+ * under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.html)
+ * or public domain at https://github.com/pq-crystals/dilithium
+ */
 
 #define CRYPTO_NAMESPACE(s) dilithium_##s
 #define CRYPTO_NAMESPACETOP crypto_sign
 
-
-//#define DILITHIUM_MODE 2
+// #define DILITHIUM_MODE 2
 #define DILITHIUM_MODE 3
 //#define DILITHIUM_MODE 5
 
 #define SEEDBYTES 32
 #define CRHBYTES 64
+#define TRBYTES 64
+#define RNDBYTES 32
 #define N 256
 #define DILITHIUM_Q 8380417
 #define D 13
@@ -59,7 +34,7 @@
 #define GAMMA2 ((DILITHIUM_Q-1)/88)
 #define OMEGA 80
 #define CRYPTO_ALGNAME "Dilithium2"
-
+#define CTILDEBYTES 32
 #elif DILITHIUM_MODE == 3
 
 #define K 6
@@ -71,7 +46,7 @@
 #define GAMMA2 ((DILITHIUM_Q-1)/32)
 #define OMEGA 55
 #define CRYPTO_ALGNAME "Dilithium3"
-
+#define CTILDEBYTES 48
 #elif DILITHIUM_MODE == 5
 
 #define K 8
@@ -83,17 +58,18 @@
 #define GAMMA2 ((DILITHIUM_Q-1)/32)
 #define OMEGA 75
 #define CRYPTO_ALGNAME "Dilithium5"
-
+#define CTILDEBYTES 64
 #else
 
 #error "No parameter specified!"
 
 #endif
 
+
+
 #define POLYT1_PACKEDBYTES  320
 #define POLYT0_PACKEDBYTES  416
 #define POLYVECH_PACKEDBYTES (OMEGA + K)
-
 
 #if GAMMA1 == (1 << 17)
 #define POLYZ_PACKEDBYTES   576
@@ -114,11 +90,11 @@
 #endif
 
 #define DILITHIUM_CRYPTO_PUBLICKEYBYTES (SEEDBYTES + K*POLYT1_PACKEDBYTES)
-#define DILITHIUM_CRYPTO_SECRETKEYBYTES (3*SEEDBYTES \
+#define DILITHIUM_CRYPTO_SECRETKEYBYTES (2*SEEDBYTES \
+        + TRBYTES \
         + L*POLYETA_PACKEDBYTES \
         + K*POLYETA_PACKEDBYTES \
         + K*POLYT0_PACKEDBYTES)
-#define DILITHIUM_CRYPTO_BYTES (SEEDBYTES + L*POLYZ_PACKEDBYTES + POLYVECH_PACKEDBYTES)
-
+#define DILITHIUM_CRYPTO_BYTES (CTILDEBYTES + L*POLYZ_PACKEDBYTES + POLYVECH_PACKEDBYTES)
 
 #endif

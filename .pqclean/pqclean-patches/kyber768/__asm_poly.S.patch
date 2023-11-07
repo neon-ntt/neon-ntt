@@ -12,10 +12,10 @@
 -.global ___asm_add_reduce
 -__asm_add_reduce:
 -___asm_add_reduce:
-+.global PQCLEAN_NAMESPACE__asm_add_reduce
-+.global _PQCLEAN_NAMESPACE__asm_add_reduce
-+PQCLEAN_NAMESPACE__asm_add_reduce:
-+_PQCLEAN_NAMESPACE__asm_add_reduce:
++.global PQCLEAN_NAMESPACE_asm_add_reduce
++.global _PQCLEAN_NAMESPACE_asm_add_reduce
++PQCLEAN_NAMESPACE_asm_add_reduce:
++_PQCLEAN_NAMESPACE_asm_add_reduce:
  
      mov w4, #3329
      mov w5, #25519
@@ -27,10 +27,10 @@
 -.global ___asm_sub_reduce
 -__asm_sub_reduce:
 -___asm_sub_reduce:
-+.global PQCLEAN_NAMESPACE__asm_sub_reduce
-+.global _PQCLEAN_NAMESPACE__asm_sub_reduce
-+PQCLEAN_NAMESPACE__asm_sub_reduce:
-+_PQCLEAN_NAMESPACE__asm_sub_reduce:
++.global PQCLEAN_NAMESPACE_asm_sub_reduce
++.global _PQCLEAN_NAMESPACE_asm_sub_reduce
++PQCLEAN_NAMESPACE_asm_sub_reduce:
++_PQCLEAN_NAMESPACE_asm_sub_reduce:
  
      mov w4, #3329
      mov w5, #25519
@@ -42,10 +42,10 @@
 -.global ___asm_add_add_reduce
 -__asm_add_add_reduce:
 -___asm_add_add_reduce:
-+.global PQCLEAN_NAMESPACE__asm_add_add_reduce
-+.global _PQCLEAN_NAMESPACE__asm_add_add_reduce
-+PQCLEAN_NAMESPACE__asm_add_add_reduce:
-+_PQCLEAN_NAMESPACE__asm_add_add_reduce:
++.global PQCLEAN_NAMESPACE_asm_add_add_reduce
++.global _PQCLEAN_NAMESPACE_asm_add_add_reduce
++PQCLEAN_NAMESPACE_asm_add_add_reduce:
++_PQCLEAN_NAMESPACE_asm_add_add_reduce:
  
      mov w4, #3329
      mov w5, #25519
