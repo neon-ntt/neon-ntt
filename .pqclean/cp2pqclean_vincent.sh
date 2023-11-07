@@ -3,46 +3,46 @@ BASE=`dirname $0`
 BASE=`cd ${BASE} && pwd`
 echo $BASE
 WORK=work
-# WORKPATCHED=work-patched
+WORKPATCHED=work-patched
 PQCleanPATH=~/git/public/PQClean
 
 SRC_PATH=../
 
-# rm -rf ${WORK} ${WORKPATCHED}
-# mkdir -p ${WORK} ${WORKPATCHED}
+rm -rf ${WORK} ${WORKPATCHED}
+mkdir -p ${WORK} ${WORKPATCHED}
 
-# # patch implementations
-# for scheme in kyber512 kyber768 kyber1024 dilithium2 dilithium3 dilithium5
-# do
-#     cp -rL ${SRC_PATH}/${scheme} ${WORK}
+# patch implementations
+for scheme in kyber512 kyber768 kyber1024 dilithium2 dilithium3 dilithium5
+do
+    cp -rL ${SRC_PATH}/${scheme} ${WORK}
 
-#     # delete non scheme files
-#     rm -rf ${WORK}/${scheme}/ntt ${WORK}/${scheme}/microbenchmarks
+    # delete non scheme files
+    rm -rf ${WORK}/${scheme}/ntt ${WORK}/${scheme}/microbenchmarks
 
-#     # delete fips202.[ch]
-#     rm ${WORK}/${scheme}/scheme/fips202.[ch]
+    # delete fips202.[ch]
+    rm ${WORK}/${scheme}/scheme/fips202.[ch]
 
-#     # delete checksum files for dilithium
-#     rm -f ${WORK}/${scheme}/checksum*
+    # delete checksum files for dilithium
+    rm -f ${WORK}/${scheme}/checksum*
 
-#     # mv .i to .inc
-#     mv $WORK/${scheme}/scheme/macros.i $WORK/${scheme}/scheme/macros.inc
-#     mv $WORK/${scheme}/scheme/macros_common.i $WORK/${scheme}/scheme/macros_common.inc
+    # mv .i to .inc
+    mv $WORK/${scheme}/scheme/macros.i $WORK/${scheme}/scheme/macros.inc
+    mv $WORK/${scheme}/scheme/macros_common.i $WORK/${scheme}/scheme/macros_common.inc
 
-#     # copy to work-patched
-#     cp -r $WORK/${scheme} ${WORKPATCHED}
+    # copy to work-patched
+    cp -r $WORK/${scheme} ${WORKPATCHED}
 
-#     # apply patches
-#     cd ${WORKPATCHED}
-#     for X in ${BASE}/pqclean-patches/${scheme}/*
-#     do
-#         patch -s -p1 < ${X}
-#     done
-#     cd ..
-# done
+    # apply patches
+    cd ${WORKPATCHED}
+    for X in ${BASE}/pqclean-patches/${scheme}/*
+    do
+        patch -s -p1 < ${X}
+    done
+    cd ..
+done
 
 # process and copy to PQClean
-# cd ${WORKPATCHED}
+cd ${WORKPATCHED}
 # kyber
 for k in 2 3 4
 do
