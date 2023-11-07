@@ -1,6 +1,6 @@
 --- work/kyber512/scheme/__asm_NTT.S
 +++ work-patched/kyber512/scheme/__asm_NTT.S
-@@ -25,13 +25,13 @@
+@@ -26,13 +26,13 @@
   * SOFTWARE.
   */
  
@@ -17,10 +17,10 @@
 +PQCLEAN_NAMESPACE__asm_ntt_SIMD_top:
 +_PQCLEAN_NAMESPACE__asm_ntt_SIMD_top:
  
-     push_all
-     Q         .req w20
-@@ -194,10 +194,10 @@
- 
+     push_simd
+     Q         .req w8
+@@ -218,10 +218,10 @@
+     ret
  
  .align 2
 -.global __asm_ntt_SIMD_bot
@@ -32,6 +32,6 @@
 +PQCLEAN_NAMESPACE__asm_ntt_SIMD_bot:
 +_PQCLEAN_NAMESPACE__asm_ntt_SIMD_bot:
  
-     push_all
-     Q         .req w20
+     push_simd
+     Q         .req w8
 

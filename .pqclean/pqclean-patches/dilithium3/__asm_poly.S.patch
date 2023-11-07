@@ -1,6 +1,6 @@
 --- work/dilithium3/scheme/__asm_poly.S
 +++ work-patched/dilithium3/scheme/__asm_poly.S
-@@ -25,14 +25,14 @@
+@@ -26,14 +26,14 @@
   * SOFTWARE.
   */
  
@@ -20,8 +20,8 @@
  
      mov x7, #16
      _10_to_32_loop:
-@@ -102,10 +102,10 @@
-     br lr
+@@ -103,10 +103,10 @@
+     ret
  
  .align 2
 -.global __asm_poly_reduce
@@ -35,8 +35,8 @@
  
      ldr w4, [x1]
  
-@@ -195,10 +195,10 @@
-     br lr
+@@ -196,10 +196,10 @@
+     ret
  
  .align 2
 -.global __asm_poly_caddq
@@ -50,8 +50,8 @@
  
      ldr w4, [x1]
  
-@@ -288,10 +288,10 @@
-     br lr
+@@ -289,10 +289,10 @@
+     ret
  
  .align 2
 -.global __asm_poly_freeze
@@ -65,8 +65,8 @@
  
      ldr w4, [x1]
  
-@@ -417,10 +417,10 @@
-     br lr
+@@ -418,10 +418,10 @@
+     ret
  
  .align 2
 -.global __asm_poly_power2round
@@ -80,8 +80,8 @@
  
      mov w4, #1
  
-@@ -563,10 +563,10 @@
-     br lr
+@@ -564,10 +564,10 @@
+     ret
  
  .align 2
 -.global __asm_poly_add
@@ -95,8 +95,8 @@
  
      ld1 {v0.4S}, [x1], #16
      ld1 {v4.4S}, [x2], #16
-@@ -612,10 +612,10 @@
-     br lr
+@@ -613,10 +613,10 @@
+     ret
  
  .align 2
 -.global __asm_poly_sub
@@ -110,8 +110,8 @@
  
      ld1 {v0.4S}, [x1], #16
      ld1 {v4.4S}, [x2], #16
-@@ -661,10 +661,10 @@
-     br lr
+@@ -662,10 +662,10 @@
+     ret
  
  .align 2
 -.global __asm_poly_shiftl
@@ -125,8 +125,8 @@
  
      add x1, x0, #0
  
-@@ -728,10 +728,10 @@
-     br lr
+@@ -729,10 +729,10 @@
+     ret
  
  .align 2
 -.global __asm_poly_pointwise_montgomery
@@ -140,7 +140,7 @@
  
      push_all
  
-@@ -847,10 +847,10 @@
+@@ -848,10 +848,10 @@
  
  
  .align 2

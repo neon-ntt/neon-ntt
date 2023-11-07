@@ -1,6 +1,6 @@
 --- work/dilithium5/scheme/__asm_iNTT.S
 +++ work-patched/dilithium5/scheme/__asm_iNTT.S
-@@ -25,13 +25,13 @@
+@@ -26,13 +26,13 @@
   * SOFTWARE.
   */
  
@@ -19,8 +19,8 @@
  
      push_all
      Q         .req w20
-@@ -435,10 +435,10 @@
-     br lr
+@@ -397,10 +397,10 @@
+     ret
  
  .align 2
 -.global __asm_intt_SIMD_bot

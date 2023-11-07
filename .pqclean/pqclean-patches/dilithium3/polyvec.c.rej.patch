@@ -1,0 +1,20 @@
+--- work/dilithium3/scheme/polyvec.c.rej
++++ work-patched/dilithium3/scheme/polyvec.c.rej
+@@ -0,0 +1,16 @@
++--- dilithium3/scheme/polyvec.c
+++++ dilithium3/scheme/polyvec.c
++@@ -178,11 +178,11 @@
++ *              - const polyvecl *u: pointer to first input vector
++ *              - const polyvecl *v: pointer to second input vector
++ **************************************************/
++-extern void __asm_polyvecl_pointwise_acc_montgomery(int32_t *, const int32_t *, const int32_t *, const int32_t *);
+++extern void PQCLEAN_NAMESPACE_asm_polyvecl_pointwise_acc_montgomery(int32_t *, const int32_t *, const int32_t *, const int32_t *);
++ void polyvecl_pointwise_acc_montgomery(poly *w,
++                                        const polyvecl *u,
++                                        const polyvecl *v) {
++-    __asm_polyvecl_pointwise_acc_montgomery(w->coeffs, u->vec[0].coeffs, v->vec[0].coeffs, l_montgomery_const);
+++    PQCLEAN_NAMESPACE_asm_polyvecl_pointwise_acc_montgomery(w->coeffs, u->vec[0].coeffs, v->vec[0].coeffs, l_montgomery_const);
++ }
++ 
++ /*************************************************
+
