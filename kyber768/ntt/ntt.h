@@ -51,7 +51,7 @@ extern void __asm_asymmetric_mul(const int16_t *, const int16_t *, const int16_t
 extern void __asm_asymmetric_mul_montgomery(const int16_t *, const int16_t *, const int16_t *, const int16_t *, int16_t *);
 
 extern
-const int16_t asymmetric_const[16];
+const int16_t asymmetric_const[8];
 extern
 const int16_t constants[16];
 
