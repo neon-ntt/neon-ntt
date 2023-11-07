@@ -1,6 +1,6 @@
 --- work/kyber1024/scheme/__asm_iNTT.S
 +++ work-patched/kyber1024/scheme/__asm_iNTT.S
-@@ -25,13 +25,13 @@
+@@ -26,13 +26,13 @@
   * SOFTWARE.
   */
  
@@ -19,8 +19,8 @@
  
      push_all
      Q         .req w20
-@@ -111,10 +111,10 @@
-     br lr
+@@ -171,10 +171,10 @@
+     ret
  
  .align 2
 -.global __asm_intt_SIMD_top

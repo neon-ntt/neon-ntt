@@ -1,6 +1,6 @@
 --- work/kyber768/scheme/__asm_poly.S
 +++ work-patched/kyber768/scheme/__asm_poly.S
-@@ -25,13 +25,13 @@
+@@ -26,13 +26,13 @@
   * SOFTWARE.
   */
  
@@ -19,8 +19,8 @@
  
      mov w4, #3329
      mov w5, #25519
-@@ -89,10 +89,10 @@
-     br lr
+@@ -90,10 +90,10 @@
+     ret
  
  .align 2
 -.global __asm_sub_reduce
@@ -34,8 +34,8 @@
  
      mov w4, #3329
      mov w5, #25519
-@@ -150,10 +150,10 @@
-     br lr
+@@ -151,10 +151,10 @@
+     ret
  
  .align 2
 -.global __asm_add_add_reduce

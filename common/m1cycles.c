@@ -1,6 +1,6 @@
-/* 
+/*
  * Duc Tri Nguyen (CERG GMU)
- * Modified from M1: 
+ * Modified from M1:
  * https://gist.github.com/dougallj/5bafb113492047c865c0c8cfbc930155#file-m1_robsize-c-L390
  */
 
@@ -113,17 +113,17 @@ static void init_rdtsc()
 
     // TODO: KPC_CLASS_RAWPMU_MASK
 
-    if (kpc_get_counter_count(KPC_MASK) != COUNTERS_COUNT)
-    {
-        printf("wrong fixed counters count\n");
-        return;
-    }
+    // if (kpc_get_counter_count(KPC_MASK) != COUNTERS_COUNT)
+    // {
+    //     printf("wrong fixed counters count\n");
+    //     return;
+    // }
 
-    if (kpc_get_config_count(KPC_MASK) != CONFIG_COUNT)
-    {
-        printf("wrong fixed config count\n");
-        return;
-    }
+    // if (kpc_get_config_count(KPC_MASK) != CONFIG_COUNT)
+    // {
+    //     printf("wrong fixed config count\n");
+    //     return;
+    // }
 
     // Not all counters can count all things:
 

@@ -1,6 +1,6 @@
 --- work/kyber512/scheme/__asm_base_mul.S
 +++ work-patched/kyber512/scheme/__asm_base_mul.S
-@@ -25,15 +25,15 @@
+@@ -26,15 +26,15 @@
   * SOFTWARE.
   */
  
@@ -21,7 +21,7 @@
  
      push_all
      Q         .req w20
-@@ -94,10 +94,10 @@
+@@ -246,10 +246,10 @@
  
  
  .align 2
@@ -35,8 +35,8 @@
 +_PQCLEAN_NAMESPACE__asm_asymmetric_mul:
  
      push_all
-     Q         .req w28
-@@ -246,10 +246,10 @@
+     des       .req x11
+@@ -595,10 +595,10 @@
  
  
  .align 2
@@ -50,5 +50,5 @@
 +_PQCLEAN_NAMESPACE__asm_asymmetric_mul_montgomery:
  
      push_all
-     Q         .req w28
+     des       .req x11
 

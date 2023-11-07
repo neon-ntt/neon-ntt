@@ -1,6 +1,6 @@
 --- work/dilithium5/scheme/__asm_NTT.S
 +++ work-patched/dilithium5/scheme/__asm_NTT.S
-@@ -25,13 +25,13 @@
+@@ -26,13 +26,13 @@
   * SOFTWARE.
   */
  
@@ -17,10 +17,10 @@
 +PQCLEAN_NAMESPACE_asm_ntt_SIMD_top:
 +_PQCLEAN_NAMESPACE_asm_ntt_SIMD_top:
  
-     push_all
-     Q         .req w20
-@@ -206,10 +206,10 @@
-     br lr
+     push_simd
+     Q         .req w8
+@@ -163,10 +163,10 @@
+     ret
  
  .align 2
 -.global __asm_ntt_SIMD_bot
@@ -32,6 +32,6 @@
 +PQCLEAN_NAMESPACE_asm_ntt_SIMD_bot:
 +_PQCLEAN_NAMESPACE_asm_ntt_SIMD_bot:
  
-     push_all
-     Q         .req w20
+     push_simd
+     Q         .req w8
 

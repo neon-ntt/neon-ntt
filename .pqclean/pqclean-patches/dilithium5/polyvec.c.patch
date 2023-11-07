@@ -1,20 +1,6 @@
 --- work/dilithium5/scheme/polyvec.c
 +++ work-patched/dilithium5/scheme/polyvec.c
-@@ -177,11 +177,11 @@
- *              - const polyvecl *u: pointer to first input vector
- *              - const polyvecl *v: pointer to second input vector
- **************************************************/
--extern void __asm_polyvecl_pointwise_acc_montgomery(int32_t *, const int32_t *, const int32_t *, const int32_t *);
-+extern void PQCLEAN_NAMESPACE_asm_polyvecl_pointwise_acc_montgomery(int32_t *, const int32_t *, const int32_t *, const int32_t *);
- void polyvecl_pointwise_acc_montgomery(poly *w,
-                                        const polyvecl *u,
-                                        const polyvecl *v) {
--    __asm_polyvecl_pointwise_acc_montgomery(w->coeffs, u->vec[0].coeffs, v->vec[0].coeffs, l_montgomery_const);
-+    PQCLEAN_NAMESPACE_asm_polyvecl_pointwise_acc_montgomery(w->coeffs, u->vec[0].coeffs, v->vec[0].coeffs, l_montgomery_const);
- }
- 
- /*************************************************
-@@ -363,6 +363,7 @@
+@@ -362,6 +362,7 @@
      }
  }
  

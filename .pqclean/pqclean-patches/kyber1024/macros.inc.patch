@@ -1,12 +1,12 @@
 --- work/kyber1024/scheme/macros.inc
 +++ work-patched/kyber1024/scheme/macros.inc
-@@ -28,7 +28,7 @@
- #ifndef MACROS_S
- #define MACROS_S
+@@ -26,7 +26,7 @@
+  * SOFTWARE.
+  */
  
 -#include "macros_common.i"
 +#include "macros_common.inc"
  
- .macro qo_barrett a0, a1, a2, a3, t0, t1, t2, t3, barrett_const, shrv, Q
-     wrap_qX_barrett \a0, \a1, \a2, \a3, \t0, \t1, \t2, \t3, \barrett_const, \shrv, \Q, .8H, .H
+ .macro trn_4x4 a0, a1, a2, a3, t0, t1, t2, t3
+ 
 

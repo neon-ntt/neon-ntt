@@ -1,5 +1,5 @@
 
-SUPERCOP_PATH=~/supercop-20210604
+SUPERCOP_PATH=~/supercop
 
 cp -rL kyber512/scheme $SUPERCOP_PATH/crypto_kem/kyber512/
 cp -rL kyber768/scheme $SUPERCOP_PATH/crypto_kem/kyber768/

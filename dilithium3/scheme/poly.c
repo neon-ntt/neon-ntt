@@ -10,6 +10,7 @@
  * MIT License
  *
  * Copyright (c) 2023: Hanno Becker, Vincent Hwang, Matthias J. Kannwischer, Bo-Yin Yang, and Shang-Yi Yang
+ * Copyright (c) 2023: Vincent Hwang
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,12 +40,7 @@
 
 #include "fips202x2.h"
 
-#include "NTT_params.h"
 #include "ntt.h"
-
-static const int32_t montgomery_const[4] = {
-    DILITHIUM_Q, DILITHIUM_QINV
-};
 
 #define DBENCH_START()
 #define DBENCH_STOP(t)
@@ -61,7 +57,7 @@ extern void __asm_poly_reduce(int32_t *, const int32_t *);
 void poly_reduce(poly *a) {
     DBENCH_START();
 
-    __asm_poly_reduce(a->coeffs, montgomery_const);
+    __asm_poly_reduce(a->coeffs, constants);
 
     DBENCH_STOP(*tred);
 }
@@ -78,7 +74,7 @@ extern void __asm_poly_caddq(int32_t *, const int32_t *);
 void poly_caddq(poly *a) {
     DBENCH_START();
 
-    __asm_poly_caddq(a->coeffs, montgomery_const);
+    __asm_poly_caddq(a->coeffs, constants);
 
     DBENCH_STOP(*tred);
 }
@@ -95,7 +91,7 @@ extern void __asm_poly_freeze(int32_t *, const int32_t *);
 void poly_freeze(poly *a) {
     DBENCH_START();
 
-    __asm_poly_freeze(a->coeffs, montgomery_const);
+    __asm_poly_freeze(a->coeffs, constants);
 
     DBENCH_STOP(*tred);
 }
@@ -209,7 +205,7 @@ extern void __asm_poly_pointwise_montgomery(int32_t *des, const int32_t *src1, c
 void poly_pointwise_montgomery(poly *c, const poly *a, const poly *b) {
     DBENCH_START();
 
-    __asm_poly_pointwise_montgomery(c->coeffs, a->coeffs, b->coeffs, montgomery_const);
+    __asm_poly_pointwise_montgomery(c->coeffs, a->coeffs, b->coeffs, constants);
 
     DBENCH_STOP(*tmul);
 }

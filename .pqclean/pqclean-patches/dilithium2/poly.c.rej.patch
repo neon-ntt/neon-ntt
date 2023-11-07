@@ -1,0 +1,62 @@
+--- work/dilithium2/scheme/poly.c.rej
++++ work-patched/dilithium2/scheme/poly.c.rej
+@@ -0,0 +1,58 @@
++--- dilithium2/scheme/poly.c
+++++ dilithium2/scheme/poly.c
++@@ -57,11 +57,11 @@
++ *
++ * Arguments:   - poly *a: pointer to input/output polynomial
++ **************************************************/
++-extern void __asm_poly_reduce(int32_t *, const int32_t *);
+++extern void PQCLEAN_NAMESPACE_asm_poly_reduce(int32_t *, const int32_t *);
++ void poly_reduce(poly *a) {
++     DBENCH_START();
++ 
++-    __asm_poly_reduce(a->coeffs, montgomery_const);
+++    PQCLEAN_NAMESPACE_asm_poly_reduce(a->coeffs, montgomery_const);
++ 
++     DBENCH_STOP(*tred);
++ }
++@@ -74,11 +74,11 @@
++ *
++ * Arguments:   - poly *a: pointer to input/output polynomial
++ **************************************************/
++-extern void __asm_poly_caddq(int32_t *, const int32_t *);
+++extern void PQCLEAN_NAMESPACE_asm_poly_caddq(int32_t *, const int32_t *);
++ void poly_caddq(poly *a) {
++     DBENCH_START();
++ 
++-    __asm_poly_caddq(a->coeffs, montgomery_const);
+++    PQCLEAN_NAMESPACE_asm_poly_caddq(a->coeffs, montgomery_const);
++ 
++     DBENCH_STOP(*tred);
++ }
++@@ -91,11 +91,11 @@
++ *
++ * Arguments:   - poly *a: pointer to input/output polynomial
++ **************************************************/
++-extern void __asm_poly_freeze(int32_t *, const int32_t *);
+++extern void PQCLEAN_NAMESPACE_asm_poly_freeze(int32_t *, const int32_t *);
++ void poly_freeze(poly *a) {
++     DBENCH_START();
++ 
++-    __asm_poly_freeze(a->coeffs, montgomery_const);
+++    PQCLEAN_NAMESPACE_asm_poly_freeze(a->coeffs, montgomery_const);
++ 
++     DBENCH_STOP(*tred);
++ }
++@@ -205,11 +205,11 @@
++ *              - const poly *a: pointer to first input polynomial
++ *              - const poly *b: pointer to second input polynomial
++ **************************************************/
++-extern void __asm_poly_pointwise_montgomery(int32_t *des, const int32_t *src1, const int32_t *src2, const int32_t *table);
+++extern void PQCLEAN_NAMESPACE_asm_poly_pointwise_montgomery(int32_t *des, const int32_t *src1, const int32_t *src2, const int32_t *table);
++ void poly_pointwise_montgomery(poly *c, const poly *a, const poly *b) {
++     DBENCH_START();
++ 
++-    __asm_poly_pointwise_montgomery(c->coeffs, a->coeffs, b->coeffs, montgomery_const);
+++    PQCLEAN_NAMESPACE_asm_poly_pointwise_montgomery(c->coeffs, a->coeffs, b->coeffs, montgomery_const);
++ 
++     DBENCH_STOP(*tmul);
++ }
+
