@@ -24,11 +24,11 @@ uint8_t seed[KYBER_SYMBYTES] = {0};
 int main()
 {
   unsigned int i, j;
-  unsigned char pk[CRYPTO_PUBLICKEYBYTES] = {0};
-  unsigned char sk[CRYPTO_SECRETKEYBYTES] = {0};
-  unsigned char ct[CRYPTO_CIPHERTEXTBYTES] = {0};
-  unsigned char key_a[CRYPTO_BYTES] = {0};
-  unsigned char key_b[CRYPTO_BYTES] = {0};
+  unsigned char pk[KYBER_AARCH64_CRYPTO_PUBLICKEYBYTES] = {0};
+  unsigned char sk[KYBER_AARCH64_CRYPTO_SECRETKEYBYTES] = {0};
+  unsigned char ct[KYBER_AARCH64_CRYPTO_CIPHERTEXTBYTES] = {0};
+  unsigned char key_a[KYBER_AARCH64_CRYPTO_BYTES] = {0};
+  unsigned char key_b[KYBER_AARCH64_CRYPTO_BYTES] = {0};
 
   int16_t a[KYBER_K][KYBER_K][KYBER_N];
   int16_t vec[KYBER_K][KYBER_N];
