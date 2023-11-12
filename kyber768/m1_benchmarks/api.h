@@ -1,1 +1,1 @@
-../scheme/api.h
+../scheme/kem.h

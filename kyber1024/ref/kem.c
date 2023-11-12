@@ -1,22 +1,12 @@
-
-/*
- * This file is licensed
- * under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.html) or
- * public domain at https://github.com/pq-crystals/kyber/tree/master/ref
- */
-
+#include "indcpa.h"
+#include "kem.h"
+#include "params.h"
+#include "randombytes.h"
+#include "symmetric.h"
+#include "verify.h"
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
-
-#include "api.h"
-#include "params.h"
-#include "indcpa.h"
-#include "verify.h"
-#include "symmetric.h"
-#include "randombytes.h"
-
-
 /*************************************************
 * Name:        crypto_kem_keypair_derand
 *
@@ -57,14 +47,12 @@ int crypto_kem_keypair_derand(uint8_t *pk,
 * Returns 0 (success)
 **************************************************/
 int crypto_kem_keypair(uint8_t *pk,
-                       uint8_t *sk) {
+        uint8_t *sk) {
     uint8_t coins[2 * KYBER_SYMBYTES];
     randombytes(coins, 2 * KYBER_SYMBYTES);
     crypto_kem_keypair_derand(pk, sk, coins);
     return 0;
 }
-
-
 
 /*************************************************
 * Name:        crypto_kem_enc_derand
@@ -120,8 +108,8 @@ int crypto_kem_enc_derand(uint8_t *ct,
 * Returns 0 (success)
 **************************************************/
 int crypto_kem_enc(uint8_t *ct,
-                   uint8_t *ss,
-                   const uint8_t *pk) {
+        uint8_t *ss,
+        const uint8_t *pk) {
     uint8_t coins[KYBER_SYMBYTES];
     randombytes(coins, KYBER_SYMBYTES);
     crypto_kem_enc_derand(ct, ss, pk, coins);
@@ -146,8 +134,8 @@ int crypto_kem_enc(uint8_t *ct,
 * On failure, ss will contain a pseudo-random value.
 **************************************************/
 int crypto_kem_dec(uint8_t *ss,
-                   const uint8_t *ct,
-                   const uint8_t *sk) {
+        const uint8_t *ct,
+        const uint8_t *sk) {
     int fail;
     uint8_t buf[2 * KYBER_SYMBYTES];
     /* Will contain key, coins */

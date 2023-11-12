@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "crypto_kem.h"
+#include "api.h"
 #include "indcpa.h"
 #include "params.h"
 #include "indcpa.h"

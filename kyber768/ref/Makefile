@@ -29,14 +29,14 @@ CYCLES_SOURCES = $(M1_CYCLES_SOURCES) $(A72_CYCLES_SOURCES)
 
 BENCHFLAGS = -I$(CYCLES_PATH) -DBENCH
 
-ASM_HEADERs = macros.i macros_common.i
-ASM_SOURCES = __asm_NTT.S __asm_iNTT.S  __asm_base_mul.S __asm_poly.S
+ASM_HEADERs =
+ASM_SOURCES =
 
-HASH_HEADERS += symmetric.h rejsample.h
-HASH_SOURCES += neon_symmetric-shake.c symmetric-shake.c rejsample.c
+HASH_HEADERS += symmetric.h
+HASH_SOURCES += symmetric-shake.c
 
-HEADERS = params.h api.h indcpa.h polyvec.h poly.h NTT_params.h ntt.h cbd.h reduce.h verify.h
-SOURCES = kem.c indcpa.c polyvec.c neon_polyvec.c poly.c neon_poly.c ntt.c cbd.c reduce.c verify.c
+HEADERS = params.h api.h indcpa.h polyvec.h poly.h ntt.h cbd.h reduce.h verify.h
+SOURCES = kem.c indcpa.c polyvec.c poly.c ntt.c cbd.c reduce.c verify.c
 
 HEADERS += $(ASM_HEADERS) $(C_HEADERS) $(HASH_HEADERS) $(SORT_HEADERS) $(RAND_HEADERS)
 SOURCES += $(ASM_SOURCES) $(C_SOURCES) $(HASH_SOURCES) $(SORT_SOURCES) $(RAND_SOURCES)
@@ -63,6 +63,4 @@ clean:
 	-$(RM) -rf kyber_test
 	-$(RM) -rf kyber_testvectors
 	-$(RM) -rf kyber_speed
-
-
 
