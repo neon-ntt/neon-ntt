@@ -34,7 +34,7 @@
 #ifndef PARAMS_H
 #define PARAMS_H
 
-#define KYBER_NAMESPACE(s) s
+#define KYBER_NAMESPACE(s) KYBER_AARCH64_##s
 
 #define KYBER_N 256
 #define KYBER_Q 3329
