@@ -1,8 +1,11 @@
 #ifndef M1CYCLES_H
 #define M1CYCLES_H
 
-void setup_rdtsc(void);
+#ifdef __APPLE__
 
-extern unsigned long long int rdtsc(void);
+void setup_rdtsc(void);
+unsigned long long int rdtsc(void);
+
+#endif
 
 #endif
