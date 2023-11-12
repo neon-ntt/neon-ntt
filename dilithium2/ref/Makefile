@@ -6,8 +6,8 @@ NISTFLAGS += -Wno-unused-result -mpopcnt -maes \
 RM = /bin/rm
 
 HASH_PATH = ../../common
-HASH_HEADERS = $(HASH_PATH)/fips202.h $(HASH_PATH)/fips202x2.h
-HASH_SOURCES = $(HASH_PATH)/fips202.c $(HASH_PATH)/fips202x2.c
+HASH_HEADERS = $(HASH_PATH)/fips202.h
+HASH_SOURCES = $(HASH_PATH)/fips202.c
 
 SORT_PATH = .
 SORT_HEADERS =
@@ -29,8 +29,8 @@ CYCLES_SOURCES = $(M1_CYCLES_SOURCES) $(A72_CYCLES_SOURCES)
 
 BENCHFLAGS = -I$(CYCLES_PATH) -DBENCH
 
-ASM_HEADERs = macros.i macros_common.i
-ASM_SOURCES = __asm_NTT.S __asm_iNTT.S __asm_poly.S feat.S
+ASM_HEADERs =
+ASM_SOURCES =
 
 HASH_HEADERS += symmetric.h
 HASH_SOURCES += symmetric-shake.c
