@@ -53,11 +53,11 @@
 *
 * Arguments:   - poly *a: pointer to input/output polynomial
 **************************************************/
-extern void __asm_poly_reduce(int32_t *, const int32_t *);
+extern void DILITHIUM_AARCH64__asm_poly_reduce(int32_t *, const int32_t *);
 void poly_reduce(poly *a) {
     DBENCH_START();
 
-    __asm_poly_reduce(a->coeffs, constants);
+    DILITHIUM_AARCH64__asm_poly_reduce(a->coeffs, constants);
 
     DBENCH_STOP(*tred);
 }
@@ -70,11 +70,11 @@ void poly_reduce(poly *a) {
 *
 * Arguments:   - poly *a: pointer to input/output polynomial
 **************************************************/
-extern void __asm_poly_caddq(int32_t *, const int32_t *);
+extern void DILITHIUM_AARCH64__asm_poly_caddq(int32_t *, const int32_t *);
 void poly_caddq(poly *a) {
     DBENCH_START();
 
-    __asm_poly_caddq(a->coeffs, constants);
+    DILITHIUM_AARCH64__asm_poly_caddq(a->coeffs, constants);
 
     DBENCH_STOP(*tred);
 }
@@ -87,11 +87,11 @@ void poly_caddq(poly *a) {
 *
 * Arguments:   - poly *a: pointer to input/output polynomial
 **************************************************/
-extern void __asm_poly_freeze(int32_t *, const int32_t *);
+extern void DILITHIUM_AARCH64__asm_poly_freeze(int32_t *, const int32_t *);
 void poly_freeze(poly *a) {
     DBENCH_START();
 
-    __asm_poly_freeze(a->coeffs, constants);
+    DILITHIUM_AARCH64__asm_poly_freeze(a->coeffs, constants);
 
     DBENCH_STOP(*tred);
 }
@@ -201,11 +201,11 @@ void poly_invntt_tomont(poly *a) {
 *              - const poly *a: pointer to first input polynomial
 *              - const poly *b: pointer to second input polynomial
 **************************************************/
-extern void __asm_poly_pointwise_montgomery(int32_t *des, const int32_t *src1, const int32_t *src2, const int32_t *table);
+extern void DILITHIUM_AARCH64__asm_poly_pointwise_montgomery(int32_t *des, const int32_t *src1, const int32_t *src2, const int32_t *table);
 void poly_pointwise_montgomery(poly *c, const poly *a, const poly *b) {
     DBENCH_START();
 
-    __asm_poly_pointwise_montgomery(c->coeffs, a->coeffs, b->coeffs, constants);
+    DILITHIUM_AARCH64__asm_poly_pointwise_montgomery(c->coeffs, a->coeffs, b->coeffs, constants);
 
     DBENCH_STOP(*tmul);
 }
@@ -222,11 +222,11 @@ void poly_pointwise_montgomery(poly *c, const poly *a, const poly *b) {
 *              - poly *a0: pointer to output polynomial with coefficients c0
 *              - const poly *a: pointer to input polynomial
 **************************************************/
-extern void __asm_poly_power2round(int32_t *, int32_t *, const int32_t *);
+extern void DILITHIUM_AARCH64__asm_poly_power2round(int32_t *, int32_t *, const int32_t *);
 void poly_power2round(poly *a1, poly *a0, const poly *a) {
     DBENCH_START();
 
-    __asm_poly_power2round(a1->coeffs, a0->coeffs, a->coeffs);
+    DILITHIUM_AARCH64__asm_poly_power2round(a1->coeffs, a0->coeffs, a->coeffs);
 
     DBENCH_STOP(*tround);
 }
@@ -780,11 +780,11 @@ void polyt1_pack(uint8_t *r, const poly *a) {
 * Arguments:   - poly *r: pointer to output polynomial
 *              - const uint8_t *a: byte array with bit-packed polynomial
 **************************************************/
-extern void __asm_10_to_32(int32_t *, const uint8_t *);
+extern void DILITHIUM_AARCH64__asm_10_to_32(int32_t *, const uint8_t *);
 void polyt1_unpack(poly *r, const uint8_t *a) {
     DBENCH_START();
 
-    __asm_10_to_32(r->coeffs, a);
+    DILITHIUM_AARCH64__asm_10_to_32(r->coeffs, a);
 
     DBENCH_STOP(*tpack);
 }

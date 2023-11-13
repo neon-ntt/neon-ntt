@@ -29,10 +29,10 @@
 #include "macros.i"
 
 .align 2
-.global __asm_intt_SIMD_top
-.global ___asm_intt_SIMD_top
-__asm_intt_SIMD_top:
-___asm_intt_SIMD_top:
+.global DILITHIUM_AARCH64__asm_intt_SIMD_top
+.global _DILITHIUM_AARCH64__asm_intt_SIMD_top
+DILITHIUM_AARCH64__asm_intt_SIMD_top:
+_DILITHIUM_AARCH64__asm_intt_SIMD_top:
 
     push_all
     Q         .req w20
@@ -397,10 +397,10 @@ ___asm_intt_SIMD_top:
     ret
 
 .align 2
-.global __asm_intt_SIMD_bot
-.global ___asm_intt_SIMD_bot
-__asm_intt_SIMD_bot:
-___asm_intt_SIMD_bot:
+.global DILITHIUM_AARCH64__asm_intt_SIMD_bot
+.global _DILITHIUM_AARCH64__asm_intt_SIMD_bot
+DILITHIUM_AARCH64__asm_intt_SIMD_bot:
+_DILITHIUM_AARCH64__asm_intt_SIMD_bot:
 
     push_all
     Q         .req w20

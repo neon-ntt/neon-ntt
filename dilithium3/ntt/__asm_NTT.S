@@ -28,11 +28,13 @@
 
 #include "macros.i"
 
+#include "params.h"
+
 .align 2
-.global __asm_ntt_SIMD_top
-.global ___asm_ntt_SIMD_top
-__asm_ntt_SIMD_top:
-___asm_ntt_SIMD_top:
+.global DILITHIUM_AARCH64__asm_ntt_SIMD_top
+.global _DILITHIUM_AARCH64__asm_ntt_SIMD_top
+DILITHIUM_AARCH64__asm_ntt_SIMD_top:
+_DILITHIUM_AARCH64__asm_ntt_SIMD_top:
 
     push_simd
     Q         .req w8
@@ -163,10 +165,10 @@ ___asm_ntt_SIMD_top:
     ret
 
 .align 2
-.global __asm_ntt_SIMD_bot
-.global ___asm_ntt_SIMD_bot
-__asm_ntt_SIMD_bot:
-___asm_ntt_SIMD_bot:
+.global DILITHIUM_AARCH64__asm_ntt_SIMD_bot
+.global _DILITHIUM_AARCH64__asm_ntt_SIMD_bot
+DILITHIUM_AARCH64__asm_ntt_SIMD_bot:
+_DILITHIUM_AARCH64__asm_ntt_SIMD_bot:
 
     push_simd
     Q         .req w8

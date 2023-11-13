@@ -42,7 +42,7 @@
 
 #define QINV 58728449
 
-extern void __asm_polyvecl_pointwise_acc_montgomery(int *, const int *, const int *, const int *);
+extern void DILITHIUM_AARCH64__asm_polyvecl_pointwise_acc_montgomery(int *, const int *, const int *, const int *);
 
 static const int32_t l_montgomery_const[4] = {
     Q1, QINV};
@@ -86,7 +86,7 @@ int main()
 
         t0 = hal_get_time();
 
-        __asm_polyvecl_pointwise_acc_montgomery(polyNTTout, poly1, poly2, l_montgomery_const);
+        DILITHIUM_AARCH64__asm_polyvecl_pointwise_acc_montgomery(polyNTTout, poly1, poly2, l_montgomery_const);
 
         t1 = hal_get_time();
 
@@ -123,7 +123,7 @@ int main()
 
         for (int j = 0; j < DILITHIUM_K; j++)
         {
-            __asm_polyvecl_pointwise_acc_montgomery(&(t[j][0]), &(A[j][0][0]), &(s[0][0]), l_montgomery_const);
+            DILITHIUM_AARCH64__asm_polyvecl_pointwise_acc_montgomery(&(t[j][0]), &(A[j][0][0]), &(s[0][0]), l_montgomery_const);
         }
 
         for (int j = 0; j < DILITHIUM_K; j++)
@@ -139,3 +139,6 @@ int main()
     qsort(times, ITERATIONS, sizeof(uint64_t), cmp_uint64_t);
     printf("MatrixVectorMul (median of %d measurements): %ld cycles\n", ITERATIONS, times[ITERATIONS >> 1]);
 }
+
+
+

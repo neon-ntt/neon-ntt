@@ -30,10 +30,10 @@
 #include "params.h"
 
 .align 2
-.global __asm_10_to_32
-.global ___asm_10_to_32
-__asm_10_to_32:
-___asm_10_to_32:
+.global DILITHIUM_AARCH64__asm_10_to_32
+.global _DILITHIUM_AARCH64__asm_10_to_32
+DILITHIUM_AARCH64__asm_10_to_32:
+_DILITHIUM_AARCH64__asm_10_to_32:
 
     mov x7, #16
     _10_to_32_loop:
@@ -103,10 +103,10 @@ ___asm_10_to_32:
     ret
 
 .align 2
-.global __asm_poly_reduce
-.global ___asm_poly_reduce
-__asm_poly_reduce:
-___asm_poly_reduce:
+.global DILITHIUM_AARCH64__asm_poly_reduce
+.global _DILITHIUM_AARCH64__asm_poly_reduce
+DILITHIUM_AARCH64__asm_poly_reduce:
+_DILITHIUM_AARCH64__asm_poly_reduce:
 
     ldr w4, [x1]
 
@@ -196,10 +196,10 @@ ___asm_poly_reduce:
     ret
 
 .align 2
-.global __asm_poly_caddq
-.global ___asm_poly_caddq
-__asm_poly_caddq:
-___asm_poly_caddq:
+.global DILITHIUM_AARCH64__asm_poly_caddq
+.global _DILITHIUM_AARCH64__asm_poly_caddq
+DILITHIUM_AARCH64__asm_poly_caddq:
+_DILITHIUM_AARCH64__asm_poly_caddq:
 
     ldr w4, [x1]
 
@@ -289,10 +289,10 @@ ___asm_poly_caddq:
     ret
 
 .align 2
-.global __asm_poly_freeze
-.global ___asm_poly_freeze
-__asm_poly_freeze:
-___asm_poly_freeze:
+.global DILITHIUM_AARCH64__asm_poly_freeze
+.global _DILITHIUM_AARCH64__asm_poly_freeze
+DILITHIUM_AARCH64__asm_poly_freeze:
+_DILITHIUM_AARCH64__asm_poly_freeze:
 
     ldr w4, [x1]
 
@@ -418,10 +418,10 @@ ___asm_poly_freeze:
     ret
 
 .align 2
-.global __asm_poly_power2round
-.global ___asm_poly_power2round
-__asm_poly_power2round:
-___asm_poly_power2round:
+.global DILITHIUM_AARCH64__asm_poly_power2round
+.global _DILITHIUM_AARCH64__asm_poly_power2round
+DILITHIUM_AARCH64__asm_poly_power2round:
+_DILITHIUM_AARCH64__asm_poly_power2round:
 
     mov w4, #1
 
@@ -564,10 +564,10 @@ ___asm_poly_power2round:
     ret
 
 .align 2
-.global __asm_poly_add
-.global ___asm_poly_add
-__asm_poly_add:
-___asm_poly_add:
+.global DILITHIUM_AARCH64__asm_poly_add
+.global _DILITHIUM_AARCH64__asm_poly_add
+DILITHIUM_AARCH64__asm_poly_add:
+_DILITHIUM_AARCH64__asm_poly_add:
 
     ld1 {v0.4S}, [x1], #16
     ld1 {v4.4S}, [x2], #16
@@ -613,10 +613,10 @@ ___asm_poly_add:
     ret
 
 .align 2
-.global __asm_poly_sub
-.global ___asm_poly_sub
-__asm_poly_sub:
-___asm_poly_sub:
+.global DILITHIUM_AARCH64__asm_poly_sub
+.global _DILITHIUM_AARCH64__asm_poly_sub
+DILITHIUM_AARCH64__asm_poly_sub:
+_DILITHIUM_AARCH64__asm_poly_sub:
 
     ld1 {v0.4S}, [x1], #16
     ld1 {v4.4S}, [x2], #16
@@ -662,10 +662,10 @@ ___asm_poly_sub:
     ret
 
 .align 2
-.global __asm_poly_shiftl
-.global ___asm_poly_shiftl
-__asm_poly_shiftl:
-___asm_poly_shiftl:
+.global DILITHIUM_AARCH64__asm_poly_shiftl
+.global _DILITHIUM_AARCH64__asm_poly_shiftl
+DILITHIUM_AARCH64__asm_poly_shiftl:
+_DILITHIUM_AARCH64__asm_poly_shiftl:
 
     add x1, x0, #0
 
@@ -729,10 +729,10 @@ ___asm_poly_shiftl:
     ret
 
 .align 2
-.global __asm_poly_pointwise_montgomery
-.global ___asm_poly_pointwise_montgomery
-__asm_poly_pointwise_montgomery:
-___asm_poly_pointwise_montgomery:
+.global DILITHIUM_AARCH64__asm_poly_pointwise_montgomery
+.global _DILITHIUM_AARCH64__asm_poly_pointwise_montgomery
+DILITHIUM_AARCH64__asm_poly_pointwise_montgomery:
+_DILITHIUM_AARCH64__asm_poly_pointwise_montgomery:
 
     push_all
 
@@ -848,10 +848,10 @@ ___asm_poly_pointwise_montgomery:
 
 
 .align 2
-.global __asm_polyvecl_pointwise_acc_montgomery
-.global ___asm_polyvecl_pointwise_acc_montgomery
-__asm_polyvecl_pointwise_acc_montgomery:
-___asm_polyvecl_pointwise_acc_montgomery:
+.global DILITHIUM_AARCH64__asm_polyvecl_pointwise_acc_montgomery
+.global _DILITHIUM_AARCH64__asm_polyvecl_pointwise_acc_montgomery
+DILITHIUM_AARCH64__asm_polyvecl_pointwise_acc_montgomery:
+_DILITHIUM_AARCH64__asm_polyvecl_pointwise_acc_montgomery:
 
     push_all
 
