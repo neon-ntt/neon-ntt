@@ -53,9 +53,9 @@ int main()
 {
   unsigned int i;
 
-  unsigned char pk[CRYPTO_PUBLICKEYBYTES];
-  unsigned char sk[CRYPTO_SECRETKEYBYTES];
-  unsigned char sm[MLEN + CRYPTO_BYTES];
+  unsigned char pk[DILITHIUM_AARCH64_CRYPTO_PUBLICKEYBYTES];
+  unsigned char sk[DILITHIUM_AARCH64_CRYPTO_SECRETKEYBYTES];
+  unsigned char sm[MLEN + DILITHIUM_AARCH64_CRYPTO_BYTES];
 
   poly t;
 

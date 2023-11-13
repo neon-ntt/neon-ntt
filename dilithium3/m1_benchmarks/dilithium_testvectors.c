@@ -21,12 +21,12 @@ static void printbytes(const uint8_t *x, size_t xlen) {
 }
 
 int main(void) {
-    uint8_t sk[CRYPTO_SECRETKEYBYTES];
-    uint8_t pk[CRYPTO_PUBLICKEYBYTES];
+    uint8_t sk[DILITHIUM_AARCH64_CRYPTO_SECRETKEYBYTES];
+    uint8_t pk[DILITHIUM_AARCH64_CRYPTO_PUBLICKEYBYTES];
 
     uint8_t mi[MAXMLEN];
-    uint8_t sm[MAXMLEN + CRYPTO_BYTES];
-    uint8_t sig[CRYPTO_BYTES];
+    uint8_t sm[MAXMLEN + DILITHIUM_AARCH64_CRYPTO_BYTES];
+    uint8_t sig[DILITHIUM_AARCH64_CRYPTO_BYTES];
 
     size_t smlen;
     size_t siglen;
@@ -41,8 +41,8 @@ int main(void) {
 
         crypto_sign_keypair(pk, sk);
 
-        printbytes(pk, CRYPTO_PUBLICKEYBYTES);
-        printbytes(sk, CRYPTO_SECRETKEYBYTES);
+        printbytes(pk, DILITHIUM_AARCH64_CRYPTO_PUBLICKEYBYTES);
+        printbytes(sk, DILITHIUM_AARCH64_CRYPTO_SECRETKEYBYTES);
 
         crypto_sign(sm, &smlen, mi, i, sk);
         crypto_sign_signature(sig, &siglen, mi, i, sk);

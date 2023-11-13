@@ -90,7 +90,7 @@ int crypto_sign_keypair(uint8_t *pk, uint8_t *sk) {
     pack_pk(pk, rho, &t1);
 
     /* Compute H(rho, t1) and write secret key */
-    shake256(tr, TRBYTES, pk, CRYPTO_PUBLICKEYBYTES);
+    shake256(tr, TRBYTES, pk, DILITHIUM_AARCH64_CRYPTO_PUBLICKEYBYTES);
     pack_sk(sk, rho, tr, key, &t0, &s1, &s2);
 
     return 0;
@@ -211,7 +211,7 @@ rej:
 
     /* Write signature */
     pack_sig(sig, sig, &z, &h);
-    *siglen = CRYPTO_BYTES;
+    *siglen = DILITHIUM_AARCH64_CRYPTO_BYTES;
     return 0;
 }
 
@@ -239,9 +239,9 @@ int crypto_sign(uint8_t *sm,
     size_t i;
 
     for (i = 0; i < mlen; ++i) {
-        sm[CRYPTO_BYTES + mlen - 1 - i] = m[mlen - 1 - i];
+        sm[DILITHIUM_AARCH64_CRYPTO_BYTES + mlen - 1 - i] = m[mlen - 1 - i];
     }
-    crypto_sign_signature(sm, smlen, sm + CRYPTO_BYTES, mlen, sk);
+    crypto_sign_signature(sm, smlen, sm + DILITHIUM_AARCH64_CRYPTO_BYTES, mlen, sk);
     *smlen += mlen;
     return 0;
 }
@@ -275,7 +275,7 @@ int crypto_sign_verify(const uint8_t *sig,
     polyveck t1, w1, h;
     shake256incctx state;
 
-    if (siglen != CRYPTO_BYTES) {
+    if (siglen != DILITHIUM_AARCH64_CRYPTO_BYTES) {
         return -1;
     }
 
@@ -288,7 +288,7 @@ int crypto_sign_verify(const uint8_t *sig,
     }
 
     /* Compute CRH(H(rho, t1), msg) */
-    shake256(mu, CRHBYTES, pk, CRYPTO_PUBLICKEYBYTES);
+    shake256(mu, CRHBYTES, pk, DILITHIUM_AARCH64_CRYPTO_PUBLICKEYBYTES);
     shake256_inc_init(&state);
     shake256_inc_absorb(&state, mu, CRHBYTES);
     shake256_inc_absorb(&state, m, mlen);
@@ -354,17 +354,17 @@ int crypto_sign_open(uint8_t *m,
                      const uint8_t *pk) {
     size_t i;
 
-    if (smlen < CRYPTO_BYTES) {
+    if (smlen < DILITHIUM_AARCH64_CRYPTO_BYTES) {
         goto badsig;
     }
 
-    *mlen = smlen - CRYPTO_BYTES;
-    if (crypto_sign_verify(sm, CRYPTO_BYTES, sm + CRYPTO_BYTES, *mlen, pk)) {
+    *mlen = smlen - DILITHIUM_AARCH64_CRYPTO_BYTES;
+    if (crypto_sign_verify(sm, DILITHIUM_AARCH64_CRYPTO_BYTES, sm + DILITHIUM_AARCH64_CRYPTO_BYTES, *mlen, pk)) {
         goto badsig;
     } else {
         /* All good, copy msg, return 0 */
         for (i = 0; i < *mlen; ++i) {
-            m[i] = sm[CRYPTO_BYTES + i];
+            m[i] = sm[DILITHIUM_AARCH64_CRYPTO_BYTES + i];
         }
         return 0;
     }

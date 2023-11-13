@@ -38,9 +38,9 @@
 
 static int test_sign(void)
 {
-    unsigned char pk[CRYPTO_PUBLICKEYBYTES];
-    unsigned char sk[CRYPTO_SECRETKEYBYTES];
-    unsigned char sm[MLEN + CRYPTO_BYTES];
+    unsigned char pk[DILITHIUM_AARCH64_CRYPTO_PUBLICKEYBYTES];
+    unsigned char sk[DILITHIUM_AARCH64_CRYPTO_SECRETKEYBYTES];
+    unsigned char sm[MLEN + DILITHIUM_AARCH64_CRYPTO_BYTES];
     unsigned char m[MLEN];
 
     size_t mlen;
@@ -63,10 +63,10 @@ static int test_sign(void)
 
 static int test_wrong_pk(void)
 {
-    unsigned char pk[CRYPTO_PUBLICKEYBYTES];
-    unsigned char pk2[CRYPTO_PUBLICKEYBYTES];
-    unsigned char sk[CRYPTO_SECRETKEYBYTES];
-    unsigned char sm[MLEN + CRYPTO_BYTES];
+    unsigned char pk[DILITHIUM_AARCH64_CRYPTO_PUBLICKEYBYTES];
+    unsigned char pk2[DILITHIUM_AARCH64_CRYPTO_PUBLICKEYBYTES];
+    unsigned char sk[DILITHIUM_AARCH64_CRYPTO_SECRETKEYBYTES];
+    unsigned char sm[MLEN + DILITHIUM_AARCH64_CRYPTO_BYTES];
     unsigned char m[MLEN];
 
     size_t mlen;
@@ -100,8 +100,8 @@ int main(void)
       return 1;
   }
 
-  printf("CRYPTO_SECRETKEYBYTES:  %d\n",CRYPTO_SECRETKEYBYTES);
-  printf("CRYPTO_PUBLICKEYBYTES:  %d\n",CRYPTO_PUBLICKEYBYTES);
+  printf("CRYPTO_SECRETKEYBYTES:  %d\n",DILITHIUM_AARCH64_CRYPTO_SECRETKEYBYTES);
+  printf("CRYPTO_PUBLICKEYBYTES:  %d\n",DILITHIUM_AARCH64_CRYPTO_PUBLICKEYBYTES);
   printf("Test successful\n");
 
   return 0;
