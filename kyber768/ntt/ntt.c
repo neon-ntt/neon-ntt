@@ -26,7 +26,7 @@
  * SOFTWARE.
  */
 
-#include <arm_neon.h>
+#include <stdint.h>
 #include "params.h"
 #include "ntt.h"
 #include "NTT_params.h"

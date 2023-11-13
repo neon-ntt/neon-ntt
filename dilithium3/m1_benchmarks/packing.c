@@ -1,1 +1,1 @@
-../../dilithium2/m1_benchmarks/packing.c
+../scheme/packing.c

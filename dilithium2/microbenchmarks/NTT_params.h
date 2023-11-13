@@ -1,1 +1,1 @@
-../../dilithium3/microbenchmarks/NTT_params.h
+../ntt/NTT_params.h

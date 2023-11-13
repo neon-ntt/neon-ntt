@@ -1,1 +1,1 @@
-../../dilithium3/scheme/macros_common.i
+../ntt/macros_common.i

@@ -1,1 +1,1 @@
-../scheme/params.h
+../ntt/params.h

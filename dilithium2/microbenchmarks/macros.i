@@ -1,1 +1,1 @@
-../../dilithium3/microbenchmarks/macros.i
+../ntt/macros.i

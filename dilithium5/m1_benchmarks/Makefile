@@ -1,1 +1,1 @@
-../../dilithium2/m1_benchmarks/Makefile
+../../dilithium3/m1_benchmarks/Makefile

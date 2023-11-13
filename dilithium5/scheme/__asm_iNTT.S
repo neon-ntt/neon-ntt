@@ -1,1 +1,1 @@
-../../dilithium3/scheme/__asm_iNTT.S
+../ntt/__asm_iNTT.S

@@ -1,1 +1,1 @@
-../../dilithium2/m1_benchmarks/ntt.c
+../ntt/ntt.c

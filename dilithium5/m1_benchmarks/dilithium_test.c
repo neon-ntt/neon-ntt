@@ -1,1 +1,1 @@
-../../dilithium2/m1_benchmarks/dilithium_test.c
+../../dilithium3/m1_benchmarks/dilithium_test.c

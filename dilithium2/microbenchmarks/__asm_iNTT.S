@@ -1,1 +1,1 @@
-../../dilithium3/microbenchmarks/__asm_iNTT.S
+../ntt/__asm_iNTT.S

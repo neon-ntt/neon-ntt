@@ -1,1 +1,1 @@
-../../dilithium2/m1_benchmarks/sign.c
+../scheme/sign.c

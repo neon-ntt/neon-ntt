@@ -1,1 +1,1 @@
-../../dilithium3/microbenchmarks/ntt.h
+../ntt/ntt.h

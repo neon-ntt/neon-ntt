@@ -1,1 +1,1 @@
-../../dilithium2/m1_benchmarks/poly.h
+../scheme/poly.h

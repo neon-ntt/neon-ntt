@@ -1,1 +1,1 @@
-../../dilithium2/m1_benchmarks/polyvec.h
+../scheme/polyvec.h
