@@ -34,9 +34,8 @@
  */
 
 #include <stdint.h>
+#include "params.h"
 #include "NTT_params.h"
-
-
 
 extern void DILITHIUM_AARCH64__asm_ntt_SIMD_top(int32_t *des, const int32_t *table, const int32_t *_constants);
 extern void DILITHIUM_AARCH64__asm_ntt_SIMD_bot(int32_t *des, const int32_t *table, const int32_t *_constants);

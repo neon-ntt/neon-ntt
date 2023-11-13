@@ -31,10 +31,10 @@
 #include "params.h"
 
 .align 2
-.global __asm_point_mul_extended
-.global ___asm_point_mul_extended
-__asm_point_mul_extended:
-___asm_point_mul_extended:
+.global KYBER_AARCH64__asm_point_mul_extended
+.global _KYBER_AARCH64__asm_point_mul_extended
+KYBER_AARCH64__asm_point_mul_extended:
+_KYBER_AARCH64__asm_point_mul_extended:
 
     push_all
     Q         .req w20
@@ -246,10 +246,10 @@ ___asm_point_mul_extended:
 
 
 .align 2
-.global __asm_asymmetric_mul
-.global ___asm_asymmetric_mul
-__asm_asymmetric_mul:
-___asm_asymmetric_mul:
+.global KYBER_AARCH64__asm_asymmetric_mul
+.global _KYBER_AARCH64__asm_asymmetric_mul
+KYBER_AARCH64__asm_asymmetric_mul:
+_KYBER_AARCH64__asm_asymmetric_mul:
 
     push_all
     des       .req x11
@@ -595,10 +595,10 @@ ___asm_asymmetric_mul:
 
 
 .align 2
-.global __asm_asymmetric_mul_montgomery
-.global ___asm_asymmetric_mul_montgomery
-__asm_asymmetric_mul_montgomery:
-___asm_asymmetric_mul_montgomery:
+.global KYBER_AARCH64__asm_asymmetric_mul_montgomery
+.global _KYBER_AARCH64__asm_asymmetric_mul_montgomery
+KYBER_AARCH64__asm_asymmetric_mul_montgomery:
+_KYBER_AARCH64__asm_asymmetric_mul_montgomery:
 
     push_all
     des       .req x11
@@ -762,7 +762,6 @@ ___asm_asymmetric_mul_montgomery:
 
 #endif
 
-    // TODO: interleaving
     mov counter, #15
     _asymmetric_mul_montgomery_loop:
 

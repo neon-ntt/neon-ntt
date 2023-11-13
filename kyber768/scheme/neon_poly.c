@@ -129,14 +129,14 @@ void neon_poly_invntt_tomont(int16_t r[KYBER_N]) {
 *            - const poly *a: pointer to first input polynomial
 *            - const poly *b: pointer to second input polynomial
 **************************************************/
-extern void __asm_add_reduce(int16_t *, const int16_t *);
+extern void KYBER_AARCH64__asm_add_reduce(int16_t *, const int16_t *);
 void neon_poly_add_reduce(int16_t c[KYBER_N], const int16_t a[KYBER_N]) {
-    __asm_add_reduce(c, a);
+    KYBER_AARCH64__asm_add_reduce(c, a);
 }
 
-extern void __asm_add_add_reduce(int16_t *, const int16_t *, const int16_t *);
+extern void KYBER_AARCH64__asm_add_add_reduce(int16_t *, const int16_t *, const int16_t *);
 void neon_poly_add_add_reduce(int16_t c[KYBER_N], const int16_t a[KYBER_N], const int16_t b[KYBER_N]) {
-    __asm_add_add_reduce(c, a, b);
+    KYBER_AARCH64__asm_add_add_reduce(c, a, b);
 }
 
 /*************************************************
@@ -150,7 +150,7 @@ void neon_poly_add_add_reduce(int16_t c[KYBER_N], const int16_t a[KYBER_N], cons
 *            - const poly *a: pointer to first input polynomial
 *            - const poly *b: pointer to second input polynomial
 **************************************************/
-extern void __asm_sub_reduce(int16_t *, const int16_t *);
+extern void KYBER_AARCH64__asm_sub_reduce(int16_t *, const int16_t *);
 void neon_poly_sub_reduce(int16_t c[KYBER_N], const int16_t a[KYBER_N]) {
-    __asm_sub_reduce(c, a);
+    KYBER_AARCH64__asm_sub_reduce(c, a);
 }

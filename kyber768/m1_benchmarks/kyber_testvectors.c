@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "api.h"
+#include "kem.h"
 #include "randombytes.h"
 
 #define NTESTS 5

@@ -51,7 +51,7 @@ int main()
 
         t0 = hal_get_time();
         NTT((int16_t *)(&poly2[0][0]));
-        __asm_point_mul_extended((int16_t *)(&poly2_asymmetric[0][0]), (int16_t *)(&poly2[0][0]), pre_asymmetric_table_Q1_extended, asymmetric_const);
+        KYBER_AARCH64__asm_point_mul_extended((int16_t *)(&poly2_asymmetric[0][0]), (int16_t *)(&poly2[0][0]), pre_asymmetric_table_Q1_extended, asymmetric_const);
 
         t1 = hal_get_time();
 
@@ -66,7 +66,7 @@ int main()
 
         t0 = hal_get_time();
 
-        __asm_point_mul_extended((int16_t *)(&poly2_asymmetric[0][0]), (int16_t *)(&poly2[0][0]), pre_asymmetric_table_Q1_extended, asymmetric_const);
+        KYBER_AARCH64__asm_point_mul_extended((int16_t *)(&poly2_asymmetric[0][0]), (int16_t *)(&poly2[0][0]), pre_asymmetric_table_Q1_extended, asymmetric_const);
 
         t1 = hal_get_time();
 
@@ -82,7 +82,7 @@ int main()
 
         t0 = hal_get_time();
 
-        __asm_asymmetric_mul((int16_t *)(&poly1[0][0]), (int16_t *)(&poly2[0][0]), (int16_t *)(&poly2_asymmetric[0][0]), asymmetric_const, (int16_t *)polyout);
+        KYBER_AARCH64__asm_asymmetric_mul((int16_t *)(&poly1[0][0]), (int16_t *)(&poly2[0][0]), (int16_t *)(&poly2_asymmetric[0][0]), asymmetric_const, (int16_t *)polyout);
 
         t1 = hal_get_time();
 
@@ -115,12 +115,12 @@ int main()
         for (int j = 0; j < KYBER_K; j++)
         {
             NTT(&(s[0][0]));
-            __asm_point_mul_extended(&(s_asymmetric[j][0]), &(s[j][0]), pre_asymmetric_table_Q1_extended, asymmetric_const);
+            KYBER_AARCH64__asm_point_mul_extended(&(s_asymmetric[j][0]), &(s[j][0]), pre_asymmetric_table_Q1_extended, asymmetric_const);
         }
 
         for (int j = 0; j < KYBER_K; j++)
         {
-            __asm_asymmetric_mul(&(A[j][0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const, &(acc[j][0]));
+            KYBER_AARCH64__asm_asymmetric_mul(&(A[j][0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const, &(acc[j][0]));
         }
 
         for (int j = 0; j < KYBER_K; j++)
@@ -141,7 +141,7 @@ int main()
 
         t0 = hal_get_time();
 
-        __asm_asymmetric_mul(&(A[0][0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const, &(acc[0][0]));
+        KYBER_AARCH64__asm_asymmetric_mul(&(A[0][0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const, &(acc[0][0]));
 
         iNTT(&(acc[0][0]));
 
@@ -161,10 +161,10 @@ int main()
         for (int j = 0; j < KYBER_K; j++)
         {
             NTT(&(s[0][0]));
-            __asm_point_mul_extended(&(s_asymmetric[j][0]), &(s[j][0]), pre_asymmetric_table_Q1_extended, asymmetric_const);
+            KYBER_AARCH64__asm_point_mul_extended(&(s_asymmetric[j][0]), &(s[j][0]), pre_asymmetric_table_Q1_extended, asymmetric_const);
         }
 
-        __asm_asymmetric_mul(&(A[0][0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const, &(acc[0][0]));
+        KYBER_AARCH64__asm_asymmetric_mul(&(A[0][0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const, &(acc[0][0]));
 
         iNTT(&(acc[0][0]));
 

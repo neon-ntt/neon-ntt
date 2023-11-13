@@ -7,6 +7,7 @@
 
 #include "params.h"
 #include "api.h"
+#include "sign.h"
 #include "randombytes.h"
 
 #define MAXMLEN 2048

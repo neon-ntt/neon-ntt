@@ -7,8 +7,9 @@
  * public domain at https://github.com/pq-crystals/kyber/tree/master/ref
  */
 
-#define KYBER_NAMESPACE(s) CRYPTO_NAMESPACE(s)
+#define KYBER_NAMESPACE(s) KYBER_AARCH64_##s
 
+/* Don't change parameters below this line */
 #define KYBER_N 256
 #define KYBER_Q 3329
 

@@ -29,10 +29,10 @@
 #include "macros.i"
 
 .align 2
-.global __asm_intt_SIMD_bot
-.global ___asm_intt_SIMD_bot
-__asm_intt_SIMD_bot:
-___asm_intt_SIMD_bot:
+.global KYBER_AARCH64__asm_intt_SIMD_bot
+.global _KYBER_AARCH64__asm_intt_SIMD_bot
+KYBER_AARCH64__asm_intt_SIMD_bot:
+_KYBER_AARCH64__asm_intt_SIMD_bot:
 
     push_all
     Q         .req w20
@@ -171,10 +171,10 @@ ___asm_intt_SIMD_bot:
     ret
 
 .align 2
-.global __asm_intt_SIMD_top
-.global ___asm_intt_SIMD_top
-__asm_intt_SIMD_top:
-___asm_intt_SIMD_top:
+.global KYBER_AARCH64__asm_intt_SIMD_top
+.global _KYBER_AARCH64__asm_intt_SIMD_top
+KYBER_AARCH64__asm_intt_SIMD_top:
+_KYBER_AARCH64__asm_intt_SIMD_top:
 
     push_all
     Q         .req w20

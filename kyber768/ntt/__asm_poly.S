@@ -29,10 +29,10 @@
 #include "macros.i"
 
 .align 2
-.global __asm_add_reduce
-.global ___asm_add_reduce
-__asm_add_reduce:
-___asm_add_reduce:
+.global KYBER_AARCH64__asm_add_reduce
+.global _KYBER_AARCH64__asm_add_reduce
+KYBER_AARCH64__asm_add_reduce:
+_KYBER_AARCH64__asm_add_reduce:
 
     mov w4, #3329
     mov w5, #25519
@@ -90,10 +90,10 @@ ___asm_add_reduce:
     ret
 
 .align 2
-.global __asm_sub_reduce
-.global ___asm_sub_reduce
-__asm_sub_reduce:
-___asm_sub_reduce:
+.global KYBER_AARCH64__asm_sub_reduce
+.global _KYBER_AARCH64__asm_sub_reduce
+KYBER_AARCH64__asm_sub_reduce:
+_KYBER_AARCH64__asm_sub_reduce:
 
     mov w4, #3329
     mov w5, #25519
@@ -151,10 +151,10 @@ ___asm_sub_reduce:
     ret
 
 .align 2
-.global __asm_add_add_reduce
-.global ___asm_add_add_reduce
-__asm_add_add_reduce:
-___asm_add_add_reduce:
+.global KYBER_AARCH64__asm_add_add_reduce
+.global _KYBER_AARCH64__asm_add_add_reduce
+KYBER_AARCH64__asm_add_add_reduce:
+_KYBER_AARCH64__asm_add_add_reduce:
 
     mov w4, #3329
     mov w5, #25519

@@ -31,10 +31,11 @@
 #include <arm_neon.h>
 
 #include "hal.h"
-#include "NTT_params.h"
-#include "ntt.h"
 
 #include "params.h"
+
+#include "NTT_params.h"
+#include "ntt.h"
 
 #define DILITHIUM_L L
 #define DILITHIUM_K K

@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "api.h"
+#include "kem.h"
 #include "indcpa.h"
 #include "params.h"
 #include "indcpa.h"
@@ -78,10 +79,10 @@ int main()
   for(i=0;i<NTESTS;i++) {
     neon_polyvec_ntt(s);
     for(j = 0; j < KYBER_K; j++){
-      __asm_point_mul_extended(&(s_asymmetric[j][0]), &(s[j][0]), pre_asymmetric_table_Q1_extended, asymmetric_const);
+      KYBER_AARCH64__asm_point_mul_extended(&(s_asymmetric[j][0]), &(s[j][0]), pre_asymmetric_table_Q1_extended, asymmetric_const);
     }
     for(j = 0; j < KYBER_K; j++){
-      __asm_asymmetric_mul(&(a[j][0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const, acc[j]);
+      KYBER_AARCH64__asm_asymmetric_mul(&(a[j][0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const, acc[j]);
     }
     neon_polyvec_invntt_to_mont(acc);
 
@@ -92,7 +93,7 @@ int main()
 
   TIME(start);
   for(i=0;i<NTESTS;i++) {
-    __asm_asymmetric_mul(&(vec[0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const, poly);
+    KYBER_AARCH64__asm_asymmetric_mul(&(vec[0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const, poly);
     neon_poly_invntt_tomont(poly);
   }
   TIME(stop);
@@ -102,7 +103,7 @@ int main()
   TIME(start);
   for(i=0;i<NTESTS;i++) {
     neon_polyvec_ntt(s);
-    __asm_asymmetric_mul(&(vec[0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const, poly);
+    KYBER_AARCH64__asm_asymmetric_mul(&(vec[0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const, poly);
     neon_poly_invntt_tomont(poly);
   }
   TIME(stop);
@@ -122,7 +123,7 @@ int main()
   TIME(start);
   for(i=0;i<NTESTS;i++) {
     NTT(&(s[0][0]));
-    __asm_point_mul_extended(&(s_asymmetric[0][0]), &(s[0][0]), pre_asymmetric_table_Q1_extended, asymmetric_const);
+    KYBER_AARCH64__asm_point_mul_extended(&(s_asymmetric[0][0]), &(s[0][0]), pre_asymmetric_table_Q1_extended, asymmetric_const);
   }
   TIME(stop);
   ns = CALC(start, stop);
@@ -130,7 +131,7 @@ int main()
 
   TIME(start);
   for(i=0;i<NTESTS;i++) {
-    __asm_asymmetric_mul(&(a[0][0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const, acc[0]);
+    KYBER_AARCH64__asm_asymmetric_mul(&(a[0][0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const, acc[0]);
   }
   TIME(stop);
   ns = CALC(start, stop);

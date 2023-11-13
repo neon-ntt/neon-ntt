@@ -6,7 +6,7 @@ CFLAGS = -O3 -fomit-frame-pointer -march=native -mcpu=native \
 	-Wredundant-decls -Wmissing-prototypes \
 	-Wundef -Wshadow
 
-HEADERs = hal.h ntt.h NTT_params.h params.h  macros_common.i macros.i
+HEADERs = hal.h ntt.h NTT_params.h params.h macros_common.i macros.i
 SRCs = hal.c ntt.c
 ASMs = __asm_NTT.S __asm_iNTT.S __asm_base_mul.S
 
