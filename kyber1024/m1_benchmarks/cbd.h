@@ -1,1 +1,1 @@
-../../kyber768/m1_benchmarks/cbd.h
+../scheme/cbd.h

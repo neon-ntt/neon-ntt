@@ -1,1 +1,1 @@
-../../kyber768/m1_benchmarks/polyvec.c
+../scheme/polyvec.c

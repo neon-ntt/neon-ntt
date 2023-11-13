@@ -1,1 +1,1 @@
-../../kyber768/m1_benchmarks/__asm_poly.S
+../ntt/__asm_poly.S

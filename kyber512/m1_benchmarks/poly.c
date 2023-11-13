@@ -1,1 +1,1 @@
-../../kyber768/m1_benchmarks/poly.c
+../scheme/poly.c

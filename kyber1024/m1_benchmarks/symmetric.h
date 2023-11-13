@@ -1,1 +1,1 @@
-../../kyber768/m1_benchmarks/symmetric.h
+../scheme/symmetric.h

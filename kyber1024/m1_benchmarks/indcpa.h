@@ -1,1 +1,1 @@
-../../kyber768/m1_benchmarks/indcpa.h
+../scheme/indcpa.h

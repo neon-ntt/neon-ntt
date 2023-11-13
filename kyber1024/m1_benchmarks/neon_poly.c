@@ -1,1 +1,1 @@
-../../kyber768/m1_benchmarks/neon_poly.c
+../scheme/neon_poly.c

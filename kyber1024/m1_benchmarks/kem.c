@@ -1,1 +1,1 @@
-../../kyber768/m1_benchmarks/kem.c
+../scheme/kem.c

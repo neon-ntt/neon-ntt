@@ -1,1 +1,1 @@
-../../kyber768/m1_benchmarks/rejsample.h
+../scheme/rejsample.h

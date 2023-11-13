@@ -1,1 +1,1 @@
-../../kyber768/m1_benchmarks/__asm_NTT.S
+../ntt/__asm_NTT.S

@@ -1,1 +1,1 @@
-../../kyber768/m1_benchmarks/api.h
+../scheme/api.h

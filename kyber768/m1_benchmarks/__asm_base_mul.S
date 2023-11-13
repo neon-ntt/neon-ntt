@@ -1,1 +1,1 @@
-../scheme/__asm_base_mul.S
+../ntt/__asm_base_mul.S

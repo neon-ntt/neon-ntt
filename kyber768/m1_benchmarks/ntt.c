@@ -1,1 +1,1 @@
-../scheme/ntt.c
+../ntt/ntt.c

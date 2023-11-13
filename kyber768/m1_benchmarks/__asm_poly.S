@@ -1,1 +1,1 @@
-../scheme/__asm_poly.S
+../ntt/__asm_poly.S

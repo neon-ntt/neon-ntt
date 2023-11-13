@@ -1,1 +1,1 @@
-../../kyber768/m1_benchmarks/neon_symmetric-shake.c
+../scheme/neon_symmetric-shake.c

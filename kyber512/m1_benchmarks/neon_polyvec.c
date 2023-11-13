@@ -1,1 +1,1 @@
-../../kyber768/m1_benchmarks/neon_polyvec.c
+../scheme/neon_polyvec.c

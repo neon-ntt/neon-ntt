@@ -1,1 +1,1 @@
-../../kyber768/m1_benchmarks/verify.h
+../scheme/verify.h

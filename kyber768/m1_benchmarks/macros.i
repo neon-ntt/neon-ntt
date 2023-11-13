@@ -1,1 +1,1 @@
-../scheme/macros.i
+../ntt/macros.i

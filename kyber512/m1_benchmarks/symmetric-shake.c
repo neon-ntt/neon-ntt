@@ -1,1 +1,1 @@
-../../kyber768/m1_benchmarks/symmetric-shake.c
+../scheme/symmetric-shake.c
