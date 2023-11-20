@@ -47,12 +47,12 @@ int32_t decompose(int32_t *a0, int32_t a) {
     int32_t a1;
 
     a1  = (a + 127) >> 7;
-    #if GAMMA2 == (DILITHIUM_Q-1)/32
+    #if GAMMA2 == 261888
 
     a1  = (a1 * 1025 + (1 << 21)) >> 22;
     a1 &= 15;
 
-    #elif GAMMA2 == (DILITHIUM_Q-1)/88
+    #elif GAMMA2 == 95232
 
     a1  = (a1 * 11275 + (1 << 23)) >> 24;
     a1 ^= ((43 - a1) >> 31) & a1;
@@ -105,7 +105,7 @@ int32_t use_hint(int32_t a, unsigned int hint) {
         return a1;
     }
 
-    #if GAMMA2 == (DILITHIUM_Q-1)/32
+    #if GAMMA2 == 261888
 
     if (a0 > 0) {
         return (a1 + 1) & 15;
@@ -113,7 +113,7 @@ int32_t use_hint(int32_t a, unsigned int hint) {
         return (a1 - 1) & 15;
     }
 
-    #elif GAMMA2 == (DILITHIUM_Q-1)/88
+    #elif GAMMA2 == 95232
 
     if (a0 > 0) {
         return (a1 == 43) ?  0 : a1 + 1;

@@ -916,7 +916,7 @@ void polyz_pack(uint8_t *r, const poly *a) {
     uint32_t t[4];
     DBENCH_START();
 
-    #if GAMMA1 == (1 << 17)
+    #if GAMMA1 == 131072
 
     for (i = 0; i < N / 4; ++i) {
         t[0] = GAMMA1 - a->coeffs[4 * i + 0];
@@ -938,7 +938,7 @@ void polyz_pack(uint8_t *r, const poly *a) {
         r[9 * i + 8]  = t[3] >> 10;
     }
 
-    #elif GAMMA1 == (1 << 19)
+    #elif GAMMA1 == 524288
 
     for (i = 0; i < N / 2; ++i) {
         t[0] = GAMMA1 - a->coeffs[2 * i + 0];
@@ -974,7 +974,7 @@ void polyz_unpack(poly *r, const uint8_t *a) {
     unsigned int i;
     DBENCH_START();
 
-    #if GAMMA1 == (1 << 17)
+    #if GAMMA1 == 131072
 
     for (i = 0; i < N / 4; ++i) {
         r->coeffs[4 * i + 0]  = a[9 * i + 0];
@@ -1003,7 +1003,7 @@ void polyz_unpack(poly *r, const uint8_t *a) {
         r->coeffs[4 * i + 3] = GAMMA1 - r->coeffs[4 * i + 3];
     }
 
-    #elif GAMMA1 == (1 << 19)
+    #elif GAMMA1 == 524288
 
     for (i = 0; i < N / 2; ++i) {
         r->coeffs[2 * i + 0]  = a[5 * i + 0];
@@ -1043,7 +1043,7 @@ void polyw1_pack(uint8_t *r, const poly *a) {
     unsigned int i;
     DBENCH_START();
 
-    #if GAMMA2 == (DILITHIUM_Q-1)/88
+    #if GAMMA2 == 95232
 
     for (i = 0; i < N / 4; ++i) {
         r[3 * i + 0]  = a->coeffs[4 * i + 0];
@@ -1054,7 +1054,7 @@ void polyw1_pack(uint8_t *r, const poly *a) {
         r[3 * i + 2] |= a->coeffs[4 * i + 3] << 2;
     }
 
-    #elif GAMMA2 == (DILITHIUM_Q-1)/32
+    #elif GAMMA2 == 261888
 
     for (i = 0; i < N / 2; ++i) {
         r[i] = a->coeffs[2 * i + 0] | (a->coeffs[2 * i + 1] << 4);
