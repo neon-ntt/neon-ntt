@@ -22,7 +22,7 @@
 void polyvec_compress(uint8_t r[KYBER_POLYVECCOMPRESSEDBYTES], const int16_t a[KYBER_K][KYBER_N]) {
     unsigned int i, j, k;
 
-    #if (KYBER_POLYVECCOMPRESSEDBYTES == (KYBER_K * 352))
+    #if KYBER_K == 4
     uint16_t t[8];
     for (i = 0; i < KYBER_K; i++) {
         for (j = 0; j < KYBER_N / 8; j++) {
@@ -46,7 +46,7 @@ void polyvec_compress(uint8_t r[KYBER_POLYVECCOMPRESSEDBYTES], const int16_t a[K
             r += 11;
         }
     }
-    #elif (KYBER_POLYVECCOMPRESSEDBYTES == (KYBER_K * 320))
+    #elif (KYBER_K == 2 || KYBER_K == 3)
     uint16_t t[4];
     for (i = 0; i < KYBER_K; i++) {
         for (j = 0; j < KYBER_N / 4; j++) {
@@ -82,7 +82,7 @@ void polyvec_compress(uint8_t r[KYBER_POLYVECCOMPRESSEDBYTES], const int16_t a[K
 void polyvec_decompress(int16_t r[KYBER_K][KYBER_N], const uint8_t a[KYBER_POLYVECCOMPRESSEDBYTES]) {
     unsigned int i, j, k;
 
-    #if (KYBER_POLYVECCOMPRESSEDBYTES == (KYBER_K * 352))
+    #if KYBER_K == 4
     uint16_t t[8];
     for (i = 0; i < KYBER_K; i++) {
         for (j = 0; j < KYBER_N / 8; j++) {
@@ -101,7 +101,7 @@ void polyvec_decompress(int16_t r[KYBER_K][KYBER_N], const uint8_t a[KYBER_POLYV
             }
         }
     }
-    #elif (KYBER_POLYVECCOMPRESSEDBYTES == (KYBER_K * 320))
+    #elif (KYBER_K == 2 || KYBER_K == 3)
     uint16_t t[4];
     for (i = 0; i < KYBER_K; i++) {
         for (j = 0; j < KYBER_N / 4; j++) {

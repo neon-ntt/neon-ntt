@@ -22,7 +22,7 @@ uint8_t seed[KYBER_SYMBYTES] = {0};
 // Result is clock cycles
 #define  CALC(start, stop) (stop - start) / NTESTS;
 
-int main()
+int main(void)
 {
   unsigned int i, j;
   unsigned char pk[KYBER_AARCH64_CRYPTO_PUBLICKEYBYTES] = {0};

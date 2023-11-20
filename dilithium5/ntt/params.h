@@ -1,5 +1,5 @@
-#ifndef PARAMS_H
-#define PARAMS_H
+#ifndef DILITHIUM_AARCH64_PARAMS_H
+#define DILITHIUM_AARCH64_PARAMS_H
 
 /*
  * This file is dual licensed
@@ -8,7 +8,7 @@
  */
 
 // #define DILITHIUM_MODE 2
-//#define DILITHIUM_MODE 3
+// #define DILITHIUM_MODE 3
 #define DILITHIUM_MODE 5
 
 #define CRYPTO_NAMESPACE(s) DILITHIUM_AARCH64_##s
@@ -73,15 +73,19 @@
 #define POLYT0_PACKEDBYTES  416
 #define POLYVECH_PACKEDBYTES (OMEGA + K)
 
-#if GAMMA1 == (1 << 17)
+#if GAMMA1 == 131072
+// GAMMA1 == (1 << 17)
 #define POLYZ_PACKEDBYTES   576
-#elif GAMMA1 == (1 << 19)
+#elif GAMMA1 == 524288
+// GAMMA1 == (1 << 19)
 #define POLYZ_PACKEDBYTES   640
 #endif
 
-#if GAMMA2 == (DILITHIUM_Q-1)/88
+#if GAMMA2 == 95232
+// GAMMA2 == (DILITHIUM_Q-1)/88
 #define POLYW1_PACKEDBYTES  192
-#elif GAMMA2 == (DILITHIUM_Q-1)/32
+#elif GAMMA2 == 261888
+// GAMMA2 == (DILITHIUM_Q-1)/88
 #define POLYW1_PACKEDBYTES  128
 #endif
 

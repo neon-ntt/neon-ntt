@@ -10,14 +10,38 @@ TMP=tmp
 
 PQCleanPATH=~/Desktop/git/public/PQClean
 
-unifdef_inplace_kyber() {
-unifdef -UPROFILE_HASHING -DKYBER_ETA2=2 -DKYBER_N=256 -DKYBER_INDCPA_MSGBYTES=32 $1 > tmp
+unifdef_inplace_kyber512() {
+unifdef -DKYBER_K=2 -DKYBER_POLYVECCOMPRESSEDBYTES=640 -DKYBER_ETA1=3 -DKYBER_POLYCOMPRESSEDBYTES=128 -UPROFILE_HASHING -DKYBER_ETA2=2 -DKYBER_N=256 -DKYBER_INDCPA_MSGBYTES=32 $1 > tmp
 mv tmp $1
 rm -f tmp
 }
 
-unifdef_inplace_dilithium() {
-unifdef -DDILITHIUM_Q=8380417 -UPROFILE_HASHING $1 > tmp
+unifdef_inplace_kyber768() {
+unifdef -DKYBER_K=3 -DKYBER_POLYVECCOMPRESSEDBYTES=960 -DKYBER_ETA1=2 -DKYBER_POLYCOMPRESSEDBYTES=128 -UPROFILE_HASHING -DKYBER_ETA2=2 -DKYBER_N=256 -DKYBER_INDCPA_MSGBYTES=32 $1 > tmp
+mv tmp $1
+rm -f tmp
+}
+
+unifdef_inplace_kyber1024() {
+unifdef -DKYBER_K=4 -DKYBER_POLYVECCOMPRESSEDBYTES=1408 -DKYBER_ETA1=2 -DKYBER_POLYCOMPRESSEDBYTES=160 -UPROFILE_HASHING -DKYBER_ETA2=2 -DKYBER_N=256 -DKYBER_INDCPA_MSGBYTES=32 $1 > tmp
+mv tmp $1
+rm -f tmp
+}
+
+unifdef_inplace_dilithium2() {
+unifdef -DDILITHIUM_MODE=2 -DGAMMA1=131072 -DGAMMA2=95232 -DETA=2 -DDILITHIUM_Q=8380417 -UPROFILE_HASHING $1 > tmp
+mv tmp $1
+rm -f tmp
+}
+
+unifdef_inplace_dilithium3() {
+unifdef -DDILITHIUM_MODE=3 -DGAMMA1=524288 -DGAMMA2=261888 -DETA=4 -DDILITHIUM_Q=8380417 -UPROFILE_HASHING $1 > tmp
+mv tmp $1
+rm -f tmp
+}
+
+unifdef_inplace_dilithium5() {
+unifdef -k -DDILITHIUM_MODE=5 -DGAMMA1=524288 -DGAMMA2=261888 -DETA=2 -DDILITHIUM_Q=8380417 -UPROFILE_HASHING $1 > tmp
 mv tmp $1
 rm -f tmp
 }
@@ -41,21 +65,27 @@ do
     if [ $i = kyber512 ]
     then
         namespc="s/KYBER_AARCH64/PQCLEAN_KYBER512_AARCH64/g"
+        for j in *.c *.h
+        do
+            unifdef_inplace_kyber512 $j
+        done
     elif [ $i = kyber768 ]
     then
         namespc="s/KYBER_AARCH64/PQCLEAN_KYBER768_AARCH64/g"
+        for j in *.c *.h
+        do
+            unifdef_inplace_kyber768 $j
+        done
     elif [ $i = kyber1024 ]
     then
         namespc="s/KYBER_AARCH64/PQCLEAN_KYBER1024_AARCH64/g"
+        for j in *.c *.h
+        do
+            unifdef_inplace_kyber1024 $j
+        done
     fi
 
     $SED -i $namespc *.[chS]
-
-    for j in *.c *.h
-    do
-        unifdef_inplace_kyber $j
-    done
-
     cp * $PQCleanPATH/crypto_kem/$i/aarch64/
 
     cd ../
@@ -81,21 +111,27 @@ do
     if [ $i = dilithium2 ]
     then
         namespc="s/DILITHIUM_AARCH64/PQCLEAN_DILITHIUM2_AARCH64/g"
+        for j in *.c *.h
+        do
+            unifdef_inplace_dilithium2 $j
+        done
     elif [ $i = dilithium3 ]
     then
         namespc="s/DILITHIUM_AARCH64/PQCLEAN_DILITHIUM3_AARCH64/g"
+        for j in *.c *.h
+        do
+            unifdef_inplace_dilithium3 $j
+        done
     elif [ $i = dilithium5 ]
     then
         namespc="s/DILITHIUM_AARCH64/PQCLEAN_DILITHIUM5_AARCH64/g"
+        for j in *.c *.h
+        do
+            unifdef_inplace_dilithium5 $j
+        done
     fi
 
     $SED -i $namespc *.[chS]
-
-    for j in *.c *.h
-    do
-        unifdef_inplace_dilithium $j
-    done
-
     cp * $PQCleanPATH/crypto_sign/$i/aarch64/
 
     cd ../
