@@ -10,6 +10,18 @@ TMP=tmp
 
 PQCleanPATH=~/Desktop/git/public/PQClean
 
+unifdef_inplace_kyber() {
+unifdef -UPROFILE_HASHING -DKYBER_ETA2=2 -DKYBER_N=256 -DKYBER_INDCPA_MSGBYTES=32 $1 > tmp
+mv tmp $1
+rm -f tmp
+}
+
+unifdef_inplace_dilithium() {
+unifdef -DDILITHIUM_Q=8380417 -UPROFILE_HASHING $1 > tmp
+mv tmp $1
+rm -f tmp
+}
+
 for i in kyber512 kyber768 kyber1024
 do
     rm -rf $TMP
@@ -26,7 +38,6 @@ do
     mv macros.i macros.inc
     mv macros_common.i macros_common.inc
 
-
     if [ $i = kyber512 ]
     then
         namespc="s/KYBER_AARCH64/PQCLEAN_KYBER512_AARCH64/g"
@@ -39,6 +50,12 @@ do
     fi
 
     $SED -i $namespc *.[chS]
+
+    for j in *.c *.h
+    do
+        unifdef_inplace_kyber $j
+    done
+
     cp * $PQCleanPATH/crypto_kem/$i/aarch64/
 
     cd ../
@@ -73,6 +90,12 @@ do
     fi
 
     $SED -i $namespc *.[chS]
+
+    for j in *.c *.h
+    do
+        unifdef_inplace_dilithium $j
+    done
+
     cp * $PQCleanPATH/crypto_sign/$i/aarch64/
 
     cd ../
