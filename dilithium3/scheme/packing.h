@@ -1,5 +1,5 @@
-#ifndef PACKING_H
-#define PACKING_H
+#ifndef DILITHIUM_AARCH64_PACKING_H
+#define DILITHIUM_AARCH64_PACKING_H
 
 /*
  * This file is dual licensed

@@ -1,5 +1,5 @@
-#ifndef CBD_H
-#define CBD_H
+#ifndef KYBER_AARCH64_CBD_H
+#define KYBER_AARCH64_CBD_H
 
 /*
  * This file is licensed

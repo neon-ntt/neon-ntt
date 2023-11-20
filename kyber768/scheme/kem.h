@@ -1,5 +1,5 @@
-#ifndef KEM_H
-#define KEM_H
+#ifndef KYBER_AARCH64_KEM_H
+#define KYBER_AARCH64_KEM_H
 
 /*
  * This file is licensed

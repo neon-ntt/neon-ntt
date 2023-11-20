@@ -1,5 +1,5 @@
-#ifndef REDUCE_H
-#define REDUCE_H
+#ifndef KYBER_AARCH64_REDUCE_H
+#define KYBER_AARCH64_REDUCE_H
 
 /*
  * This file is licensed

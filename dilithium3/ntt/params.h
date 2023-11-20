@@ -1,5 +1,5 @@
-#ifndef PARAMS_H
-#define PARAMS_H
+#ifndef DILITHIUM_AARCH64_PARAMS_H
+#define DILITHIUM_AARCH64_PARAMS_H
 
 /*
  * This file is dual licensed

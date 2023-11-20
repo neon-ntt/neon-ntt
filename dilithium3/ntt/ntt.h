@@ -1,5 +1,5 @@
-#ifndef NTT_H
-#define NTT_H
+#ifndef DILITHIUM_AARCH64_NTT_H
+#define DILITHIUM_AARCH64_NTT_H
 
 /*
  * This file was originally licensed

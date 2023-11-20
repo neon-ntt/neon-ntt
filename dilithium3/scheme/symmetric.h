@@ -1,5 +1,5 @@
-#ifndef SYMMETRIC_H
-#define SYMMETRIC_H
+#ifndef DILITHIUM_AARCH64_SYMMETRIC_H
+#define DILITHIUM_AARCH64_SYMMETRIC_H
 
 /*
  * This file was originally licensed

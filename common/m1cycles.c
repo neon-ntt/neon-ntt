@@ -66,7 +66,7 @@ KPERF_LIST
 uint64_t g_counters[COUNTERS_COUNT];
 uint64_t g_config[COUNTERS_COUNT];
 
-static void configure_rdtsc()
+static void configure_rdtsc(void)
 {
     if (kpc_set_config(KPC_MASK, g_config))
     {
@@ -93,7 +93,7 @@ static void configure_rdtsc()
     }
 }
 
-static void init_rdtsc()
+static void init_rdtsc(void)
 {
     void *kperf = dlopen(
         "/System/Library/PrivateFrameworks/kperf.framework/Versions/A/kperf",

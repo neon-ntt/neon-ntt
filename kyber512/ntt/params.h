@@ -1,5 +1,5 @@
-#ifndef PARAMS_H
-#define PARAMS_H
+#ifndef KYBER_AARCH64_PARAMS_H
+#define KYBER_AARCH64_PARAMS_H
 
 /*
  * This file is licensed

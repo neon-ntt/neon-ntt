@@ -1,5 +1,5 @@
-#ifndef INDCPA_H
-#define INDCPA_H
+#ifndef KYBER_AARCH64_INDCPA_H
+#define KYBER_AARCH64_INDCPA_H
 
 /*
  * This file is licensed

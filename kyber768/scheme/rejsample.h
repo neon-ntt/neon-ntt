@@ -1,5 +1,5 @@
-#ifndef REJSAMPLE_H
-#define REJSAMPLE_H
+#ifndef KYBER_AARCH64_REJSAMPLE_H
+#define KYBER_AARCH64_REJSAMPLE_H
 
 /*
  * This file is licensed

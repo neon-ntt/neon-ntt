@@ -1,5 +1,5 @@
-#ifndef POLY_H
-#define POLY_H
+#ifndef KYBER_AARCH64_POLY_H
+#define KYBER_AARCH64_POLY_H
 
 /*
  * This file is licensed

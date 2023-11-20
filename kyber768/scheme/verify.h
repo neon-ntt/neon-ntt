@@ -1,5 +1,5 @@
-#ifndef VERIFY_H
-#define VERIFY_H
+#ifndef KYBER_AARCH64_VERIFY_H
+#define KYBER_AARCH64_VERIFY_H
 
 /*
  * This file is licensed

@@ -1,5 +1,5 @@
-#ifndef SYMMETRIC_H
-#define SYMMETRIC_H
+#ifndef KYBER_AARCH64_SYMMETRIC_H
+#define KYBER_AARCH64_SYMMETRIC_H
 
 /*
  * This file is licensed

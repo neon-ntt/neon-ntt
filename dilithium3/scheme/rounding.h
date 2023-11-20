@@ -1,5 +1,5 @@
-#ifndef ROUNDING_H
-#define ROUNDING_H
+#ifndef DILITHIUM_AARCH64_ROUNDING_H
+#define DILITHIUM_AARCH64_ROUNDING_H
 
 /*
  * This file is dual licensed

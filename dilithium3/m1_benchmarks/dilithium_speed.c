@@ -49,7 +49,7 @@
 
 static unsigned char m[NTESTS][MLEN];
 
-int main()
+int main(void)
 {
   unsigned int i;
 

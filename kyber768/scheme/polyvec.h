@@ -1,5 +1,5 @@
-#ifndef POLYVEC_H
-#define POLYVEC_H
+#ifndef KYBER_AARCH64_POLYVEC_H
+#define KYBER_AARCH64_POLYVEC_H
 
 /*
  * This file was originally licensed

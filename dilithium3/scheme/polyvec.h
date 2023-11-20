@@ -1,5 +1,5 @@
-#ifndef POLYVEC_H
-#define POLYVEC_H
+#ifndef DILITHIUM_AARCH64_POLYVEC_H
+#define DILITHIUM_AARCH64_POLYVEC_H
 
 /*
  * This file is dual licensed
