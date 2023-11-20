@@ -2,7 +2,9 @@
 #define NTT_PARAMS_H
 
 /*
- * CC0 1.0 Universal or the following MIT License
+ * We offer
+ * CC0 1.0 Universal or the following MIT License for this file.
+ * You may freely choose one of them that applies.
  *
  * MIT License
  *
