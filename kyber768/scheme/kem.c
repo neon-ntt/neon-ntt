@@ -5,10 +5,6 @@
  * public domain at https://github.com/pq-crystals/kyber/tree/master/ref
  */
 
-#include <stddef.h>
-#include <stdint.h>
-#include <string.h>
-
 #include "api.h"
 #include "params.h"
 #include "kem.h"
@@ -17,6 +13,9 @@
 #include "symmetric.h"
 #include "randombytes.h"
 
+#include <stddef.h>
+#include <stdint.h>
+#include <string.h>
 
 /*************************************************
 * Name:        crypto_kem_keypair_derand

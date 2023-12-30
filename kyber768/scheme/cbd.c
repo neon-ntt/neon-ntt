@@ -6,10 +6,10 @@
  * public domain at https://github.com/cothan/kyber/blob/master/neon
  */
 
-#include <arm_neon.h>
-#include <stdint.h>
 #include "params.h"
 #include "cbd.h"
+#include <stdint.h>
+#include <arm_neon.h>
 
 #define vload2(c, ptr) c = vld2q_u8(ptr);
 

@@ -8,11 +8,11 @@
  * public domain at https://github.com/cothan/kyber/blob/master/neon
  */
 
+
+#include "params.h"
+#include "fips202.h"
 #include <stddef.h>
 #include <stdint.h>
-#include "params.h"
-
-#include "fips202.h"
 
 typedef shake128ctx xof_state;
 

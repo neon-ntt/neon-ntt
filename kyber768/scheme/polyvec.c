@@ -5,10 +5,10 @@
  * public domain at https://github.com/pq-crystals/kyber/tree/master/ref
  */
 
-#include <stdint.h>
 #include "params.h"
 #include "poly.h"
 #include "polyvec.h"
+#include <stdint.h>
 
 /*************************************************
 * Name:        polyvec_compress

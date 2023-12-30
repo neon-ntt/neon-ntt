@@ -28,10 +28,10 @@
  * SOFTWARE.
  */
 
-#include <stdint.h>
 #include "params.h"
 #include "ntt.h"
 #include "NTT_params.h"
+#include <stdint.h>
 
 const __attribute__ ((aligned (16)))int16_t asymmetric_const[8] = {
     Q1, Q1prime2, RmodQ1, RmodQ1Q1prime, R3modQ1_prime_half, R3modQ1_doubleprime

@@ -8,8 +8,8 @@
  * public domain at https://github.com/cothan/kyber/blob/master/neon
  */
 
-#include <stdint.h>
 #include "params.h"
+#include <stdint.h>
 
 /*
  * Elements of R_q = Z_q[X]/(X^n + 1). Represents polynomial

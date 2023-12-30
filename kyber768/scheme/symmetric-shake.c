@@ -5,12 +5,13 @@
  * public domain at https://github.com/pq-crystals/kyber/tree/master/ref
  */
 
-#include <stddef.h>
-#include <stdint.h>
-#include <string.h>
+
 #include "params.h"
 #include "symmetric.h"
 #include "fips202.h"
+#include <stddef.h>
+#include <stdint.h>
+#include <string.h>
 
 /*************************************************
 * Name:        kyber_shake128_absorb

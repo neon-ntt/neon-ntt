@@ -35,9 +35,9 @@
  * SOFTWARE.
  */
 
-#include <stdint.h>
 #include "params.h"
 #include "poly.h"
+#include <stdint.h>
 
 typedef struct {
     poly vec[KYBER_K];

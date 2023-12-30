@@ -31,9 +31,8 @@
  */
 
 #include "params.h"
-#include <stdint.h>
-
 #include "NTT_params.h"
+#include <stdint.h>
 
 extern const int16_t zetas[128];
 

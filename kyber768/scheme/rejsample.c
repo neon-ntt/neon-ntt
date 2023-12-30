@@ -6,10 +6,10 @@
  * public domain at https://github.com/cothan/kyber/blob/master/neon
  */
 
-#include <arm_neon.h>
 #include "params.h"
 #include "symmetric.h"
 #include "rejsample.h"
+#include <arm_neon.h>
 
 // Define NEON operation
 // Load 8x16

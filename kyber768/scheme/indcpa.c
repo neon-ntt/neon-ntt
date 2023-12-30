@@ -33,10 +33,6 @@
  * SOFTWARE.
  */
 
-#include <stddef.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <string.h>
 #include "params.h"
 #include "rejsample.h"
 #include "indcpa.h"
@@ -44,9 +40,12 @@
 #include "polyvec.h"
 #include "randombytes.h"
 #include "symmetric.h"
-
 #include "NTT_params.h"
 #include "ntt.h"
+#include <stddef.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
 
 /*************************************************
 * Name:        pack_pk

@@ -32,13 +32,13 @@
  * SOFTWARE.
  */
 
-#include <arm_neon.h>
 #include "params.h"
 #include "poly.h"
 #include "ntt.h"
 #include "reduce.h"
 #include "cbd.h"
 #include "symmetric.h"
+#include <arm_neon.h>
 
 /*************************************************
 * Name:        poly_compress

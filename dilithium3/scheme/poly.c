@@ -37,11 +37,9 @@
 #include "reduce.h"
 #include "rounding.h"
 #include "symmetric.h"
-#include <stdint.h>
-
 #include "fips202x2.h"
-
 #include "ntt.h"
+#include <stdint.h>
 
 #define DBENCH_START()
 #define DBENCH_STOP(t)

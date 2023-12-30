@@ -33,12 +33,12 @@
  * SOFTWARE.
  */
 
-#include <arm_neon.h>
 #include "params.h"
 #include "poly.h"
 #include "ntt.h"
 #include "cbd.h"
 #include "symmetric.h"
+#include <arm_neon.h>
 
 /*************************************************
 * Name:        neon_poly_getnoise_eta1_2x

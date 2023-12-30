@@ -33,7 +33,6 @@
  * SOFTWARE.
  */
 
-#include <arm_neon.h>
 #include "params.h"
 #include "reduce.h"
 #include "ntt.h"
@@ -41,6 +40,7 @@
 #include "polyvec.h"
 
 #include "NTT_params.h"
+#include <arm_neon.h>
 
 #define _V (((1U << 26) + KYBER_Q / 2) / KYBER_Q)
 

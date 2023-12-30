@@ -5,9 +5,9 @@
  * public domain at https://github.com/pq-crystals/kyber/tree/master/ref
  */
 
+#include "verify.h"
 #include <stddef.h>
 #include <stdint.h>
-#include "verify.h"
 
 /*************************************************
 * Name:        verify
