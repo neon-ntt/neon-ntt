@@ -11,6 +11,42 @@
 #include <stdint.h>
 
 /*************************************************
+* Name:        polyvec_ntt
+*
+* Description: Apply forward NTT to all elements of a vector of polynomials
+*
+* Arguments:   - polyvec *r: pointer to in/output vector of polynomials
+**************************************************/
+void polyvec_ntt(int16_t r[KYBER_K][KYBER_N]) {
+    unsigned int i;
+    for (i = 0; i < KYBER_K; i++) {
+        poly_ntt(r[i]);
+    }
+}
+
+/*************************************************
+* Name:        neon_polyvec_invntt_to_mont
+*
+* Description: Apply inverse NTT to all elements of a vector of polynomials
+*              and multiply by Montgomery factor 2^16
+*
+* Arguments:   - polyvec *r: pointer to in/output vector of polynomials
+**************************************************/
+void polyvec_invntt_to_mont(int16_t r[KYBER_K][KYBER_N]) {
+    unsigned int i;
+    for (i = 0; i < KYBER_K; i++) {
+        poly_invntt_tomont(r[i]);
+    }
+}
+
+void polyvec_add_reduce(int16_t c[KYBER_K][KYBER_N], const int16_t a[KYBER_K][KYBER_N]) {
+    unsigned int i;
+    for (i = 0; i < KYBER_K; i++) {
+        poly_add_reduce(c[i], a[i]);
+    }
+}
+
+/*************************************************
 * Name:        polyvec_compress
 *
 * Description: Compress and serialize vector of polynomials

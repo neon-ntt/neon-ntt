@@ -164,12 +164,12 @@ void gen_matrix(int16_t a[KYBER_K][KYBER_K][KYBER_N], const uint8_t seed[KYBER_S
     #if KYBER_K == 2
     for (unsigned int i = 0; i < KYBER_K; i++) {
         if (transposed) {
-            neon_xof_absorb(&state, seed, i, i, 0, 1);
+            xofx2_absorb(&state, seed, i, i, 0, 1);
         } else {
-            neon_xof_absorb(&state, seed, 0, 1, i, i);
+            xofx2_absorb(&state, seed, 0, 1, i, i);
         }
 
-        neon_xof_squeezeblocks(buf0, buf1, GEN_MATRIX_NBLOCKS, &state);
+        xofx2_squeezeblocks(buf0, buf1, GEN_MATRIX_NBLOCKS, &state);
 
         buflen = GEN_MATRIX_NBLOCKS * XOF_BLOCKBYTES;
 
@@ -181,7 +181,7 @@ void gen_matrix(int16_t a[KYBER_K][KYBER_K][KYBER_N], const uint8_t seed[KYBER_S
                 buf0[k] = buf0[buflen - off + k];
                 buf1[k] = buf1[buflen - off + k];
             }
-            neon_xof_squeezeblocks(buf0 + off, buf1 + off, 1, &state);
+            xofx2_squeezeblocks(buf0 + off, buf1 + off, 1, &state);
 
             buflen = off + XOF_BLOCKBYTES;
             ctr0 += rej_uniform(&(a[i][0][0]) + ctr0, KYBER_N - ctr0, buf0, buflen);
@@ -230,12 +230,12 @@ void gen_matrix(int16_t a[KYBER_K][KYBER_K][KYBER_N], const uint8_t seed[KYBER_S
         }
 
         if (transposed) {
-            neon_xof_absorb(&state, seed, x1, x2, y1, y2);
+            xofx2_absorb(&state, seed, x1, x2, y1, y2);
         } else {
-            neon_xof_absorb(&state, seed, y1, y2, x1, x2);
+            xofx2_absorb(&state, seed, y1, y2, x1, x2);
         }
 
-        neon_xof_squeezeblocks(buf0, buf1, GEN_MATRIX_NBLOCKS, &state);
+        xofx2_squeezeblocks(buf0, buf1, GEN_MATRIX_NBLOCKS, &state);
 
         buflen = GEN_MATRIX_NBLOCKS * XOF_BLOCKBYTES;
 
@@ -248,7 +248,7 @@ void gen_matrix(int16_t a[KYBER_K][KYBER_K][KYBER_N], const uint8_t seed[KYBER_S
                 buf0[k] = buf0[buflen - off + k];
                 buf1[k] = buf1[buflen - off + k];
             }
-            neon_xof_squeezeblocks(buf0 + off, buf1 + off, 1, &state);
+            xofx2_squeezeblocks(buf0 + off, buf1 + off, 1, &state);
 
             buflen = off + XOF_BLOCKBYTES;
             ctr0 += rej_uniform(s1 + ctr0, KYBER_N - ctr0, buf0, buflen);
@@ -284,12 +284,12 @@ void gen_matrix(int16_t a[KYBER_K][KYBER_K][KYBER_N], const uint8_t seed[KYBER_S
     for (unsigned int i = 0; i < KYBER_K; i++) {
         for (unsigned int j = 0; j < KYBER_K; j += 2) {
             if (transposed) {
-                neon_xof_absorb(&state, seed, i, i, j, j + 1);
+                xofx2_absorb(&state, seed, i, i, j, j + 1);
             } else {
-                neon_xof_absorb(&state, seed, j, j + 1, i, i);
+                xofx2_absorb(&state, seed, j, j + 1, i, i);
             }
 
-            neon_xof_squeezeblocks(buf0, buf1, GEN_MATRIX_NBLOCKS, &state);
+            xofx2_squeezeblocks(buf0, buf1, GEN_MATRIX_NBLOCKS, &state);
             buflen = GEN_MATRIX_NBLOCKS * XOF_BLOCKBYTES;
             ctr0 = neon_rej_uniform(&(a[i][j][0]), buf0);
             ctr1 = neon_rej_uniform(&(a[i][j + 1][0]), buf1);
@@ -300,7 +300,7 @@ void gen_matrix(int16_t a[KYBER_K][KYBER_K][KYBER_N], const uint8_t seed[KYBER_S
                     buf0[k] = buf0[buflen - off + k];
                     buf1[k] = buf1[buflen - off + k];
                 }
-                neon_xof_squeezeblocks(buf0 + off, buf1 + off, 1, &state);
+                xofx2_squeezeblocks(buf0 + off, buf1 + off, 1, &state);
 
                 buflen = off + XOF_BLOCKBYTES;
                 ctr0 += rej_uniform(&(a[i][j][0]) + ctr0, KYBER_N - ctr0, buf0, buflen);
@@ -342,21 +342,21 @@ void indcpa_keypair_derand(uint8_t pk[KYBER_INDCPA_PUBLICKEYBYTES],
     gen_a(a, publicseed);
 
     #if KYBER_K == 2
-    neon_poly_getnoise_eta1_2x(&(skpv[0][0]), &(skpv[1][0]), noiseseed, 0, 1);
-    neon_poly_getnoise_eta1_2x(&(e[0][0]), &(e[1][0]), noiseseed, 2, 3);
+    poly_getnoise_eta1_x2(&(skpv[0][0]), &(skpv[1][0]), noiseseed, 0, 1);
+    poly_getnoise_eta1_x2(&(e[0][0]), &(e[1][0]), noiseseed, 2, 3);
     #elif KYBER_K == 3
-    neon_poly_getnoise_eta1_2x(&(skpv[0][0]), &(skpv[1][0]), noiseseed, 0, 1);
-    neon_poly_getnoise_eta1_2x(&(skpv[2][0]), &(e[0][0]), noiseseed, 2, 3);
-    neon_poly_getnoise_eta1_2x(&(e[1][0]), &(e[2][0]), noiseseed, 4, 5);
+    poly_getnoise_eta1_x2(&(skpv[0][0]), &(skpv[1][0]), noiseseed, 0, 1);
+    poly_getnoise_eta1_x2(&(skpv[2][0]), &(e[0][0]), noiseseed, 2, 3);
+    poly_getnoise_eta1_x2(&(e[1][0]), &(e[2][0]), noiseseed, 4, 5);
     #elif KYBER_K == 4
-    neon_poly_getnoise_eta1_2x(&(skpv[0][0]), &(skpv[1][0]), noiseseed, 0, 1);
-    neon_poly_getnoise_eta1_2x(&(skpv[2][0]), &(skpv[3][0]), noiseseed, 2, 3);
-    neon_poly_getnoise_eta1_2x(&(e[0][0]), &(e[1][0]), noiseseed, 4, 5);
-    neon_poly_getnoise_eta1_2x(&(e[2][0]), &(e[3][0]), noiseseed, 6, 7);
+    poly_getnoise_eta1_x2(&(skpv[0][0]), &(skpv[1][0]), noiseseed, 0, 1);
+    poly_getnoise_eta1_x2(&(skpv[2][0]), &(skpv[3][0]), noiseseed, 2, 3);
+    poly_getnoise_eta1_x2(&(e[0][0]), &(e[1][0]), noiseseed, 4, 5);
+    poly_getnoise_eta1_x2(&(e[2][0]), &(e[3][0]), noiseseed, 6, 7);
     #endif
 
-    neon_polyvec_ntt(skpv);
-    neon_polyvec_ntt(e);
+    polyvec_ntt(skpv);
+    polyvec_ntt(e);
 
     for (i = 0; i < KYBER_K; i++) {
         KYBER_AARCH64__asm_point_mul_extended(&(skpv_asymmetric[i][0]), &(skpv[i][0]), pre_asymmetric_table_Q1_extended, asymmetric_const);
@@ -366,7 +366,7 @@ void indcpa_keypair_derand(uint8_t pk[KYBER_INDCPA_PUBLICKEYBYTES],
         KYBER_AARCH64__asm_asymmetric_mul_montgomery(&(a[i][0][0]), &(skpv[0][0]), &(skpv_asymmetric[0][0]), asymmetric_const, pkpv[i]);
     }
 
-    neon_polyvec_add_reduce(pkpv, e);
+    polyvec_add_reduce(pkpv, e);
 
     pack_sk(sk, skpv);
     pack_pk(pk, pkpv, publicseed);
@@ -411,32 +411,32 @@ void indcpa_enc(uint8_t c[KYBER_INDCPA_BYTES],
 
     #if KYBER_K == 2
     // ETA1 != ETA2 (3 != 2)
-    neon_poly_getnoise_eta1_2x(&(sp[0][0]), &(sp[1][0]), coins, 0, 1);
-    neon_poly_getnoise_eta2_2x(&(ep[0][0]), &(ep[1][0]), coins, 2, 3);
-    neon_poly_getnoise_eta2(&(epp[0]), coins, 4);
+    poly_getnoise_eta1_x2(&(sp[0][0]), &(sp[1][0]), coins, 0, 1);
+    poly_getnoise_eta2_x2(&(ep[0][0]), &(ep[1][0]), coins, 2, 3);
+    poly_getnoise_eta2(&(epp[0]), coins, 4);
     #elif KYBER_K == 3
     #if KYBER_ETA1 == KYBER_ETA2
     // Because ETA1 == ETA2
-    neon_poly_getnoise_eta1_2x(&(sp[0][0]), &(sp[1][0]), coins, 0, 1);
-    neon_poly_getnoise_eta1_2x(&(sp[2][0]), &(ep[0][0]), coins, 2, 3);
-    neon_poly_getnoise_eta1_2x(&(ep[1][0]), &(ep[2][0]), coins, 4, 5);
-    neon_poly_getnoise_eta2(&(epp[0]), coins, 6);
+    poly_getnoise_eta1_x2(&(sp[0][0]), &(sp[1][0]), coins, 0, 1);
+    poly_getnoise_eta1_x2(&(sp[2][0]), &(ep[0][0]), coins, 2, 3);
+    poly_getnoise_eta1_x2(&(ep[1][0]), &(ep[2][0]), coins, 4, 5);
+    poly_getnoise_eta2(&(epp[0]), coins, 6);
     #else
 #error "We need eta1 == eta2 here"
     #endif
     #elif KYBER_K == 4
     #if KYBER_ETA1 == KYBER_ETA2
-    neon_poly_getnoise_eta1_2x(&(sp[0][0]), &(sp[1][0]), coins, 0, 1);
-    neon_poly_getnoise_eta1_2x(&(sp[2][0]), &(sp[3][0]), coins, 2, 3);
-    neon_poly_getnoise_eta1_2x(&(ep[0][0]), &(ep[1][0]), coins, 4, 5);
-    neon_poly_getnoise_eta1_2x(&(ep[2][0]), &(ep[3][0]), coins, 6, 7);
-    neon_poly_getnoise_eta2(&(epp[0]), coins, 8);
+    poly_getnoise_eta1_x2(&(sp[0][0]), &(sp[1][0]), coins, 0, 1);
+    poly_getnoise_eta1_x2(&(sp[2][0]), &(sp[3][0]), coins, 2, 3);
+    poly_getnoise_eta1_x2(&(ep[0][0]), &(ep[1][0]), coins, 4, 5);
+    poly_getnoise_eta1_x2(&(ep[2][0]), &(ep[3][0]), coins, 6, 7);
+    poly_getnoise_eta2(&(epp[0]), coins, 8);
     #else
 #error "We need eta1 == eta2 here"
     #endif
     #endif
 
-    neon_polyvec_ntt(sp);
+    polyvec_ntt(sp);
 
     for (i = 0; i < KYBER_K; i++) {
         KYBER_AARCH64__asm_point_mul_extended(&(sp_asymmetric[i][0]), &(sp[i][0]), pre_asymmetric_table_Q1_extended, asymmetric_const);
@@ -448,12 +448,12 @@ void indcpa_enc(uint8_t c[KYBER_INDCPA_BYTES],
 
     KYBER_AARCH64__asm_asymmetric_mul(&(pkpv[0][0]), &(sp[0][0]), &(sp_asymmetric[0][0]), asymmetric_const, v);
 
-    neon_polyvec_invntt_to_mont(b);
+    polyvec_invntt_to_mont(b);
     invntt(v);
 
-    neon_polyvec_add_reduce(b, ep);
+    polyvec_add_reduce(b, ep);
 
-    neon_poly_add_add_reduce(v, epp, k);
+    poly_add_add_reduce(v, epp, k);
 
     pack_ciphertext(c, b, v);
 }
@@ -484,7 +484,7 @@ void indcpa_dec(uint8_t m[KYBER_INDCPA_MSGBYTES],
     unpack_ciphertext(b, v, c);
     unpack_sk(skpv, sk);
 
-    neon_polyvec_ntt(b);
+    polyvec_ntt(b);
 
     for (i = 0; i < KYBER_K; i++) {
         KYBER_AARCH64__asm_point_mul_extended(&(b_asymmetric[i][0]), &(b[i][0]), pre_asymmetric_table_Q1_extended, asymmetric_const);
@@ -494,7 +494,7 @@ void indcpa_dec(uint8_t m[KYBER_INDCPA_MSGBYTES],
 
     invntt(mp);
 
-    neon_poly_sub_reduce(v, mp);
+    poly_sub_reduce(v, mp);
 
     poly_tomsg(m, v);
 }

@@ -19,6 +19,23 @@ typedef struct {
     int16_t coeffs[KYBER_N];
 } poly;
 
+#define poly_reduce KYBER_NAMESPACE(poly_reduce)
+void poly_reduce(int16_t c[KYBER_N]);
+#define poly_add_reduce KYBER_NAMESPACE(poly_add_reduce_csubq)
+void poly_add_reduce(int16_t c[KYBER_N], const int16_t a[KYBER_N]);
+
+#define poly_sub_reduce KYBER_NAMESPACE(poly_sub_reduce_csubq)
+void poly_sub_reduce(int16_t c[KYBER_N], const int16_t a[KYBER_N]);
+
+#define poly_add_add_reduce KYBER_NAMESPACE(poly_add_add_reduce_csubq)
+void poly_add_add_reduce(int16_t c[KYBER_N], const int16_t a[KYBER_N], const int16_t b[KYBER_N]);
+
+#define poly_ntt KYBER_NAMESPACE(neon_poly_ntt)
+void poly_ntt(int16_t r[KYBER_N]);
+
+#define poly_invntt_tomont KYBER_NAMESPACE(neon_poly_invntt_tomont)
+void poly_invntt_tomont(int16_t r[KYBER_N]);
+
 #define poly_compress KYBER_NAMESPACE(poly_compress)
 void poly_compress(uint8_t r[KYBER_POLYCOMPRESSEDBYTES], const int16_t a[KYBER_N]);
 #define poly_decompress KYBER_NAMESPACE(poly_decompress)
@@ -32,41 +49,25 @@ void poly_frommsg(int16_t r[KYBER_N], const uint8_t msg[KYBER_INDCPA_MSGBYTES]);
 #define poly_tomsg KYBER_NAMESPACE(poly_tomsg)
 void poly_tomsg(uint8_t msg[KYBER_INDCPA_MSGBYTES], const int16_t r[KYBER_N]);
 
-// NEON
 
-#define neon_poly_reduce KYBER_NAMESPACE(poly_reduce)
-void neon_poly_reduce(int16_t c[KYBER_N]);
-#define neon_poly_add_reduce KYBER_NAMESPACE(poly_add_reduce_csubq)
-void neon_poly_add_reduce(int16_t c[KYBER_N], const int16_t a[KYBER_N]);
-
-#define neon_poly_sub_reduce KYBER_NAMESPACE(poly_sub_reduce_csubq)
-void neon_poly_sub_reduce(int16_t c[KYBER_N], const int16_t a[KYBER_N]);
-
-#define neon_poly_add_add_reduce KYBER_NAMESPACE(poly_add_add_reduce_csubq)
-void neon_poly_add_add_reduce(int16_t c[KYBER_N], const int16_t a[KYBER_N], const int16_t b[KYBER_N]);
-
-#define neon_poly_getnoise_eta1_2x KYBER_NAMESPACE(poly_getnoise_eta1_2x)
-void neon_poly_getnoise_eta1_2x(int16_t vec1[KYBER_N], int16_t vec2[KYBER_N],
+#define poly_getnoise_eta1_x2 KYBER_NAMESPACE(poly_getnoise_eta1_2x)
+void poly_getnoise_eta1_x2(int16_t vec1[KYBER_N], int16_t vec2[KYBER_N],
                                 const uint8_t seed[KYBER_SYMBYTES],
                                 uint8_t nonce1, uint8_t nonce2);
 
-#define neon_poly_getnoise_eta2_2x KYBER_NAMESPACE(poly_getnoise_eta2_2x)
-void neon_poly_getnoise_eta2_2x(int16_t vec1[KYBER_N], int16_t vec2[KYBER_N],
+#define poly_getnoise_eta2_x2 KYBER_NAMESPACE(poly_getnoise_eta2_2x)
+void poly_getnoise_eta2_x2(int16_t vec1[KYBER_N], int16_t vec2[KYBER_N],
                                 const uint8_t seed[KYBER_SYMBYTES],
                                 uint8_t nonce1, uint8_t nonce2);
 
-#define neon_poly_getnoise_eta2 KYBER_NAMESPACE(poly_getnoise_eta2)
-void neon_poly_getnoise_eta2(int16_t r[KYBER_N],
+#define poly_getnoise_eta2 KYBER_NAMESPACE(poly_getnoise_eta2)
+void poly_getnoise_eta2(int16_t r[KYBER_N],
                              const uint8_t seed[KYBER_SYMBYTES],
                              uint8_t nonce);
 
 #define poly_frombytes KYBER_NAMESPACE(poly_frombytes)
 void poly_frombytes(int16_t r[KYBER_N], const uint8_t a[KYBER_POLYBYTES]);
 
-#define neon_poly_ntt KYBER_NAMESPACE(neon_poly_ntt)
-void neon_poly_ntt(int16_t r[KYBER_N]);
 
-#define neon_poly_invntt_tomont KYBER_NAMESPACE(neon_poly_invntt_tomont)
-void neon_poly_invntt_tomont(int16_t r[KYBER_N]);
 
 #endif

@@ -1,9 +1,19 @@
 
 **/.DS_Store
 
+**/testvectors.txt
+
 **/test
 **/gen_table
 **/speed
+**/testvectors
+
+**/kyber_test
+**/kyber_speed
+**/kyber_testvectors
+**/dilithium_test
+**/dilithium_speed
+**/dilithium_testvectors
 
 work
 work-patched
