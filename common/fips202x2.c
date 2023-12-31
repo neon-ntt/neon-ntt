@@ -35,6 +35,7 @@
 
 #include <arm_neon.h>
 #include <stddef.h>
+#include "fips202.h"
 #include "fips202x2.h"
 
 #ifdef PROFILE_HASHING
@@ -71,8 +72,44 @@ extern unsigned long long hash_cycles;
 #define vrxor(c, a, b) c = vrax1q_u64(a, b);
 // End Define
 
+/*************************************************
+* Name:        load64
+*
+* Description: Load 8 bytes into uint64_t in little-endian order
+*
+* Arguments:   - const uint8_t *x: pointer to input byte array
+*
+* Returns the loaded 64-bit unsigned integer
+**************************************************/
+static uint64_t load64(const uint8_t x[8]) {
+    unsigned int i;
+    uint64_t r = 0;
+
+    for (i = 0; i < 8; i++) {
+        r |= (uint64_t)x[i] << 8 * i;
+    }
+
+    return r;
+}
+
+/*************************************************
+* Name:        store64
+*
+* Description: Store a 64-bit integer to array of 8 bytes in little-endian order
+*
+* Arguments:   - uint8_t *x: pointer to the output byte array (allocated)
+*              - uint64_t u: input 64-bit unsigned integer
+**************************************************/
+static void store64(uint8_t x[8], uint64_t u) {
+    unsigned int i;
+
+    for (i = 0; i < 8; i++) {
+        x[i] = u >> 8 * i;
+    }
+}
+
 /* Keccak round constants */
-static const uint64_t neon_KeccakF_RoundConstants[NROUNDS] = {
+static const uint64_t KeccakF_RoundConstants[NROUNDS] = {
     (uint64_t)0x0000000000000001ULL,
     (uint64_t)0x0000000000008082ULL,
     (uint64_t)0x800000000000808aULL,
@@ -110,7 +147,7 @@ extern void f1600x2(v128 *, const uint64_t *);
 static inline
 void KeccakF1600_StatePermutex2(v128 state[25]) {
     #if (__APPLE__ && __ARM_FEATURE_CRYPTO) || (__ARM_FEATURE_SHA3) /* although not sure what is being implemented, we find something fast */
-    f1600x2(state, neon_KeccakF_RoundConstants);
+    f1600x2(state, KeccakF_RoundConstants);
     #else
     v128 Aba, Abe, Abi, Abo, Abu;
     v128 Aga, Age, Agi, Ago, Agu;
@@ -182,7 +219,7 @@ void KeccakF1600_StatePermutex2(v128 state[25]) {
         vxor(Asu, Asu, Du);
         vROL(BCu, Asu, 14);
         vXNA(Eba, Aba, BCe, BCi);
-        vxor(Eba, Eba, vdupq_n_u64(neon_KeccakF_RoundConstants[round]));
+        vxor(Eba, Eba, vdupq_n_u64(KeccakF_RoundConstants[round]));
         vXNA(Ebe, BCe, BCi, BCo);
         vXNA(Ebi, BCi, BCo, BCu);
         vXNA(Ebo, BCo, BCu, Aba);
@@ -283,7 +320,7 @@ void KeccakF1600_StatePermutex2(v128 state[25]) {
         vxor(Esu, Esu, Du);
         vROL(BCu, Esu, 14);
         vXNA(Aba, Eba, BCe, BCi);
-        vxor(Aba, Aba, vdupq_n_u64(neon_KeccakF_RoundConstants[round + 1]));
+        vxor(Aba, Aba, vdupq_n_u64(KeccakF_RoundConstants[round + 1]));
         vXNA(Abe, BCe, BCi, BCo);
         vXNA(Abi, BCi, BCo, BCu);
         vXNA(Abo, BCo, BCu, Eba);
@@ -402,92 +439,38 @@ void keccakx2_absorb(v128 s[25],
                      const uint8_t *in1,
                      size_t inlen,
                      uint8_t p) {
-    size_t i, pos = 0;
 
-    // Declare SIMD registers
-    v128 tmp, mask;
-    uint64x1_t a, b;
-    uint64x2_t a1, b1, atmp1, btmp1;
-    uint64x2x2_t a2, b2, atmp2, btmp2;
-    // End
+    unsigned int i;
+    uint64_t t64x2[2];
+    v128 t128;
 
-    for (i = 0; i < 25; ++i) {
-        s[i] = vdupq_n_u64(0);
+    for(i = 0; i < 25; i++){
+        s[i] = s[i] ^ s[i];
     }
 
-    // Load in0[i] to register, then in1[i] to register, exchange them
     while (inlen >= r) {
-        for (i = 0; i < r / 8 - 1; i += 4) {
-            a2 = vld1q_u64_x2((uint64_t *)&in0[pos]);
-            b2 = vld1q_u64_x2((uint64_t *)&in1[pos]);
-            // BD = zip1(AB and CD)
-            atmp2.val[0] = vzip1q_u64(a2.val[0], b2.val[0]);
-            atmp2.val[1] = vzip1q_u64(a2.val[1], b2.val[1]);
-            // AC = zip2(AB and CD)
-            btmp2.val[0] = vzip2q_u64(a2.val[0], b2.val[0]);
-            btmp2.val[1] = vzip2q_u64(a2.val[1], b2.val[1]);
-
-            vxor(s[i + 0], s[i + 0], atmp2.val[0]);
-            vxor(s[i + 1], s[i + 1], btmp2.val[0]);
-            vxor(s[i + 2], s[i + 2], atmp2.val[1]);
-            vxor(s[i + 3], s[i + 3], btmp2.val[1]);
-
-            pos += 8 * 2 * 2;
+        for(i = 0; i < r / 8; i++){
+            t64x2[0] = load64(in0 + 8 * i);
+            t64x2[1] = load64(in1 + 8 * i);
+            t128 = vld1q_u64(t64x2);
+            s[i] ^= t128;
         }
-        // Last iteration
-        i = r / 8 - 1;
-        a = vld1_u64((uint64_t *)&in0[pos]);
-        b = vld1_u64((uint64_t *)&in1[pos]);
-        tmp = vcombine_u64(a, b);
-        vxor(s[i], s[i], tmp);
-        pos += 8;
-
-        KeccakF1600_StatePermutex2(s);
+        in0 += r;
+        in1 += r;
         inlen -= r;
+        KeccakF1600_StatePermutex2(s);
     }
 
-    i = 0;
-    while (inlen >= 16) {
-        a1 = vld1q_u64((uint64_t *)&in0[pos]);
-        b1 = vld1q_u64((uint64_t *)&in1[pos]);
-        // BD = zip1(AB and CD)
-        atmp1 = vzip1q_u64(a1, b1);
-        // AC = zip2(AB and CD)
-        btmp1 = vzip2q_u64(a1, b1);
-
-        vxor(s[i + 0], s[i + 0], atmp1);
-        vxor(s[i + 1], s[i + 1], btmp1);
-
-        i += 2;
-        pos += 8 * 2;
-        inlen -= 8 * 2;
+    for(i = 0; i < inlen; i++){
+        t64x2[0] = in0[i];
+        t64x2[1] = in1[i];
+        t128 = vld1q_u64(t64x2);
+        s[i / 8] ^= t128 << 8 * (i & 7);
     }
 
-    if (inlen >= 8) {
-        a = vld1_u64((uint64_t *)&in0[pos]);
-        b = vld1_u64((uint64_t *)&in1[pos]);
-        tmp = vcombine_u64(a, b);
-        vxor(s[i], s[i], tmp);
+    s[i / 8] ^= (uint64_t)p << 8 * (i & 7);
+    s[(r - 1) / 8] ^= 1ULL << 63;
 
-        i++;
-        pos += 8;
-        inlen -= 8;
-    }
-
-    if (inlen) {
-        a = vld1_u64((uint64_t *)&in0[pos]);
-        b = vld1_u64((uint64_t *)&in1[pos]);
-        tmp = vcombine_u64(a, b);
-        mask = vdupq_n_u64((1ULL << (8 * inlen)) - 1);
-        tmp = vandq_u64(tmp, mask);
-        vxor(s[i], s[i], tmp);
-    }
-
-    tmp = vdupq_n_u64((uint64_t)p << (8 * inlen));
-    vxor(s[i], s[i], tmp);
-
-    mask = vdupq_n_u64(1ULL << 63);
-    vxor(s[r / 8 - 1], s[r / 8 - 1], mask);
 }
 
 /*************************************************
@@ -510,35 +493,15 @@ void keccakx2_squeezeblocks(uint8_t *out0,
                             v128 s[25]) {
     unsigned int i;
 
-    uint64x1_t a, b;
-    uint64x2x2_t a2, b2;
-
     while (nblocks > 0) {
         KeccakF1600_StatePermutex2(s);
-
-        for (i = 0; i < r / 8 - 1; i += 4) {
-            a2.val[0] = vuzp1q_u64(s[i], s[i + 1]);
-            b2.val[0] = vuzp2q_u64(s[i], s[i + 1]);
-            a2.val[1] = vuzp1q_u64(s[i + 2], s[i + 3]);
-            b2.val[1] = vuzp2q_u64(s[i + 2], s[i + 3]);
-            vst1q_u64_x2((uint64_t *)out0, a2);
-            vst1q_u64_x2((uint64_t *)out1, b2);
-
-            out0 += 32;
-            out1 += 32;
+        for (i = 0; i < r / 8; i++) {
+            store64(out0 + 8 * i, *((uint64_t*)(s + i) + 0));
+            store64(out1 + 8 * i, *((uint64_t*)(s + i) + 1));
         }
-
-        i = r / 8 - 1;
-        // Last iteration
-        a = vget_low_u64(s[i]);
-        b = vget_high_u64(s[i]);
-        vst1_u64((uint64_t *)out0, a);
-        vst1_u64((uint64_t *)out1, b);
-
-        out0 += 8;
-        out1 += 8;
-
-        --nblocks;
+        out0 += r;
+        out1 += r;
+        nblocks -= 1;
     }
 }
 

@@ -65,7 +65,6 @@ const __attribute__ ((aligned (16)))int16_t streamlined_inv_GS_negacyclic_table_
 *
 * Arguments:   - int16_t r[256]: pointer to input/output vector of elements of Zq
 **************************************************/
-// Merged NTT layer
 void ntt(int16_t r[256]) {
     NTT(r);
 }
