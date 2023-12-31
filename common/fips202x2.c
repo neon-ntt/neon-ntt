@@ -1,10 +1,5 @@
 
 /*
- * This file was originally licensed
- * under Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.html)
- * at https://github.com/GMUCERG/PQC_NEON/blob/main/neon/kyber or
- * public domain at https://github.com/cothan/kyber/blob/master/neon
- *
  * We offer
  * CC0 1.0 Universal or the following MIT License for this file.
  * You may freely choose one of them that applies.
@@ -12,6 +7,7 @@
  * MIT License
  *
  * Copyright (c) 2023: Hanno Becker, Vincent Hwang, Matthias J. Kannwischer, Bo-Yin Yang, and Shang-Yi Yang
+ * Copyright (c) 2023: Vincent Hwang
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -33,10 +29,9 @@
  * SOFTWARE.
  */
 
-#include <arm_neon.h>
-#include <stddef.h>
-#include "fips202.h"
 #include "fips202x2.h"
+#include <stddef.h>
+#include <arm_neon.h>
 
 #ifdef PROFILE_HASHING
 #include "hal.h"
@@ -45,32 +40,8 @@ extern unsigned long long hash_cycles;
 
 #define NROUNDS 24
 
-// Define NEON operation
-// c = load(ptr)
-#define vload(ptr) vld1q_u64(ptr);
-// ptr <= c;
-#define vstore(ptr, c) vst1q_u64(ptr, c);
-// c = a ^ b
-#define vxor(c, a, b) c = veorq_u64(a, b);
 // Rotate by n bit ((a << offset) ^ (a >> (64-offset)))
-#define vROL(out, a, offset)    \
-    out = vshlq_n_u64(a, offset); \
-    out = vsriq_n_u64(out, a, 64 - offset);
-// Xor chain: out = a ^ b ^ c ^ d ^ e
-#define vXOR4(out, a, b, c, d, e) \
-    out = veorq_u64(a, b);          \
-    out = veorq_u64(out, c);        \
-    out = veorq_u64(out, d);        \
-    out = veorq_u64(out, e);
-// Not And c = ~a & b
-// #define vbic(c, a, b) c = vbicq_u64(b, a);
-// Xor Not And: out = a ^ ( (~b) & c)
-#define vXNA(out, a, b, c) \
-    out = vbicq_u64(c, b);   \
-    out = veorq_u64(out, a);
-// Rotate by 1 bit, then XOR: a ^ ROL(b): SHA1 instruction, not support
-#define vrxor(c, a, b) c = vrax1q_u64(a, b);
-// End Define
+#define ROL(a, offset) vsriq_n_u64(vshlq_n_u64(a, offset), a, 64 - offset)
 
 /*************************************************
 * Name:        load64
@@ -190,205 +161,196 @@ void KeccakF1600_StatePermutex2(v128 state[25]) {
     Asu = state[24];
 
     for (int round = 0; round < NROUNDS; round += 2) {
-        //    prepareTheta
-        vXOR4(BCa, Aba, Aga, Aka, Ama, Asa);
-        vXOR4(BCe, Abe, Age, Ake, Ame, Ase);
-        vXOR4(BCi, Abi, Agi, Aki, Ami, Asi);
-        vXOR4(BCo, Abo, Ago, Ako, Amo, Aso);
-        vXOR4(BCu, Abu, Agu, Aku, Amu, Asu);
 
-        //thetaRhoPiChiIotaPrepareTheta(round  , A, E)
-        vROL(Da, BCe, 1);
-        vxor(Da, BCu, Da);
-        vROL(De, BCi, 1);
-        vxor(De, BCa, De);
-        vROL(Di, BCo, 1);
-        vxor(Di, BCe, Di);
-        vROL(Do, BCu, 1);
-        vxor(Do, BCi, Do);
-        vROL(Du, BCa, 1);
-        vxor(Du, BCo, Du);
+        BCa = Aba ^ Aga ^ Aka ^ Ama ^ Asa;
+        BCe = Abe ^ Age ^ Ake ^ Ame ^ Ase;
+        BCi = Abi ^ Agi ^ Aki ^ Ami ^ Asi;
+        BCo = Abo ^ Ago ^ Ako ^ Amo ^ Aso;
+        BCu = Abu ^ Agu ^ Aku ^ Amu ^ Asu;
 
-        vxor(Aba, Aba, Da);
-        vxor(Age, Age, De);
-        vROL(BCe, Age, 44);
-        vxor(Aki, Aki, Di);
-        vROL(BCi, Aki, 43);
-        vxor(Amo, Amo, Do);
-        vROL(BCo, Amo, 21);
-        vxor(Asu, Asu, Du);
-        vROL(BCu, Asu, 14);
-        vXNA(Eba, Aba, BCe, BCi);
-        vxor(Eba, Eba, vdupq_n_u64(KeccakF_RoundConstants[round]));
-        vXNA(Ebe, BCe, BCi, BCo);
-        vXNA(Ebi, BCi, BCo, BCu);
-        vXNA(Ebo, BCo, BCu, Aba);
-        vXNA(Ebu, BCu, Aba, BCe);
+        //thetaRhoPiChiIotaPrepareTheta(round, A, E)
+        Da = BCu ^ ROL(BCe, 1);
+        De = BCa ^ ROL(BCi, 1);
+        Di = BCe ^ ROL(BCo, 1);
+        Do = BCi ^ ROL(BCu, 1);
+        Du = BCo ^ ROL(BCa, 1);
 
-        vxor(Abo, Abo, Do);
-        vROL(BCa, Abo, 28);
-        vxor(Agu, Agu, Du);
-        vROL(BCe, Agu, 20);
-        vxor(Aka, Aka, Da);
-        vROL(BCi, Aka, 3);
-        vxor(Ame, Ame, De);
-        vROL(BCo, Ame, 45);
-        vxor(Asi, Asi, Di);
-        vROL(BCu, Asi, 61);
-        vXNA(Ega, BCa, BCe, BCi);
-        vXNA(Ege, BCe, BCi, BCo);
-        vXNA(Egi, BCi, BCo, BCu);
-        vXNA(Ego, BCo, BCu, BCa);
-        vXNA(Egu, BCu, BCa, BCe);
+        Aba ^= Da;
+        BCa = Aba;
+        Age ^= De;
+        BCe = ROL(Age, 44);
+        Aki ^= Di;
+        BCi = ROL(Aki, 43);
+        Amo ^= Do;
+        BCo = ROL(Amo, 21);
+        Asu ^= Du;
+        BCu = ROL(Asu, 14);
+        Eba =   BCa ^ ((~BCe)&  BCi );
+        Eba ^= vdupq_n_u64(KeccakF_RoundConstants[round]);
+        Ebe =   BCe ^ ((~BCi)&  BCo );
+        Ebi =   BCi ^ ((~BCo)&  BCu );
+        Ebo =   BCo ^ ((~BCu)&  BCa );
+        Ebu =   BCu ^ ((~BCa)&  BCe );
 
-        vxor(Abe, Abe, De);
-        vROL(BCa, Abe, 1);
-        vxor(Agi, Agi, Di);
-        vROL(BCe, Agi, 6);
-        vxor(Ako, Ako, Do);
-        vROL(BCi, Ako, 25);
-        vxor(Amu, Amu, Du);
-        vROL(BCo, Amu, 8);
-        vxor(Asa, Asa, Da);
-        vROL(BCu, Asa, 18);
-        vXNA(Eka, BCa, BCe, BCi);
-        vXNA(Eke, BCe, BCi, BCo);
-        vXNA(Eki, BCi, BCo, BCu);
-        vXNA(Eko, BCo, BCu, BCa);
-        vXNA(Eku, BCu, BCa, BCe);
+        Abo ^= Do;
+        BCa = ROL(Abo, 28);
+        Agu ^= Du;
+        BCe = ROL(Agu, 20);
+        Aka ^= Da;
+        BCi = ROL(Aka,  3);
+        Ame ^= De;
+        BCo = ROL(Ame, 45);
+        Asi ^= Di;
+        BCu = ROL(Asi, 61);
+        Ega =   BCa ^ ((~BCe)&  BCi );
+        Ege =   BCe ^ ((~BCi)&  BCo );
+        Egi =   BCi ^ ((~BCo)&  BCu );
+        Ego =   BCo ^ ((~BCu)&  BCa );
+        Egu =   BCu ^ ((~BCa)&  BCe );
 
-        vxor(Abu, Abu, Du);
-        vROL(BCa, Abu, 27);
-        vxor(Aga, Aga, Da);
-        vROL(BCe, Aga, 36);
-        vxor(Ake, Ake, De);
-        vROL(BCi, Ake, 10);
-        vxor(Ami, Ami, Di);
-        vROL(BCo, Ami, 15);
-        vxor(Aso, Aso, Do);
-        vROL(BCu, Aso, 56);
-        vXNA(Ema, BCa, BCe, BCi);
-        vXNA(Eme, BCe, BCi, BCo);
-        vXNA(Emi, BCi, BCo, BCu);
-        vXNA(Emo, BCo, BCu, BCa);
-        vXNA(Emu, BCu, BCa, BCe);
+        Abe ^= De;
+        BCa = ROL(Abe,  1);
+        Agi ^= Di;
+        BCe = ROL(Agi,  6);
+        Ako ^= Do;
+        BCi = ROL(Ako, 25);
+        Amu ^= Du;
+        BCo = ROL(Amu,  8);
+        Asa ^= Da;
+        BCu = ROL(Asa, 18);
+        Eka =   BCa ^ ((~BCe)&  BCi );
+        Eke =   BCe ^ ((~BCi)&  BCo );
+        Eki =   BCi ^ ((~BCo)&  BCu );
+        Eko =   BCo ^ ((~BCu)&  BCa );
+        Eku =   BCu ^ ((~BCa)&  BCe );
 
-        vxor(Abi, Abi, Di);
-        vROL(BCa, Abi, 62);
-        vxor(Ago, Ago, Do);
-        vROL(BCe, Ago, 55);
-        vxor(Aku, Aku, Du);
-        vROL(BCi, Aku, 39);
-        vxor(Ama, Ama, Da);
-        vROL(BCo, Ama, 41);
-        vxor(Ase, Ase, De);
-        vROL(BCu, Ase, 2);
-        vXNA(Esa, BCa, BCe, BCi);
-        vXNA(Ese, BCe, BCi, BCo);
-        vXNA(Esi, BCi, BCo, BCu);
-        vXNA(Eso, BCo, BCu, BCa);
-        vXNA(Esu, BCu, BCa, BCe);
+        Abu ^= Du;
+        BCa = ROL(Abu, 27);
+        Aga ^= Da;
+        BCe = ROL(Aga, 36);
+        Ake ^= De;
+        BCi = ROL(Ake, 10);
+        Ami ^= Di;
+        BCo = ROL(Ami, 15);
+        Aso ^= Do;
+        BCu = ROL(Aso, 56);
+        Ema =   BCa ^ ((~BCe)&  BCi );
+        Eme =   BCe ^ ((~BCi)&  BCo );
+        Emi =   BCi ^ ((~BCo)&  BCu );
+        Emo =   BCo ^ ((~BCu)&  BCa );
+        Emu =   BCu ^ ((~BCa)&  BCe );
 
-        // Next Round
+        Abi ^= Di;
+        BCa = ROL(Abi, 62);
+        Ago ^= Do;
+        BCe = ROL(Ago, 55);
+        Aku ^= Du;
+        BCi = ROL(Aku, 39);
+        Ama ^= Da;
+        BCo = ROL(Ama, 41);
+        Ase ^= De;
+        BCu = ROL(Ase,  2);
+        Esa =   BCa ^ ((~BCe)&  BCi );
+        Ese =   BCe ^ ((~BCi)&  BCo );
+        Esi =   BCi ^ ((~BCo)&  BCu );
+        Eso =   BCo ^ ((~BCu)&  BCa );
+        Esu =   BCu ^ ((~BCa)&  BCe );
 
         //    prepareTheta
-        vXOR4(BCa, Eba, Ega, Eka, Ema, Esa);
-        vXOR4(BCe, Ebe, Ege, Eke, Eme, Ese);
-        vXOR4(BCi, Ebi, Egi, Eki, Emi, Esi);
-        vXOR4(BCo, Ebo, Ego, Eko, Emo, Eso);
-        vXOR4(BCu, Ebu, Egu, Eku, Emu, Esu);
+        BCa = Eba ^ Ega ^ Eka ^ Ema ^ Esa;
+        BCe = Ebe ^ Ege ^ Eke ^ Eme ^ Ese;
+        BCi = Ebi ^ Egi ^ Eki ^ Emi ^ Esi;
+        BCo = Ebo ^ Ego ^ Eko ^ Emo ^ Eso;
+        BCu = Ebu ^ Egu ^ Eku ^ Emu ^ Esu;
 
         //thetaRhoPiChiIotaPrepareTheta(round+1, E, A)
-        vROL(Da, BCe, 1);
-        vxor(Da, BCu, Da);
-        vROL(De, BCi, 1);
-        vxor(De, BCa, De);
-        vROL(Di, BCo, 1);
-        vxor(Di, BCe, Di);
-        vROL(Do, BCu, 1);
-        vxor(Do, BCi, Do);
-        vROL(Du, BCa, 1);
-        vxor(Du, BCo, Du);
+        Da = BCu ^ ROL(BCe, 1);
+        De = BCa ^ ROL(BCi, 1);
+        Di = BCe ^ ROL(BCo, 1);
+        Do = BCi ^ ROL(BCu, 1);
+        Du = BCo ^ ROL(BCa, 1);
 
-        vxor(Eba, Eba, Da);
-        vxor(Ege, Ege, De);
-        vROL(BCe, Ege, 44);
-        vxor(Eki, Eki, Di);
-        vROL(BCi, Eki, 43);
-        vxor(Emo, Emo, Do);
-        vROL(BCo, Emo, 21);
-        vxor(Esu, Esu, Du);
-        vROL(BCu, Esu, 14);
-        vXNA(Aba, Eba, BCe, BCi);
-        vxor(Aba, Aba, vdupq_n_u64(KeccakF_RoundConstants[round + 1]));
-        vXNA(Abe, BCe, BCi, BCo);
-        vXNA(Abi, BCi, BCo, BCu);
-        vXNA(Abo, BCo, BCu, Eba);
-        vXNA(Abu, BCu, Eba, BCe);
+        Eba ^= Da;
+        BCa = Eba;
+        Ege ^= De;
+        BCe = ROL(Ege, 44);
+        Eki ^= Di;
+        BCi = ROL(Eki, 43);
+        Emo ^= Do;
+        BCo = ROL(Emo, 21);
+        Esu ^= Du;
+        BCu = ROL(Esu, 14);
+        Aba =   BCa ^ ((~BCe)&  BCi );
+        Aba ^= vdupq_n_u64(KeccakF_RoundConstants[round + 1]);
+        Abe =   BCe ^ ((~BCi)&  BCo );
+        Abi =   BCi ^ ((~BCo)&  BCu );
+        Abo =   BCo ^ ((~BCu)&  BCa );
+        Abu =   BCu ^ ((~BCa)&  BCe );
 
-        vxor(Ebo, Ebo, Do);
-        vROL(BCa, Ebo, 28);
-        vxor(Egu, Egu, Du);
-        vROL(BCe, Egu, 20);
-        vxor(Eka, Eka, Da);
-        vROL(BCi, Eka, 3);
-        vxor(Eme, Eme, De);
-        vROL(BCo, Eme, 45);
-        vxor(Esi, Esi, Di);
-        vROL(BCu, Esi, 61);
-        vXNA(Aga, BCa, BCe, BCi);
-        vXNA(Age, BCe, BCi, BCo);
-        vXNA(Agi, BCi, BCo, BCu);
-        vXNA(Ago, BCo, BCu, BCa);
-        vXNA(Agu, BCu, BCa, BCe);
+        Ebo ^= Do;
+        BCa = ROL(Ebo, 28);
+        Egu ^= Du;
+        BCe = ROL(Egu, 20);
+        Eka ^= Da;
+        BCi = ROL(Eka, 3);
+        Eme ^= De;
+        BCo = ROL(Eme, 45);
+        Esi ^= Di;
+        BCu = ROL(Esi, 61);
+        Aga =   BCa ^ ((~BCe)&  BCi );
+        Age =   BCe ^ ((~BCi)&  BCo );
+        Agi =   BCi ^ ((~BCo)&  BCu );
+        Ago =   BCo ^ ((~BCu)&  BCa );
+        Agu =   BCu ^ ((~BCa)&  BCe );
 
-        vxor(Ebe, Ebe, De);
-        vROL(BCa, Ebe, 1);
-        vxor(Egi, Egi, Di);
-        vROL(BCe, Egi, 6);
-        vxor(Eko, Eko, Do);
-        vROL(BCi, Eko, 25);
-        vxor(Emu, Emu, Du);
-        vROL(BCo, Emu, 8);
-        vxor(Esa, Esa, Da);
-        vROL(BCu, Esa, 18);
-        vXNA(Aka, BCa, BCe, BCi);
-        vXNA(Ake, BCe, BCi, BCo);
-        vXNA(Aki, BCi, BCo, BCu);
-        vXNA(Ako, BCo, BCu, BCa);
-        vXNA(Aku, BCu, BCa, BCe);
+        Ebe ^= De;
+        BCa = ROL(Ebe, 1);
+        Egi ^= Di;
+        BCe = ROL(Egi, 6);
+        Eko ^= Do;
+        BCi = ROL(Eko, 25);
+        Emu ^= Du;
+        BCo = ROL(Emu, 8);
+        Esa ^= Da;
+        BCu = ROL(Esa, 18);
+        Aka =   BCa ^ ((~BCe)&  BCi );
+        Ake =   BCe ^ ((~BCi)&  BCo );
+        Aki =   BCi ^ ((~BCo)&  BCu );
+        Ako =   BCo ^ ((~BCu)&  BCa );
+        Aku =   BCu ^ ((~BCa)&  BCe );
 
-        vxor(Ebu, Ebu, Du);
-        vROL(BCa, Ebu, 27);
-        vxor(Ega, Ega, Da);
-        vROL(BCe, Ega, 36);
-        vxor(Eke, Eke, De);
-        vROL(BCi, Eke, 10);
-        vxor(Emi, Emi, Di);
-        vROL(BCo, Emi, 15);
-        vxor(Eso, Eso, Do);
-        vROL(BCu, Eso, 56);
-        vXNA(Ama, BCa, BCe, BCi);
-        vXNA(Ame, BCe, BCi, BCo);
-        vXNA(Ami, BCi, BCo, BCu);
-        vXNA(Amo, BCo, BCu, BCa);
-        vXNA(Amu, BCu, BCa, BCe);
+        Ebu ^= Du;
+        BCa = ROL(Ebu, 27);
+        Ega ^= Da;
+        BCe = ROL(Ega, 36);
+        Eke ^= De;
+        BCi = ROL(Eke, 10);
+        Emi ^= Di;
+        BCo = ROL(Emi, 15);
+        Eso ^= Do;
+        BCu = ROL(Eso, 56);
+        Ama =   BCa ^ ((~BCe)&  BCi );
+        Ame =   BCe ^ ((~BCi)&  BCo );
+        Ami =   BCi ^ ((~BCo)&  BCu );
+        Amo =   BCo ^ ((~BCu)&  BCa );
+        Amu =   BCu ^ ((~BCa)&  BCe );
 
-        vxor(Ebi, Ebi, Di);
-        vROL(BCa, Ebi, 62);
-        vxor(Ego, Ego, Do);
-        vROL(BCe, Ego, 55);
-        vxor(Eku, Eku, Du);
-        vROL(BCi, Eku, 39);
-        vxor(Ema, Ema, Da);
-        vROL(BCo, Ema, 41);
-        vxor(Ese, Ese, De);
-        vROL(BCu, Ese, 2);
-        vXNA(Asa, BCa, BCe, BCi);
-        vXNA(Ase, BCe, BCi, BCo);
-        vXNA(Asi, BCi, BCo, BCu);
-        vXNA(Aso, BCo, BCu, BCa);
-        vXNA(Asu, BCu, BCa, BCe);
+        Ebi ^= Di;
+        BCa = ROL(Ebi, 62);
+        Ego ^= Do;
+        BCe = ROL(Ego, 55);
+        Eku ^= Du;
+        BCi = ROL(Eku, 39);
+        Ema ^= Da;
+        BCo = ROL(Ema, 41);
+        Ese ^= De;
+        BCu = ROL(Ese, 2);
+        Asa =   BCa ^ ((~BCe)&  BCi );
+        Ase =   BCe ^ ((~BCi)&  BCo );
+        Asi =   BCi ^ ((~BCo)&  BCu );
+        Aso =   BCo ^ ((~BCu)&  BCa );
+        Asu =   BCu ^ ((~BCa)&  BCe );
+
     }
 
     state[0] = Aba;
