@@ -1,9 +1,12 @@
-This repository accompanies the paper **Neon NTT: Faster Dilithium, Kyber, and Saber on Cortex-A72 and Apple M1** available at https://eprint.iacr.org/2021/986.
+
+This repository accompanies the paper **Neon NTT: Faster Dilithium, Kyber, and Saber on Cortex-A72 and Apple M1**
+published at [IACR Transactions on Cryptographic Hardware and Embedded Systems (TCHES), Issue 1, Volume 2022](https://tches.iacr.org/index.php/TCHES/article/view/9295).
+The paper is also available at [ePrint 2021/986](https://eprint.iacr.org/2021/986).
 
 
 Authors: 
  - Hanno Becker `<hanno.becker@arm.com>`
- - Vincent Hwang `<vincentvbh7@gmail.com>`
+ - [Vincent Hwang](https://vincentvbh.github.io/) `<vincentvbh7@gmail.com>`
  - [Matthias J. Kannwischer](https://kannwischer.eu/) `<matthias@kannwischer.eu>`
  - [Bo-Yin Yang](https://homepage.iis.sinica.edu.tw/pages/byyang/) `<by@crypto.tw>` 
  - Shang-Yi Yang `<nick.yang@chelpis.com>`
