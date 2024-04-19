@@ -3,6 +3,10 @@ This repository accompanies the paper **Neon NTT: Faster Dilithium, Kyber, and S
 published at [IACR Transactions on Cryptographic Hardware and Embedded Systems (TCHES), Issue 1, Volume 2022](https://tches.iacr.org/index.php/TCHES/article/view/9295).
 The paper is also available at [ePrint 2021/986](https://eprint.iacr.org/2021/986).
 
+There are several updates after the publication.
+To reproduce the results in the paper, please refer to the commit
+
+`a96c17dbe74ac7675c785a728396e216555c432b`.
 
 Authors: 
  - Hanno Becker `<hanno.becker@arm.com>`
