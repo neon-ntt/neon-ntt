@@ -117,109 +117,109 @@ _DILITHIUM_AARCH64__asm_intt_SIMD_top:
     dup v30.4S, Qhalf
     dup v31.4S, nQhalf
 
-    cmge v18.4S, v31.4S,  v0.4S
-    cmge v19.4S, v31.4S,  v1.4S
-    cmge v16.4S,  v0.4S, v30.4S
-    cmge v17.4S,  v1.4S, v30.4S
+    cmgt v18.4S, v31.4S,  v0.4S
+    cmgt v19.4S, v31.4S,  v1.4S
+    cmgt v16.4S,  v0.4S, v30.4S
+    cmgt v17.4S,  v1.4S, v30.4S
 
     sub  v16.4S, v16.4S, v18.4S
     sub  v17.4S, v17.4S, v19.4S
 
     mla   v0.4S, v16.4S, v29.4S
-    cmge v18.4S, v31.4S,  v2.4S
+    cmgt v18.4S, v31.4S,  v2.4S
     mla   v1.4S, v17.4S, v29.4S
-    cmge v19.4S, v31.4S,  v3.4S
+    cmgt v19.4S, v31.4S,  v3.4S
 
     str  q0, [src, #0*64]
-    cmge v16.4S,  v2.4S, v30.4S
+    cmgt v16.4S,  v2.4S, v30.4S
     ldr  q0, [src, #(16 + 0*64)]
     str  q1, [src, #1*64]
-    cmge v17.4S,  v3.4S, v30.4S
+    cmgt v17.4S,  v3.4S, v30.4S
     ldr  q1, [src, #(16 + 1*64)]
 
     sub  v16.4S, v16.4S, v18.4S
     sub  v17.4S, v17.4S, v19.4S
 
     mla   v2.4S, v16.4S, v29.4S
-    cmge v18.4S, v31.4S,  v4.4S
+    cmgt v18.4S, v31.4S,  v4.4S
     mla   v3.4S, v17.4S, v29.4S
-    cmge v19.4S, v31.4S,  v5.4S
+    cmgt v19.4S, v31.4S,  v5.4S
 
     str  q2, [src, #2*64]
-    cmge v16.4S,  v4.4S, v30.4S
+    cmgt v16.4S,  v4.4S, v30.4S
     ldr  q2, [src, #(16 + 2*64)]
     str  q3, [src, #3*64]
-    cmge v17.4S,  v5.4S, v30.4S
+    cmgt v17.4S,  v5.4S, v30.4S
     ldr  q3, [src, #(16 + 3*64)]
 
     sub  v16.4S, v16.4S, v18.4S
     sub  v17.4S, v17.4S, v19.4S
 
     mla   v4.4S, v16.4S, v29.4S
-    cmge v18.4S, v31.4S,  v6.4S
+    cmgt v18.4S, v31.4S,  v6.4S
     mla   v5.4S, v17.4S, v29.4S
-    cmge v19.4S, v31.4S,  v7.4S
+    cmgt v19.4S, v31.4S,  v7.4S
 
     str  q4, [src, #4*64]
-    cmge v16.4S,  v6.4S, v30.4S
+    cmgt v16.4S,  v6.4S, v30.4S
     ldr  q4, [src, #(16 + 4*64)]
     str  q5, [src, #5*64]
-    cmge v17.4S,  v7.4S, v30.4S
+    cmgt v17.4S,  v7.4S, v30.4S
     ldr  q5, [src, #(16 + 5*64)]
 
     sub  v16.4S, v16.4S, v18.4S
     sub  v17.4S, v17.4S, v19.4S
 
     mla   v6.4S, v16.4S, v29.4S
-    cmge v18.4S, v31.4S,  v8.4S
+    cmgt v18.4S, v31.4S,  v8.4S
     mla   v7.4S, v17.4S, v29.4S
-    cmge v19.4S, v31.4S,  v9.4S
+    cmgt v19.4S, v31.4S,  v9.4S
 
     str  q6, [src, #6*64]
-    cmge v16.4S,  v8.4S, v30.4S
+    cmgt v16.4S,  v8.4S, v30.4S
     ldr  q6, [src, #(16 + 6*64)]
     str  q7, [src, #7*64]
-    cmge v17.4S,  v9.4S, v30.4S
+    cmgt v17.4S,  v9.4S, v30.4S
     ldr  q7, [src, #(16 + 7*64)]
 
     sub  v16.4S, v16.4S, v18.4S
     sub  v17.4S, v17.4S, v19.4S
 
     mla   v8.4S, v16.4S, v29.4S
-    cmge v18.4S, v31.4S, v10.4S
+    cmgt v18.4S, v31.4S, v10.4S
     mla   v9.4S, v17.4S, v29.4S
-    cmge v19.4S, v31.4S, v11.4S
+    cmgt v19.4S, v31.4S, v11.4S
 
     str  q8, [src,  #8*64]
-    cmge v16.4S, v10.4S, v30.4S
+    cmgt v16.4S, v10.4S, v30.4S
     str  q9, [src,  #9*64]
-    cmge v17.4S, v11.4S, v30.4S
+    cmgt v17.4S, v11.4S, v30.4S
 
     sub  v16.4S, v16.4S, v18.4S
     sub  v17.4S, v17.4S, v19.4S
 
     mla  v10.4S, v16.4S, v29.4S
-    cmge v18.4S, v31.4S, v12.4S
+    cmgt v18.4S, v31.4S, v12.4S
     mla  v11.4S, v17.4S, v29.4S
-    cmge v19.4S, v31.4S, v13.4S
+    cmgt v19.4S, v31.4S, v13.4S
 
     str q10, [src, #10*64]
-    cmge v16.4S, v12.4S, v30.4S
+    cmgt v16.4S, v12.4S, v30.4S
     str q11, [src, #11*64]
-    cmge v17.4S, v13.4S, v30.4S
+    cmgt v17.4S, v13.4S, v30.4S
 
     sub  v16.4S, v16.4S, v18.4S
     sub  v17.4S, v17.4S, v19.4S
 
     mla  v12.4S, v16.4S, v29.4S
-    cmge v18.4S, v31.4S, v14.4S
+    cmgt v18.4S, v31.4S, v14.4S
     mla  v13.4S, v17.4S, v29.4S
-    cmge v19.4S, v31.4S, v15.4S
+    cmgt v19.4S, v31.4S, v15.4S
 
     str q12, [src, #12*64]
-    cmge v16.4S, v14.4S, v30.4S
+    cmgt v16.4S, v14.4S, v30.4S
     str q13, [src, #13*64]
-    cmge v17.4S, v15.4S, v30.4S
+    cmgt v17.4S, v15.4S, v30.4S
 
     sub  v16.4S, v16.4S, v18.4S
     sub  v17.4S, v17.4S, v19.4S
@@ -270,10 +270,10 @@ _DILITHIUM_AARCH64__asm_intt_SIMD_top:
     dup v30.4S, Qhalf
     dup v31.4S, nQhalf
 
-    cmge v18.4S, v31.4S,  v0.4S
-    cmge v19.4S, v31.4S,  v1.4S
-    cmge v16.4S,  v0.4S, v30.4S
-    cmge v17.4S,  v1.4S, v30.4S
+    cmgt v18.4S, v31.4S,  v0.4S
+    cmgt v19.4S, v31.4S,  v1.4S
+    cmgt v16.4S,  v0.4S, v30.4S
+    cmgt v17.4S,  v1.4S, v30.4S
 
     sub  v16.4S, v16.4S, v18.4S
     sub  v17.4S, v17.4S, v19.4S
@@ -284,10 +284,10 @@ _DILITHIUM_AARCH64__asm_intt_SIMD_top:
     str  q0, [src, #0*64]
     str  q1, [src, #1*64]
 
-    cmge v18.4S, v31.4S,  v2.4S
-    cmge v19.4S, v31.4S,  v3.4S
-    cmge v16.4S,  v2.4S, v30.4S
-    cmge v17.4S,  v3.4S, v30.4S
+    cmgt v18.4S, v31.4S,  v2.4S
+    cmgt v19.4S, v31.4S,  v3.4S
+    cmgt v16.4S,  v2.4S, v30.4S
+    cmgt v17.4S,  v3.4S, v30.4S
 
     sub  v16.4S, v16.4S, v18.4S
     sub  v17.4S, v17.4S, v19.4S
@@ -298,10 +298,10 @@ _DILITHIUM_AARCH64__asm_intt_SIMD_top:
     str  q2, [src, #2*64]
     str  q3, [src, #3*64]
 
-    cmge v18.4S, v31.4S,  v4.4S
-    cmge v19.4S, v31.4S,  v5.4S
-    cmge v16.4S,  v4.4S, v30.4S
-    cmge v17.4S,  v5.4S, v30.4S
+    cmgt v18.4S, v31.4S,  v4.4S
+    cmgt v19.4S, v31.4S,  v5.4S
+    cmgt v16.4S,  v4.4S, v30.4S
+    cmgt v17.4S,  v5.4S, v30.4S
 
     sub  v16.4S, v16.4S, v18.4S
     sub  v17.4S, v17.4S, v19.4S
@@ -312,10 +312,10 @@ _DILITHIUM_AARCH64__asm_intt_SIMD_top:
     str  q4, [src, #4*64]
     str  q5, [src, #5*64]
 
-    cmge v18.4S, v31.4S,  v6.4S
-    cmge v19.4S, v31.4S,  v7.4S
-    cmge v16.4S,  v6.4S, v30.4S
-    cmge v17.4S,  v7.4S, v30.4S
+    cmgt v18.4S, v31.4S,  v6.4S
+    cmgt v19.4S, v31.4S,  v7.4S
+    cmgt v16.4S,  v6.4S, v30.4S
+    cmgt v17.4S,  v7.4S, v30.4S
 
     sub  v16.4S, v16.4S, v18.4S
     sub  v17.4S, v17.4S, v19.4S
@@ -326,10 +326,10 @@ _DILITHIUM_AARCH64__asm_intt_SIMD_top:
     str  q6, [src, #6*64]
     str  q7, [src, #7*64]
 
-    cmge v18.4S, v31.4S,  v8.4S
-    cmge v19.4S, v31.4S,  v9.4S
-    cmge v16.4S,  v8.4S, v30.4S
-    cmge v17.4S,  v9.4S, v30.4S
+    cmgt v18.4S, v31.4S,  v8.4S
+    cmgt v19.4S, v31.4S,  v9.4S
+    cmgt v16.4S,  v8.4S, v30.4S
+    cmgt v17.4S,  v9.4S, v30.4S
 
     sub  v16.4S, v16.4S, v18.4S
     sub  v17.4S, v17.4S, v19.4S
@@ -340,10 +340,10 @@ _DILITHIUM_AARCH64__asm_intt_SIMD_top:
     str  q8, [src,  #8*64]
     str  q9, [src,  #9*64]
 
-    cmge v18.4S, v31.4S, v10.4S
-    cmge v19.4S, v31.4S, v11.4S
-    cmge v16.4S, v10.4S, v30.4S
-    cmge v17.4S, v11.4S, v30.4S
+    cmgt v18.4S, v31.4S, v10.4S
+    cmgt v19.4S, v31.4S, v11.4S
+    cmgt v16.4S, v10.4S, v30.4S
+    cmgt v17.4S, v11.4S, v30.4S
 
     sub  v16.4S, v16.4S, v18.4S
     sub  v17.4S, v17.4S, v19.4S
@@ -354,10 +354,10 @@ _DILITHIUM_AARCH64__asm_intt_SIMD_top:
     str q10, [src, #10*64]
     str q11, [src, #11*64]
 
-    cmge v18.4S, v31.4S, v12.4S
-    cmge v19.4S, v31.4S, v13.4S
-    cmge v16.4S, v12.4S, v30.4S
-    cmge v17.4S, v13.4S, v30.4S
+    cmgt v18.4S, v31.4S, v12.4S
+    cmgt v19.4S, v31.4S, v13.4S
+    cmgt v16.4S, v12.4S, v30.4S
+    cmgt v17.4S, v13.4S, v30.4S
 
     sub  v16.4S, v16.4S, v18.4S
     sub  v17.4S, v17.4S, v19.4S
@@ -368,10 +368,10 @@ _DILITHIUM_AARCH64__asm_intt_SIMD_top:
     str q12, [src, #12*64]
     str q13, [src, #13*64]
 
-    cmge v18.4S, v31.4S, v14.4S
-    cmge v19.4S, v31.4S, v15.4S
-    cmge v16.4S, v14.4S, v30.4S
-    cmge v17.4S, v15.4S, v30.4S
+    cmgt v18.4S, v31.4S, v14.4S
+    cmgt v19.4S, v31.4S, v15.4S
+    cmgt v16.4S, v14.4S, v30.4S
+    cmgt v17.4S, v15.4S, v30.4S
 
     sub  v16.4S, v16.4S, v18.4S
     sub  v17.4S, v17.4S, v19.4S
