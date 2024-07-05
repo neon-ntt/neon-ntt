@@ -79,6 +79,9 @@ _DILITHIUM_AARCH64__asm_ntt_SIMD_top:
     qq_butterfly_mix  v1,  v5,  v9, v13,  v3,  v7, v11, v15, v16, v17, v18, v19,  v0,  v4,  v8, v12,  v2,  v6, v10, v14, v28, v29, v30, v31, v20, v22, 0, 1, v22, 2, 3, v23, 0, 1, v23, 2, 3, v22, 0, 1, v22, 2, 3, v23, 0, 1, v23, 2, 3
     qq_butterfly_mix  v0,  v4,  v8, v12,  v2,  v6, v10, v14, v28, v29, v30, v31,  v8, v10, v12, v14,  v9, v11, v13, v15, v16, v17, v18, v19, v20, v22, 0, 1, v22, 2, 3, v23, 0, 1, v23, 2, 3, v26, 0, 1, v26, 2, 3, v27, 0, 1, v27, 2, 3
 
+     mov counter, #3
+    _ntt_top_loop:
+
     qq_butterfly_mixssl \
              v8, v10, v12, v14,  v9, v11, v13, v15, v16, v17, v18, v19, \
              v1,  v3,  v5,  v7, v28, v29, v30, v31, \
@@ -93,9 +96,6 @@ _DILITHIUM_AARCH64__asm_ntt_SIMD_top:
             src, \
              q9, q11, q13, q15, \
              #(16+9*64), #(16+11*64), #(16+13*64), #(16+15*64)
-
-    mov counter, #3
-    _ntt_top_loop:
 
     qq_butterfly_mixssl \
              v0,  v2,  v4,  v6,  v1,  v3,  v5,  v7, v28, v29, v30, v31, \
@@ -132,7 +132,10 @@ _DILITHIUM_AARCH64__asm_ntt_SIMD_top:
     qq_butterfly_mix  v1,  v5,  v9, v13,  v3,  v7, v11, v15, v16, v17, v18, v19,  v0,  v4,  v8, v12,  v2,  v6, v10, v14, v28, v29, v30, v31, v20, v22, 0, 1, v22, 2, 3, v23, 0, 1, v23, 2, 3, v22, 0, 1, v22, 2, 3, v23, 0, 1, v23, 2, 3
     qq_butterfly_mix  v0,  v4,  v8, v12,  v2,  v6, v10, v14, v28, v29, v30, v31,  v8, v10, v12, v14,  v9, v11, v13, v15, v16, v17, v18, v19, v20, v22, 0, 1, v22, 2, 3, v23, 0, 1, v23, 2, 3, v26, 0, 1, v26, 2, 3, v27, 0, 1, v27, 2, 3
 
-    qq_butterfly_mixssl \
+    sub counter, counter, #1
+    cbnz counter, _ntt_top_loop
+
+    qq_butterfly_mixss \
              v8, v10, v12, v14,  v9, v11, v13, v15, v16, v17, v18, v19, \
              v1,  v3,  v5,  v7, v28, v29, v30, v31, \
             v20, \
@@ -142,13 +145,7 @@ _DILITHIUM_AARCH64__asm_ntt_SIMD_top:
              #9*64, #11*64, #13*64, #15*64, \
             src, \
              q8, q10, q12, q14, \
-             #8*64, #10*64, #12*64, #14*64, \
-            src, \
-             q9, q11, q13, q15, \
-             #(16+9*64), #(16+11*64), #(16+13*64), #(16+15*64)
-
-    sub counter, counter, #1
-    cbnz counter, _ntt_top_loop
+             #8*64, #10*64, #12*64, #14*64
 
     qq_butterfly_botss \
              v0,  v2,  v4,  v6,  v1,  v3,  v5,  v7, v28, v29, v30, v31, \
