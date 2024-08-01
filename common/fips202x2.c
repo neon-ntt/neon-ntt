@@ -6,8 +6,8 @@
  *
  * MIT License
  *
- * Copyright (c) 2023: Hanno Becker, Vincent Hwang, Matthias J. Kannwischer, Bo-Yin Yang, and Shang-Yi Yang
  * Copyright (c) 2023: Vincent Hwang
+ * Copyright (c) 2023: Hanno Becker, Vincent Hwang, Matthias J. Kannwischer, Bo-Yin Yang, and Shang-Yi Yang
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
