@@ -1,6 +1,7 @@
 /*
- * Duc Tri Nguyen (CERG GMU)
- * Modified from M1:
+ * Modified from
+ * https://github.com/GMUCERG/PQC_NEON/blob/main/neon/kyber/m1cycles.c, Duc Tri Nguyen (CERG GMU)
+ * which was modified from M1
  * https://gist.github.com/dougallj/5bafb113492047c865c0c8cfbc930155#file-m1_robsize-c-L390
  */
 
@@ -60,6 +61,7 @@ KPERF_LIST
 #define KPC_CLASS_POWER_MASK (1u << KPC_CLASS_POWER)
 #define KPC_CLASS_RAWPMU_MASK (1u << KPC_CLASS_RAWPMU)
 
+// COUNTERS_COUNT may vary
 #define COUNTERS_COUNT 10
 #define CONFIG_COUNT 8
 #define KPC_MASK (KPC_CLASS_CONFIGURABLE_MASK | KPC_CLASS_FIXED_MASK)
@@ -113,39 +115,7 @@ static void init_rdtsc(void)
     KPERF_LIST
 #undef F
 
-    // TODO: KPC_CLASS_RAWPMU_MASK
-
-    // if (kpc_get_counter_count(KPC_MASK) != COUNTERS_COUNT)
-    // {
-    //     printf("wrong fixed counters count\n");
-    //     return;
-    // }
-
-    // if (kpc_get_config_count(KPC_MASK) != CONFIG_COUNT)
-    // {
-    //     printf("wrong fixed config count\n");
-    //     return;
-    // }
-
-    // Not all counters can count all things:
-
-    // CPMU_CORE_CYCLE           {0-7}
-    // CPMU_FED_IC_MISS_DEM      {0-7}
-    // CPMU_FED_ITLB_MISS        {0-7}
-
-    // CPMU_INST_BRANCH          {3, 4, 5}
-    // CPMU_SYNC_DC_LOAD_MISS    {3, 4, 5}
-    // CPMU_SYNC_DC_STORE_MISS   {3, 4, 5}
-    // CPMU_SYNC_DTLB_MISS       {3, 4, 5}
-    // CPMU_SYNC_BR_ANY_MISP     {3, 4, 5}
-    // CPMU_SYNC_ST_HIT_YNGR_LD  {3, 4, 5}
-    // CPMU_INST_A64             {5}
-
-    // using "CFGWORD_ALLMODES_MASK" is much noisier
     g_config[0] = CPMU_CORE_CYCLE | CFGWORD_EL0A64EN_MASK;
-    // configs[3] = CPMU_SYNC_DC_LOAD_MISS | CFGWORD_EL0A64EN_MASK;
-    // configs[4] = CPMU_SYNC_DTLB_MISS | CFGWORD_EL0A64EN_MASK;
-    // configs[5] = CPMU_INST_A64 | CFGWORD_EL0A64EN_MASK;
 
     configure_rdtsc();
 }
