@@ -179,14 +179,11 @@ void poly_compress(uint8_t r[KYBER_POLYCOMPRESSEDBYTES], const int16_t a[KYBER_N
 
             // 16-bit precision suffices for round(2^4 x / q)
 
-            // 16-bit subtractive Montgomery
+            // 16-bit Barrett
             // inputs are in [-q/2, ..., q/2]
-            // -59 = 2^4 * 2^16 mod^+- q
-            // -315 = (-59) * q^(-1) mod^+- 2^16
-            // 1 = q^(-1) mod^+- 2^4 so we skip this part below
-            lo = u * (-315);
-            hi = (int16_t)((int32_t)(u * (-59)) >> 16);
-            hi = (int16_t)(((int32_t)lo * 3329) >> 16) - hi;
+            // 315 = round(16 * 2^16 / q)
+            hi = (int16_t)(((int32_t)u * 315 + (1 << 15)) >> 16);
+            hi = hi * 3329;
             t[j] = hi & 0xf;
 
         }
@@ -207,9 +204,8 @@ void poly_compress(uint8_t r[KYBER_POLYCOMPRESSEDBYTES], const int16_t a[KYBER_N
             // 20-bit Barrett
             // inputs are in [-q/2, ..., q/2]
             // 10079 = round(32 * 2^20 / q)
-            lo = u * 32;
             hi = (int16_t)(((int32_t)u * 10079 + (1 << 19)) >> 20);
-            hi = hi * 3329 - lo;
+            hi = hi * 3329;
             t[j] = hi & 0x1f;
 
         }
@@ -370,7 +366,7 @@ void poly_frommsg(int16_t r[KYBER_N], const uint8_t msg[KYBER_INDCPA_MSGBYTES]) 
 void poly_tomsg(uint8_t msg[KYBER_INDCPA_MSGBYTES], const int16_t a[KYBER_N]) {
     unsigned int i, j;
     int16_t u;
-    int16_t lo, hi;
+    int16_t hi;
     uint16_t t;
 
     for (i = 0; i < KYBER_N / 8; i++) {
@@ -383,9 +379,8 @@ void poly_tomsg(uint8_t msg[KYBER_INDCPA_MSGBYTES], const int16_t a[KYBER_N]) {
             // 19-bit Barrett
             // inputs are in [-q/2, ..., q/2]
             // 315 = round(2 * 2^19 / q)
-            lo = u * 2;
             hi = (int16_t)(((int32_t)u * 315 + (1 << 18)) >> 19);
-            hi = hi * 3329 - lo;
+            hi = hi * 3329;
             t = hi & 1;
 
             msg[i] |= t << j;
