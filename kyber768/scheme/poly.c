@@ -32,6 +32,8 @@
  * SOFTWARE.
  */
 
+#include <stdio.h>
+
 #include "params.h"
 #include "poly.h"
 #include "ntt.h"
@@ -168,10 +170,7 @@ void poly_compress(uint8_t r[KYBER_POLYCOMPRESSEDBYTES], const int16_t a[KYBER_N
     unsigned int i, j;
     int16_t u;
     int16_t lo, hi;
-    uint32_t d0;
     uint8_t t[8];
-
-
 
     #if (KYBER_POLYCOMPRESSEDBYTES == 128)
     for (i = 0; i < KYBER_N / 8; i++) {
@@ -370,14 +369,25 @@ void poly_frommsg(int16_t r[KYBER_N], const uint8_t msg[KYBER_INDCPA_MSGBYTES]) 
 **************************************************/
 void poly_tomsg(uint8_t msg[KYBER_INDCPA_MSGBYTES], const int16_t a[KYBER_N]) {
     unsigned int i, j;
+    int16_t u;
+    int16_t lo, hi;
     uint16_t t;
 
     for (i = 0; i < KYBER_N / 8; i++) {
         msg[i] = 0;
         for (j = 0; j < 8; j++) {
-            t  = a[8 * i + j];
-            t += ((int16_t)t >> 15) & KYBER_Q;
-            t  = (((t << 1) + KYBER_Q / 2) / KYBER_Q) & 1;
+            u = a[8 * i + j];
+
+            // 19-bit precision suffices for round(2 x / q)
+
+            // 19-bit Barrett
+            // inputs are in [-q/2, ..., q/2]
+            // 315 = round(2 * 2^19 / q)
+            lo = u * 2;
+            hi = (int16_t)(((int32_t)u * 315 + (1 << 18)) >> 19);
+            hi = hi * 3329 - lo;
+            t = hi & 1;
+
             msg[i] |= t << j;
         }
     }
