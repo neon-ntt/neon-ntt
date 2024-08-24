@@ -178,9 +178,10 @@ void poly_compress(uint8_t r[KYBER_POLYCOMPRESSEDBYTES], const int16_t a[KYBER_N
         for (j = 0; j < 8; j++) {
             u  = a[8 * i + j];
 
-            // 16-bit subtractive Montgomery suffices
-            // inputs are in [-q/2, ..., q/2]
+            // 16-bit precision suffices for round(2^4 x / q)
 
+            // 16-bit subtractive Montgomery
+            // inputs are in [-q/2, ..., q/2]
             // -59 = 2^4 * 2^16 mod^+- q
             // -315 = (-59) * q^(-1) mod^+- 2^16
             // 1 = q^(-1) mod^+- 2^4 so we skip this part below
@@ -200,14 +201,18 @@ void poly_compress(uint8_t r[KYBER_POLYCOMPRESSEDBYTES], const int16_t a[KYBER_N
     #elif (KYBER_POLYCOMPRESSEDBYTES == 160)
     for (i = 0; i < KYBER_N / 8; i++) {
         for (j = 0; j < 8; j++) {
-
-            // 17-bit Montgomery suffices
-
             u  = a[8 * i + j];
 
-            // map to positive standard representatives
-            u += (u >> 15) & KYBER_Q;
-            t[j] = ((((uint32_t)u << 5) + KYBER_Q / 2) / KYBER_Q) & 31;
+            // 20-bit precision suffices for round(2^5 x / q)
+
+            // 20-bit Barrett
+            // inputs are in [-q/2, ..., q/2]
+            // 10079 = round(32 * 2^20 / q)
+            lo = u * 32;
+            hi = (int16_t)(((int32_t)u * 10079 + (1 << 19)) >> 20);
+            hi = hi * 3329 - lo;
+            t[j] = hi & 0x1f;
+
         }
 
         r[0] = (t[0] >> 0) | (t[1] << 5);
