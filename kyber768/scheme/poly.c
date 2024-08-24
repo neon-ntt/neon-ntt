@@ -167,15 +167,28 @@ void poly_sub_reduce(int16_t c[KYBER_N], const int16_t a[KYBER_N]) {
 void poly_compress(uint8_t r[KYBER_POLYCOMPRESSEDBYTES], const int16_t a[KYBER_N]) {
     unsigned int i, j;
     int16_t u;
+    int16_t lo, hi;
+    uint32_t d0;
     uint8_t t[8];
+
+
 
     #if (KYBER_POLYCOMPRESSEDBYTES == 128)
     for (i = 0; i < KYBER_N / 8; i++) {
         for (j = 0; j < 8; j++) {
-            // map to positive standard representatives
             u  = a[8 * i + j];
-            u += (u >> 15) & KYBER_Q;
-            t[j] = ((((uint16_t)u << 4) + KYBER_Q / 2) / KYBER_Q) & 15;
+
+            // 16-bit subtractive Montgomery suffices
+            // inputs are in [-q/2, ..., q/2]
+
+            // -59 = 2^4 * 2^16 mod^+- q
+            // -315 = (-59) * q^(-1) mod^+- 2^16
+            // 1 = q^(-1) mod^+- 2^4 so we skip this part below
+            lo = u * (-315);
+            hi = (int16_t)((int32_t)(u * (-59)) >> 16);
+            hi = (int16_t)(((int32_t)lo * 3329) >> 16) - hi;
+            t[j] = hi & 0xf;
+
         }
 
         r[0] = t[0] | (t[1] << 4);
@@ -187,8 +200,12 @@ void poly_compress(uint8_t r[KYBER_POLYCOMPRESSEDBYTES], const int16_t a[KYBER_N
     #elif (KYBER_POLYCOMPRESSEDBYTES == 160)
     for (i = 0; i < KYBER_N / 8; i++) {
         for (j = 0; j < 8; j++) {
-            // map to positive standard representatives
+
+            // 17-bit Montgomery suffices
+
             u  = a[8 * i + j];
+
+            // map to positive standard representatives
             u += (u >> 15) & KYBER_Q;
             t[j] = ((((uint32_t)u << 5) + KYBER_Q / 2) / KYBER_Q) & 31;
         }
