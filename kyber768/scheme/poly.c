@@ -169,7 +169,6 @@ void poly_sub_reduce(int16_t c[KYBER_N], const int16_t a[KYBER_N]) {
 void poly_compress(uint8_t r[KYBER_POLYCOMPRESSEDBYTES], const int16_t a[KYBER_N]) {
     unsigned int i, j;
     int16_t u;
-    int16_t hi;
     uint8_t t[8];
 
     #if (KYBER_POLYCOMPRESSEDBYTES == 128)
@@ -178,16 +177,10 @@ void poly_compress(uint8_t r[KYBER_POLYCOMPRESSEDBYTES], const int16_t a[KYBER_N
             u  = a[8 * i + j];
 
             // 16-bit precision suffices for round(2^4 x / q)
-
-            // 16-bit Barrett
             // inputs are in [-q/2, ..., q/2]
             // 315 = round(16 * 2^16 / q)
-            hi = (int16_t)(((int32_t)u * 315 + (1 << 15)) >> 16);
-            // or 17-bit Barrett
-            // 630 = round(17 * 2^17 / q)
-            // hi = (int16_t)(((int32_t)u * 630 + (1 << 16)) >> 17);
-            hi = hi * 3329;
-            t[j] = hi & 0xf;
+            u = (int16_t)(((int32_t)u * 315 + (1 << 15)) >> 16);
+            t[j] = u & 0xf;
 
         }
 
@@ -202,14 +195,11 @@ void poly_compress(uint8_t r[KYBER_POLYCOMPRESSEDBYTES], const int16_t a[KYBER_N
         for (j = 0; j < 8; j++) {
             u  = a[8 * i + j];
 
-            // 20-bit precision suffices for round(2^5 x / q)
-
-            // 20-bit Barrett
+            // 15-bit precision suffices for round(2^5 x / q)
             // inputs are in [-q/2, ..., q/2]
-            // 10079 = round(32 * 2^20 / q)
-            hi = (int16_t)(((int32_t)u * 10079 + (1 << 19)) >> 20);
-            hi = hi * 3329;
-            t[j] = hi & 0x1f;
+            // 315 = round(32 * 2^15 / q)
+            u = (int16_t)(((int32_t)u * 315 + (1 << 14)) >> 15);
+            t[j] = u & 0x1f;
 
         }
 
@@ -369,7 +359,6 @@ void poly_frommsg(int16_t r[KYBER_N], const uint8_t msg[KYBER_INDCPA_MSGBYTES]) 
 void poly_tomsg(uint8_t msg[KYBER_INDCPA_MSGBYTES], const int16_t a[KYBER_N]) {
     unsigned int i, j;
     int16_t u;
-    int16_t hi;
     uint16_t t;
 
     for (i = 0; i < KYBER_N / 8; i++) {
@@ -378,13 +367,10 @@ void poly_tomsg(uint8_t msg[KYBER_INDCPA_MSGBYTES], const int16_t a[KYBER_N]) {
             u = a[8 * i + j];
 
             // 19-bit precision suffices for round(2 x / q)
-
-            // 19-bit Barrett
             // inputs are in [-q/2, ..., q/2]
             // 315 = round(2 * 2^19 / q)
-            hi = (int16_t)(((int32_t)u * 315 + (1 << 18)) >> 19);
-            hi = hi * 3329;
-            t = hi & 1;
+            u = (int16_t)(((int32_t)u * 315 + (1 << 18)) >> 19);
+            t = u & 1;
 
             msg[i] |= t << j;
         }
