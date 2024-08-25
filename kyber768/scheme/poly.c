@@ -169,7 +169,7 @@ void poly_sub_reduce(int16_t c[KYBER_N], const int16_t a[KYBER_N]) {
 void poly_compress(uint8_t r[KYBER_POLYCOMPRESSEDBYTES], const int16_t a[KYBER_N]) {
     unsigned int i, j;
     int16_t u;
-    int16_t lo, hi;
+    int16_t hi;
     uint8_t t[8];
 
     #if (KYBER_POLYCOMPRESSEDBYTES == 128)
@@ -183,6 +183,9 @@ void poly_compress(uint8_t r[KYBER_POLYCOMPRESSEDBYTES], const int16_t a[KYBER_N
             // inputs are in [-q/2, ..., q/2]
             // 315 = round(16 * 2^16 / q)
             hi = (int16_t)(((int32_t)u * 315 + (1 << 15)) >> 16);
+            // or 17-bit Barrett
+            // 630 = round(17 * 2^17 / q)
+            // hi = (int16_t)(((int32_t)u * 630 + (1 << 16)) >> 17);
             hi = hi * 3329;
             t[j] = hi & 0xf;
 
