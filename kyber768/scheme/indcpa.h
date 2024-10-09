@@ -30,3 +30,4 @@ void indcpa_dec(uint8_t m[KYBER_INDCPA_MSGBYTES],
                 const uint8_t sk[KYBER_INDCPA_SECRETKEYBYTES]);
 
 #endif
+

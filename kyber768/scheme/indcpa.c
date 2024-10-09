@@ -331,29 +331,23 @@ void indcpa_keypair_derand(uint8_t pk[KYBER_INDCPA_PUBLICKEYBYTES],
     uint8_t buf[2 * KYBER_SYMBYTES];
     const uint8_t *publicseed = buf;
     const uint8_t *noiseseed = buf + KYBER_SYMBYTES;
+    uint8_t nonce = 0;
     int16_t a[KYBER_K][KYBER_K][KYBER_N];
     int16_t e[KYBER_K][KYBER_N];
     int16_t pkpv[KYBER_K][KYBER_N];
     int16_t skpv[KYBER_K][KYBER_N];
     int16_t skpv_asymmetric[KYBER_K][KYBER_N >> 1];
 
-    hash_g(buf, coins, KYBER_SYMBYTES);
+    memcpy(buf, coins, KYBER_SYMBYTES);
+    buf[KYBER_SYMBYTES] = KYBER_K;
+    hash_g(buf, buf, KYBER_SYMBYTES + 1);
 
     gen_a(a, publicseed);
 
-    #if KYBER_K == 2
-    poly_getnoise_eta1_x2(&(skpv[0][0]), &(skpv[1][0]), noiseseed, 0, 1);
-    poly_getnoise_eta1_x2(&(e[0][0]), &(e[1][0]), noiseseed, 2, 3);
-    #elif KYBER_K == 3
-    poly_getnoise_eta1_x2(&(skpv[0][0]), &(skpv[1][0]), noiseseed, 0, 1);
-    poly_getnoise_eta1_x2(&(skpv[2][0]), &(e[0][0]), noiseseed, 2, 3);
-    poly_getnoise_eta1_x2(&(e[1][0]), &(e[2][0]), noiseseed, 4, 5);
-    #elif KYBER_K == 4
-    poly_getnoise_eta1_x2(&(skpv[0][0]), &(skpv[1][0]), noiseseed, 0, 1);
-    poly_getnoise_eta1_x2(&(skpv[2][0]), &(skpv[3][0]), noiseseed, 2, 3);
-    poly_getnoise_eta1_x2(&(e[0][0]), &(e[1][0]), noiseseed, 4, 5);
-    poly_getnoise_eta1_x2(&(e[2][0]), &(e[3][0]), noiseseed, 6, 7);
-    #endif
+    for(i = 0; i < KYBER_K; i++)
+        poly_getnoise_eta1(&skpv[i][0], noiseseed, nonce++);
+    for(i = 0; i < KYBER_K; i++)
+        poly_getnoise_eta1(&e[i][0], noiseseed, nonce++);
 
     polyvec_ntt(skpv);
     polyvec_ntt(e);
