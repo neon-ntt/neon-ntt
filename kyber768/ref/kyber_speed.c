@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "api.h"
+#include "kem.h"
 #include "indcpa.h"
 #include "params.h"
 #include "indcpa.h"
@@ -19,7 +20,7 @@ uint8_t seed[KYBER_SYMBYTES] = {0};
 // Result is clock cycles
 #define  CALC(start, stop) (stop - start) / NTESTS;
 
-int main()
+int main(void)
 {
   unsigned int i;
   unsigned char pk[CRYPTO_PUBLICKEYBYTES] = {0};
