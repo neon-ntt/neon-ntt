@@ -28,20 +28,23 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <string.h>
+#include "api.h"
+#include "config.h"
 #include "params.h"
 #include "sign.h"
 #include "randombytes.h"
-#include "api.h"
 
 #define NTESTS 1000
 #define MLEN 32
+#define CTXLEN 14
 
 static int test_sign(void)
 {
-    unsigned char pk[CRYPTO_PUBLICKEYBYTES];
-    unsigned char sk[CRYPTO_SECRETKEYBYTES];
-    unsigned char sm[MLEN + CRYPTO_BYTES];
-    unsigned char m[MLEN];
+    uint8_t pk[CRYPTO_PUBLICKEYBYTES];
+    uint8_t sk[CRYPTO_SECRETKEYBYTES];
+    uint8_t sm[MLEN + CRYPTO_BYTES];
+    uint8_t m[MLEN + CRYPTO_BYTES];
+    uint8_t ctx[CTXLEN] = {0};
 
     size_t mlen;
     size_t smlen;
@@ -49,10 +52,10 @@ static int test_sign(void)
     crypto_sign_keypair(pk, sk);
 
     randombytes(m, MLEN);
-    crypto_sign(sm, &smlen, m, MLEN, sk);
+    crypto_sign(sm, &smlen, m, MLEN, ctx, CTXLEN, sk);
 
     // By relying on m == sm we prevent having to allocate CRYPTO_BYTES twice
-    if (crypto_sign_open(sm, &mlen, sm, smlen, pk))
+    if (crypto_sign_open(sm, &mlen, sm, smlen, ctx, CTXLEN, pk))
     {
         printf("ERROR Signature did not verify correctly!\n");
         return -1;
@@ -63,11 +66,12 @@ static int test_sign(void)
 
 static int test_wrong_pk(void)
 {
-    unsigned char pk[CRYPTO_PUBLICKEYBYTES];
-    unsigned char pk2[CRYPTO_PUBLICKEYBYTES];
-    unsigned char sk[CRYPTO_SECRETKEYBYTES];
-    unsigned char sm[MLEN + CRYPTO_BYTES];
-    unsigned char m[MLEN];
+    uint8_t pk[CRYPTO_PUBLICKEYBYTES];
+    uint8_t pk2[CRYPTO_PUBLICKEYBYTES];
+    uint8_t sk[CRYPTO_SECRETKEYBYTES];
+    uint8_t sm[MLEN + CRYPTO_BYTES];
+    uint8_t m[MLEN];
+    uint8_t ctx[CTXLEN] = {0};
 
     size_t mlen;
     size_t smlen;
@@ -77,10 +81,10 @@ static int test_wrong_pk(void)
     crypto_sign_keypair(pk, sk);
 
     randombytes(m, MLEN);
-    crypto_sign(sm, &smlen, m, MLEN, sk);
+    crypto_sign(sm, &smlen, m, MLEN, ctx, CTXLEN, sk);
 
     // By relying on m == sm we prevent having to allocate CRYPTO_BYTES twice
-    if (crypto_sign_open(sm, &mlen, sm, smlen, pk2)){
+    if (crypto_sign_open(sm, &mlen, sm, smlen, ctx, CTXLEN, pk2)){
         return 0;
     }
     printf("ERROR Signature did verify correctly under wrong public key!\n");
@@ -102,6 +106,7 @@ int main(void)
 
   printf("CRYPTO_SECRETKEYBYTES:  %d\n",CRYPTO_SECRETKEYBYTES);
   printf("CRYPTO_PUBLICKEYBYTES:  %d\n",CRYPTO_PUBLICKEYBYTES);
+  printf("CRYPTO_BYTES:  %d\n",CRYPTO_BYTES);
   printf("Test successful\n");
 
   return 0;

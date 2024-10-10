@@ -20,19 +20,52 @@ uint8_t seed[KYBER_SYMBYTES] = {0};
 // Result is clock cycles
 #define  CALC(start, stop) (stop - start) / NTESTS;
 
+static int cmp_uint64(const void *a, const void *b){
+    return ((*((const uint64_t*)a)) - ((*((const uint64_t*)b))));
+}
+
+#ifdef __AVERAGE__
+
+#define LOOP_INIT(__clock0, __clock1) { \
+    __clock0 = GET_TIME; \
+}
+#define LOOP_TAIL(__f_string, records, __clock0, __clock1) { \
+    __clock1 = GET_TIME; \
+    printf(__f_string, (__clock1 - __clock0) / NTESTS); \
+}
+#define BODY_INIT(__clock0, __clock1) {}
+#define BODY_TAIL(records, __clock0, __clock1) {}
+
+#elif defined(__MEDIAN__)
+
+#define LOOP_INIT(__clock0, __clock1) {}
+#define LOOP_TAIL(__f_string, records, __clock0, __clock1) { \
+    qsort(records, sizeof(uint64_t), NTESTS, cmp_uint64); \
+    printf(__f_string, records[NTESTS >> 1]); \
+}
+#define BODY_INIT(__clock0, __clock1) { \
+    __clock0 = GET_TIME; \
+}
+#define BODY_TAIL(records, __clock0, __clock1) { \
+    __clock1 = GET_TIME; \
+    records[i] = __clock1 - __clock0; \
+}
+
+#endif
+
 int main(void)
 {
   unsigned int i;
-  unsigned char pk[KYBER_AARCH64_CRYPTO_PUBLICKEYBYTES] = {0};
-  unsigned char sk[KYBER_AARCH64_CRYPTO_SECRETKEYBYTES] = {0};
-  unsigned char ct[KYBER_AARCH64_CRYPTO_CIPHERTEXTBYTES] = {0};
-  unsigned char key_a[KYBER_AARCH64_CRYPTO_BYTES] = {0};
-  unsigned char key_b[KYBER_AARCH64_CRYPTO_BYTES] = {0};
+  uint8_t pk[KYBER_AARCH64_CRYPTO_PUBLICKEYBYTES] = {0};
+  uint8_t sk[KYBER_AARCH64_CRYPTO_SECRETKEYBYTES] = {0};
+  uint8_t ct[KYBER_AARCH64_CRYPTO_CIPHERTEXTBYTES] = {0};
+  uint8_t key_a[KYBER_AARCH64_CRYPTO_BYTES] = {0};
+  uint8_t key_b[KYBER_AARCH64_CRYPTO_BYTES] = {0};
 
 
 //   struct timespec start, stop;
-  long long ns;
-  long long start, stop;
+  uint64_t ns;
+  uint64_t start, stop;
 
 
 // Init performance counter
@@ -45,7 +78,7 @@ int main(void)
   }
   TIME(stop);
   ns = CALC(start, stop);
-  printf("crypto_kem_keypair: %lld\n", ns);
+  printf("crypto_kem_keypair: %llu\n", ns);
 
   TIME(start);
   for(i=0;i<NTESTS;i++) {
@@ -53,7 +86,7 @@ int main(void)
   }
   TIME(stop);
   ns = CALC(start, stop);
-  printf("crypto_kem_enc: %lld\n", ns);
+  printf("crypto_kem_enc: %llu\n", ns);
 
   TIME(start);
   for(i=0;i<NTESTS;i++) {
@@ -61,7 +94,7 @@ int main(void)
   }
   TIME(stop);
   ns = CALC(start, stop);
-  printf("crypto_kem_dec: %lld\n", ns);
+  printf("crypto_kem_dec: %llu\n", ns);
 
 //
 

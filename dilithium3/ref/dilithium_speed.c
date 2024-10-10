@@ -31,31 +31,31 @@
 #include "params.h"
 #include "sign.h"
 #include "randombytes.h"
-#include "m1cycles.h"
+#include "cycles.h"
 #include "api.h"
-
 
 #include "poly.h"
 #include "polyvec.h"
 
-#define NTESTS 1000000
-// #define NTESTS 10000
+// #define NTESTS 1000000
+#define NTESTS 10000
 #define MLEN 32
+#define CTXLEN 14
 
-#define TIME(s) s = rdtsc();
+#define TIME(s) s = get_cycle();
 // Result is clock cycles
 #define  CALC(start, stop) (stop - start) / NTESTS;
 
-
 static unsigned char m[NTESTS][MLEN];
 
-int main()
+int main(void)
 {
   unsigned int i;
 
-  unsigned char pk[CRYPTO_PUBLICKEYBYTES];
-  unsigned char sk[CRYPTO_SECRETKEYBYTES];
-  unsigned char sm[MLEN + CRYPTO_BYTES];
+  uint8_t pk[CRYPTO_PUBLICKEYBYTES];
+  uint8_t sk[CRYPTO_SECRETKEYBYTES];
+  uint8_t sm[MLEN + CRYPTO_BYTES];
+  uint8_t ctx[CTXLEN] = {0};
 
   poly t;
 
@@ -67,12 +67,12 @@ int main()
   size_t smlen;
 
 //   struct timespec start, stop;
-  long long ns;
-  long long start, stop;
+  uint64_t ns;
+  uint64_t start, stop;
 
 
 // Init performance counter
-  setup_rdtsc();
+  init_counter();
 //
 
   TIME(start);
@@ -81,7 +81,7 @@ int main()
   }
   TIME(stop);
   ns = CALC(start, stop);
-  printf("crypto_sign_keypair: %lld\n", ns);
+  printf("crypto_sign_keypair: %llu\n", ns);
 
 
   for(i=0;i<NTESTS;i++){
@@ -90,19 +90,19 @@ int main()
 
   TIME(start);
   for(i=0;i<NTESTS;i++) {
-    crypto_sign(sm, &smlen, m[i], MLEN, sk);
+    crypto_sign(sm, &smlen, m[i], MLEN, ctx, CTXLEN, sk);
   }
   TIME(stop);
   ns = CALC(start, stop);
-  printf("crypto_sign: %lld\n", ns);
+  printf("crypto_sign: %llu\n", ns);
 
   TIME(start);
   for(i=0;i<NTESTS;i++) {
-    crypto_sign_open(m[i], &mlen, sm, smlen, pk);
+    crypto_sign_open(m[i], &mlen, sm, smlen, ctx, CTXLEN, pk);
   }
   TIME(stop);
   ns = CALC(start, stop);
-  printf("crypto_sign_open: %lld\n", ns);
+  printf("crypto_sign_open: %llu\n", ns);
 
 
   TIME(start);
@@ -114,7 +114,7 @@ int main()
   }
   TIME(stop);
   ns = CALC(start, stop);
-  printf("MatrixVectorMul: %lld\n", ns);
+  printf("MatrixVectorMul: %llu\n", ns);
 
   TIME(start);
   for(i=0;i<NTESTS;i++) {
@@ -122,7 +122,7 @@ int main()
   }
   TIME(stop);
   ns = CALC(start, stop);
-  printf("NTT: %lld\n", ns);
+  printf("NTT: %llu\n", ns);
 
   TIME(start);
   for(i=0;i<NTESTS;i++) {
@@ -130,7 +130,7 @@ int main()
   }
   TIME(stop);
   ns = CALC(start, stop);
-  printf("long base_mul acc: %lld\n", ns);
+  printf("long base_mul acc: %llu\n", ns);
 
   TIME(start);
   for(i=0;i<NTESTS;i++) {
@@ -138,7 +138,7 @@ int main()
   }
   TIME(stop);
   ns = CALC(start, stop);
-  printf("iNTT: %lld\n", ns);
+  printf("iNTT: %llu\n", ns);
 
 
 

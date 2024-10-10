@@ -4,12 +4,14 @@
 #include <stdio.h>
 #include <string.h>
 
-
-#include "params.h"
 #include "api.h"
+#include "config.h"
+#include "params.h"
+#include "sign.h"
 #include "randombytes.h"
 
 #define MAXMLEN 2048
+#define CTXLEN 14
 
 static void printbytes(const uint8_t *x, size_t xlen) {
     size_t i;
@@ -23,9 +25,10 @@ int main(void) {
     uint8_t sk[CRYPTO_SECRETKEYBYTES];
     uint8_t pk[CRYPTO_PUBLICKEYBYTES];
 
-    uint8_t mi[MAXMLEN];
+    uint8_t mi[MAXMLEN + CRYPTO_BYTES];
     uint8_t sm[MAXMLEN + CRYPTO_BYTES];
     uint8_t sig[CRYPTO_BYTES];
+    uint8_t ctx[CTXLEN] = {0};
 
     size_t smlen;
     size_t siglen;
@@ -43,16 +46,16 @@ int main(void) {
         printbytes(pk, CRYPTO_PUBLICKEYBYTES);
         printbytes(sk, CRYPTO_SECRETKEYBYTES);
 
-        crypto_sign(sm, &smlen, mi, i, sk);
-        crypto_sign_signature(sig, &siglen, mi, i, sk);
+        crypto_sign(sm, &smlen, mi, i, ctx, CTXLEN, sk);
+        crypto_sign_signature(sig, &siglen, mi, i, ctx, CTXLEN, sk);
 
         printbytes(sm, smlen);
         printbytes(sig, siglen);
 
         // By relying on m == sm we prevent having to allocate CRYPTO_BYTES
         // twice
-        r = crypto_sign_open(sm, &mlen, sm, smlen, pk);
-        r |= crypto_sign_verify(sig, siglen, mi, i, pk);
+        r = crypto_sign_open(sm, &mlen, sm, smlen, ctx, CTXLEN, pk);
+        r |= crypto_sign_verify(sig, siglen, mi, i, ctx, CTXLEN, pk);
 
         if (r) {
             printf("ERROR: signature verification failed\n");
