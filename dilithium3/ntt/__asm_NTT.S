@@ -30,8 +30,6 @@
 
 #include "macros.i"
 
-#include "params.h"
-
 .align 2
 .global DILITHIUM_AARCH64__asm_ntt_SIMD_top
 .global _DILITHIUM_AARCH64__asm_ntt_SIMD_top

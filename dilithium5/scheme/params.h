@@ -1,1 +1,1 @@
-../ntt/params.h
+../../dilithium3/scheme/params.h

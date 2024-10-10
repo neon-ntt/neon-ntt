@@ -1,4 +1,0 @@
-NTTs (median of 10000 measurements): 2241 cycles
-polyvecl_pointwise_acc_montgomery (dim x base_mul) (median of 10000 measurements): 1222 cycles
-iNTTs (median of 10000 measurements): 2823 cycles
-MatrixVectorMul (median of 10000 measurements): 27488 cycles
