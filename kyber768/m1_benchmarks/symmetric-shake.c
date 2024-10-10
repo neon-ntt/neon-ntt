@@ -1,1 +1,0 @@
-../scheme/symmetric-shake.c
