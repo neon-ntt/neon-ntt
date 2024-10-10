@@ -1,1 +1,0 @@
-../../kyber768/microbenchmarks/__asm_NTT.S

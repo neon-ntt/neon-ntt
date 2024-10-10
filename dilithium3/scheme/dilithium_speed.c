@@ -43,106 +43,112 @@
 #define MLEN 32
 #define CTXLEN 14
 
-#define TIME(s) s = get_cycle();
-// Result is clock cycles
-#define  CALC(start, stop) (stop - start) / NTESTS;
+uint64_t time0, time1;
+uint64_t cycles[NTESTS];
+
+#define __AVERAGE__
+// #define __MEDIAN__
+
+#ifdef __AVERAGE__
+
+#define LOOP_INIT(__clock0, __clock1) { \
+    __clock0 = get_cycle(); \
+}
+#define LOOP_TAIL(__f_string, records, __clock0, __clock1) { \
+    __clock1 = get_cycle(); \
+    printf(__f_string " average cycles: %lld\n", (__clock1 - __clock0) / NTESTS); \
+}
+#define BODY_INIT(__clock0, __clock1) {}
+#define BODY_TAIL(records, __clock0, __clock1) {}
+
+#elif defined(__MEDIAN__)
+
+#include <stdlib.h>
+
+static int cmp_uint64(const void *a, const void *b){
+    return ((*((const uint64_t*)a)) - ((*((const uint64_t*)b))));
+}
+
+#define LOOP_INIT(__clock0, __clock1) {}
+#define LOOP_TAIL(__f_string, records, __clock0, __clock1) { \
+    qsort(records, sizeof(uint64_t), NTESTS, cmp_uint64); \
+    printf(__f_string " median cycles: %lld\n", records[NTESTS >> 1]); \
+}
+#define BODY_INIT(__clock0, __clock1) { \
+    __clock0 = get_cycle(); \
+}
+#define BODY_TAIL(records, __clock0, __clock1) { \
+    __clock1 = get_cycle(); \
+    records[i] = __clock1 - __clock0; \
+}
+
+#endif
+
+#define WRAP_FUNC(__f_string, records, __clock0, __clock1, func){ \
+    LOOP_INIT(__clock0, __clock1); \
+    for(size_t i = 0; i < NTESTS; i++){ \
+        BODY_INIT(__clock0, __clock1); \
+        func; \
+        BODY_TAIL(records, __clock0, __clock1); \
+    } \
+    LOOP_TAIL(__f_string, records, __clock0, __clock1); \
+}
 
 static unsigned char m[NTESTS][MLEN];
 
-int main(void)
-{
-  unsigned int i;
+int main(void){
 
-  uint8_t pk[CRYPTO_PUBLICKEYBYTES];
-  uint8_t sk[CRYPTO_SECRETKEYBYTES];
-  uint8_t sm[MLEN + CRYPTO_BYTES];
-  uint8_t ctx[CTXLEN] = {0};
+    uint8_t pk[CRYPTO_PUBLICKEYBYTES];
+    uint8_t sk[CRYPTO_SECRETKEYBYTES];
+    uint8_t sm[MLEN + CRYPTO_BYTES];
+    uint8_t ctx[CTXLEN] = {0};
 
-  poly t;
+    poly t;
 
-  polyvecl mat[K];
-  polyvecl s1hat;
-  polyveck t1;
+    polyvecl mat[K];
+    polyvecl s1hat;
+    polyveck t1;
 
-  size_t mlen;
-  size_t smlen;
+    size_t mlen;
+    size_t smlen;
 
-//   struct timespec start, stop;
-  uint64_t ns;
-  uint64_t start, stop;
+    // Init performance counter
+    init_counter();
 
+    WRAP_FUNC("crypto_sign_keypair",
+              cycles, time0, time1,
+              crypto_sign_keypair(pk, sk));
 
-// Init performance counter
-  init_counter();
-//
+    for(size_t i = 0; i < NTESTS; i++){
+        randombytes(m[i], MLEN);
+    }
 
-  TIME(start);
-  for(i=0;i<NTESTS;i++) {
-    crypto_sign_keypair(pk, sk);
-  }
-  TIME(stop);
-  ns = CALC(start, stop);
-  printf("crypto_sign_keypair: %llu\n", ns);
+    WRAP_FUNC("crypto_sign",
+              cycles, time0, time1,
+              crypto_sign(sm, &smlen, m[i], MLEN, ctx, CTXLEN, sk));
 
+    WRAP_FUNC("crypto_sign_open",
+              cycles, time0, time1,
+              crypto_sign_open(m[i], &mlen, sm, smlen, ctx, CTXLEN, pk));
 
-  for(i=0;i<NTESTS;i++){
-    randombytes(m[i], MLEN);
-  }
+    WRAP_FUNC("MatrixVectorMul",
+              cycles, time0, time1,
+              polyvecl_ntt(&s1hat); \
+              polyvec_matrix_pointwise_montgomery(&t1, mat, &s1hat); \
+              polyveck_reduce(&t1); \
+              polyveck_invntt_tomont(&t1));
 
-  TIME(start);
-  for(i=0;i<NTESTS;i++) {
-    crypto_sign(sm, &smlen, m[i], MLEN, ctx, CTXLEN, sk);
-  }
-  TIME(stop);
-  ns = CALC(start, stop);
-  printf("crypto_sign: %llu\n", ns);
+    WRAP_FUNC("NTT",
+              cycles, time0, time1,
+              poly_ntt(&t));
 
-  TIME(start);
-  for(i=0;i<NTESTS;i++) {
-    crypto_sign_open(m[i], &mlen, sm, smlen, ctx, CTXLEN, pk);
-  }
-  TIME(stop);
-  ns = CALC(start, stop);
-  printf("crypto_sign_open: %llu\n", ns);
+    WRAP_FUNC("long base_mul acc",
+              cycles, time0, time1,
+              polyvecl_pointwise_acc_montgomery(&t, &mat[0], &s1hat));
 
-
-  TIME(start);
-  for(i=0;i<NTESTS;i++) {
-    polyvecl_ntt(&s1hat);
-    polyvec_matrix_pointwise_montgomery(&t1, mat, &s1hat);
-    polyveck_reduce(&t1);
-    polyveck_invntt_tomont(&t1);
-  }
-  TIME(stop);
-  ns = CALC(start, stop);
-  printf("MatrixVectorMul: %llu\n", ns);
-
-  TIME(start);
-  for(i=0;i<NTESTS;i++) {
-    poly_ntt(&t);
-  }
-  TIME(stop);
-  ns = CALC(start, stop);
-  printf("NTT: %llu\n", ns);
-
-  TIME(start);
-  for(i=0;i<NTESTS;i++) {
-    polyvecl_pointwise_acc_montgomery(&t, &mat[0], &s1hat);
-  }
-  TIME(stop);
-  ns = CALC(start, stop);
-  printf("long base_mul acc: %llu\n", ns);
-
-  TIME(start);
-  for(i=0;i<NTESTS;i++) {
-    poly_invntt_tomont(&t);
-  }
-  TIME(stop);
-  ns = CALC(start, stop);
-  printf("iNTT: %llu\n", ns);
-
-
-
+    WRAP_FUNC("iNTT",
+              cycles, time0, time1,
+              poly_invntt_tomont(&t));
 
   return 0;
 }

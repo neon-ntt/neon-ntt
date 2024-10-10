@@ -21,7 +21,7 @@
 * Returns 0 (success)
 **************************************************/
 int crypto_sign_keypair(uint8_t *pk, uint8_t *sk) {
-  uint8_t seedbuf[2*SEEDBYTES + CRHBYTES];
+  uint8_t seedbuf[2 *SEEDBYTES + CRHBYTES];
   uint8_t tr[TRBYTES];
   const uint8_t *rho, *rhoprime, *key;
   polyvecl mat[K];
@@ -30,9 +30,9 @@ int crypto_sign_keypair(uint8_t *pk, uint8_t *sk) {
 
   /* Get randomness for rho, rhoprime and key */
   randombytes(seedbuf, SEEDBYTES);
-  seedbuf[SEEDBYTES+0] = K;
-  seedbuf[SEEDBYTES+1] = L;
-  shake256(seedbuf, 2*SEEDBYTES + CRHBYTES, seedbuf, SEEDBYTES+2);
+  seedbuf[SEEDBYTES + 0] = K;
+  seedbuf[SEEDBYTES + 1] = L;
+  shake256(seedbuf, 2 * SEEDBYTES + CRHBYTES, seedbuf, SEEDBYTES + 2);
   rho = seedbuf;
   rhoprime = rho + SEEDBYTES;
   key = rhoprime + CRHBYTES;
@@ -90,7 +90,7 @@ int crypto_sign_signature(uint8_t *sig,
                           const uint8_t *sk)
 {
   unsigned int n;
-  uint8_t seedbuf[2*SEEDBYTES + TRBYTES + RNDBYTES + 2*CRHBYTES];
+  uint8_t seedbuf[2 * SEEDBYTES + TRBYTES + RNDBYTES + 2 * CRHBYTES];
   uint8_t *rho, *tr, *key, *mu, *rhoprime, *rnd;
   uint16_t nonce = 0;
   polyvecl mat[K], s1, y, z;
@@ -253,7 +253,7 @@ int crypto_sign_verify(const uint8_t *sig,
                        const uint8_t *pk)
 {
   unsigned int i;
-  uint8_t buf[K*POLYW1_PACKEDBYTES];
+  uint8_t buf[K * POLYW1_PACKEDBYTES];
   uint8_t rho[SEEDBYTES];
   uint8_t mu[CRHBYTES];
   uint8_t c[CTILDEBYTES];
@@ -308,7 +308,7 @@ int crypto_sign_verify(const uint8_t *sig,
   /* Call random oracle and verify challenge */
   shake256_inc_init(&state);
   shake256_inc_absorb(&state, mu, CRHBYTES);
-  shake256_inc_absorb(&state, buf, K*POLYW1_PACKEDBYTES);
+  shake256_inc_absorb(&state, buf, K * POLYW1_PACKEDBYTES);
   shake256_inc_finalize(&state);
   shake256_inc_squeeze(c2, CTILDEBYTES, &state);
   for(i = 0; i < CTILDEBYTES; ++i)
