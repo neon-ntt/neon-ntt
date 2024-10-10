@@ -3,15 +3,10 @@
 
 #define KYBER_K 3	/* Change this for different security strengths */
 
+#define KYBER_NAMESPACE(s) KYBER_AARCH64_##s
 
 /* Don't change parameters below this line */
-#if   (KYBER_K == 2)
-#define KYBER_NAMESPACE(s) pqcrystals_kyber512_ref_##s
-#elif (KYBER_K == 3)
-#define KYBER_NAMESPACE(s) pqcrystals_kyber768_ref_##s
-#elif (KYBER_K == 4)
-#define KYBER_NAMESPACE(s) pqcrystals_kyber1024_ref_##s
-#else
+#if ( (KYBER_K != 2) && (KYBER_K != 3) && (KYBER_K != 4) )
 #error "KYBER_K must be in {2,3,4}"
 #endif
 

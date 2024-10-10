@@ -20,12 +20,8 @@ RAND_SOURCES = $(RAND_PATH)/randombytes.c $(RAND_PATH)/rng.c $(RAND_PATH)/chacha
 CFLAGS += -I$(HASH_PATH) -I$(SORT_PATH) -I$(RAND_PATH)
 
 CYCLES_PATH = ../../common
-M1_CYCLES_HEADERS = $(CYCLES_PATH)/m1cycles.h
-M1_CYCLES_SOURCES = $(CYCLES_PATH)/m1cycles.c
-A72_CYCLES_HEADERS = $(CYCLES_PATH)/hal.h
-A72_CYCLES_SOURCES = $(CYCLES_PATH)/hal.c
-CYCLES_HEADERS = $(M1_CYCLES_HEADERS) $(A72_CYCLES_HEADERS)
-CYCLES_SOURCES = $(M1_CYCLES_SOURCES) $(A72_CYCLES_SOURCES)
+CYCLES_HEADERS = $(CYCLES_PATH)/cycles.h
+CYCLES_SOURCES = $(CYCLES_PATH)/cycles.c
 
 BENCHFLAGS = -I$(CYCLES_PATH) -DBENCH
 
@@ -53,8 +49,8 @@ kyber_test: kyber_test.c $(HEADERS) $(SOURCES)
 kyber_testvectors: kyber_testvectors.c $(HEADERS) $(SOURCES)
 	$(CC) $(CFLAGS) $(SOURCES) $< -o $@ -DNORAND
 
-kyber_speed: kyber_speed.c $(HEADERS) $(SOURCES) $(M1_CYCLES_HEADERS) $(M1_CYCLES_SOURCES)
-	$(CC) $(CFLAGS) $(SOURCES) $(M1_CYCLES_SOURCES) $< -o $@
+kyber_speed: kyber_speed.c $(HEADERS) $(SOURCES) $(CYCLES_HEADERS) $(CYCLES_SOURCES)
+	$(CC) $(CFLAGS) $(SOURCES) $(CYCLES_SOURCES) $< -o $@
 
 .PHONY: bench clean
 

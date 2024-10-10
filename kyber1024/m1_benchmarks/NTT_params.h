@@ -1,1 +1,0 @@
-../ntt/NTT_params.h

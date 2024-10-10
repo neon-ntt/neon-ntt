@@ -10,13 +10,13 @@
 #include "poly.h"
 #include "polyvec.h"
 #include "ntt.h"
-#include "m1cycles.h"
+#include "cycles.h"
 
 #define NTESTS 100000
 
 uint8_t seed[KYBER_SYMBYTES] = {0};
 
-#define TIME(s) s = rdtsc();
+#define TIME(s) s = get_cycle();
 // Result is clock cycles
 #define  CALC(start, stop) (stop - start) / NTESTS;
 
@@ -36,7 +36,7 @@ int main(void)
 
 
 // Init performance counter
-  setup_rdtsc();
+  init_counter();
 //
 
   TIME(start);
