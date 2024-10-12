@@ -357,7 +357,7 @@ void indcpa_keypair_derand(uint8_t pk[KYBER_INDCPA_PUBLICKEYBYTES],
     }
 
     for (i = 0; i < KYBER_K; i++) {
-        KYBER_AARCH64__asm_asymmetric_mul_montgomery(&(a[i][0][0]), &(skpv[0][0]), &(skpv_asymmetric[0][0]), asymmetric_const, pkpv[i]);
+        KYBER_AARCH64__asm_asymmetric_mul_montgomery(pkpv[i], &(a[i][0][0]), &(skpv[0][0]), &(skpv_asymmetric[0][0]), asymmetric_const);
     }
 
     polyvec_add_reduce(pkpv, e);
@@ -437,10 +437,10 @@ void indcpa_enc(uint8_t c[KYBER_INDCPA_BYTES],
     }
 
     for (i = 0; i < KYBER_K; i++) {
-        KYBER_AARCH64__asm_asymmetric_mul(&(at[i][0][0]), &(sp[0][0]), &(sp_asymmetric[0][0]), asymmetric_const, b[i]);
+        KYBER_AARCH64__asm_asymmetric_mul(b[i], &(at[i][0][0]), &(sp[0][0]), &(sp_asymmetric[0][0]), asymmetric_const);
     }
 
-    KYBER_AARCH64__asm_asymmetric_mul(&(pkpv[0][0]), &(sp[0][0]), &(sp_asymmetric[0][0]), asymmetric_const, v);
+    KYBER_AARCH64__asm_asymmetric_mul(v, &(pkpv[0][0]), &(sp[0][0]), &(sp_asymmetric[0][0]), asymmetric_const);
 
     polyvec_invntt_to_mont(b);
     invntt(v);
@@ -484,7 +484,7 @@ void indcpa_dec(uint8_t m[KYBER_INDCPA_MSGBYTES],
         KYBER_AARCH64__asm_point_mul_extended(&(b_asymmetric[i][0]), &(b[i][0]), pre_asymmetric_table_Q1_extended, asymmetric_const);
     }
 
-    KYBER_AARCH64__asm_asymmetric_mul(&(skpv[0][0]), &(b[0][0]), &(b_asymmetric[0][0]), asymmetric_const, mp);
+    KYBER_AARCH64__asm_asymmetric_mul(mp, &(skpv[0][0]), &(b[0][0]), &(b_asymmetric[0][0]), asymmetric_const);
 
     invntt(mp);
 

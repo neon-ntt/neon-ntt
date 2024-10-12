@@ -269,9 +269,16 @@ _KYBER_AARCH64__asm_asymmetric_mul:
     src2asy_3 .req x14
     counter   .req x19
 
-    ldr s4, [x3]
+    mov des, x0
+    mov src1_0, x1
+    mov src2_0, x2
+    mov src2asy_0, x3
 
-    add des, x4, #0
+    ldr s4, [x4]
+
+    // ldr s4, [x3]
+
+    // add des, x4, #0
 
     add     src1_1,    src1_0, #512*1
     add     src2_1,    src2_0, #512*1
@@ -618,9 +625,16 @@ _KYBER_AARCH64__asm_asymmetric_mul_montgomery:
     src2asy_3 .req x14
     counter   .req x19
 
-    ldr q4, [x3]
+    mov des, x0
+    mov src1_0, x1
+    mov src2_0, x2
+    mov src2asy_0, x3
 
-    add des, x4, #0
+    ldr q4, [x4]
+
+    // ldr q4, [x3]
+
+    // add des, x4, #0
 
     add     src1_1,    src1_0, #512*1
     add     src2_1,    src2_0, #512*1

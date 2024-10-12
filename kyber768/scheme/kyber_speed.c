@@ -110,7 +110,7 @@ int main(void){
 
     WRAP_FUNC("asymmetric_mul (dim x base_mul)",
               cycles, time0, time1,
-              KYBER_AARCH64__asm_asymmetric_mul((int16_t *)(&poly1[0][0]), (int16_t *)(&poly2[0][0]), (int16_t *)(&poly2_asymmetric[0][0]), asymmetric_const, (int16_t *)polyout));
+              KYBER_AARCH64__asm_asymmetric_mul((int16_t *)polyout, (int16_t *)(&poly1[0][0]), (int16_t *)(&poly2[0][0]), (int16_t *)(&poly2_asymmetric[0][0]), asymmetric_const));
 
     WRAP_FUNC("iNTT",
               cycles, time0, time1,
@@ -123,7 +123,7 @@ int main(void){
                   KYBER_AARCH64__asm_point_mul_extended(&(s_asymmetric[j][0]), &(s[j][0]), pre_asymmetric_table_Q1_extended, asymmetric_const); \
               } \
               for (size_t j = 0; j < KYBER_K; j++){ \
-                  KYBER_AARCH64__asm_asymmetric_mul(&(A[j][0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const, &(acc[j][0])); \
+                  KYBER_AARCH64__asm_asymmetric_mul(&(acc[j][0]), &(A[j][0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const); \
               } \
               for (size_t j = 0; j < KYBER_K; j++){ \
                   iNTT(&(acc[j][0])); \
@@ -131,7 +131,7 @@ int main(void){
 
     WRAP_FUNC("InnerProd (Enc)",
               cycles, time0, time1,
-              KYBER_AARCH64__asm_asymmetric_mul(&(A[0][0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const, &(acc[0][0])); \
+              KYBER_AARCH64__asm_asymmetric_mul(&(acc[0][0]), &(A[0][0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const); \
               iNTT(&(acc[0][0])));
 
     WRAP_FUNC("InnerProd (Dec)",
@@ -140,7 +140,7 @@ int main(void){
                   NTT(&(s[0][0])); \
                   KYBER_AARCH64__asm_point_mul_extended(&(s_asymmetric[j][0]), &(s[j][0]), pre_asymmetric_table_Q1_extended, asymmetric_const); \
               } \
-              KYBER_AARCH64__asm_asymmetric_mul(&(A[0][0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const, &(acc[0][0])); \
+              KYBER_AARCH64__asm_asymmetric_mul(&(acc[0][0]), &(A[0][0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const); \
               iNTT(&(acc[0][0])));
 
     return 0;

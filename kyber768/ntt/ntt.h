@@ -43,8 +43,8 @@ extern void KYBER_AARCH64__asm_intt_SIMD_bot(int16_t *, const int16_t *, const i
 extern void KYBER_AARCH64__asm_intt_SIMD_top(int16_t *, const int16_t *, const int16_t *);
 
 extern void KYBER_AARCH64__asm_point_mul_extended(int16_t *, const int16_t *, const int16_t *, const int16_t *);
-extern void KYBER_AARCH64__asm_asymmetric_mul(const int16_t *, const int16_t *, const int16_t *, const int16_t *, int16_t *);
-extern void KYBER_AARCH64__asm_asymmetric_mul_montgomery(const int16_t *, const int16_t *, const int16_t *, const int16_t *, int16_t *);
+extern void KYBER_AARCH64__asm_asymmetric_mul(int16_t *, const int16_t *, const int16_t *, const int16_t *, const int16_t *);
+extern void KYBER_AARCH64__asm_asymmetric_mul_montgomery(int16_t *, const int16_t *, const int16_t *, const int16_t *, const int16_t *);
 
 extern
 const int16_t asymmetric_const[8];
