@@ -1,1 +1,0 @@
-../ntt/__asm_narrow.S

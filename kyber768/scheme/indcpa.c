@@ -331,7 +331,6 @@ void indcpa_keypair_derand(uint8_t pk[KYBER_INDCPA_PUBLICKEYBYTES],
     uint8_t buf[2 * KYBER_SYMBYTES];
     const uint8_t *publicseed = buf;
     const uint8_t *noiseseed = buf + KYBER_SYMBYTES;
-    uint8_t nonce = 0;
     int16_t a[KYBER_K][KYBER_K][KYBER_N];
     int16_t e[KYBER_K][KYBER_N];
     int16_t pkpv[KYBER_K][KYBER_N];
@@ -344,10 +343,20 @@ void indcpa_keypair_derand(uint8_t pk[KYBER_INDCPA_PUBLICKEYBYTES],
 
     gen_a(a, publicseed);
 
-    for(i = 0; i < KYBER_K; i++)
-        poly_getnoise_eta1(&skpv[i][0], noiseseed, nonce++);
-    for(i = 0; i < KYBER_K; i++)
-        poly_getnoise_eta1(&e[i][0], noiseseed, nonce++);
+#if KYBER_K == 2
+    poly_getnoise_eta1_x2(&(skpv[0][0]), &(skpv[1][0]), noiseseed, 0, 1);
+    poly_getnoise_eta1_x2(&(e[0][0]), &(e[1][0]), noiseseed, 2, 3);
+#elif KYBER_K == 3
+    poly_getnoise_eta1_x2(&(skpv[0][0]), &(skpv[1][0]), noiseseed, 0, 1);
+    poly_getnoise_eta1_x2(&(skpv[2][0]), &(e[0][0]), noiseseed, 2, 3);
+    poly_getnoise_eta1_x2(&(e[1][0]), &(e[2][0]), noiseseed, 4, 5);
+#elif KYBER_K == 4
+    poly_getnoise_eta1_x2(&(skpv[0][0]), &(skpv[1][0]), noiseseed, 0, 1);
+    poly_getnoise_eta1_x2(&(skpv[2][0]), &(skpv[3][0]), noiseseed, 2, 3);
+    poly_getnoise_eta1_x2(&(e[0][0]), &(e[1][0]), noiseseed, 4, 5);
+    poly_getnoise_eta1_x2(&(e[2][0]), &(e[3][0]), noiseseed, 6, 7);
+#endif
+
 
     polyvec_ntt(skpv);
     polyvec_ntt(e);
@@ -403,32 +412,32 @@ void indcpa_enc(uint8_t c[KYBER_INDCPA_BYTES],
     poly_frommsg(k, m);
     gen_at(at, seed);
 
-    #if KYBER_K == 2
+#if KYBER_K == 2
     // ETA1 != ETA2 (3 != 2)
     poly_getnoise_eta1_x2(&(sp[0][0]), &(sp[1][0]), coins, 0, 1);
     poly_getnoise_eta2_x2(&(ep[0][0]), &(ep[1][0]), coins, 2, 3);
     poly_getnoise_eta2(&(epp[0]), coins, 4);
-    #elif KYBER_K == 3
-    #if KYBER_ETA1 == KYBER_ETA2
+#elif KYBER_K == 3
+#if KYBER_ETA1 == KYBER_ETA2
     // Because ETA1 == ETA2
     poly_getnoise_eta1_x2(&(sp[0][0]), &(sp[1][0]), coins, 0, 1);
     poly_getnoise_eta1_x2(&(sp[2][0]), &(ep[0][0]), coins, 2, 3);
     poly_getnoise_eta1_x2(&(ep[1][0]), &(ep[2][0]), coins, 4, 5);
     poly_getnoise_eta2(&(epp[0]), coins, 6);
-    #else
+#else
 #error "We need eta1 == eta2 here"
-    #endif
-    #elif KYBER_K == 4
-    #if KYBER_ETA1 == KYBER_ETA2
+#endif
+#elif KYBER_K == 4
+#if KYBER_ETA1 == KYBER_ETA2
     poly_getnoise_eta1_x2(&(sp[0][0]), &(sp[1][0]), coins, 0, 1);
     poly_getnoise_eta1_x2(&(sp[2][0]), &(sp[3][0]), coins, 2, 3);
     poly_getnoise_eta1_x2(&(ep[0][0]), &(ep[1][0]), coins, 4, 5);
     poly_getnoise_eta1_x2(&(ep[2][0]), &(ep[3][0]), coins, 6, 7);
     poly_getnoise_eta2(&(epp[0]), coins, 8);
-    #else
+#else
 #error "We need eta1 == eta2 here"
-    #endif
-    #endif
+#endif
+#endif
 
     polyvec_ntt(sp);
 

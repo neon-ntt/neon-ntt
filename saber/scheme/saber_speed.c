@@ -36,27 +36,21 @@
 #include "fips202.h"
 #include "fips202x2.h"
 #include "NTT.h"
-#include "m1cycles.h"
+#include "cycles.h"
 
-#define NTESTS 1000000
+// #define NTESTS 1000000
+#define NTESTS 100000
 
-#define TIME(s) s = rdtsc();
+#define TIME(s) s = get_cycle();
 // Result is clock cycles
 #define  CALC(start, stop) (stop - start) / NTESTS;
 
 long long times[NTESTS + 1];
 long long offset;
 
-extern void __asm_10_to_32(uint32_t *des, const uint8_t *src);
-extern void __asm_13_to_32(uint32_t *des, const uint8_t *src);
-extern void __asm_16_to_32(uint32_t *des, const uint16_t *src);
-extern void __asm_round(uint16_t *des, const uint32_t *src, const uint16_t const_h1);
-extern void __asm_enc_add_msg(uint16_t *des, const uint32_t *src, const uint16_t *msg, const uint16_t const_h1);
-extern void __asm_dec_get_msg(uint16_t *des, const uint32_t *src, const uint16_t *c_msg, const uint16_t const_h2);
-
 uint8_t seed[SABER_SEEDBYTES] = {0};
 
-int main()
+int main(void)
 {
   unsigned int i,j,k;
   unsigned char pk[CRYPTO_PUBLICKEYBYTES] = {0};
@@ -82,7 +76,7 @@ int main()
   uint32_t acc_NTT[SABER_L][SABER_N];
 
   // setup cycles
-  setup_rdtsc();
+  init_counter();
 
 // CCA
 

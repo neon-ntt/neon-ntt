@@ -17,7 +17,7 @@ Jose Maria Bermudo Mera, Michiel Van Beirendonck, Andrea Basso.
 #include "randombytes.h"
 #include "fips202.h"
 #include "verify.h"
-#include "crypto_kem.h"
+#include "kem.h"
 
 int crypto_kem_keypair(unsigned char *pk, unsigned char *sk)
 {

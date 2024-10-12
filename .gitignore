@@ -7,11 +7,14 @@
 **/testvectors
 
 **/kyber_test
-**/kyber_speed
 **/kyber_testvectors
+**/kyber_speed
 **/dilithium_test
-**/dilithium_speed
 **/dilithium_testvectors
+**/dilithium_speed
+**/saber_test
+**/saber_testvectors
+**/saber_speed
 
 work
 work-patched

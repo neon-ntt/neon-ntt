@@ -1,1 +1,0 @@
-../ntt/macros_common.i

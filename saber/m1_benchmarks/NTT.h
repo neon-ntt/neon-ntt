@@ -1,1 +1,0 @@
-../scheme/NTT.h
