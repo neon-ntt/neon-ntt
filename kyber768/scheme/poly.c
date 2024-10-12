@@ -10,6 +10,7 @@
  *
  * MIT License
  *
+ * Copyright (c) 2024: Vincent Hwang
  * Copyright (c) 2023: Hanno Becker, Vincent Hwang, Matthias J. Kannwischer, Bo-Yin Yang, and Shang-Yi Yang
  *
  *
@@ -32,14 +33,17 @@
  * SOFTWARE.
  */
 
-#include <stdio.h>
-
 #include "params.h"
 #include "poly.h"
 #include "ntt.h"
 #include "reduce.h"
 #include "cbd.h"
 #include "symmetric.h"
+
+#include <arm_neon.h>
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wgnu-statement-expression"
 
 /*************************************************
 * Name:        poly_getnoise_eta1
@@ -176,6 +180,184 @@ void poly_sub_reduce(int16_t c[KYBER_N], const int16_t a[KYBER_N]) {
     KYBER_AARCH64__asm_sub_reduce(c, a);
 }
 
+#define SHIFT_WITH_HOLES_B(a, mask_lo, mask_hi, shift_i) ({ \
+            int8x16_t val; \
+            do { \
+                val = (int8x16_t)vorrq_s16((int16x8_t)vandq_s8(a, mask_lo), \
+                                  vshrq_n_s16((int16x8_t)vandq_s8(a, mask_hi), shift_i)); \
+            } while(0); \
+            val; \
+        })
+
+#define SHIFT_WITH_HOLES_B_LAZY(a, mask_hi, shift_i) ({ \
+            int8x16_t val; \
+            do { \
+                val = (int8x16_t)vorrq_s16((int16x8_t)a, \
+                                 vshrq_n_s16((int16x8_t)vandq_s8(a, mask_hi), shift_i)); \
+            } while(0); \
+            val; \
+        })
+
+#define SHIFT_WITH_HOLES_B_VERY_LAZY(a, shift_i) ({ \
+            int8x16_t val; \
+            do { \
+                val = (int8x16_t)vorrq_s16((int16x8_t)a, \
+                                 vshrq_n_s16((int16x8_t)a, shift_i)); \
+            } while(0); \
+            val; \
+        })
+
+#define SHIFT_WITH_HOLES_H(a, mask_lo, mask_hi, shift_i) ({ \
+            int16x8_t val; \
+            do { \
+                val = (int16x8_t)vorrq_s32((int32x4_t)vandq_s16(a, mask_lo), \
+                                 vshrq_n_s32((int32x4_t)vandq_s16(a, mask_hi), shift_i)); \
+            } while(0); \
+            val; \
+        })
+
+#define SHIFT_WITH_HOLES_S(a, mask_lo, mask_hi, shift_i) ({ \
+            int32x4_t val; \
+            do { \
+                val = (int32x4_t)vorrq_s64((int64x2_t)vandq_s32(a, mask_lo), \
+                                 vshrq_n_s64((int64x2_t)vandq_s32(a, mask_hi), shift_i)); \
+            } while(0); \
+            val; \
+        })
+
+#if (KYBER_POLYCOMPRESSEDBYTES == 128)
+static
+void poly_compress4_neon(uint8_t r[128], const int16_t a[KYBER_N]){
+
+    int16x8_t tvec[4];
+    int16x8_t mask4 = vdupq_n_s16(0xf);
+    int16x8_t one = vdupq_n_s16(1);
+#if __ARM_FEATURE_DOTPROD
+    int8x16_t dot_v = {1, 0, 16, 0, 1, 0, 16, 0, 1, 0, 16, 0, 1, 0, 16, 0};
+    int32x4_t zero_int32x4 = {0, 0, 0, 0};
+#endif
+
+    for(size_t i = 0; i < KYBER_N / 32; i++) {
+
+        tvec[0] = vld1q_s16(a + i * 32 + 8 * 0);
+        tvec[1] = vld1q_s16(a + i * 32 + 8 * 1);
+        tvec[2] = vld1q_s16(a + i * 32 + 8 * 2);
+        tvec[3] = vld1q_s16(a + i * 32 + 8 * 3);
+
+        tvec[0] = vqdmulhq_n_s16(tvec[0], 315);
+        tvec[1] = vqdmulhq_n_s16(tvec[1], 315);
+        tvec[2] = vqdmulhq_n_s16(tvec[2], 315);
+        tvec[3] = vqdmulhq_n_s16(tvec[3], 315);
+
+        tvec[0] = vhaddq_s16(tvec[0], one);
+        tvec[1] = vhaddq_s16(tvec[1], one);
+        tvec[2] = vhaddq_s16(tvec[2], one);
+        tvec[3] = vhaddq_s16(tvec[3], one);
+
+        tvec[0] = vandq_s16(tvec[0], mask4);
+        tvec[1] = vandq_s16(tvec[1], mask4);
+        tvec[2] = vandq_s16(tvec[2], mask4);
+        tvec[3] = vandq_s16(tvec[3], mask4);
+
+#if __ARM_FEATURE_DOTPROD
+
+        tvec[0] = (int16x8_t)vdotq_s32(zero_int32x4, (int8x16_t)tvec[0], dot_v);
+        tvec[1] = (int16x8_t)vdotq_s32(zero_int32x4, (int8x16_t)tvec[1], dot_v);
+        tvec[2] = (int16x8_t)vdotq_s32(zero_int32x4, (int8x16_t)tvec[2], dot_v);
+        tvec[3] = (int16x8_t)vdotq_s32(zero_int32x4, (int8x16_t)tvec[3], dot_v);
+
+        tvec[0] = vmovn_high_s32(vmovn_s32((int32x4_t)tvec[0]), (int32x4_t)tvec[1]);
+        tvec[2] = vmovn_high_s32(vmovn_s32((int32x4_t)tvec[2]), (int32x4_t)tvec[3]);
+
+        tvec[0] = (int16x8_t)vmovn_high_s16(vmovn_s16(tvec[0]), tvec[2]);
+
+#else
+
+        tvec[0] = (int16x8_t)vmovn_high_s16(vmovn_s16(tvec[0]), tvec[1]);
+        tvec[2] = (int16x8_t)vmovn_high_s16(vmovn_s16(tvec[2]), tvec[3]);
+
+        tvec[0] = (int16x8_t)SHIFT_WITH_HOLES_B_VERY_LAZY((int8x16_t)tvec[0], 4);
+        tvec[2] = (int16x8_t)SHIFT_WITH_HOLES_B_VERY_LAZY((int8x16_t)tvec[2], 4);
+
+        tvec[0] = (int16x8_t)vmovn_high_s16(vmovn_s16(tvec[0]), tvec[2]);
+
+#endif
+
+        vst1q_s16((int16_t*)r, tvec[0]);
+
+        r += 16;
+    }
+
+}
+#endif
+
+#if (KYBER_POLYCOMPRESSEDBYTES == 160)
+static
+void poly_compress5_neon(uint8_t r[160], const int16_t a[KYBER_N]){
+
+    int16x8_t tvec[2];
+    int16x8_t mask5 = vdupq_n_s16(0x1f);
+    int16x8_t mask_h_lo = {0x3ff, 0, 0x3ff, 0, 0x3ff, 0, 0x3ff, 0};
+    int16x8_t mask_h_hi = {0, 0x3ff, 0, 0x3ff, 0, 0x3ff, 0, 0x3ff};
+    int32x4_t mask_w_lo = {0xfffff, 0, 0xfffff, 0};
+    int32x4_t mask_w_hi = {0, 0xfffff, 0, 0xfffff};
+#if __ARM_FEATURE_DOTPROD
+    int8x16_t dot_v = {1, 0, 32, 0, 1, 0, 32, 0, 1, 0, 32, 0, 1, 0, 32, 0};
+    int32x4_t zero_int32x4 = {0, 0, 0, 0};
+#else
+    int8x16_t mask_b_lo = {0x1f, 0, 0x1f, 0, 0x1f, 0, 0x1f, 0, 0x1f, 0, 0x1f, 0, 0x1f, 0, 0x1f, 0};
+    int8x16_t mask_b_hi = {0, 0x1f, 0, 0x1f, 0, 0x1f, 0, 0x1f, 0, 0x1f, 0, 0x1f, 0, 0x1f, 0, 0x1f};
+#endif
+
+    uint16_t t[2][8];
+    for(size_t i = 0; i < KYBER_N / 16; i++) {
+
+        tvec[0] = vld1q_s16(a + 16 * i + 8 * 0);
+        tvec[1] = vld1q_s16(a + 16 * i + 8 * 1);
+        tvec[0] = vqrdmulhq_n_s16(tvec[0], 315);
+        tvec[1] = vqrdmulhq_n_s16(tvec[1], 315);
+        tvec[0] = vandq_s16(tvec[0], mask5);
+        tvec[1] = vandq_s16(tvec[1], mask5);
+
+#if __ARM_FEATURE_DOTPROD
+
+        tvec[0] = (int16x8_t)vdotq_s32(zero_int32x4, (int8x16_t)tvec[0], dot_v);
+        tvec[1] = (int16x8_t)vdotq_s32(zero_int32x4, (int8x16_t)tvec[1], dot_v);
+
+        tvec[0] = vmovn_high_s32(vmovn_s32((int32x4_t)tvec[0]), (int32x4_t)tvec[1]);
+
+        tvec[0] = SHIFT_WITH_HOLES_H(tvec[0], mask_h_lo, mask_h_hi, 6);
+        tvec[0] = (int16x8_t)SHIFT_WITH_HOLES_S((int32x4_t)tvec[0], mask_w_lo, mask_w_hi, 12);
+
+#else
+
+        tvec[0] = (int16x8_t)vmovn_high_s16(vmovn_s16(tvec[0]), tvec[1]);
+
+        tvec[0] = (int16x8_t)SHIFT_WITH_HOLES_B((int8x16_t)tvec[0], mask_b_lo, mask_b_hi, 3);
+        tvec[0] = SHIFT_WITH_HOLES_H(tvec[0], mask_h_lo, mask_h_hi, 6);
+        tvec[0] = (int16x8_t)SHIFT_WITH_HOLES_S((int32x4_t)tvec[0], mask_w_lo, mask_w_hi, 12);
+
+#endif
+
+        vst1q_s16((int16_t*)t[0], tvec[0]);
+
+        r[0] = t[0][0];
+        r[1] = t[0][0] >> 8;
+        r[2] = t[0][1];
+        r[3] = t[0][1] >> 8;
+        r[4] = t[0][2];
+        r[5] = t[0][4];
+        r[6] = t[0][4] >> 8;
+        r[7] = t[0][5];
+        r[8] = t[0][5] >> 8;
+        r[9] = t[0][6];
+
+        r += 10;
+    }
+
+}
+#endif
+
 /*************************************************
 * Name:        poly_compress
 *
@@ -186,52 +368,13 @@ void poly_sub_reduce(int16_t c[KYBER_N], const int16_t a[KYBER_N]) {
 *              - const poly *a: pointer to input polynomial
 **************************************************/
 void poly_compress(uint8_t r[KYBER_POLYCOMPRESSEDBYTES], const int16_t a[KYBER_N]) {
-    unsigned int i, j;
-    int16_t u;
-    uint8_t t[8];
-
-    #if (KYBER_POLYCOMPRESSEDBYTES == 128)
-    for (i = 0; i < KYBER_N / 8; i++) {
-        for (j = 0; j < 8; j++) {
-            u  = a[8 * i + j];
-
-            // 16-bit precision suffices for round(2^4 x / q)
-            // inputs are in [-q/2, ..., q/2]
-            // 315 = round(16 * 2^16 / q)
-            u = (int16_t)(((int32_t)u * 315 + (1 << 15)) >> 16);
-            t[j] = u & 0xf;
-
-        }
-
-        r[0] = t[0] | (t[1] << 4);
-        r[1] = t[2] | (t[3] << 4);
-        r[2] = t[4] | (t[5] << 4);
-        r[3] = t[6] | (t[7] << 4);
-        r += 4;
-    }
-    #elif (KYBER_POLYCOMPRESSEDBYTES == 160)
-    for (i = 0; i < KYBER_N / 8; i++) {
-        for (j = 0; j < 8; j++) {
-            u  = a[8 * i + j];
-
-            // 15-bit precision suffices for round(2^5 x / q)
-            // inputs are in [-q/2, ..., q/2]
-            // 315 = round(32 * 2^15 / q)
-            u = (int16_t)(((int32_t)u * 315 + (1 << 14)) >> 15);
-            t[j] = u & 0x1f;
-
-        }
-
-        r[0] = (t[0] >> 0) | (t[1] << 5);
-        r[1] = (t[1] >> 3) | (t[2] << 2) | (t[3] << 7);
-        r[2] = (t[3] >> 1) | (t[4] << 4);
-        r[3] = (t[4] >> 4) | (t[5] << 1) | (t[6] << 6);
-        r[4] = (t[6] >> 2) | (t[7] << 3);
-        r += 5;
-    }
-    #else
+#if (KYBER_POLYCOMPRESSEDBYTES == 128)
+    poly_compress4_neon(r, a);
+#elif (KYBER_POLYCOMPRESSEDBYTES == 160)
+    poly_compress5_neon(r, a);
+#else
 #error "KYBER_POLYCOMPRESSEDBYTES needs to be in {128, 160}"
-    #endif
+#endif
 }
 
 /*************************************************
@@ -311,39 +454,10 @@ void poly_tobytes(uint8_t r[KYBER_POLYBYTES], const int16_t a[KYBER_N]) {
 *              - const uint8_t *a: pointer to input byte array
 *                                  (of KYBER_POLYBYTES bytes)
 **************************************************/
-void poly_frombytes(int16_t r[KYBER_N], const uint8_t a[KYBER_POLYBYTES]) {
-    uint8x16x3_t neon_buf;
-    uint16x8x4_t tmp;
-    int16x8x4_t value;
-    uint16x8_t const_0xfff;
-    const_0xfff = vdupq_n_u16(0xfff);
-
-    unsigned int i, j = 0;
-    for (i = 0; i < KYBER_POLYBYTES; i += 48) {
-        neon_buf = vld3q_u8(&a[i]);
-
-        // Val0: 0-1 | 3-4 | 6-7| 9-10
-        tmp.val[0] = (uint16x8_t)vzip1q_u8(neon_buf.val[0], neon_buf.val[1]);
-        tmp.val[1] = (uint16x8_t)vzip2q_u8(neon_buf.val[0], neon_buf.val[1]);
-
-        tmp.val[0] = vandq_u16(tmp.val[0], const_0xfff);
-        tmp.val[1] = vandq_u16(tmp.val[1], const_0xfff);
-
-        // Val1: 1-2 | 4-5 | 7-8 | 10-11
-        tmp.val[2] = (uint16x8_t)vzip1q_u8(neon_buf.val[1], neon_buf.val[2]);
-        tmp.val[3] = (uint16x8_t)vzip2q_u8(neon_buf.val[1], neon_buf.val[2]);
-
-        tmp.val[2] = vshrq_n_u16(tmp.val[2], 4);
-        tmp.val[3] = vshrq_n_u16(tmp.val[3], 4);
-
-        // Final value
-        value.val[0] = (int16x8_t)vzip1q_u16(tmp.val[0], tmp.val[2]);
-        value.val[1] = (int16x8_t)vzip2q_u16(tmp.val[0], tmp.val[2]);
-        value.val[2] = (int16x8_t)vzip1q_u16(tmp.val[1], tmp.val[3]);
-        value.val[3] = (int16x8_t)vzip2q_u16(tmp.val[1], tmp.val[3]);
-
-        vst1q_s16_x4(r + j, value);
-        j += 32;
+void poly_frombytes(int16_t r[KYBER_N], const uint8_t a[KYBER_POLYBYTES]){
+    for(size_t i = 0; i < KYBER_N / 2; i++) {
+        r[2 * i    ] = ((a[3 * i + 0] >> 0) | ((uint16_t)a[3 * i + 1] << 8)) & 0xFFF;
+        r[2 * i + 1] = ((a[3 * i + 1] >> 4) | ((uint16_t)a[3 * i + 2] << 4)) & 0xFFF;
     }
 }
 
@@ -367,6 +481,71 @@ void poly_frommsg(int16_t r[KYBER_N], const uint8_t msg[KYBER_INDCPA_MSGBYTES]) 
     }
 }
 
+static
+void poly_compress1_neon(uint8_t r[32], const int16_t a[KYBER_N]){
+
+    int16x8_t tvec[16];
+    int16x8_t mask1 = vdupq_n_s16(0x1);
+#if __ARM_FEATURE_DOTPROD
+    int8x16_t dot_v1 = {1, 2, 4, 8, 1, 2, 4, 8, 1, 2, 4, 8, 1, 2, 4, 8};
+    int8x16_t dot_v4 = {1, 0, 16, 0, 1, 0, 16, 0, 1, 0, 16, 0, 1, 0, 16, 0};
+    int32x4_t zero_int32x4 = {0, 0, 0, 0};
+#endif
+
+    for(size_t i = 0; i < KYBER_N / 128; i++){
+
+        for(size_t j = 0; j < 16; j++){
+            tvec[j] = vld1q_s16(a + i * 128 + 8 * j);
+            tvec[j] = vqdmulhq_n_s16(tvec[j], 315);
+            tvec[j] = vrshrq_n_s16(tvec[j], 4);
+            tvec[j] = vandq_s16(tvec[j], mask1);
+        }
+
+#if __ARM_FEATURE_DOTPROD
+
+        for(size_t j = 0; j < 16; j += 2){
+            tvec[j] = (int16x8_t)vmovn_high_s16(vmovn_s16(tvec[j]), tvec[j + 1]);
+            tvec[j] = (int16x8_t)vdotq_s32(zero_int32x4, (int8x16_t)tvec[j], dot_v1);
+        }
+
+        for(size_t j = 0; j < 16; j += 4){
+            tvec[j] = vmovn_high_s32(vmovn_s32((int32x4_t)tvec[j]), (int32x4_t)tvec[j + 2]);
+            tvec[j] = (int16x8_t)vdotq_s32(zero_int32x4, (int8x16_t)tvec[j], dot_v4);
+        }
+
+        tvec[0] = (int16x8_t)vmovn_high_s32(vmovn_s32((int32x4_t)tvec[0]), (int32x4_t)tvec[4]);
+        tvec[8] = (int16x8_t)vmovn_high_s32(vmovn_s32((int32x4_t)tvec[8]), (int32x4_t)tvec[12]);
+
+        tvec[0] = (int16x8_t)vmovn_high_s16(vmovn_s16(tvec[0]), tvec[8]);
+
+#else
+
+        for(size_t j = 0; j < 16; j += 2){
+            tvec[j] = (int16x8_t)vmovn_high_s16(vmovn_s16(tvec[j]), tvec[j + 1]);
+            tvec[j] = (int16x8_t)SHIFT_WITH_HOLES_B_VERY_LAZY((int8x16_t)tvec[j], 7);
+        }
+
+        for(size_t j = 0; j < 16; j += 4){
+            tvec[j] = (int16x8_t)vmovn_high_s16(vmovn_s16(tvec[j]), tvec[j + 2]);
+            tvec[j] = (int16x8_t)SHIFT_WITH_HOLES_B_VERY_LAZY((int8x16_t)tvec[j], 6);
+        }
+
+        tvec[0] = (int16x8_t)vmovn_high_s16(vmovn_s16(tvec[0]), tvec[4]);
+        tvec[8] = (int16x8_t)vmovn_high_s16(vmovn_s16(tvec[8]), tvec[12]);
+        tvec[0] = (int16x8_t)SHIFT_WITH_HOLES_B_VERY_LAZY((int8x16_t)tvec[0], 4);
+        tvec[8] = (int16x8_t)SHIFT_WITH_HOLES_B_VERY_LAZY((int8x16_t)tvec[8], 4);
+
+        tvec[0] = (int16x8_t)vmovn_high_s16(vmovn_s16(tvec[0]), tvec[8]);
+
+#endif
+
+        vst1q_u8(r, (uint8x16_t)tvec[0]);
+        r += 16;
+
+    }
+
+}
+
 /*************************************************
 * Name:        poly_tomsg
 *
@@ -376,22 +555,7 @@ void poly_frommsg(int16_t r[KYBER_N], const uint8_t msg[KYBER_INDCPA_MSGBYTES]) 
 *              - const poly *a: pointer to input polynomial
 **************************************************/
 void poly_tomsg(uint8_t msg[KYBER_INDCPA_MSGBYTES], const int16_t a[KYBER_N]) {
-    unsigned int i, j;
-    int16_t u;
-    uint16_t t;
-
-    for (i = 0; i < KYBER_N / 8; i++) {
-        msg[i] = 0;
-        for (j = 0; j < 8; j++) {
-            u = a[8 * i + j];
-
-            // 19-bit precision suffices for round(2 x / q)
-            // inputs are in [-q/2, ..., q/2]
-            // 315 = round(2 * 2^19 / q)
-            u = (int16_t)(((int32_t)u * 315 + (1 << 18)) >> 19);
-            t = u & 1;
-
-            msg[i] |= t << j;
-        }
-    }
+    poly_compress1_neon(msg, a);
 }
+
+#pragma GCC diagnostic pop

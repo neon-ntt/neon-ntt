@@ -5,6 +5,8 @@ NISTFLAGS += -Wno-unused-result -mpopcnt -maes \
              -mtune=native -O3 -fomit-frame-pointer
 RM = /bin/rm
 
+CFLAGS += -march=armv8-a
+
 HASH_PATH = ../../common
 HASH_HEADERS = $(HASH_PATH)/fips202.h $(HASH_PATH)/fips202x2.h
 HASH_SOURCES = $(HASH_PATH)/fips202.c $(HASH_PATH)/fips202x2.c $(HASH_PATH)/feat.S
