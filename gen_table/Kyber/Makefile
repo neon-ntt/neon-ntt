@@ -1,13 +1,17 @@
 
+CC = gcc
+
 CFLAGS += -Wall -Wextra -Wmissing-prototypes -Wredundant-decls \
-          -Wshadow -mtune=native -O3
+          -Wshadow -O3 -march=armv8-a
 
-HEADERS = NTT_params.h tools.h gen_table.h
-SRCs = tools.c gen_table.c
+HEADERs = NTT_params.h tools.h naive_mult.h gen_table.h
+SOURCEs = tools.c naive_mult.c gen_table.c
 
-all: $(HEADERS) $(SRCs) call_gen.c
-	gcc -o gen_table $(CFLAGS) $(SRCs) call_gen.c
+all: call_gen
+
+call_gen: call_gen.c $(HEADERs) $(SOURCEs)
+	$(CC) $(CFLAGS) $(SOURCEs) $< -o $@
 
 .PHONY: clean
 clean:
-	rm -f gen_table
+	rm -f call_gen
