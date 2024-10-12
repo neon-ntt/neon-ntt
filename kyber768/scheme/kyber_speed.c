@@ -102,11 +102,11 @@ int main(void){
     WRAP_FUNC("NTT_heavy",
               cycles, time0, time1,
               NTT((int16_t *)(&poly2[0][0])); \
-              KYBER_AARCH64__asm_point_mul_extended((int16_t *)(&poly2_asymmetric[0][0]), (int16_t *)(&poly2[0][0]), pre_asymmetric_table_Q1_extended, asymmetric_const));
+              KYBER_AARCH64__asm_point_mul_extended((int16_t *)(&poly2_asymmetric[0][0]), (int16_t *)(&poly2[0][0]), pre_asymmetric_table_extended, asymmetric_const));
 
     WRAP_FUNC("point_mul",
               cycles, time0, time1,
-              KYBER_AARCH64__asm_point_mul_extended((int16_t *)(&poly2_asymmetric[0][0]), (int16_t *)(&poly2[0][0]), pre_asymmetric_table_Q1_extended, asymmetric_const));
+              KYBER_AARCH64__asm_point_mul_extended((int16_t *)(&poly2_asymmetric[0][0]), (int16_t *)(&poly2[0][0]), pre_asymmetric_table_extended, asymmetric_const));
 
     WRAP_FUNC("asymmetric_mul (dim x base_mul)",
               cycles, time0, time1,
@@ -120,7 +120,7 @@ int main(void){
               cycles, time0, time1,
               for (size_t j = 0; j < KYBER_K; j++){ \
                   NTT(&(s[0][0])); \
-                  KYBER_AARCH64__asm_point_mul_extended(&(s_asymmetric[j][0]), &(s[j][0]), pre_asymmetric_table_Q1_extended, asymmetric_const); \
+                  KYBER_AARCH64__asm_point_mul_extended(&(s_asymmetric[j][0]), &(s[j][0]), pre_asymmetric_table_extended, asymmetric_const); \
               } \
               for (size_t j = 0; j < KYBER_K; j++){ \
                   KYBER_AARCH64__asm_asymmetric_mul(&(acc[j][0]), &(A[j][0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const); \
@@ -138,7 +138,7 @@ int main(void){
               cycles, time0, time1,
               for (size_t j = 0; j < KYBER_K; j++){ \
                   NTT(&(s[0][0])); \
-                  KYBER_AARCH64__asm_point_mul_extended(&(s_asymmetric[j][0]), &(s[j][0]), pre_asymmetric_table_Q1_extended, asymmetric_const); \
+                  KYBER_AARCH64__asm_point_mul_extended(&(s_asymmetric[j][0]), &(s[j][0]), pre_asymmetric_table_extended, asymmetric_const); \
               } \
               KYBER_AARCH64__asm_asymmetric_mul(&(acc[0][0]), &(A[0][0][0]), &(s[0][0]), &(s_asymmetric[0][0]), asymmetric_const); \
               iNTT(&(acc[0][0])));

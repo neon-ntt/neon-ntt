@@ -8,6 +8,7 @@
  *
  * MIT License
  *
+ * Copyright (c) 2024: Vincent Hwang
  * Copyright (c) 2023: Vincent Hwang
  * Copyright (c) 2023: Hanno Becker, Vincent Hwang, Matthias J. Kannwischer, Bo-Yin Yang, and Shang-Yi Yang
  *
@@ -52,23 +53,23 @@ extern
 const int16_t constants[16];
 
 extern
-const int16_t streamlined_CT_negacyclic_table_Q1_jump_extended[((NTT_N - 1) + (1 << 0) + (1 << 4) + NTT_N) << 1];
+const int16_t streamlined_CT_negacyclic_table_jump_extended[((NTT_N - 1) + (1 << 0) + (1 << 4) + NTT_N) << 1];
 
 extern
-const int16_t pre_asymmetric_table_Q1_extended[ARRAY_N];
+const int16_t pre_asymmetric_table_extended[ARRAY_N];
 
 extern
-const int16_t streamlined_inv_GS_negacyclic_table_Q1_jump_extended[((NTT_N - 1) + (1 << 0) + (1 << 4) + NTT_N) << 1];
+const int16_t streamlined_inv_GS_negacyclic_table_jump_extended[((NTT_N - 1) + (1 << 0) + (1 << 4) + NTT_N) << 1];
 
 
 #define NTT(in) do { \
-        KYBER_AARCH64__asm_ntt_SIMD_top(in, streamlined_CT_negacyclic_table_Q1_jump_extended, constants); \
-        KYBER_AARCH64__asm_ntt_SIMD_bot(in, streamlined_CT_negacyclic_table_Q1_jump_extended, constants); \
+        KYBER_AARCH64__asm_ntt_SIMD_top(in, streamlined_CT_negacyclic_table_jump_extended, constants); \
+        KYBER_AARCH64__asm_ntt_SIMD_bot(in, streamlined_CT_negacyclic_table_jump_extended, constants); \
     } while(0)
 
 #define iNTT(in) do { \
-        KYBER_AARCH64__asm_intt_SIMD_bot(in, streamlined_inv_GS_negacyclic_table_Q1_jump_extended, constants); \
-        KYBER_AARCH64__asm_intt_SIMD_top(in, streamlined_inv_GS_negacyclic_table_Q1_jump_extended, constants); \
+        KYBER_AARCH64__asm_intt_SIMD_bot(in, streamlined_inv_GS_negacyclic_table_jump_extended, constants); \
+        KYBER_AARCH64__asm_intt_SIMD_top(in, streamlined_inv_GS_negacyclic_table_jump_extended, constants); \
     } while(0)
 
 #define ntt KYBER_NAMESPACE(ntt)

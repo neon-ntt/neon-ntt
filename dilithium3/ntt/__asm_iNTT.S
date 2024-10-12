@@ -6,6 +6,7 @@
  *
  * MIT License
  *
+ * Copyright (c) 2024: Vincent Hwang
  * Copyright (c) 2023: Vincent Hwang
  * Copyright (c) 2023: Hanno Becker, Vincent Hwang, Matthias J. Kannwischer, Bo-Yin Yang, and Shang-Yi Yang
  *
@@ -51,10 +52,10 @@ _DILITHIUM_AARCH64__asm_intt_SIMD_top:
     lsr Qhalf, Q, #1
     neg nQhalf, Qhalf
 
-    ldr invNR2ph,  [x2, #16]
-    ldr invNR2dp,  [x2, #20]
-    ldr invNWR2ph, [x2, #24]
-    ldr invNWR2dp, [x2, #28]
+    ldr invNR2dp,  [x2, #16]
+    ldr invNR2ph,  [x2, #20]
+    ldr invNWR2dp, [x2, #24]
+    ldr invNWR2ph, [x2, #28]
 
     ldr q20, [x1, #0*16]
     ldr q21, [x1, #1*16]
@@ -98,14 +99,14 @@ _DILITHIUM_AARCH64__asm_intt_SIMD_top:
     qq_sub_add v16, v17, v18, v19, v28, v29, v30, v31,  v0,  v2,  v4,  v6,  v8, v10, v12, v14
     qq_sub_add  v0,  v2,  v4,  v6,  v8, v10, v12, v14,  v1,  v3,  v5,  v7,  v9, v11, v13, v15
 
-    mov v20.S[2], invNR2ph
-    mov v20.S[3], invNR2dp
+    mov v20.S[2], invNR2dp
+    mov v20.S[3], invNR2ph
 
     qq_montgomery_mul  v1,  v3,  v5,  v7,  v0,  v2,  v4,  v6, v20, v20, 2, 3, v20, 2, 3, v20, 2, 3, v20, 2, 3
     qq_montgomery_mul  v0,  v2,  v4,  v6, v16, v17, v18, v19, v20, v20, 2, 3, v20, 2, 3, v20, 2, 3, v20, 2, 3
 
-    mov v20.S[2], invNWR2ph
-    mov v20.S[3], invNWR2dp
+    mov v20.S[2], invNWR2dp
+    mov v20.S[3], invNWR2ph
 
     qq_montgomery_mul  v9, v11, v13, v15,  v8, v10, v12, v14, v20, v20, 2, 3, v20, 2, 3, v20, 2, 3, v20, 2, 3
     qq_montgomery_mul  v8, v10, v12, v14, v28, v29, v30, v31, v20, v20, 2, 3, v20, 2, 3, v20, 2, 3, v20, 2, 3
@@ -251,14 +252,14 @@ _DILITHIUM_AARCH64__asm_intt_SIMD_top:
     qq_sub_add v16, v17, v18, v19, v28, v29, v30, v31,  v0,  v2,  v4,  v6,  v8, v10, v12, v14
     qq_sub_add  v0,  v2,  v4,  v6,  v8, v10, v12, v14,  v1,  v3,  v5,  v7,  v9, v11, v13, v15
 
-    mov v20.S[2], invNR2ph
-    mov v20.S[3], invNR2dp
+    mov v20.S[2], invNR2dp
+    mov v20.S[3], invNR2ph
 
     qq_montgomery_mul  v1,  v3,  v5,  v7,  v0,  v2,  v4,  v6, v20, v20, 2, 3, v20, 2, 3, v20, 2, 3, v20, 2, 3
     qq_montgomery_mul  v0,  v2,  v4,  v6, v16, v17, v18, v19, v20, v20, 2, 3, v20, 2, 3, v20, 2, 3, v20, 2, 3
 
-    mov v20.S[2], invNWR2ph
-    mov v20.S[3], invNWR2dp
+    mov v20.S[2], invNWR2dp
+    mov v20.S[3], invNWR2ph
 
     qq_montgomery_mul  v9, v11, v13, v15,  v8, v10, v12, v14, v20, v20, 2, 3, v20, 2, 3, v20, 2, 3, v20, 2, 3
     qq_montgomery_mul  v8, v10, v12, v14, v28, v29, v30, v31, v20, v20, 2, 3, v20, 2, 3, v20, 2, 3, v20, 2, 3
@@ -406,7 +407,7 @@ _DILITHIUM_AARCH64__asm_intt_SIMD_bot:
 
     push_all
     Q         .req w20
-    RphRdp    .req x21
+    RdpRph    .req x21
     src0      .req x0
     src1      .req x2
     table0    .req x28
@@ -414,7 +415,7 @@ _DILITHIUM_AARCH64__asm_intt_SIMD_bot:
     counter   .req x19
 
     ldr Q, [x2]
-    ldr RphRdp, [x2, #8]
+    ldr RdpRph, [x2, #8]
 
     add table0, x1, #128
     add table1, table0, #1024
@@ -456,7 +457,7 @@ _DILITHIUM_AARCH64__asm_intt_SIMD_bot:
             #0*16, #1*16, #2*16, #3*16
 
     mov v4.S[0], Q
-    mov v20.D[0], RphRdp
+    mov v20.D[0], RdpRph
 
     dq_butterfly_vec_bot  v0,  v2, v12, v13,  v1,  v3,  v4,  v8,  v9, v10, v11
     dq_butterfly_vec_mix_rev  v0,  v2, v12, v13,  v1,  v3, v16, v18, v28, v29, v17, v19,  v4,  v8,  v9, v10, v11, v24, v25, v26, v27
@@ -530,7 +531,7 @@ _DILITHIUM_AARCH64__asm_intt_SIMD_bot:
             #0*16, #1*16, #2*16, #3*16
 
     mov v4.S[0], Q
-    mov v20.D[0], RphRdp
+    mov v20.D[0], RdpRph
 
     dq_butterfly_vec_bot  v0,  v2, v12, v13,  v1,  v3,  v4,  v8,  v9, v10, v11
     dq_butterfly_vec_mix_rev  v0,  v2, v12, v13,  v1,  v3, v16, v18, v28, v29, v17, v19,  v4,  v8,  v9, v10, v11, v24, v25, v26, v27
@@ -579,7 +580,7 @@ _DILITHIUM_AARCH64__asm_intt_SIMD_bot:
     add src1, src1, #64
 
     .unreq    Q
-    .unreq    RphRdp
+    .unreq    RdpRph
     .unreq    src0
     .unreq    src1
     .unreq    table0

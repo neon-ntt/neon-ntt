@@ -6,6 +6,7 @@
  *
  * MIT License
  *
+ * Copyright (c) 2024: Vincent Hwang
  * Copyright (c) 2023: Vincent Hwang
  * Copyright (c) 2023: Hanno Becker, Vincent Hwang, Matthias J. Kannwischer, Bo-Yin Yang, and Shang-Yi Yang
  *
@@ -45,7 +46,7 @@ _KYBER_AARCH64__asm_intt_SIMD_bot:
     counter   .req x19
 
     ldrsh Q, [x2, #0]
-    ldrsh BarrettM, [x2, #8]
+    ldrsh BarrettM, [x2, #2]
 
     add table, x1, #64
 
@@ -188,9 +189,9 @@ _KYBER_AARCH64__asm_intt_SIMD_top:
     counter   .req x19
 
     ldrsh        Q, [x2, #0]
-    ldrsh BarrettM, [x2, #8]
-    ldr       invN, [x2, #10]
-    ldr     invN_f, [x2, #14]
+    ldrsh BarrettM, [x2, #2]
+    ldr       invN, [x2, #4]
+    ldr     invN_f, [x2, #8]
 
     mov v4.S[0], invN
     mov v4.S[1], invN_f
@@ -239,7 +240,7 @@ _KYBER_AARCH64__asm_intt_SIMD_top:
             #(16+8*32), #(16+9*32), #(16+10*32), #(16+11*32)
 
     qo_montgomery_mul_insl \
-             v8,  v9, v10, v11, v28, v29, v30, v31,  v0,  v4, 1, 0,  v4, 1, 0,  v4, 1, 0,  v4, 1, 0, \
+             v8,  v9, v10, v11, v28, v29, v30, v31,  v0,  v4, 0, 1,  v4, 0, 1,  v4, 0, 1,  v4, 0, 1, \
              src, \
              q20, q21, q22, q23, \
              #12*32, #13*32, #14*32, #15*32, \
@@ -256,7 +257,7 @@ _KYBER_AARCH64__asm_intt_SIMD_top:
              q8,  q9, q10, q11, \
              #(16+0*32), #(16+1*32), #(16+2*32), #(16+3*32), \
              v12, v13, v14, v15, v24, v25, v26, v27, \
-             v0,  v4, 1, 0,  v4, 1, 0,  v4, 1, 0,  v4, 1, 0
+             v0,  v4, 0, 1,  v4, 0, 1,  v4, 0, 1,  v4, 0, 1
 
     str q12, [src, # 4*32]
     ldr q12, [src, #(16+ 4*32)]
@@ -283,13 +284,13 @@ _KYBER_AARCH64__asm_intt_SIMD_top:
 
 
     qo_montgomery_mul_ins \
-             v8,  v9, v10, v11, v28, v29, v30, v31,  v0,  v4, 1, 0,  v4, 1, 0,  v4, 1, 0,  v4, 1, 0, \
+             v8,  v9, v10, v11, v28, v29, v30, v31,  v0,  v4, 0, 1,  v4, 0, 1,  v4, 0, 1,  v4, 0, 1, \
              src, \
              q20, q21, q22, q23, \
              #(16+12*32), #(16+13*32), #(16+14*32), #(16+15*32)
 
     qo_montgomery_mul_ins \
-            v12, v13, v14, v15, v24, v25, v26, v27,  v0,  v4, 1, 0,  v4, 1, 0,  v4, 1, 0,  v4, 1, 0, \
+            v12, v13, v14, v15, v24, v25, v26, v27,  v0,  v4, 0, 1,  v4, 0, 1,  v4, 0, 1,  v4, 0, 1, \
              src, \
               q8,  q9, q10, q11, \
              #(16+0*32), #(16+1*32), #(16+2*32), #(16+3*32)

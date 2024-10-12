@@ -6,6 +6,7 @@
  *
  * MIT License
  *
+ * Copyright (c) 2024: Vincent Hwang
  * Copyright (c) 2023: Vincent Hwang
  * Copyright (c) 2023: Hanno Becker, Vincent Hwang, Matthias J. Kannwischer, Bo-Yin Yang, and Shang-Yi Yang
  *
@@ -234,7 +235,7 @@ _KYBER_AARCH64__asm_ntt_SIMD_bot:
     counter   .req x11
 
     ldrsh Q, [x2, #0]
-    ldrsh BarrettM, [x2, #8]
+    ldrsh BarrettM, [x2, #2]
 
     add table, x1, #64
 
