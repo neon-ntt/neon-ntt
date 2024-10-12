@@ -12,6 +12,7 @@
  *
  * MIT License
  *
+ * Copyright (c) 2024: Vincent Hwang
  * Copyright (c) 2023: Vincent Hwang
  * Copyright (c) 2023: Hanno Becker, Vincent Hwang, Matthias J. Kannwischer, Bo-Yin Yang, and Shang-Yi Yang
  *
@@ -44,23 +45,25 @@ extern void DILITHIUM_AARCH64__asm_ntt_SIMD_bot(int32_t *des, const int32_t *tab
 extern void DILITHIUM_AARCH64__asm_intt_SIMD_top(int32_t *des, const int32_t *table, const int32_t *_constants);
 extern void DILITHIUM_AARCH64__asm_intt_SIMD_bot(int32_t *des, const int32_t *table, const int32_t *_constants);
 
+extern void DILITHIUM_AARCH64__asm_poly_pointwise_montgomery(int32_t *des, const int32_t *src1, const int32_t *src2, const int32_t *table);
+
 extern
 const int32_t constants[16];
 
 extern
-const int32_t streamlined_CT_negacyclic_table_Q1_jump_extended[((NTT_N - 1) + (1 << 0) + (1 << 4)) << 1];
+const int32_t streamlined_CT_negacyclic_table_jump_extended[((NTT_N - 1) + (1 << 0) + (1 << 4)) << 1];
 
 extern
-const int32_t streamlined_GS_itable_Q1_jump_extended[((NTT_N - 1) + (1 << 0) + (1 << 4)) << 1];
+const int32_t streamlined_inv_GS_negacyclic_table_jump_extended[((NTT_N - 1) + (1 << 0) + (1 << 4)) << 1];
 
 #define NTT(in) do { \
-        DILITHIUM_AARCH64__asm_ntt_SIMD_top(in, streamlined_CT_negacyclic_table_Q1_jump_extended, constants); \
-        DILITHIUM_AARCH64__asm_ntt_SIMD_bot(in, streamlined_CT_negacyclic_table_Q1_jump_extended, constants); \
+        DILITHIUM_AARCH64__asm_ntt_SIMD_top(in, streamlined_CT_negacyclic_table_jump_extended, constants); \
+        DILITHIUM_AARCH64__asm_ntt_SIMD_bot(in, streamlined_CT_negacyclic_table_jump_extended, constants); \
     } while(0)
 
 #define iNTT(in) do { \
-        DILITHIUM_AARCH64__asm_intt_SIMD_bot(in, streamlined_GS_itable_Q1_jump_extended, constants); \
-        DILITHIUM_AARCH64__asm_intt_SIMD_top(in, streamlined_GS_itable_Q1_jump_extended, constants); \
+        DILITHIUM_AARCH64__asm_intt_SIMD_bot(in, streamlined_inv_GS_negacyclic_table_jump_extended, constants); \
+        DILITHIUM_AARCH64__asm_intt_SIMD_top(in, streamlined_inv_GS_negacyclic_table_jump_extended, constants); \
     } while(0)
 
 #define ntt DILITHIUM_NAMESPACE(ntt)
