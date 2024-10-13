@@ -205,64 +205,17 @@ void poly_compress11_neon(uint8_t r[352], const int16_t a[KYBER_N]){
 *              - const polyvec *a: pointer to input vector of polynomials
 **************************************************/
 void polyvec_compress(uint8_t r[KYBER_POLYVECCOMPRESSEDBYTES], const int16_t a[KYBER_K][KYBER_N]) {
-
-    #if KYBER_K == 4
-    // uint16_t t[8];
+#if KYBER_K == 4
     for (size_t i = 0; i < KYBER_K; i++) {
         poly_compress11_neon(r + i * 352, a[i]);
-        // for (j = 0; j < KYBER_N / 8; j++) {
-        //     for (k = 0; k < 8; k++) {
-        //         u  = a[i][8 * j + k];
-
-        //         // 21-bit suffices for round(2048 x / q)
-        //         // inputs are in [-q/2, ..., q/2]
-        //         // 1290167 = round(2048 * 2^21 / q)
-        //         u = ((int16_t)(((int32_t)u * 1290167 + (1 << 20)) >> 21));
-        //         t[k] = u & 0x7ff;
-
-        //     }
-
-        //     r[ 0] = (t[0] >>  0);
-        //     r[ 1] = (t[0] >>  8) | (t[1] << 3);
-        //     r[ 2] = (t[1] >>  5) | (t[2] << 6);
-        //     r[ 3] = (t[2] >>  2);
-        //     r[ 4] = (t[2] >> 10) | (t[3] << 1);
-        //     r[ 5] = (t[3] >>  7) | (t[4] << 4);
-        //     r[ 6] = (t[4] >>  4) | (t[5] << 7);
-        //     r[ 7] = (t[5] >>  1);
-        //     r[ 8] = (t[5] >>  9) | (t[6] << 2);
-        //     r[ 9] = (t[6] >>  6) | (t[7] << 5);
-        //     r[10] = (t[7] >>  3);
-        //     r += 11;
-        // }
     }
-    #elif (KYBER_K == 2 || KYBER_K == 3)
-    // uint16_t t[4];
+#elif (KYBER_K == 2 || KYBER_K == 3)
     for (size_t i = 0; i < KYBER_K; i++) {
         poly_compress10_neon(r + i * 320, a[i]);
-        // for (j = 0; j < KYBER_N / 4; j++) {
-        //     for (k = 0; k < 4; k++) {
-        //         u  = a[i][4 * j + k];
-
-        //         // 22-bit suffices for round(1024 x / q)
-        //         // inputs are in [-q/2, ..., q/2]
-        //         // 1290167 = round(1024 * 2^22 / q)
-        //         u = ((int16_t)(((int32_t)u * 1290167 + (1 << 21)) >> 22));
-        //         t[k] = u & 0x3ff;
-
-        //     }
-
-        //     r[0] = (t[0] >> 0);
-        //     r[1] = (t[0] >> 8) | (t[1] << 2);
-        //     r[2] = (t[1] >> 6) | (t[2] << 4);
-        //     r[3] = (t[2] >> 4) | (t[3] << 6);
-        //     r[4] = (t[3] >> 2);
-        //     r += 5;
-        // }
     }
-    #else
+#else
 #error "KYBER_POLYVECCOMPRESSEDBYTES needs to be in {320*KYBER_K, 352*KYBER_K}"
-    #endif
+#endif
 }
 
 /*************************************************

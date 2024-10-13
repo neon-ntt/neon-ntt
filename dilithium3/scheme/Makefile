@@ -25,7 +25,7 @@ CYCLES_SOURCES = $(CYCLES_PATH)/cycles.c
 
 BENCHFLAGS = -I$(CYCLES_PATH) -DBENCH
 
-ASM_HEADERs = macros.i macros_common.i
+ASM_HEADERS = macros.i macros_common.i
 ASM_SOURCES = __asm_NTT.S __asm_iNTT.S __asm_poly.S
 
 HASH_HEADERS += symmetric.h

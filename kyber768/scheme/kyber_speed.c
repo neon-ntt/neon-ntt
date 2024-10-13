@@ -11,7 +11,7 @@
 #include "ntt.h"
 #include "cycles.h"
 
-#define NTESTS 100000
+#define NTESTS 1000000
 
 uint64_t time0, time1;
 uint64_t cycles[NTESTS];

@@ -6,8 +6,5 @@
 void init_counter(void);
 uint64_t get_cycle(void);
 
-// void setup_rdtsc(void);
-// unsigned long long int rdtsc(void);
-
 #endif
 
