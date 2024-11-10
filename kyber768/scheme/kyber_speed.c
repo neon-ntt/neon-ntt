@@ -10,8 +10,11 @@
 #include "polyvec.h"
 #include "ntt.h"
 
+#if __APPLE__
 #define __AVERAGE__
-// #define __MEDIAN__
+#else
+#define __MEDIAN__
+#endif
 #include "cycles.h"
 
 #define NTESTS 1000000

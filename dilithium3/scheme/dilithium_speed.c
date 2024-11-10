@@ -33,8 +33,12 @@
 #include "params.h"
 #include "sign.h"
 #include "randombytes.h"
+
+#if __APPLE__
 #define __AVERAGE__
-// #define __MEDIAN__
+#else
+#define __MEDIAN__
+#endif
 #include "cycles.h"
 
 #include "poly.h"
